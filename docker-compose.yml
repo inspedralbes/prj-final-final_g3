@@ -1,0 +1,57 @@
+
+services:
+
+  node:
+    image: node:20.8.1-bullseye-slim
+    volumes:
+      - ./node:/usr/src/app
+    working_dir: /usr/src/app 
+    ports:
+      - 8080:8080
+    command: /bin/sh -c "npm install && npm run serve"
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 9091:80
+    depends_on:
+      - db
+
+  laravel:
+    build: ./Laravel
+    volumes:
+      - ./Laravel:/var/www/html
+    ports:
+      - 8000:80
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    command: /bin/sh -c "composer install --no-interaction && chown -R www-data:www-data * &&apache2-foreground "
+    depends_on:
+      - db
+  
+  next:
+    build: ./next
+    volumes:
+      - ./next:/usr/src/app
+    ports:
+      - 3000:3000
+    command: /bin/sh -c "npm install && npm run dev"
+    depends_on:
+      - node
+
+
+  db:
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: persones
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./mysql/dades.sql:/docker-entrypoint-initdb.d/dades.sql
