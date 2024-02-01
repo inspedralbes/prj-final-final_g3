@@ -18,5 +18,3 @@ COPY package*.json .
 
 #expose port 8080 to the outside world
 EXPOSE 3000
-
-
