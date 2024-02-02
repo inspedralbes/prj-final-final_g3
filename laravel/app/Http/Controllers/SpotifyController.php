@@ -37,34 +37,21 @@ class SpotifyController extends Controller
     //     return $body;
     // }
 
-    public function getAccessToken(){
+    public function getAccessToken()  {
         $client_id = '5467f1a23dd643079df61dee264117f3';
         $redirectUri = 'http://localhost:8000';
+        $state = $this->generateRandomString(16);
+        $scope = 'user-read-email user-library-read user-top-read';
 
-        $scope = 'user-read-private user-read-email';
-        $authUrl = "https://accounts.spotify.com/authorize";
-
-        $text = $this->generateRandomString(16);
-
-        $params = [
+        $queryParameters = [
             'response_type' => 'code',
-            'client_id' => $client_id,
+            'client_id' => $client_id, // Configura tu client_id en el archivo de configuración
             'scope' => $scope,
-            'code_challenge_method' => 'S256',
-            'redirect_uri' => $redirectUri,
-            'state' => $text
-
+            'redirect_uri' =>$redirectUri, // Configura tu redirect_uri en el archivo de configuración
+            'state' => $state,
         ];
 
-        $client = new Client();
-
-        $response = $client->get($authUrl, [
-            'query' => $params,
-        ]);
-
-        $authUrl = URL::to($authUrl . '/callback') . '?' . http_build_query($params);
-
-        return Redirect::to($authUrl);
+        return redirect('https://accounts.spotify.com/authorize?' . http_build_query($queryParameters));
     }
 
     private function generateRandomString($length)
