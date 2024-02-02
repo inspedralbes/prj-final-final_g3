@@ -91,7 +91,7 @@ class SpotifyController extends Controller
         
         $response = $client->get($url, [
             'headers' => [
-                'Authorization' => 'Bearer BQDXKjSQqgK6aBsR4UBvxAV-BZJNk01-0EP5faUe7bDjSQw1livPWtdvK8FuCvFVZWdUfK3g4mtifpwtM7F6eO5D2UDTFhW-2eSnxlDSXTi2292spdA',
+                'Authorization' => 'Bearer ',
             ]
         ]);
 
