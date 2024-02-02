@@ -12,31 +12,6 @@ use Illuminate\Support\Facades\URL;
 
 class SpotifyController extends Controller
 {
-    // public function getAccesToken(){
-    //     $client = new Client();
-
-    //     $client_id = 'c716b362daf24eff8f677f1f2d00e20c';
-    //     $client_secret = 'e965f33797214231bee7ac783bb594be';
-    //     $url = 'https://accounts.spotify.com/api/token';
-    //     $scope = 'user-read-private user-read-email';
-    //     $header = new stdClass();
-
-
-    //     $response = $client->post($url, [
-    //         'headers' => [
-    //             'Authorization' => 'Basic ' . base64_encode($client_id . ':' . $client_secret),
-    //             'Content-Type' => 'application/x-www-form-urlencoded',
-    //             'scopes' => $scope
-    //         ],
-    //         'form_params' => [
-    //             'grant_type' => 'client_credentials',
-    //         ]
-    //     ]);
-    //     $body = $response->getBody()->getContents();
-
-    //     return $body;
-    // }
-
     public function login()  {
         $client_id = '5467f1a23dd643079df61dee264117f3';
         $redirectUri = 'http://localhost:8000/api/callback';
@@ -56,31 +31,43 @@ class SpotifyController extends Controller
 
     public function callback(Request $request)
     {
-        $code = $request->input('code');
-        $state = $request->input('state');
+        $code = $request->query('code', null);
+        $state = $request->query('state', null);
 
         if ($state === null) {
-            return redirect('/')->with('error', 'state_mismatch');
+            return redirect('/#' . http_build_query(['error' => 'state_mismatch']));
         } else {
+            $client = new Client();
+
             $authOptions = [
                 'url' => 'https://accounts.spotify.com/api/token',
                 'form_params' => [
                     'code' => $code,
-                    'redirect_uri' => config('services.spotify.redirect_uri'),
+                    'redirect_uri' => env('SPOTIFY_REDIRECT_URI'),
                     'grant_type' => 'authorization_code',
                 ],
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Authorization' => 'Basic ' . base64_encode(config('services.spotify.client_id') . ':' . config('services.spotify.client_secret')),
+                    'Authorization' => 'Basic ' . base64_encode(env('SPOTIFY_CLIENT_ID') . ':' . env('SPOTIFY_CLIENT_SECRET')),
                 ],
             ];
-            
-            $response = Http::asForm()->post($authOptions['url'], $authOptions['form_params']);
-            
-            // Obtener la respuesta
-            $status = $response->status();  // Código de estado HTTP
-            $data = $response->json();
-            dd($data);
+
+            try {
+                $response = $client->post($authOptions['url'], [
+                    'form_params' => $authOptions['form_params'],
+                    'headers' => $authOptions['headers'],
+                ]);
+
+                $responseData = json_decode($response->getBody(), true);
+
+                // Puedes realizar acciones adicionales según la respuesta
+
+                // Devolver una respuesta de ejemplo
+                return response()->json(['data' => $responseData]);
+            } catch (\Exception $e) {
+                // Manejar cualquier excepción que pueda ocurrir durante la solicitud
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
         }
     }
 
