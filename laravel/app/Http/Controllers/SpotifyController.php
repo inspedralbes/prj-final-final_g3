@@ -38,7 +38,7 @@ class SpotifyController extends Controller
     // }
 
     public function getAccessToken(){
-        $client_id = 'c716b362daf24eff8f677f1f2d00e20c';
+        $client_id = '5467f1a23dd643079df61dee264117f3';
         $redirectUri = 'http://localhost:8000';
 
         $scope = 'user-read-private user-read-email';
@@ -67,23 +67,18 @@ class SpotifyController extends Controller
         return Redirect::to($authUrl);
     }
 
-    private function generateRandomString($length){
-        return Str::random($length);
+    private function generateRandomString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
     }
 
-    private function hashString($text){
-        $hashed = hash('sha256', $text);
-
-        return $hashed;
-    }
-
-    private function base64encode($input){
-        $base64Encoded = base64_encode($input);
-        
-        $base64Encoded = str_replace(['+', '/', '='], ['-', '_', ''], $base64Encoded);
-
-        return $base64Encoded;
-    }
 
     public function getTrack(){
         $client = new Client();
