@@ -33,15 +33,15 @@ services:
       - db
   
   next:
-    build: ./next
+    image: node:20.8.1-bullseye-slim
+    working_dir: /usr/src/app
     volumes:
       - ./next:/usr/src/app
     ports:
       - 3000:3000
-    command: /bin/sh -c "npm install && npm run dev"
+    command: sh -c "npm install && npm run dev"
     depends_on:
       - node
-
 
   db:
     image: mysql:8.2.0
