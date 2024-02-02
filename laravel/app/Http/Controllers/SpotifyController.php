@@ -37,9 +37,9 @@ class SpotifyController extends Controller
     //     return $body;
     // }
 
-    public function getAccessToken()  {
+    public function login()  {
         $client_id = '5467f1a23dd643079df61dee264117f3';
-        $redirectUri = 'http://localhost:8000';
+        $redirectUri = 'http://localhost:8000/api/callback';
         $state = $this->generateRandomString(16);
         $scope = 'user-read-email user-library-read user-top-read';
 
@@ -54,6 +54,37 @@ class SpotifyController extends Controller
         return redirect('https://accounts.spotify.com/authorize?' . http_build_query($queryParameters));
     }
 
+    public function callback(Request $request)
+    {
+        $code = $request->input('code');
+        $state = $request->input('state');
+
+        if ($state === null) {
+            return redirect('/')->with('error', 'state_mismatch');
+        } else {
+            $authOptions = [
+                'url' => 'https://accounts.spotify.com/api/token',
+                'form_params' => [
+                    'code' => $code,
+                    'redirect_uri' => config('services.spotify.redirect_uri'),
+                    'grant_type' => 'authorization_code',
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Authorization' => 'Basic ' . base64_encode(config('services.spotify.client_id') . ':' . config('services.spotify.client_secret')),
+                ],
+            ];
+            
+            $response = Http::asForm()->post($authOptions['url'], $authOptions['form_params']);
+            
+            // Obtener la respuesta
+            $status = $response->status();  // Código de estado HTTP
+            $data = $response->json();
+            dd($data);
+        }
+    }
+
+
     private function generateRandomString($length)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -66,19 +97,17 @@ class SpotifyController extends Controller
         return $randomString;
     }
 
+    private function fetchToLogin($authOptions)
+    {
+        Http::withHeaders($authOptions['headers']);
 
-    public function getTrack(){
-        $client = new Client();
-        $url = 'https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V';
-        
-        $response = $client->get($url, [
-            'headers' => [
-                'Authorization' => 'Bearer ',
-            ]
-        ]);
+        try {
+            $response = Http::asForm()->post($authOptions['url'], $authOptions['form']);
+            $token = $response->json();
 
-        $body = $response->getBody()->getContents();
-
-        return $body;
+            return $token;
+        } catch (\Exception $error) {
+            throw $error;
+        }
     }
 }

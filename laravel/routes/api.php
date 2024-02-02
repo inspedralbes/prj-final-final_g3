@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/getAccessToken', [SpotifyController::class, 'getAccessToken']);
+Route::get('/login', [SpotifyController::class, 'login']);
+Route::get('/callback', [SpotifyController::class, 'callback']);
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
