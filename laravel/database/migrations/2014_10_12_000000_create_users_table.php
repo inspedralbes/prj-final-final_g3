@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('surnames');
             $table->string('email')->unique();
+            $table->date('birthdate');
+            $table->enum('loginWith', ['email', 'spotify', 'google']);
             $table->string('nickname')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
