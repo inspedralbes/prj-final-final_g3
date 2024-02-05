@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-// Route::get('/loginSpotify', [SpotifyController::class, 'login']);
+Route::get('/loginSpotify', [SpotifyController::class, 'login']);
 Route::get('/callback', [SpotifyController::class, 'callback']);
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
