@@ -68,7 +68,6 @@ const scrapePage = async () => {
             allEventData.push(...pagedata);
             progressBar.increment();
             await sleep(1000);
-            // console.log(`Page ${currentPage} data:`, pagedata);
         }
 
         progressBar.stop();
