@@ -17,12 +17,13 @@ use App\Http\Controllers\UserController;
 */
 
 Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-Route::get('/login', [SpotifyController::class, 'login']);
+// Route::get('/loginSpotify', [SpotifyController::class, 'login']);
 Route::get('/callback', [SpotifyController::class, 'callback']);
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
