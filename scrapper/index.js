@@ -1,17 +1,20 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
+import { Bar } from 'cli-progress';
+import colors from 'ansi-colors';
+import { promisify } from 'util';
 
-// const browser = await puppeteer.launch({
-//     headless: true
-// });
-// const page = await browser.newPage();
 
-// // await page.goto("https://www.ticketmaster.es/musica/todos-musica/10001/events");
-// await page.goto("https://example.com/");
 
-// await new Promise(r => setTimeout(r, 10000));
+const progressBar = new Bar({
+    format: 'Progress' + colors.red(' {bar}') + ' {percentage}% | ETA: {eta}s | {value}/{total} pages',
+    barCompleteChar: '\u2588',
+    barIncompleteChar: '\u2591',
+    hideCursor: true,
+});
 
-// await browser.close();
+const sleep = promisify(setTimeout);
+
 
 const scrapePage = async () => {
     const browser = await puppeteer.launch({
@@ -20,56 +23,86 @@ const scrapePage = async () => {
     });
     const page = await browser.newPage();
 
-    // await page.goto("https://www.ticketmaster.es/musica/todos-musica/10001/events/", {
-    //     waitUntil: 'domcontentloaded',
-    // });
-
-    // const pagedata = await page.evaluate(() => {
-    //     const pageList = document.querySelectorAll(".sc-1nyzlro-1");
-
-    //     return Array.from(pageList).map((page) => {
-    //         const date = page.querySelector(".lmhoCy span").innerText;
-    //         const name = page.querySelector(".sc-fyofxi-5.gJmuwa").innerText;
-    //         const location = page.querySelector(".sc-fyofxi-7.PpnvD").innerText;
-
-    //         return {
-    //             date,
-    //             name,
-    //             location
-    //         };
-    //     });
-    // });
-    await page.goto("https://www.livenation.es/event/allevents?location=Barcelona&page=1", {
-        waitUntil: 'domcontentloaded',
-    });
-
-    const pagedata = await page.evaluate(() => {
-        const pageList = document.querySelectorAll(".result-card__wrapper");
-
-        return Array.from(pageList).map((page) => {
-            // const date = page.querySelector(".lmhoCy span").innerText;
-            const name = page.querySelector(".result-info__localizedname").innerText;
-            // const location = page.querySelector(".sc-fyofxi-7.PpnvD").innerText;
-
-            return {
-                name
-            };
+    try {
+        await page.goto("https://www.livenation.es/event/allevents?location=Barcelona&page=1", {
+            waitUntil: 'domcontentloaded',
         });
-    });
 
+        const totalPages = await getTotalPages(page);
+        const allEventData = [];
 
-    console.log(pagedata);
+        progressBar.start(totalPages, 0);
 
-    // fs.writeFile("events.json", JSON.stringify(pagedata), (err) => {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    //     console.log("Successfully Written to File.");
-    // });
+        for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+            const pageUrl = `https://www.livenation.es/event/allevents?location=Barcelona&page=${currentPage}`;
+            await page.goto(pageUrl, {
+                waitUntil: 'domcontentloaded',
+            });
 
-    await browser.close();
+            const pagedata = await page.evaluate(() => {
+                const pageList = document.querySelectorAll(".result-card__wrapper");
+
+                return Array.from(pageList).map((page) => {
+                    const concert = page.querySelector(".result-info__localizedname").innerText;
+                    const artist = page.querySelector(".result-info__headliners").innerHTML;
+                    const day = page.querySelector(".event-date__date__day").innerText;
+                    const month = page.querySelector(".event-date__date__month").innerText;
+                    const year = page.querySelector(".event-date__date__year").innerText;
+                    const city = page.querySelector(".result-info__city").innerText;
+                    const location = page.querySelector(".result-info__venue").innerText;
+                    const image = page.querySelector(".progressive-image__img.progressive-image__img--normalised").getAttribute('src');;
+
+                    return {
+                        concert,
+                        artist,
+                        day,
+                        month,
+                        year,
+                        city,
+                        location,
+                        image
+                    };
+                });
+            });
+
+            allEventData.push(...pagedata);
+            progressBar.increment();
+            await sleep(1000);
+            // console.log(`Page ${currentPage} data:`, pagedata);
+        }
+
+        progressBar.stop();
+
+        ///Guardar info en el JSON
+        fs.writeFile("events.json", JSON.stringify({ events: allEventData }), (err) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log("Successfully Written to File.");
+        });
+
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        await browser.close();
+    }
+}
+
+async function getTotalPages(page) {
+    try {
+        const nextButton = await page.$('.pagination__button--next');
+        const href = await page.evaluate((element) => element.getAttribute('href'), nextButton);
+
+        const pageNumber = href.match(/page=(\d+)/);
+
+        return pageNumber ? parseInt(pageNumber[1]) : 1;
+    } catch (error) {
+        console.error("Error getting total pages:", error);
+        return 1;
+    }
 
 }
+
 
 scrapePage();
 
