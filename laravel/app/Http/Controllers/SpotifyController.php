@@ -71,7 +71,6 @@ class SpotifyController extends Controller
         }
     }
 
-
     private function generateRandomString($length)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -82,19 +81,5 @@ class SpotifyController extends Controller
         }
 
         return $randomString;
-    }
-
-    private function fetchToLogin($authOptions)
-    {
-        Http::withHeaders($authOptions['headers']);
-
-        try {
-            $response = Http::asForm()->post($authOptions['url'], $authOptions['form']);
-            $token = $response->json();
-
-            return $token;
-        } catch (\Exception $error) {
-            throw $error;
-        }
     }
 }
