@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Contracts\User as SocialiteUser;
+use Illuminate\Http\JsonResponse;
+use GuzzleHttp\Exception\ClientException;
+use Laravel\Socialite\Facades\Socialite;
+
+
 
 class UserController extends Controller
 {
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         $credentials = Validator::make($request->all(), [
             'email' => 'required|string',
             'password' => 'required|string',
@@ -40,7 +45,6 @@ class UserController extends Controller
 
 
     }
-
 
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
@@ -82,6 +86,47 @@ class UserController extends Controller
 
         return response()->json(['success' => 'Usuari creat correctament', 'data' => $response], 200);
 
+    }
+
+    public function logout(Request $request){
+        $request->user()->tokens()->delete();
+        return response()->json(['success' => 'Has tancat sessió'], 200);
+    }
+
+    public function redirectToAuth(): JsonResponse{
+        return response()->json([
+            'url' => Socialite::driver('google')
+                         ->stateless()
+                         ->redirect()
+                         ->getTargetUrl(),
+        ]);
+    }
+
+    public function handleAuthCallback(): JsonResponse{
+        try {
+            $socialiteUser = Socialite::driver('google')->stateless()->user();
+        } catch (ClientException $e) {
+            return response()->json(['error' => 'Invalid credentials provided.'], 422);
+        }
+        $user = User::query()
+            ->firstOrCreate(
+                [
+                    'email' => $socialiteUser->getEmail(),
+                ],
+                [
+                    'email_verified_at' => now(),
+                    'name' => $socialiteUser->user["given_name"],
+                    'surnames' => $socialiteUser->user["family_name"],
+                    'google_id' => $socialiteUser->user["id"],
+                    'avatar' => $socialiteUser->getAvatar(),
+                ]
+            );
+
+        return response()->json([
+            'user' => $user->makeHidden(['created_at', 'updated_at']),
+            'access_token' => $user->createToken('google-token')->plainTextToken,
+            'token_type' => 'Bearer',
+        ]);
     }
 
 }

@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('surnames');
             $table->string('email')->unique();
-            $table->date('birthdate');
+            $table->date('birthdate')->nullable();
             $table->enum('loginWith', ['email', 'spotify', 'google']);
-            $table->string('nickname')->unique();
+            $table->string('nickname')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('google_id')->nullable();
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
