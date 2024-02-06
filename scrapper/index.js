@@ -18,7 +18,7 @@ const multibar = new cliProgress.MultiBar({
 const sleep = promisify(setTimeout);
 
 const b1 = multibar.create(100, 0, { filename: 'LiveNation' });
-const b2 = multibar.create(100, 0, { filename: 'ElCorteIngles' });
+// const b2 = multibar.create(100, 0, { filename: 'ElCorteIngles' });
 
 
 ///FUNCTIONS
@@ -153,7 +153,7 @@ function writeJson() {
 
 
 scrapeLiveNation()
-    .then(() => scrapCorteIngles())
+    // .then(() => scrapCorteIngles())
     .then(() => {
         writeJson();
         multibar.stop();
