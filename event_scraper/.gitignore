@@ -1,0 +1,17 @@
+# Archivos y directorios generados automáticamente
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Directorio de logs de Scrapy
+logs/
+
+# Directorio de datos generados por Scrapy (ej. el directorio donde se guardan los datos de scraping)
+data/
+
+# Entorno virtual (si estás utilizando uno)
+venv/
+env/
+
+# Cualquier otro archivo o directorio específico de tu entorno de desarrollo que no desees compartir
