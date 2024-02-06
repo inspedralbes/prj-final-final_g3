@@ -47,10 +47,11 @@ class ConciertosSpider(scrapy.Spider):
         unique_dates = list(set(dates))
         enclosure = response.css('a[href="#recinto"]::text').get()
         artist = response.css('a[data-gtm-event-action="click artist"]::text').get()
-
+        genre = response.css('span[itemprop="title"]::text').getall()
         yield {
             "concierto": clean_title,
             "artist": artist,
+            "genre": genre[2],
             "dates": unique_dates[0],
             "hour": unique_dates[1],
             "enclosure": enclosure,
