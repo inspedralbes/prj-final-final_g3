@@ -5,10 +5,12 @@ import Hero from './components/Hero'
 import Benefits from './components/Benefits'
 import Testimonios from './components/Testimonios'
 import LastCTA from './components/LastCTA'
+import Menu from './components/Menu'
 
 export default function Page() {
   return (
     <>
+    
       <Background />
       <Header />
       <main className='w-[90%] mx-auto'>
@@ -17,6 +19,7 @@ export default function Page() {
         <Testimonios/>
         <LastCTA/>
       </main>
+      <Menu />
     </>
   )
 }
