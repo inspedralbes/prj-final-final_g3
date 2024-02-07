@@ -1,0 +1,778 @@
+[
+    {
+        "concierto": "Marc Anthony - Historia Tour",
+        "artist": " Marc Anthony",
+        "genre": " Latino ",
+        "dates": "A las 21.30 h",
+        "hour": "13 de Junio de 2024",
+        "enclosure": "Palau Sant Jordi"
+    },
+    {
+        "concierto": "Vanesa Martín",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 22:00h",
+        "hour": "13 de Julio de 2024",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Andrea Bocelli",
+        "artist": " Andrea Bocelli",
+        "genre": " Ópera y Zarzuela ",
+        "dates": "Del 30 de Abril de 2024 al 1 de Mayo de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Palau Sant Jordi"
+    },
+    {
+        "concierto": "Queen Forever el Mejor Queen Después de Queen",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": " 4 de Mayo de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "The Tyets - Tornem a Casa Tour",
+        "artist": null,
+        "genre": " Trap ",
+        "dates": "20 de Abril de 2024",
+        "hour": "A las 20:00 h.",
+        "enclosure": "Espai Can Guitet"
+    },
+    {
+        "concierto": "María Peláe - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "12 de Abril de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Sala 1 Razzmatazz "
+    },
+    {
+        "concierto": "El Señor de los Anillos",
+        "artist": null,
+        "genre": " Música Clásica ",
+        "dates": "A las 19:00 h.",
+        "hour": "20 de Abril de 2024",
+        "enclosure": "Teatre Apolo - Barcelona"
+    },
+    {
+        "concierto": "Mazoni - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "24 de Febrero de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "Antílopez - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": "23 de Febrero de 2024",
+        "enclosure": "Razzmatazz Sala 2"
+    },
+    {
+        "concierto": "Sopa de Cabra",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "11 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Passenger",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "24 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Taburete",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 22:00h",
+        "hour": "15 de Julio de 2024",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Veintiuno - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "15 de Marzo de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Andrés Calamaro - Guitar BCN 2024",
+        "artist": " Andrés Calamaro",
+        "genre": " Rock ",
+        "dates": "21 de Junio de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Poble Espanyol"
+    },
+    {
+        "concierto": "Leo Rizzi - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": " 4 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Rumours of Fleetwood Mac",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": " 8 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Malú - Guitar BCN 2024",
+        "artist": "Malú",
+        "genre": " Rock ",
+        "dates": "A las 20:30H",
+        "hour": "13 de Febrero de 2024",
+        "enclosure": "Gran Teatre del Liceu"
+    },
+    {
+        "concierto": "Funambulista - Empremtes 2024",
+        "artist": "Funambulista",
+        "genre": " Pop ",
+        "dates": "19 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": " Sala Apolo"
+    },
+    {
+        "concierto": "Diana Krall",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 22:00h",
+        "hour": "18 de Julio de 2024",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Montse Blanco - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": "17 de Marzo de 2024",
+        "enclosure": "New Fizz"
+    },
+    {
+        "concierto": "Mika",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "17 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Frank Reyes",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": " 3 de Mayo de 2024",
+        "hour": "A las 23:30h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Ramoncín",
+        "artist": "Ramoncín",
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": " 2 de Marzo de 2024",
+        "enclosure": "Sala Luz de Gas"
+    },
+    {
+        "concierto": "Malú - Guitar BCN 2024",
+        "artist": "Malú",
+        "genre": " Rock ",
+        "dates": "A las 20:30H",
+        "hour": "19 de Febrero de 2024",
+        "enclosure": "Gran Teatre del Liceu"
+    },
+    {
+        "concierto": "Celtas Cortos - Empremtes 2024",
+        "artist": "Celtas Cortos",
+        "genre": " Pop ",
+        "dates": "27 de Abril de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Razzmatazz 1"
+    },
+    {
+        "concierto": "Camela",
+        "artist": "Camela",
+        "genre": " Pop ",
+        "dates": " 3 de Mayo de 2024",
+        "hour": "A las 21:30 h",
+        "enclosure": "Zona Can Guitet, Montmeló"
+    },
+    {
+        "concierto": "Marlena - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "23 de Febrero de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "The Australian Pink Floyd Show - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "21 de Febrero de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Sala 1 Razzmatazz "
+    },
+    {
+        "concierto": "Los Chichos",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": " 9 de Marzo de 2024",
+        "enclosure": "Palau Sant Jordi - Sant Jordi Club"
+    },
+    {
+        "concierto": "Andrea Motis - Guitar BCN 2024",
+        "artist": " Andrea Motis",
+        "genre": " Rock ",
+        "dates": "A las 20:30h",
+        "hour": " 7 de Marzo de 2024",
+        "enclosure": "Sala La Paloma"
+    },
+    {
+        "concierto": "Andrea Motis - Guitar BCN 2024",
+        "artist": " Andrea Motis",
+        "genre": " Rock ",
+        "dates": "A las 20:30h",
+        "hour": " 8 de Marzo de 2024",
+        "enclosure": "Sala La Paloma"
+    },
+    {
+        "concierto": "Mikel Izal - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": " 9 de Marzo de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Auditorio Forum CCIB"
+    },
+    {
+        "concierto": "Núria Duran- Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "15 de Marzo de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "New Fizz"
+    },
+    {
+        "concierto": "Hebert Vargas",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "26 de Abril de 2024",
+        "hour": "A las 23:00h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Cheo Andújar, Nino Segarra y Amilcar Boscán",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "A las 23:30 h.",
+        "hour": "16 de Febrero de 2024",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Carlos Sadness - Guitar BCN 2024",
+        "artist": " Carlos Sadness",
+        "genre": " Rock ",
+        "dates": "11 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Els Amics de les Arts - Guitar BCN 2024",
+        "artist": " Els Amics De Les Arts",
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "18 de Mayo de 2024",
+        "enclosure": "Teatre Victoria"
+    },
+    {
+        "concierto": "Jhon Alex Castaño",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "28 de Marzo de 2024",
+        "hour": "A las 23:00h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Depeche Mode - Memento Mori Tour",
+        "artist": "Depeche Mode",
+        "genre": " Pop ",
+        "dates": "16 de Marzo de 2024",
+        "hour": "20:20 h. Suzie Stapleton / 21:30 h. DEPECHE MODE",
+        "enclosure": "Palau Sant Jordi"
+    },
+    {
+        "concierto": "La Bien Querida - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "10 de Febrero de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": " Sala Apolo"
+    },
+    {
+        "concierto": "El Sitio de mi Recreo. Homenaje a Antonio Vega",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "Del 3 de Mayo de 2024 al 4 de Mayo de 2024",
+        "hour": "03/05 a las 21:00h / 04/05 a las 20:00h",
+        "enclosure": "Teatre Apolo - Barcelona"
+    },
+    {
+        "concierto": "Merche",
+        "artist": "Merche",
+        "genre": " Pop ",
+        "dates": "A las 20:00h",
+        "hour": " 7 de Marzo de 2024",
+        "enclosure": "Luz de Gas (Menores de 16 con tutor)"
+    },
+    {
+        "concierto": "Elvira Sastre - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 20:30h",
+        "hour": "28 de Febrero de 2024",
+        "enclosure": "Sala Paral·lel 62"
+    },
+    {
+        "concierto": "Gossos - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "25 de Abril de 2024",
+        "enclosure": "Sala Paral·lel 62"
+    },
+    {
+        "concierto": "Conjunto Chaney",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "A las 23:30h (El evento se celebrará la noche del viernes 5 al sábado 6 de Abril de 2024)",
+        "hour": " 5 de Abril de 2024",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Vicco - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "10 de Mayo de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Elefantes - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "19 de Abril de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Palau De La Música Catalana"
+    },
+    {
+        "concierto": "Paula Mattheus - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": " 1 de Marzo de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Doña Manteca + Xanguito - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": " 4 de Abril de 2024",
+        "enclosure": "Luz de Gas (Menores de 16 con tutor)"
+    },
+    {
+        "concierto": "María Hein - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "29 de Febrero de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Mercedes Cañas - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "23 de Febrero de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Jhonny Rivera, Jenny López y El Orejón Trovador",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "10 de Mayo de 2024",
+        "hour": "A las 23:30h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Ismael Serrano - Guitar BCN 2024",
+        "artist": " Ismael Serrano",
+        "genre": " Rock ",
+        "dates": "A las 20:30h",
+        "hour": "29 de Febrero de 2024",
+        "enclosure": "Teatre Coliseum"
+    },
+    {
+        "concierto": "Capinàs - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "26 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "Ha*Ash - Gira Mi Salida Contigo España 2024",
+        "artist": "Ha-Ash",
+        "genre": " Pop ",
+        "dates": "A las 21:00h.",
+        "hour": "21 de Abril de 2024",
+        "enclosure": "Palau Sant Jordi - Sant Jordi Club"
+    },
+    {
+        "concierto": "Toto - Guitar BCN 2024",
+        "artist": "Toto",
+        "genre": " Rock ",
+        "dates": "26 de Julio de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Poble Espanyol"
+    },
+    {
+        "concierto": "Xoel López - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "15 de Marzo de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Sala 1 Razzmatazz "
+    },
+    {
+        "concierto": "Ravi Ram - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 20:30h",
+        "hour": "17 de Febrero de 2024",
+        "enclosure": " Sala Apolo"
+    },
+    {
+        "concierto": "Jacob Forever",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "22 de Febrero de 2024",
+        "hour": "A las 23:30h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Pol Granch - Guitar BCN 2024",
+        "artist": " Pol Granch",
+        "genre": " Rock ",
+        "dates": " 6 de Abril de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Sala 2 Razzmatazz"
+    },
+    {
+        "concierto": "Mikel Izal",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "23 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Simple Minds",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "19 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Raule Zurdo Tour",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": "17 de Mayo de 2024",
+        "enclosure": " Sant Jordi Club "
+    },
+    {
+        "concierto": "Carla Collado - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": "16 de Marzo de 2024",
+        "enclosure": "Sala Wolf."
+    },
+    {
+        "concierto": "Las Karamba - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "25 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "Kevin Johansen + Liniers + The Nada - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": " 4 de Julio de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Antoñito Molina - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "26 de Abril de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Jo Jet i Maria Ribot - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 20:30h",
+        "hour": " 2 de Marzo de 2024",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "The Musical Box - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "21 de Marzo de 2024",
+        "enclosure": "Teatre Coliseum"
+    },
+    {
+        "concierto": "Luz Casal",
+        "artist": " Luz Casal",
+        "genre": " Pop ",
+        "dates": "10 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Luis Fercán - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": " 6 de Abril de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Sala Luz de Gas"
+    },
+    {
+        "concierto": "Ring de Acordeones: Daniel Calderón y Los Gigantes VS Luis Mateus con David Rendón",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "15 de Marzo de 2024",
+        "hour": "A las 23:00h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Rozalén - Guitar BCN 2024",
+        "artist": "Rozalén",
+        "genre": " Rock ",
+        "dates": "23 de Mayo de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Gran Teatre del Liceu"
+    },
+    {
+        "concierto": "Izaro - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": " 9 de Febrero de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "El Kanka - Guitar BCN 2024",
+        "artist": "El Kanka",
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "16 de Febrero de 2024",
+        "enclosure": "Sala La Paloma"
+    },
+    {
+        "concierto": "Marina Dósem - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": "20 de Abril de 2024",
+        "enclosure": "New Fizz"
+    },
+    {
+        "concierto": "Conchita - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 20:30h",
+        "hour": "15 de Febrero de 2024",
+        "enclosure": "Sala Apolo"
+    },
+    {
+        "concierto": "Tate McRae - THINK LATER TOUR",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "20 de Mayo de 2024",
+        "hour": "20:00h Charlieonnafriday / 21:00h Tate McRae",
+        "enclosure": "Palau Sant Jordi - Sala Sant Jordi Club"
+    },
+    {
+        "concierto": "Patti Smith Quartet",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": " 5 de Julio de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Jardins del Palau de Pedralbes"
+    },
+    {
+        "concierto": "Antonio José",
+        "artist": "Antonio José",
+        "genre": " Pop ",
+        "dates": " 6 de Marzo de 2024",
+        "hour": "A las 20:30 h.",
+        "enclosure": "Sala Paral·lel 62"
+    },
+    {
+        "concierto": "Rodrigo Cuevas - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "22 de Marzo de 2024",
+        "enclosure": "Gran Teatre del Liceu"
+    },
+    {
+        "concierto": "Las Migas - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": " 5 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": " Sala Apolo"
+    },
+    {
+        "concierto": "Kadec Santa Anna - 24 Tour",
+        "artist": null,
+        "genre": " Rap y Hip-hop ",
+        "dates": "A las 21:00h",
+        "hour": "25 de Mayo de 2024",
+        "enclosure": "Sala Razzmatazz "
+    },
+    {
+        "concierto": "Carmen y María - Mepremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "Del 2 de Febrero de 2024 al 24 de Febrero de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "Blas Cantó - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": " 9 de Febrero de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "Luz de Gas (Menores de 16 con tutor)"
+    },
+    {
+        "concierto": "Loreena Mckennitt - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": " 4 de Julio de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Auditorio Forum CCIB"
+    },
+    {
+        "concierto": "Alba Luz - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": "12 de Abril de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": "New Fizz"
+    },
+    {
+        "concierto": "Maná",
+        "artist": "Maná",
+        "genre": " Pop ",
+        "dates": "A las 21:00h",
+        "hour": " 9 de Junio de 2024",
+        "enclosure": "Palau Sant Jordi"
+    },
+    {
+        "concierto": "Luis Alberto Posada",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "23 de Febrero de 2024",
+        "hour": "A las 23:00h",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Coque Malla - Guitar BCN 2024",
+        "artist": " Coque Malla",
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "22 de Marzo de 2024",
+        "enclosure": "Palau De La Música Catalana"
+    },
+    {
+        "concierto": "Opus One - Guitar BCN 2024",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "A las 21:00h",
+        "hour": "28 de Febrero de 2024",
+        "enclosure": "Teatre Coliseum"
+    },
+    {
+        "concierto": "Galvan Real- Barcelona",
+        "artist": null,
+        "genre": " Flamenco ",
+        "dates": " 8 de Junio de 2024",
+        "hour": "A las 21:00h",
+        "enclosure": " Sant Jordi Club "
+    },
+    {
+        "concierto": "El Charrito Negro Y Su Hijo Aragón",
+        "artist": null,
+        "genre": " Latino ",
+        "dates": "A las 23:30h",
+        "hour": "22 de Marzo de 2024",
+        "enclosure": "Latin Palace Barcelona"
+    },
+    {
+        "concierto": "Queen Forever el Mejor Queen Después de Queen",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": "17 de Febrero de 2024",
+        "hour": "A las 21:30 h.",
+        "enclosure": "Sala Rasa 64 (antigua Faktoria D'Arts)"
+    },
+    {
+        "concierto": "Guillem Roma - Empremtes 2024",
+        "artist": null,
+        "genre": " Pop ",
+        "dates": " 9 de Marzo de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "La (2) de l'Apolo"
+    },
+    {
+        "concierto": "Pimpinela - Siempre Juntos",
+        "artist": "Pimpinela",
+        "genre": " Pop ",
+        "dates": "13 de Septiembre de 2024",
+        "hour": "A las 22:00h",
+        "enclosure": "Auditorio Forum CCIB"
+    },
+    {
+        "concierto": "LOS TIGRES DEL NORTE",
+        "artist": null,
+        "genre": " Rock ",
+        "dates": " 7 de Abril de 2024",
+        "hour": "A las 20:30h",
+        "enclosure": "Auditorio Forum CCIB"
+    }
+]

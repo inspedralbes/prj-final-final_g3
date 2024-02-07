@@ -58,3 +58,11 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
       - ./mysql/dades.sql:/docker-entrypoint-initdb.d/dades.sql
+
+  scrapy:
+    build: ./event_scraper
+
+    working_dir: /usr/src/app
+    volumes:
+      - ./event_scraper:/usr/src/app
+    command: scrapy crawl elcorteingles_concerts -O events.json
