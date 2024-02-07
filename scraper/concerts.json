@@ -1,0 +1,615 @@
+{
+    "Pop/Rock": [
+        {
+            "artist": "Nothing But Thieves",
+            "date": "Thu, Feb 29 • 8:30 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "MILES KANE - BARCELONA - 2024 Entradas",
+            "date": "Tue, Mar 05 • 8:30 PM",
+            "venue": "Sala Boveda",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Madison Beer",
+            "date": "Sat, Mar 16 • 9:00 PM",
+            "venue": "Sala Razzmatazz",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Depeche Mode",
+            "date": "Sat, Mar 16 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Al Bano",
+            "date": "Tue, Mar 19 • 9:00 PM",
+            "venue": "Teatre Coliseum",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Tom Odell",
+            "date": "Tue, Apr 09 • 8:30 PM",
+            "venue": "Sala Razzmatazz",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Pablo López",
+            "date": "Wed, Apr 10 • 9:00 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Pablo López",
+            "date": "Thu, Apr 11 • 9:30 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Yes",
+            "date": "Fri, May 03 • 7:00 PM",
+            "venue": "Sala Paral·lel 62",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Future Islands - BARCELONA",
+            "date": "Mon, May 13 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Rammstein",
+            "date": "Tue, Jun 11 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Bruce Springsteen & The E Street Band",
+            "date": "Thu, Jun 20 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Bruce Springsteen & The E Street Band",
+            "date": "Sat, Jun 22 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Queens of the Stone Age - Alma Festival Barcelona 2024",
+            "date": "Wed, Jun 26 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Hozier - Alma Festival 2024",
+            "date": "Sun, Jun 30 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Patti Smith",
+            "date": "Fri, Jul 05 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Rumours of Fleetwood Mac",
+            "date": "Mon, Jul 08 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Estopa",
+            "date": "Wed, Jul 10 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Luis Miguel",
+            "date": "Wed, Jul 17 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Luis Miguel",
+            "date": "Thu, Jul 18 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Simple Minds",
+            "date": "Fri, Jul 19 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Pop/Rock"
+        },
+        {
+            "artist": "Toto",
+            "date": "Fri, Jul 26 • 9:00 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Pop/Rock"
+        }
+    ],
+    "Rock and Pop": [
+        {
+            "artist": "Salvador Sobral",
+            "date": "Thu, Feb 08 • 8:00 PM",
+            "venue": "Gran Teatre del Liceu",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Antònia Font",
+            "date": "Thu, Feb 08 • 8:00 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "La Bien Querida",
+            "date": "Sat, Feb 10 • 8:30 PM",
+            "venue": "Sala Apolo",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Malú",
+            "date": "Tue, Feb 13 • 9:00 PM",
+            "venue": "Gran Teatre del Liceu",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "El Kanka",
+            "date": "Thu, Feb 15 • 9:00 PM",
+            "venue": "La Paloma Sala de Ball",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "SEXY ZEBRAS Entradas",
+            "date": "Sat, Feb 17 • 9:00 PM",
+            "venue": "Sala 2 Apolo",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "The Australian Pink Floyd Show",
+            "date": "Wed, Feb 21 • 8:30 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Miss Caffeina",
+            "date": "Fri, Feb 23 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "El Columpio Asesino",
+            "date": "Sat, Feb 24 • 8:00 PM",
+            "venue": "Sala Salamandra",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Sergio Dalma",
+            "date": "Sat, Mar 02 • 9:00 PM",
+            "venue": "Auditori Fòrum CCIB",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Sergio Dalma",
+            "date": "Sun, Mar 03 • 7:00 PM",
+            "venue": "Auditori Fòrum CCIB",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "MILES KANE - BARCELONA - 2024 Entradas",
+            "date": "Tue, Mar 05 • 8:30 PM",
+            "venue": "Sala Boveda",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "DIRTY HONEY- BARCELONA 2024 Entradas",
+            "date": "Mon, Mar 11 • 9:30 PM",
+            "venue": "Sala 2 Apolo",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Xoel López",
+            "date": "Fri, Mar 15 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Madison Beer",
+            "date": "Sat, Mar 16 • 9:00 PM",
+            "venue": "Sala Razzmatazz",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Depeche Mode",
+            "date": "Sat, Mar 16 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Al Bano",
+            "date": "Tue, Mar 19 • 9:00 PM",
+            "venue": "Teatre Coliseum",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Coque Malla - Barcelona",
+            "date": "Fri, Mar 22 • 9:00 PM",
+            "venue": "Palau de la Música Catalana - Concert Hall",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Rawayana ¿Quién trae las cornetas? - Tour 2024",
+            "date": "Sun, Apr 07 • 8:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "The Warning",
+            "date": "Mon, Apr 08 • 9:00 PM",
+            "venue": "Sala Razzmatazz",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Tom Odell",
+            "date": "Tue, Apr 09 • 8:30 PM",
+            "venue": "Sala Razzmatazz",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Pablo López",
+            "date": "Wed, Apr 10 • 9:00 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Pablo López",
+            "date": "Thu, Apr 11 • 9:30 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Andy Y Lucas - Nuestros Últimos Acordes",
+            "date": "Sat, Apr 27 • 9:00 PM",
+            "venue": "Sant Jordi Club",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Yes",
+            "date": "Fri, May 03 • 7:00 PM",
+            "venue": "Sala Paral·lel 62",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Mahmood",
+            "date": "Thu, May 09 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Manolo García",
+            "date": "Sat, May 18 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Rozalén",
+            "date": "Thu, May 23 • 9:00 PM",
+            "venue": "Gran Teatre del Liceu",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Jonas Brothers",
+            "date": "Sat, May 25 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Operación Triunfo",
+            "date": "Sat, Jun 01 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Operación Triunfo",
+            "date": "Sun, Jun 02 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Maná",
+            "date": "Sun, Jun 09 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Marc Anthony",
+            "date": "Thu, Jun 13 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Olivia Rodrigo",
+            "date": "Tue, Jun 18 • 7:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Bruce Springsteen & The E Street Band",
+            "date": "Thu, Jun 20 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Bruce Springsteen & The E Street Band",
+            "date": "Sat, Jun 22 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Queens of the Stone Age - Alma Festival Barcelona 2024",
+            "date": "Wed, Jun 26 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Hozier - Alma Festival 2024",
+            "date": "Sun, Jun 30 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Babasonicos",
+            "date": "Fri, Jul 05 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Patti Smith",
+            "date": "Fri, Jul 05 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Rumours of Fleetwood Mac",
+            "date": "Mon, Jul 08 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Estopa",
+            "date": "Wed, Jul 10 • 9:00 PM",
+            "venue": "Estadio Olimpic De Montjuic Lluis Companys",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Vanesa Martín",
+            "date": "Sat, Jul 13 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Luis Miguel",
+            "date": "Wed, Jul 17 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Mika",
+            "date": "Wed, Jul 17 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Luis Miguel",
+            "date": "Thu, Jul 18 • 9:30 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Simple Minds",
+            "date": "Fri, Jul 19 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "The Teskey Brothers",
+            "date": "Sat, Jul 20 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Toto",
+            "date": "Fri, Jul 26 • 9:00 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Raphael",
+            "date": "Sun, Sep 29 • 8:00 PM",
+            "venue": "Gran Teatre del Liceu",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "THE KIFFNESS",
+            "date": "Fri, Oct 04 • 9:00 PM",
+            "venue": "Sala Apolo",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Robe",
+            "date": "Sat, Oct 05 • 8:30 PM",
+            "venue": "Parc del Forum",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Jacob Collier // DJESSE UK & EUROPE TOUR",
+            "date": "Mon, Nov 04 • 9:00 PM",
+            "venue": "Sant Jordi Club",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Pignoise",
+            "date": "Sat, Nov 30 • 9:00 PM",
+            "venue": "Sant Jordi Club",
+            "genre": "Rock and Pop"
+        },
+        {
+            "artist": "Manolo García",
+            "date": "Sat, Nov 30 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Rock and Pop"
+        }
+    ],
+    "Alternative Music": [
+        {
+            "artist": "VIVA SUECIA (CRUÏLLA HIVERN) Entradas",
+            "date": "Fri, Feb 09 • 9:00 PM",
+            "venue": "Sant Jordi Club",
+            "genre": "Alternative Music"
+        },
+        {
+            "artist": "ART SCHOOL GIRLFRIEND EU TOUR-BARCELONA-2024 Entradas",
+            "date": "Sat, Feb 10 • 9:00 PM",
+            "venue": "Laut Barcelona",
+            "genre": "Alternative Music"
+        },
+        {
+            "artist": "Nothing But Thieves",
+            "date": "Thu, Feb 29 • 8:30 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Alternative Music"
+        },
+        {
+            "artist": "Russian Red",
+            "date": "Fri, Mar 08 • 9:00 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Alternative Music"
+        },
+        {
+            "artist": "Future Islands - BARCELONA",
+            "date": "Mon, May 13 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Alternative Music"
+        }
+    ],
+    "Classical": [
+        {
+            "artist": "Andrea Bocelli",
+            "date": "Tue, Apr 30 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Classical"
+        },
+        {
+            "artist": "Andrea Bocelli",
+            "date": "Wed, May 01 • 9:00 PM",
+            "venue": "Palau Sant Jordi",
+            "genre": "Classical"
+        },
+        {
+            "artist": "Ara Malikian",
+            "date": "Fri, May 17 • 9:00 PM",
+            "venue": "Auditori Hotel Melià Stiges",
+            "genre": "Classical"
+        },
+        {
+            "artist": "Fidelio V.C.",
+            "date": "Sun, May 26 • 5:00 PM",
+            "venue": "Gran Teatre del Liceu",
+            "genre": "Classical"
+        },
+        {
+            "artist": "Yuja Wang",
+            "date": "Mon, Jun 03 • 8:00 PM",
+            "venue": "Palau de la Musica Catalana - Complex",
+            "genre": "Classical"
+        },
+        {
+            "artist": "Diana krall",
+            "date": "Thu, Jul 18 • 10:00 PM",
+            "venue": "Jardins del Palau de Pedralbes",
+            "genre": "Classical"
+        },
+        {
+            "artist": "Toto",
+            "date": "Fri, Jul 26 • 9:00 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Classical"
+        }
+    ],
+    "R&B": [
+        {
+            "artist": "Jacob Collier // DJESSE UK & EUROPE TOUR",
+            "date": "Mon, Nov 04 • 9:00 PM",
+            "venue": "Sant Jordi Club",
+            "genre": "R&B"
+        }
+    ],
+    "Festival Tickets": [
+        {
+            "artist": "Primavera Sound Barcelona 2024 - Friday",
+            "date": "Fri, May 31 • 7:00 PM",
+            "venue": "Parc del Forum",
+            "genre": "Festival Tickets"
+        },
+        {
+            "artist": "Vetusta Morla - ALMA Festival Barcelona 2024",
+            "date": "Sat, Jul 06 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Festival Tickets"
+        },
+        {
+            "artist": "Jamie Cullum",
+            "date": "Sun, Jul 14 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Festival Tickets"
+        },
+        {
+            "artist": "Stay Homas - Guitar BCN Festival",
+            "date": "Sat, Jan 25 • 11:00 AM",
+            "venue": "Poble Espanyol",
+            "genre": "Festival Tickets"
+        }
+    ],
+    "Rap and Hip-Hop Music": [
+        {
+            "artist": "Nicki Nicole",
+            "date": "Fri, Mar 22 • 8:00 PM",
+            "venue": "Sant Jordi Club",
+            "genre": "Rap and Hip-Hop Music"
+        },
+        {
+            "artist": "Die Antwoord",
+            "date": "Fri, Apr 19 • 9:00 PM",
+            "venue": "Sala Razzmatazz 1",
+            "genre": "Rap and Hip-Hop Music"
+        },
+        {
+            "artist": "Gims",
+            "date": "Wed, Jul 03 • 9:30 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Rap and Hip-Hop Music"
+        }
+    ],
+    "Vocal Performance Music": [
+        {
+            "artist": "Tom Odell",
+            "date": "Tue, Apr 09 • 8:30 PM",
+            "venue": "Sala Razzmatazz",
+            "genre": "Vocal Performance Music"
+        }
+    ],
+    "Dance and Electronic Music": [
+        {
+            "artist": "Keinemusik - OFFSónar",
+            "date": "Sat, Jun 15 • 5:00 PM",
+            "venue": "Poble Espanyol",
+            "genre": "Dance and Electronic Music"
+        }
+    ],
+    "Country and Folk Music": []
+}
