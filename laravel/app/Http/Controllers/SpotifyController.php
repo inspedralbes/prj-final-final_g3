@@ -20,9 +20,9 @@ class SpotifyController extends Controller
 
         $queryParameters = [
             'response_type' => 'code',
-            'client_id' => $client_id, // Configura tu client_id en el archivo de configuración
+            'client_id' => $client_id,
             'scope' => $scope,
-            'redirect_uri' =>$redirectUri, // Configura tu redirect_uri en el archivo de configuración
+            'redirect_uri' =>$redirectUri,
             'state' => $state,
         ];
 

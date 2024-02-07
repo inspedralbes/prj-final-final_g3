@@ -13,8 +13,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 
 
-class UserController extends Controller
-{
+class UserController extends Controller{
     public function login(Request $request){
         $credentials = Validator::make($request->all(), [
             'email' => 'required|string',
@@ -119,14 +118,37 @@ class UserController extends Controller
                     'surnames' => $socialiteUser->user["family_name"],
                     'google_id' => $socialiteUser->user["id"],
                     'avatar' => $socialiteUser->getAvatar(),
+                    'loginWith' => 'google'
                 ]
             );
 
         return response()->json([
-            'user' => $user->makeHidden(['created_at', 'updated_at']),
-            'access_token' => $user->createToken('google-token')->plainTextToken,
+            'user' => $user->makeHidden(['created_at', 'updated_at','loginWith']),
+            'access_token' => $user->createToken('Spottunes')->plainTextToken,
             'token_type' => 'Bearer',
         ]);
     }
+    
+    public function completeInfo(Request $request){
+        $token = $request->header('Authorization');
+        $user = User::where('id', $request->user()->id)->first();
 
+        $validator = Validator::make($request->all(), [
+            'birthdate' => 'required|date',
+            'nickname' => 'required|string',
+        ], [
+            'required' => 'El :attribute es obligatorio.',
+            'date' => 'El :attribute debe ser una fecha válida.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()], 400);
+        }
+
+        $user->birthdate = $request->birthdate;
+        $user->nickname = $request->nickname;
+        
+        return response()->json($user->save());   
+    }
+    
 }

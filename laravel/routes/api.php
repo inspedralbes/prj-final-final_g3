@@ -26,7 +26,7 @@ Route::get('/spotifyCallback', [SpotifyController::class, 'callback']);
 Route::get('auth', [UserController::class, 'redirectToAuth']);
 Route::get('auth/callback', [UserController::class, 'handleAuthCallback']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::put('/completeInfo', [UserController::class, 'completeInfo']);
 });
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
