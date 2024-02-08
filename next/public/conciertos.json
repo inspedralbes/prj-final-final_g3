@@ -1,0 +1,20 @@
+{
+    "conciertos": [
+      {
+        "imagen": "https://image.europafm.com/clipping/cmsimages02/2021/11/10/E193D296-BEF5-44C8-9F35-987DAA518D57/98.jpg?crop=3605,2028,x0,y99&width=1900&height=1069&optimize=low&format=webply",
+        "titulo": "Concierto de Travis Scott",
+        "fecha": "2024-03-15"
+      },
+      {
+        "imagen": "url_de_la_imagen2.jpg",
+        "titulo": "Concierto 2",
+        "fecha": "2024-04-20"
+      },
+      {
+        "imagen": "url_de_la_imagen3.jpg",
+        "titulo": "Concierto 3",
+        "fecha": "2024-05-11"
+      }
+    ]
+  }
+  
