@@ -15,7 +15,7 @@ const CardEvent = ({ image, name, location, date, people }) => {
     };
 
     return (
-        <article className='relative h-56 rounded-xl overflow-hidden'>
+        <button className='relative w-full h-56 rounded-xl overflow-hidden'>
             <img className='w-full h-full brightness-[.7] object-cover' src={image} alt="" />
             <div className='absolute bottom-2 left-2'>
                 <h2 className='text-white text-xl font-semibold'>{name}</h2>
@@ -29,7 +29,7 @@ const CardEvent = ({ image, name, location, date, people }) => {
             >
                 {liked ? <HeartFill size="20" /> : <Heart size="20" />}
             </button>
-        </article>
+        </button>
     );
 };
 
