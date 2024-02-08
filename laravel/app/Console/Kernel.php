@@ -7,6 +7,10 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        \App\Console\Commands\fetchTicketmaster::class,
+        // Agrega aquí tus comandos personalizados
+    ];
     /**
      * Define the application's command schedule.
      */
