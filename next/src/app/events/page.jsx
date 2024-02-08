@@ -7,7 +7,7 @@ const page = () => {
     <>
 
       <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative'>
-        <h1 className='text-center uppercase text-2xl font-bold'>Los proximos eventos mas top</h1>
+        <h1 className='text-center text-white uppercase text-2xl font-bold'>Los proximos eventos mas top</h1>
 
         <section className='flex flex-col gap-3'>
           <CardEvent
