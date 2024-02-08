@@ -8,25 +8,25 @@ import User from './Icons/User'
 
 const Menu = () => {
   return (
-    <section className='bg-primary w-screen sticky bottom-0 py-1 text-black flex justify-around items-center'>
+    <section className='bg-gradient-to-r from-orange-500 to-yellow-400 w-screen sticky bottom-0 py-1 text-black flex justify-around items-center'>
         <Link href="/" className='flex flex-col justify-center items-center '>
-            <Home size="26"/>
-            <p className='font-bold text-sm'>Inicio</p>
+            <Home size="32"/>
+            <p className='font-bold text-xs'>Inicio</p>
         </Link>
 
         <Link href="/events" className='flex flex-col justify-center items-center '>
-            <Speaker size="26"/>
-            <p className='font-bold text-sm'>Eventos</p>
+            <Speaker size="32"/>
+            <p className='font-bold text-xs'>Eventos</p>
         </Link>
 
         <Link href="/chat" className='flex flex-col justify-center items-center '>
-            <Chat size="26"/>
-            <p className='font-bold text-sm'>Chat</p>
+            <Chat size="32"/>
+            <p className='font-bold text-xs'>Chat</p>
         </Link>
 
         <Link href="/perfil" className='flex flex-col justify-center items-center '>
-            <User size="26"/>
-            <p className='font-bold text-sm'>Perfil</p>
+            <User size="32"/>
+            <p className='font-bold text-xs'>Perfil</p>
         </Link>
     </section>
   )
