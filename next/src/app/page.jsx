@@ -9,6 +9,7 @@ import LastCTA from './components/LastCTA'
 export default function Page() {
   return (
     <>
+    
       <Background />
       <Header />
       <main className='w-[90%] mx-auto'>
