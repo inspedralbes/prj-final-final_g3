@@ -13,7 +13,7 @@ driver = webdriver.Firefox(options=firefox_options)
 
 # Open the webpage
 driver.get(
-    "https://www.viagogo.com/Concert-Tickets?from=1707297433284&to=253402300799999&lat=NDEuMzg3Mzk3NA%3D%3D&lon=Mi4xNjg1Njg%3D"
+    "https://www.viagogo.com/Concert-Tickets?from=1707377483582&to=253402300799999&lat=NDEuMzg3&lon=Mi4xNjk%3D"
 )
 
 # Check if the cookie consent modal is present

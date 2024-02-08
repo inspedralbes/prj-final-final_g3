@@ -13,19 +13,19 @@ driver = webdriver.Firefox(options=firefox_options)
 
 # Open the webpage
 driver.get(
-    "https://www.viagogo.com/Concert-Tickets?from=1707297433284&to=253402300799999&lat=NDEuMzg3Mzk3NA%3D%3D&lon=Mi4xNjg1Njg%3D"
+    "https://www.viagogo.com/Concert-Tickets?from=1707377483582&to=253402300799999&lat=NDEuMzg3&lon=Mi4xNjk%3D"
 )
 
 # Check if the cookie consent modal is present
 try:
     modal = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "sc-jcvYYV.eIxKeM"))
+        EC.presence_of_element_located((By.CLASS_NAME, "sc-bDafuw.kpEFYe"))
     )
     print("Cookie consent modal found.")
 
     # Find the "Allow All" button inside the modal and click it
     allow_all_button = modal.find_element(
-        By.CSS_SELECTOR, "button.sc-fujyAs.fXyoiD.sc-cAUwBd.gncSNf"
+        By.CSS_SELECTOR, "button.sc-cxNHIi.uRXuY.sc-kBaCIR.egiQHt"
     )
     allow_all_button.click()
     print("Clicked 'Allow All' button.")
@@ -35,7 +35,7 @@ except:
 # Check if the page has loaded correctly
 try:
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, ".sc-kLSgde.jBovPd"))
+        EC.presence_of_element_located((By.CLASS_NAME, "sc-kLSgde"))
     )
     print("Page loaded successfully.")
 except:
