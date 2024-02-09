@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Http\Controllers\EventController;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call([EventController::class, 'fetchFromTicketMaster'])->dailyAt('8:46');
+        $schedule->call(function () {
+            $eventController = new EventController();
+            $eventController->fetchFromTicketMaster();
+            Log::info('Events fetched from Ticketmaster');
+        })->twiceDailyAt(0,12);
     }
 
     /**
