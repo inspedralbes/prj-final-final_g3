@@ -36,6 +36,18 @@ class EventController extends Controller
             if (Event::where('event_id', $event['id'])->exists()) {
                 continue; 
             }
+
+            if (Event::where('artist', isset($event['_embedded']['attractions'][0]['name']) ? $event['_embedded']['attractions'][0]['name'] : null)
+                ->where('date', $event['dates']['start']['localDate'])
+                ->where('venue', $event['_embedded']['venues'][0]['name'])
+                ->where('city', $event['_embedded']['venues'][0]['city']['name'])
+                ->exists()) {
+                continue;
+            }
+
+      
+
+            if(Event::where('artist'))
             $newEvent = new Event();
             $newEvent->event_id = $event['id'];
             $newEvent->event = $event['name'];

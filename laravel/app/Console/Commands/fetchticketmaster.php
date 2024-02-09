@@ -31,6 +31,6 @@ class fetchticketmaster extends Command
         $eventController->fetchFromTicketMaster();
         
         Log::info('Fetch from TicketMaster completed.'); // Add log statement
-        
+        echo "Fetch from TicketMaster completed." . PHP_EOL;
     }
 }
