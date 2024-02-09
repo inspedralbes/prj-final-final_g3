@@ -34,4 +34,5 @@ async function storeEvents() {
     console.log(events);
 }
 
-storeEvents();
+// storeEvents();
+console.log('Hello World!');
