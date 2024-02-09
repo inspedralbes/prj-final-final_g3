@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 class EventController extends Controller
 {
     public function fetchFromTicketMaster(){
+        echo "Fetching events from Ticketmaster...";
         $client = new Client();
         $currentPage = 0;
         $allEvents = [];
@@ -25,11 +26,16 @@ class EventController extends Controller
                 $allEvents = array_merge($allEvents, $events);
 
                 $currentPage++;
+
             } else {
                 return response()->json(['error' => 'Could not retrieve data from the Ticketmaster API'], $statusCode);
             }
         } while ($currentPage < $data['page']['totalPages']);
 
+        $totalEventsRetrieved = count($allEvents);
+        $totalEventsStored = count($allEvents);
+        $message = "Se han recuperado $totalEventsRetrieved eventos de Ticketmaster y se han almacenado $totalEventsStored en la base de datos.";
+        echo $message;
         ///Store into database
 
         foreach ($allEvents as $event) {
@@ -53,7 +59,6 @@ class EventController extends Controller
             $newEvent->save();
         }
         
-    
         return response()->json(['message' => 'Events stored in the database successfully'], 200);
     }
     
