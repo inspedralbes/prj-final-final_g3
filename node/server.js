@@ -31,7 +31,7 @@ async function getEvents() {
 
 async function storeEvents() {
     const events = await getEvents();
-    // console.log(events);
+    console.log(events);
 }
 
-// storeEvents();
+storeEvents();
