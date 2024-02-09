@@ -2,16 +2,18 @@
 services:
 
   node:
+    container_name: node
     image: node:20.8.1-bullseye-slim
     volumes:
       - ./node:/usr/src/app
-    working_dir: /usr/src/app 
+    working_dir: /usr/src/app
     ports:
       - 8080:8080
-    command: /bin/sh -c "npm install && npm run dev"
+    command: sh -c "npm install && npm run dev"
 
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
@@ -20,6 +22,7 @@ services:
       - db
 
   laravel:
+    container_name: laravel
     build: ./Laravel
     volumes:
       - ./Laravel:/var/www/html
@@ -33,6 +36,7 @@ services:
       - db
   
   next:
+    container_name: next
     image: node:20.8.1-bullseye-slim
     working_dir: /usr/src/app
     volumes:
@@ -46,6 +50,7 @@ services:
       - node
 
   db:
+    container_name: db
     image: mysql:8.2.0
     restart: always
     environment:
