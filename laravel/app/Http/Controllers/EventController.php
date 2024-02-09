@@ -9,7 +9,6 @@ use GuzzleHttp\Client;
 class EventController extends Controller
 {
     public function fetchFromTicketMaster(){
-        echo "Fetching events from Ticketmaster...";
         $client = new Client();
         $currentPage = 0;
         $allEvents = [];
@@ -32,16 +31,23 @@ class EventController extends Controller
             }
         } while ($currentPage < $data['page']['totalPages']);
 
-        $totalEventsRetrieved = count($allEvents);
-        $totalEventsStored = count($allEvents);
-        $message = "Se han recuperado $totalEventsRetrieved eventos de Ticketmaster y se han almacenado $totalEventsStored en la base de datos.";
-        echo $message;
         ///Store into database
-
         foreach ($allEvents as $event) {
             if (Event::where('event_id', $event['id'])->exists()) {
                 continue; 
             }
+
+            if (Event::where('artist', isset($event['_embedded']['attractions'][0]['name']) ? $event['_embedded']['attractions'][0]['name'] : null)
+                ->where('date', $event['dates']['start']['localDate'])
+                ->where('venue', $event['_embedded']['venues'][0]['name'])
+                ->where('city', $event['_embedded']['venues'][0]['city']['name'])
+                ->exists()) {
+                continue;
+            }
+
+      
+
+            if(Event::where('artist'))
             $newEvent = new Event();
             $newEvent->event_id = $event['id'];
             $newEvent->event = $event['name'];
