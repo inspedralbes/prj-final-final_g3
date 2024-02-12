@@ -67,20 +67,34 @@ async function storeEvents() {
             const promoter = event.promoter ? event.promoter.name : null;
             const images = event.images ? JSON.stringify(event.images.map(image => image.url)) : null;
 
-            const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-            const values = [id, name, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images];
+            const selectQuery = `SELECT * FROM events WHERE event_id = ?`;
+            const selectResult = await queryDatabase(selectQuery, [id]);
 
+            if (selectResult.length > 0) {
+                console.log('Event already exists:', name);
+                return;
+            } else {
+                const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+                const values = [id, name, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images];
+                const result = await queryDatabase(query, values);
+                console.log('Event inserted:', name);
+            }
+        });
 
+    });
+}
 
-
-            // db.query(query, values, (err, res) => {
-            //     if (err) throw err;
-            //     console.log('Event inserted:', name);
-            // });
-
-
+async function queryDatabase(query, values) {
+    return new Promise((resolve, reject) => {
+        db.query(query, values, (err, res) => {
+            if (err) reject(err);
+            resolve(res);
         });
     });
 }
 
-storeEvents();
+const server = {
+    storeEvents
+}
+
+export default server;
