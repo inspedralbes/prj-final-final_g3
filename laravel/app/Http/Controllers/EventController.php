@@ -33,11 +33,11 @@ class EventController extends Controller
 
         ///Store into database
         foreach ($allEvents as $event) {
-            if (Event::where('event_id', $event['id'])->exists()) {
+            if (event::where('event_id', $event['id'])->exists()) {
                 continue; 
             }
 
-            if (Event::where('artist', isset($event['_embedded']['attractions'][0]['name']) ? $event['_embedded']['attractions'][0]['name'] : null)
+            if (event::where('artist', isset($event['_embedded']['attractions'][0]['name']) ? $event['_embedded']['attractions'][0]['name'] : null)
                 ->where('date', $event['dates']['start']['localDate'])
                 ->where('venue', $event['_embedded']['venues'][0]['name'])
                 ->where('city', $event['_embedded']['venues'][0]['city']['name'])
@@ -45,10 +45,7 @@ class EventController extends Controller
                 continue;
             }
 
-      
-
-            if(Event::where('artist'))
-            $newEvent = new Event();
+            $newEvent = new event();
             $newEvent->event_id = $event['id'];
             $newEvent->event = $event['name'];
             $newEvent->artist = isset($event['_embedded']['attractions'][0]['name']) ? $event['_embedded']['attractions'][0]['name'] : null;
@@ -73,7 +70,7 @@ class EventController extends Controller
      */
     public function index()
 {
-    $events = Event::all();
+    $events = event::all();
 
     if ($events->isEmpty()) {
         return response()->json(['message' => 'No events found'], 404);
