@@ -115,7 +115,6 @@ class SpotifyController extends Controller
                 // Puedes realizar acciones adicionales según la respuesta
 
                 // Devolver una respuesta de ejemplo
-                dd($responseData);
                 return response()->json(['data' => $responseData]);
             } catch (\Exception $e) {
                 // Manejar cualquier excepción que pueda ocurrir durante la solicitud
