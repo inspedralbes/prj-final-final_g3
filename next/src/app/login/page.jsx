@@ -5,32 +5,40 @@ import Link from 'next/link';
 import axios from 'axios';
 
 import LoginMethods from '../components/LoginMethods'
+import Loader from '../components/Loader'
 
 const page = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   const Login = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
 
     try {
       const response = await axios.post('http://localhost:8000/api/login', { email, password });
 
       console.log("Logeado", response.data);
+
     } catch (error) {
       console.error(error);
     }
+    setIsLoading(false);
   }
 
   return (
     <main className='w-screen h-screen bg-background'>
       <section className='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
         <h1 className='text-4xl font-semibold'>Log in</h1>
-        
+
         <form className='flex flex-col gap-6' onSubmit={Login}>
           <input className='bg-transparent border-b border-gray-400 outline-none' type="email" placeholder="Correo" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <button className='py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600' type="submit">Log in</button>
+
+          <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600' type="submit">
+            {!isLoading ? "Log In" : <Loader />}
+          </button>
         </form>
 
         <LoginMethods forWhat="haz login" />
