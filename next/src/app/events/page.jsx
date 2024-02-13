@@ -36,7 +36,13 @@ const Page = () => {
           eventosAgrupados[key] = evento; // Si no existe un evento con esa clave o si el nombre del evento actual es más corto, actualizarlo
         }
       });
-      setEventosFiltrados(Object.values(eventosAgrupados)); // Convertir el objeto en un array
+
+      const eventosFiltrados = Object.values(eventosAgrupados); // Convertir el objeto en un array
+
+      // Ordenar los eventos por fecha
+      eventosFiltrados.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      setEventosFiltrados(eventosFiltrados);
     };
 
     agruparEventos();
