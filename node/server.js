@@ -85,12 +85,21 @@ async function storeEvents() {
 }
 
 async function deletePastEvents() {
-    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const deleteQuery = `DELETE FROM events WHERE CONCAT(date, ' ', time) < ?`;
-    const deleteValues = [now];
-    await queryDatabase(deleteQuery, deleteValues);
-    console.log('Past events deleted');
+    try {
+        const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        console.log('Current time:', now);
+
+        const deleteQuery = `DELETE FROM events WHERE CONCAT(date, ' ', time) < ?`;
+        const deleteValues = [now];
+        console.log('Deleting past events...');
+
+        const result = await queryDatabase(deleteQuery, deleteValues);
+        console.log(`${result.affectedRows} past events deleted`);
+    } catch (error) {
+        console.error('Error deleting past events:', error);
+    }
 }
+
 
 async function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
