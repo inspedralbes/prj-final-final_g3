@@ -12,3 +12,12 @@ cron.schedule('0 0 0,12 * * *', () => {
     scheduled: true,
     timezone: "Europe/Madrid",
 });
+
+// Ejecuta el método storeEvents() cada hora
+cron.schedule('0 * * * *', () => {
+    console.log('Running cron job');
+    server.deletePastEvents();
+}, {
+    scheduled: true,
+    timezone: "Europe/Madrid",
+});

@@ -84,6 +84,14 @@ async function storeEvents() {
     });
 }
 
+async function deletePastEvents() {
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const deleteQuery = `DELETE FROM events WHERE CONCAT(date, ' ', time) < ?`;
+    const deleteValues = [now];
+    await queryDatabase(deleteQuery, deleteValues);
+    console.log('Past events deleted');
+}
+
 async function queryDatabase(query, values) {
     return new Promise((resolve, reject) => {
         db.query(query, values, (err, res) => {
@@ -94,7 +102,8 @@ async function queryDatabase(query, values) {
 }
 
 const server = {
-    storeEvents
+    storeEvents,
+    deletePastEvents
 }
 
 export default server;
