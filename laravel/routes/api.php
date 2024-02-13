@@ -21,8 +21,10 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
 
-Route::get('/loginSpotify', [SpotifyController::class, 'login']);
-Route::get('/spotifyCallback', [SpotifyController::class, 'callback']);
+Route::group(['prefix'=>'spotify'], function() {
+    Route::get('/login', [SpotifyController::class, 'login']);
+    Route::get('/callback', [SpotifyController::class, 'callback']);
+});
 
 Route::get('auth', [UserController::class, 'redirectToAuth']);
 Route::get('auth/callback', [UserController::class, 'handleAuthCallback']);
