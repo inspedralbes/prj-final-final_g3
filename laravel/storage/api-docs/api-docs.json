@@ -1,0 +1,423 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentaió de la nostra API",
+        "description": "",
+        "contact": {
+            "name": "Equip de Spottunes",
+            "email": "a20pedgarguz@inspedralbes.cat"
+        },
+        "license": {
+            "name": "Licencia API",
+            "url": "http://www.example.com/licenses/api"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/loginSpotify": {
+            "get": {
+                "tags": [
+                    "Autenticació Spotify"
+                ],
+                "summary": "Iniciar sesión de usuario",
+                "description": "Inicia sesión de un usuario con correo electrónico y contraseña.",
+                "operationId": "login",
+                "responses": {
+                    "302": {
+                        "description": "Redirección temporal"
+                    }
+                }
+            }
+        },
+        "/api/spotifyCallback": {
+            "get": {
+                "tags": [
+                    "Autenticació Spotify"
+                ],
+                "summary": "Manejar el callback de autorización de Spotify",
+                "description": "Recibe el código de autorización de Spotify y realiza la solicitud para obtener el token de acceso.",
+                "operationId": "callback",
+                "requestBody": {
+                    "description": "Código de autorización de Spotify",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "code"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "your_authorization_code"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Respuesta exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Datos de respuesta",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Mensaje de error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticació"
+                ],
+                "summary": "Iniciar sesión de usuario",
+                "description": "Inicia sesión de un usuario con correo electrónico y contraseña.",
+                "operationId": "0fc9610184083ac6dddab2c63139225a",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Correo electrónico del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Contraseña del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "Has iniciado sesión"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en la solicitud",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Autenticació"
+                ],
+                "summary": "Registro de usuario",
+                "description": "Registra un nuevo usuario con los datos proporcionados.",
+                "operationId": "2f25885f3b6f61ca11724ec302d2e439",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "surnames",
+                        "in": "query",
+                        "description": "Apellidos del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "nickname",
+                        "in": "query",
+                        "description": "Alias o nombre de usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Correo electrónico del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    {
+                        "name": "birthdate",
+                        "in": "query",
+                        "description": "Fecha de nacimiento del usuario (formato: YYYY-MM-DD)",
+                        "required": true,
+                        "schema": {
+                            "type": "date",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Contraseña del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "Usuario creado correctamente"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error en la solicitud",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Autenticació"
+                ],
+                "summary": "Cerrar sesión",
+                "description": "Cierra la sesión del usuario actual y revoca todos los tokens de acceso asociados.",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "Has cerrado sesión"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth": {
+            "get": {
+                "tags": [
+                    "Autenticació Google"
+                ],
+                "summary": "Redirigir a la autenticación",
+                "description": "Redirige al usuario a la página de autenticación externa, como Google, para iniciar sesión.",
+                "operationId": "redirectToAuth",
+                "responses": {
+                    "302": {
+                        "description": "Redirección temporal"
+                    }
+                }
+            }
+        },
+        "/api/completeInfo": {
+            "put": {
+                "tags": [
+                    "Autenticació"
+                ],
+                "summary": "Completar información de usuario",
+                "description": "Completa la información de un usuario, como su fecha de nacimiento y apodo.",
+                "operationId": "completeInfo",
+                "requestBody": {
+                    "description": "Datos de usuario para completar",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "birthdate",
+                                    "nickname"
+                                ],
+                                "properties": {
+                                    "birthdate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-01"
+                                    },
+                                    "nickname": {
+                                        "type": "string",
+                                        "example": "usuario123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Información de usuario completada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                },
+                                "example": true
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

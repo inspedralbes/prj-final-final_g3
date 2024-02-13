@@ -10,8 +10,22 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
 
+
 class SpotifyController extends Controller
-{
+{   
+/**
+ * @OA\Get(
+ *      path="/api/loginSpotify",
+ *      operationId="login",
+ *      tags={"Autenticació Spotify"},
+ *      summary="Iniciar sesión de usuario",
+ *      description="Inicia sesión de un usuario con correo electrónico y contraseña.",
+ *      @OA\Response(
+ *          response=302,
+ *          description="Redirección temporal"
+ *      )
+ * )
+ */
     public function login()  {
         $client_id = '5467f1a23dd643079df61dee264117f3';
         $redirectUri = 'http://localhost:8000/api/callback';
@@ -29,6 +43,43 @@ class SpotifyController extends Controller
         return redirect('https://accounts.spotify.com/authorize?' . http_build_query($queryParameters));
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/spotifyCallback",
+     *      operationId="callback",
+     *      tags={"Autenticació Spotify"},
+     *      summary="Manejar el callback de autorización de Spotify",
+     *      description="Recibe el código de autorización de Spotify y realiza la solicitud para obtener el token de acceso.",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Código de autorización de Spotify",
+     *          @OA\MediaType(
+     *              mediaType="application/x-www-form-urlencoded",
+     *              @OA\Schema(
+     *                  required={"code"},
+     *                  type="object",
+     *                  @OA\Property(property="code", type="string", example="your_authorization_code"),
+     *              ),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Respuesta exitosa",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="data", type="object", description="Datos de respuesta"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error del servidor",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="error", type="string", description="Mensaje de error"),
+     *          ),
+     *      ),
+     * )
+     */
     public function callback(Request $request)
     {
         $code = $request->query('code', null);
