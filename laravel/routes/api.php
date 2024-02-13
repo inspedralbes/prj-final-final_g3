@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SpotifyController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -30,3 +31,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
 });
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
+
+Route::group(['prefix' => 'events'], function () {
+    // Route::get('/fetch', [EventController::class, 'fetchFromTicketMaster']);
+    Route::get('/', [EventController::class, 'index']);
+});

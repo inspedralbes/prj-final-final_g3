@@ -2,16 +2,20 @@
 services:
 
   node:
+    container_name: node
     image: node:20.8.1-bullseye-slim
     volumes:
       - ./node:/usr/src/app
-    working_dir: /usr/src/app 
+    working_dir: /usr/src/app
     ports:
       - 8080:8080
-    command: /bin/sh -c "npm install && npm run serve"
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - db
 
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
@@ -20,6 +24,7 @@ services:
       - db
 
   laravel:
+    container_name: laravel
     build: ./Laravel
     volumes:
       - ./Laravel:/var/www/html
@@ -27,12 +32,13 @@ services:
       - 8000:80
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
-    command: /bin/sh -c "composer install --no-interaction && chown -R www-data:www-data * && php artisan migrate && apache2-foreground "
+    command: /bin/sh -c "composer install --no-interaction && chown -R www-data:www-data * && php artisan migrate --force && apache2-foreground "
     restart: always
     depends_on:
       - db
   
   next:
+    container_name: next
     image: node:20.8.1-bullseye-slim
     working_dir: /usr/src/app
     volumes:
@@ -46,11 +52,12 @@ services:
       - node
 
   db:
+    container_name: db
     image: mysql:8.2.0
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: persones
+      MYSQL_DATABASE: spottunes
       MYSQL_USER: user
       MYSQL_PASSWORD: user
     ports:

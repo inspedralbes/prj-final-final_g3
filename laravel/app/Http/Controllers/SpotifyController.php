@@ -27,8 +27,8 @@ class SpotifyController extends Controller
  * )
  */
     public function login()  {
-        $client_id = '5467f1a23dd643079df61dee264117f3';
-        $redirectUri = 'http://localhost:8000/api/callback';
+        $client_id = env('SPOTIFY_CLIENT_ID');
+        $redirectUri = env('SPOTIFY_REDIRECT_URI');
         $state = $this->generateRandomString(16);
         $scope = 'user-read-email user-library-read user-top-read';
 
