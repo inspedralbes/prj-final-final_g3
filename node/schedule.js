@@ -6,7 +6,6 @@ server.storeEvents();
 
 // Ejecuta el método storeEvents() a las 00:00 y 12:00 todos los días
 cron.schedule('0 0 0,12 * * *', () => {
-    console.log('Running cron job');
     server.storeEvents();
 }, {
     scheduled: true,
@@ -15,7 +14,6 @@ cron.schedule('0 0 0,12 * * *', () => {
 
 // Ejecuta el método storeEvents() cada hora
 cron.schedule('0 * * * *', () => {
-    console.log('Running cron job');
     server.deletePastEvents();
 }, {
     scheduled: true,
