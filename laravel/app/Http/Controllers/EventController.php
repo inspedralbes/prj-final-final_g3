@@ -15,7 +15,7 @@ class EventController extends Controller
      */
     public function index()
 {
-    $events = event::all();
+    $events = event::orderBy('date')->orderBy('time')->get();
 
     if ($events->isEmpty()) {
         return response()->json(['message' => 'No events found'], 404);
