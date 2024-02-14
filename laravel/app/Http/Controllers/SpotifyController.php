@@ -114,8 +114,10 @@ class SpotifyController extends Controller
 
                 // Puedes realizar acciones adicionales según la respuesta
 
-                // Devolver una respuesta de ejemplo
-                return response()->json(['data' => $responseData]);
+                // Aquí construimos la URL con los datos del response
+                $redirectUrl = 'http://localhost:3005/index2' . http_build_query(['data' => $responseData]);
+                // Redireccionamos al frontend con los datos en la URL
+                return redirect($redirectUrl);
             } catch (\Exception $e) {
                 // Manejar cualquier excepción que pueda ocurrir durante la solicitud
                 return response()->json(['error' => $e->getMessage()], 500);
