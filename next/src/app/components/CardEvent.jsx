@@ -12,9 +12,6 @@ import HeartFill from './Icons/HeartFill';
 
 import Link from 'next/link';
 
-const CardEvent = ({ image, name, location, date, people }) => {
-
-
 const CardEvent = ({ image, name, location, date, people }) => {    
     const [liked, setLiked] = useState(false);
 

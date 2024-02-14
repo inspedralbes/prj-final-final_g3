@@ -10,6 +10,7 @@ import User from './Icons/User'
 const Menu = () => {
     const Loged = useContext(UserLoged);
     const isLogged = Loged.isLoged;
+    
     return (
         <section className=' w-screen sticky bottom-0 py-1 text-white flex justify-around items-center backdrop-blur-lg'>
             <Link href="/" className='flex flex-col justify-center items-center '>

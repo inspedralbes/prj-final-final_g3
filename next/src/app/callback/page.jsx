@@ -38,6 +38,7 @@ const page = () => {
                         headers: authOptions.headers,
                     })
                         .then((response) => {
+                            //isLogged.setUser(true);
                             console.log('Authentication successful:', response.data);
                             router.push('/');
                         });
