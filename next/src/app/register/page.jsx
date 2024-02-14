@@ -3,6 +3,8 @@ import Link from 'next/link';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import LoginMethods from '../components/LoginMethods'
+import Loader from '../components/Loader'
+
 
 const page = () => {
     const [email, setEmail] = useState('');
@@ -12,9 +14,11 @@ const page = () => {
     const [password, setPassword] = useState('');
     const [birthdate, setBirthdate] = useState('');
     const [passwordconfirmation, setConfirmPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const register = async (event) => {
-        event.preventDefault(); // Prevent form from refreshing the page
+        event.preventDefault();     
+        setIsLoading(true);
       
         try {
           const response = await axios.post('http://localhost:8000/api/register', {
@@ -32,6 +36,8 @@ const page = () => {
         } catch (error) {
           console.error('Error fetching data:', error);
         }
+        setIsLoading(false);
+
       };
 
     return (
@@ -46,7 +52,7 @@ const page = () => {
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="birthdate" placeholder="Birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} />
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Repite la contraseña" value={passwordconfirmation} onChange={e => setConfirmPassword(e.target.value)} />
-                    <button className='py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>Registrarme</button>
+                    <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>{!isLoading ? "Registrarme" : <Loader />}</button>
                 </form>
 
                 <LoginMethods forWhat="register" />
