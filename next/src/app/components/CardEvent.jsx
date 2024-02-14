@@ -10,7 +10,7 @@ import Users from './Icons/Users';
 import Heart from './Icons/Heart';
 import HeartFill from './Icons/HeartFill';
 
-const CardEvent = ({ image, name, location, date, people }) => {    
+const CardEvent = ({ image, name, location, date, people }) => {
     const [liked, setLiked] = useState(false);
 
     const toggleLike = () => {
