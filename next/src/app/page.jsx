@@ -9,14 +9,14 @@ import LastCTA from './components/LastCTA'
 export default function Page() {
   return (
     <>
-    
+
       <Background />
       <Header />
       <main className='w-[90%] mx-auto'>
         <Hero />
-        <Benefits/>
-        <Testimonios/>
-        <LastCTA/>
+        <Benefits />
+        <Testimonios />
+        <LastCTA />
       </main>
     </>
   )
