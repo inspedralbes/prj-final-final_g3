@@ -1,23 +1,24 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import Link from 'next/link';
+import { UserLoged } from '../context/UserLoged'
+
 import MapPin from './Icons/MapPin';
 import Calendar from './Icons/Calendar';
 import Users from './Icons/Users';
 import Heart from './Icons/Heart';
 import HeartFill from './Icons/HeartFill';
-import Link from 'next/link';
 
-const CardEvent = ({ image, name, location, date, people }) => {
-    
-
+const CardEvent = ({ image, name, location, date, people }) => {    
     const [liked, setLiked] = useState(false);
-
-    const isLogged = false;
 
     const toggleLike = () => {
         setLiked(!liked);
     };
+
+    const Loged = useContext(UserLoged);
+    const isLogged = Loged.isLoged;
 
     return (
         <button className='relative w-full h-56 rounded-xl overflow-hidden'>
