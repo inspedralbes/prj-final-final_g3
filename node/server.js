@@ -87,7 +87,6 @@ async function storeEvents() {
 async function deletePastEvents() {
     try {
         const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        console.log('Current time:', now);
 
         const deleteQuery = `DELETE FROM events WHERE CONCAT(date, ' ', time) < ?`;
         const deleteValues = [now];

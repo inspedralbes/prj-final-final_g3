@@ -1,13 +1,21 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useContext} from 'react'
 import Link from 'next/link';
 import axios from 'axios';
+import { useRouter } from 'next/navigation'
 
 import LoginMethods from '../components/LoginMethods'
 import Loader from '../components/Loader'
 
+import { UserLoged } from '../context/UserLoged'
+
+
+
 const page = () => {
+  const Loged = useContext(UserLoged);
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -18,10 +26,12 @@ const page = () => {
 
     try {
       const response = await axios.post('http://localhost:8000/api/login', { email, password });
-
+      Loged.setUser(true);
       console.log("Logeado", response.data);
-
+      router.push('/events');
+      
     } catch (error) {
+      Loged.setUser(false);
       console.error(error);
     }
     setIsLoading(false);
@@ -33,7 +43,7 @@ const page = () => {
         <h1 className='text-4xl font-semibold'>Log in</h1>
 
         <form className='flex flex-col gap-6' onSubmit={Login}>
-          <input className='bg-transparent border-b border-gray-400 outline-none' type="email" placeholder="Correo" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className='bg-transparent border-b border-gray-400 outline-none' type="email" autoFocus="true" placeholder="Correo" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
 
           <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600' type="submit">

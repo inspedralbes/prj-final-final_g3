@@ -112,7 +112,6 @@ class SpotifyController extends Controller
 
                 $responseData = json_decode($response->getBody(), true);
 
-                // Puedes realizar acciones adicionales según la respuesta
 
                 // Devolver una respuesta de ejemplo
                 return response()->json(['data' => $responseData]);

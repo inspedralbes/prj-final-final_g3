@@ -35,6 +35,27 @@ const Page = () => {
   }, []);
 
 
+  useEffect(() => {
+    const agruparEventos = () => {
+      const eventosAgrupados = {};
+      eventos.forEach(evento => {
+        const key = `${evento.artist}-${evento.date}`; // Utilizar el nombre del artista y la fecha como clave
+        if (!eventosAgrupados[key] || evento.event.length < eventosAgrupados[key].event.length) {
+          eventosAgrupados[key] = evento; // Si no existe un evento con esa clave o si el nombre del evento actual es más corto, actualizarlo
+        }
+      });
+
+      const eventosFiltrados = Object.values(eventosAgrupados); // Convertir el objeto en un array
+
+      // Ordenar los eventos por fecha
+      eventosFiltrados.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      setEventosFiltrados(eventosFiltrados);
+    };
+
+    agruparEventos();
+  }, [eventos]);
+
   return (
     <>
       <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative'>
