@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Link from 'next/link'
+import { UserLoged } from '../context/UserLoged'
 
 import Home from './Icons/Home'
 import Speaker from './Icons/Speaker'
@@ -7,7 +8,8 @@ import Chat from './Icons/Chat'
 import User from './Icons/User'
 
 const Menu = () => {
-    const isLogged = false;
+    const Loged = useContext(UserLoged);
+    const isLogged = Loged.isLoged;
     return (
         <section className=' w-screen sticky bottom-0 py-1 text-white flex justify-around items-center backdrop-blur-lg'>
             <Link href="/" className='flex flex-col justify-center items-center '>
