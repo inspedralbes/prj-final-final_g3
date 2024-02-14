@@ -38,7 +38,7 @@ const LoginMethods = ({ forWhat }) => {
             <div className='flex gap-6'>
                 <button className='w-7 h-7' onClick={redirectToGoogle}><img src="/img/google_logo.png" alt="Logo de Google" /></button>
                 <button className='w-7 h-7' onClick={redirectToSpotify}><img src="/img/spotify_logo.webp" alt="Logo de Spotify" /></button>
-                <button className='w-7 h-7'><img src="/img/appleMusic_logo.png" alt="Logo de Apple Music" /></button>
+                {/* <button className='w-7 h-7'><img src="/img/appleMusic_logo.png" alt="Logo de Apple Music" /></button> */}
             </div>
         </section>
     )

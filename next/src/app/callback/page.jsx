@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 
+// Components
+import Loader from '../components/Loader';
+
 const page = () => {
     const router = useRouter();
     useState(() => {
@@ -80,14 +83,17 @@ const page = () => {
             }
         };
 
-        if (!scope && !authuser && !hd && !prompt) {
+        if (code && state && !scope && !authuser && !hd && !prompt) {
             fetchSpotifyToken();
         }
         else if (code && state && scope && authuser && hd && prompt) {
             fetchGoogleToken();
         }
-
     }, [router])
+
+    return (
+        <Loader />
+    )
 }
 
 export default page
