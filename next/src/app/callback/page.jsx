@@ -8,55 +8,88 @@ import axios from 'axios';
 const page = () => {
     const router = useRouter();
     useState(() => {
-        console.log("Current URL:", window.location.href);
 
         const url = new URL(window.location.href);
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
-
-        const fetchData = async () => {
-            const url = new URL(window.location.href);
-            const code = url.searchParams.get("code");
-            const state = url.searchParams.get("state");
-
-            if (code && state) {
-                const authOptions = {
-                    url: 'https://accounts.spotify.com/api/token',
-                    data: new URLSearchParams({
-                        code: code,
-                        redirect_uri: process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI,
-                        grant_type: 'authorization_code',
-                    }),
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Basic ' + Buffer.from(`${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}:${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET}`).toString('base64'),
-                    },
-                };
-
-                try {
-                    const response = await axios.post(authOptions.url, authOptions.data, {
-                        headers: authOptions.headers,
-                    })
-                        .then((response) => {
-                            //isLogged.setUser(true);
-                            console.log('Authentication successful:', response.data);
-                            router.push('/');
-                        });
+        const scope = url.searchParams.get("scope");
+        const authuser = url.searchParams.get("authuser");
+        const hd = url.searchParams.get("hd");
+        const prompt = url.searchParams.get("prompt");
 
 
-                    // Aquí puedes hacer algo con los datos de autenticación
-                } catch (error) {
-                    console.error('Error during Spotify authentication:', error);
-                    throw new Error('Failed to authenticate with Spotify');
-                }
+        const fetchSpotifyToken = async () => {
+            const authOptions = {
+                url: 'https://accounts.spotify.com/api/token',
+                data: new URLSearchParams({
+                    code: code,
+                    redirect_uri: process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI,
+                    grant_type: 'authorization_code',
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + Buffer.from(`${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID}:${process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET}`).toString('base64'),
+                },
+            };
+
+            try {
+                const response = await axios.post(authOptions.url, authOptions.data, {
+                    headers: authOptions.headers,
+                });
+
+                console.log('Authentication with Spotify successful:', response.data);
+                // Si la autenticación es exitosa, redirige a la página principal
+                router.push('/');
+
+                // Aquí puedes hacer algo con los datos de autenticación si es necesario
+            } catch (error) {
+                console.error('Error during Spotify authentication:', error);
+                throw new Error('Failed to authenticate with Spotify');
+            }
+
+        };
+
+        const fetchGoogleToken = async () => {
+            const authOptions = {
+                url: 'https://oauth2.googleapis.com/token',
+                data: new URLSearchParams({
+                    code: code,
+                    client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+                    client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+                    redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI,
+                    grant_type: 'authorization_code',
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+
+            try {
+                const response = await axios.post(authOptions.url, authOptions.data, {
+                    headers: authOptions.headers,
+                });
+
+                console.log('Authentication with Google successful:', response.data);
+                // Si la autenticación es exitosa, redirige a la página principal
+                router.push('/');
+
+                // Aquí puedes hacer algo con los datos de autenticación si es necesario
+            } catch (error) {
+                console.error('Error during Google authentication:', error);
+                throw new Error('Failed to authenticate with Google');
             }
         };
 
-
-        if (code && state) {
-            fetchData();
+        if (!scope && !authuser && !hd && !prompt) {
+            fetchSpotifyToken();
         }
+        else if (code && state && scope && authuser && hd && prompt) {
+            fetchGoogleToken();
+        }
+
     }, [router])
 }
 
 export default page
+
+
