@@ -21,17 +21,10 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
 
-Route::group(['prefix'=>'spotify'], function() {
-    Route::get('/login', [SpotifyController::class, 'login']);
-    Route::get('/callback', [SpotifyController::class, 'callback']);
-});
-
-Route::get('auth', [UserController::class, 'redirectToAuth']);
-Route::get('auth/callback', [UserController::class, 'handleAuthCallback']);
-
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
 });
+
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
