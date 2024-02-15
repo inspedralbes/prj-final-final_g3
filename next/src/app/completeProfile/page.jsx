@@ -4,6 +4,8 @@ import axios from 'axios';
 import React, { useState, useContext } from 'react';
 import Loader from '../components/Loader'
 import { UserLoged } from '../context/UserLoged'
+import { useRouter } from 'next/navigation'
+
  
 
 const page = () => {
@@ -11,18 +13,27 @@ const page = () => {
     const [birthdate, setBirthdate] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const userInfo = useContext(UserLoged);
-    console.log(userInfo.jsonData);
+    const router = useRouter();
+    const name = userInfo.jsonData.userInfo.display_name;
+    const email = userInfo.jsonData.userInfo.email;
+      // console.log("Esta es la info", userInfo.jsonData.userInfo);
     
+
     const register = async (event) => {
         event.preventDefault();     
         setIsLoading(true);
-
+        console.log(nickname, birthdate, name, email);
+        
         try {
-          const response = await axios.post('http://localhost:8000/api/register', {
+          const response = await axios.post('http://localhost:8000/api/apps/register', {
             nickname,
             birthdate,
+            name,
+            email
           });
-      
+          userInfo.setUser(true);
+          router.push('/events');
+
           console.log(response.data);
           
         } catch (error) {
