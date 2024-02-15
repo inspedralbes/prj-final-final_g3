@@ -232,7 +232,6 @@ class UserController extends Controller{
         ];
 
         return response()->json(['success' => 'Usuari creat correctament', 'data' => $response], 200);
-
     }
 /**
  * @OA\Post(
@@ -282,32 +281,25 @@ class UserController extends Controller{
         ]);
     }
 
-    public function handleAuthCallback(): JsonResponse{
-        try {
-            $socialiteUser = Socialite::driver('google')->stateless()->user();
-        } catch (ClientException $e) {
-            return response()->json(['error' => 'Invalid credentials provided.'], 422);
-        }
-        $user = User::query()
-            ->firstOrCreate(
-                [
-                    'email' => $socialiteUser->getEmail(),
-                ],
-                [
-                    'email_verified_at' => now(),
-                    'name' => $socialiteUser->user["given_name"],
-                    'surnames' => $socialiteUser->user["family_name"],
-                    'google_id' => $socialiteUser->user["id"],
-                    'avatar' => $socialiteUser->getAvatar(),
-                    'loginWith' => 'google'
-                ]
-            );
-
-        return response()->json([
-            'user' => $user->makeHidden(['created_at', 'updated_at','loginWith']),
-            'access_token' => $user->createToken('Spottunes')->plainTextToken,
-            'token_type' => 'Bearer',
+    public function registerWithSpotify(Request $request){
+        $user = User::create([
+            'name' => $request->name,
+            'surnames' => $request->surnames,
+            'nickname' => $request->nickname,
+            'email' => $request->email,
+            'birthdate' => $request->birthdate,
+            'loginWith' => 'spotify',
         ]);
+
+        $user->makeHidden(['created_at', 'updated_at']);
+
+        $token = $user->createToken('Spottunes')->plainTextToken;
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response()->json(['success' => 'Usuari creat correctament', 'data' => $response], 200);
     }
 
     

@@ -27,6 +27,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
 });
 
+Route::group(['prefix'=>'apps'],function(){
+    Route::post('/register', [UserController::class, 'registerWithSpotify']);
+});
+
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
