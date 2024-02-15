@@ -27,11 +27,18 @@ const LoginMethods = ({ forWhat }) => {
         const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
         const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
         const state = generateRandomString(16);
-        const scopes = ['openid', 'profile', 'email'];
+        const scopes = [
+            'openid',
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/user.birthday.read'
+        ];
         const scope = encodeURIComponent(scopes.join(' '));
         const url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}&state=${state}`;
         window.location.href = url;
     }
+
 
     return (
         <section className='flex flex-col gap-2'>
