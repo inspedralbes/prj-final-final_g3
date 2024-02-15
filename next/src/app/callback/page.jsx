@@ -4,12 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import NextAuth from 'next-auth';
+import { UserLoged } from '../context/UserLoged'
+
 import GoogleProvider from "next-auth/providers/google";
 
 // Components
 import Loader from '../components/Loader';
 
 const page = () => {
+    const userInfo = useContext(UserLoged);
+
     const router = useRouter();
     useState(() => {
 
@@ -52,7 +56,8 @@ const page = () => {
                 })
                     .then(response => {
                         spotifyData.userInfo = response.data;
-                        router.push('/');
+                        userInfo.setJsonData(spotifyData); 
+                        router.push('/completeProfile');
                     })
                     .catch(error => {
                         console.error('Error al hacer la solicitud a Spotify API:', error);

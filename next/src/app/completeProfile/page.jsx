@@ -3,12 +3,15 @@ import Link from 'next/link';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Loader from '../components/Loader'
-
+import { UserLoged } from '../context/UserLoged'
+ 
 
 const page = () => {
     const [nickname, setNickname] = useState('');
     const [birthdate, setBirthdate] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const userInfo = useContext(UserLoged);
+    console.log(userInfo.jsonData);
 
     const register = async (event) => {
         event.preventDefault();     
