@@ -1,9 +1,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
+import NextAuth from 'next-auth';
+import GoogleProvider from "next-auth/providers/google";
+
+// Components
+import Loader from '../components/Loader';
 
 const page = () => {
     const router = useRouter();
@@ -19,6 +23,8 @@ const page = () => {
 
 
         const fetchSpotifyToken = async () => {
+            let spotifyData = {};
+
             const authOptions = {
                 url: 'https://accounts.spotify.com/api/token',
                 data: new URLSearchParams({
@@ -33,15 +39,24 @@ const page = () => {
             };
 
             try {
-                const response = await axios.post(authOptions.url, authOptions.data, {
+                const responseToken = await axios.post(authOptions.url, authOptions.data, {
                     headers: authOptions.headers,
                 });
 
-                console.log('Authentication with Spotify successful:', response.data);
-                // Si la autenticación es exitosa, redirige a la página principal
-                router.push('/');
+                spotifyData.tokenInfo = responseToken.data;
 
-                // Aquí puedes hacer algo con los datos de autenticación si es necesario
+                axios.get('https://api.spotify.com/v1/me', {
+                    headers: {
+                        Authorization: `Bearer ${responseToken.data.access_token}`
+                    }
+                })
+                    .then(response => {
+                        spotifyData.userInfo = response.data;
+                        router.push('/');
+                    })
+                    .catch(error => {
+                        console.error('Error al hacer la solicitud a Spotify API:', error);
+                    });
             } catch (error) {
                 console.error('Error during Spotify authentication:', error);
                 throw new Error('Failed to authenticate with Spotify');
@@ -50,44 +65,48 @@ const page = () => {
         };
 
         const fetchGoogleToken = async () => {
-            const authOptions = {
-                url: 'https://oauth2.googleapis.com/token',
-                data: new URLSearchParams({
-                    code: code,
-                    client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-                    client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
-                    redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI,
-                    grant_type: 'authorization_code',
-                }),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
+            const googleProvider = GoogleProvider({
+                clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+                clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+            });
+
+            const googleOptions = {
+                code: code,
+                redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI,
+                client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+                client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+                grant_type: 'authorization_code',
             };
 
             try {
-                const response = await axios.post(authOptions.url, authOptions.data, {
-                    headers: authOptions.headers,
-                });
+                const responseToken = await googleProvider.getAccessToken(googleOptions);
 
-                console.log('Authentication with Google successful:', response.data);
-                // Si la autenticación es exitosa, redirige a la página principal
+                const googleData = {
+                    tokenInfo: responseToken,
+                };
+
+                const responseUserInfo = await googleProvider.getUserInfo(responseToken);
+
+                googleData.userInfo = responseUserInfo;
+
                 router.push('/');
-
-                // Aquí puedes hacer algo con los datos de autenticación si es necesario
             } catch (error) {
                 console.error('Error during Google authentication:', error);
                 throw new Error('Failed to authenticate with Google');
             }
         };
 
-        if (!scope && !authuser && !hd && !prompt) {
+        if (code && state && !scope && !authuser && !hd && !prompt) {
             fetchSpotifyToken();
         }
         else if (code && state && scope && authuser && hd && prompt) {
             fetchGoogleToken();
         }
-
     }, [router])
+
+    return (
+        <Loader />
+    )
 }
 
 export default page
