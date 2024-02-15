@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('surnames');
+            $table->string('surnames')->nullable();
             $table->string('email')->unique();
             $table->date('birthdate')->nullable();
             $table->enum('loginWith', ['email', 'spotify', 'google']);

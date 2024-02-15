@@ -1,15 +1,21 @@
 'use client'
 
-import React, { useState, useEffect, useDispatch } from 'react';
+import React, { useState, useEffect, useDispatch, useContext } from 'react';
 import axios from 'axios';
 import CardEvent from '../components/CardEvent';
 import Menu from '../components/Menu';
+import { UserLoged } from '../context/UserLoged'
+
 
 const Page = () => {
   const [eventos, setEventos] = useState([]);
+  const userInfo = useContext(UserLoged);
+  
+
 
   useState(() => {
     const fetchData = async () => {
+      console.log("Esta es la info del usuario", userInfo.jsonData.userInfo);
       try {
         const response = await axios.get('http://localhost:8000/api/events');
         // console.log(await response);

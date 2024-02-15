@@ -16,7 +16,7 @@ const Menu = () => {
 
     const router = useRouter();
     const currentPath = usePathname()
-    console.log(router.pathname);
+    // console.log(router.pathname);
 
 
     return (

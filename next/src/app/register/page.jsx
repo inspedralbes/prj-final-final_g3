@@ -19,7 +19,8 @@ const page = () => {
     const register = async (event) => {
         event.preventDefault();     
         setIsLoading(true);
-      
+
+        
         try {
           const response = await axios.post('http://localhost:8000/api/register', {
             email,
@@ -49,7 +50,7 @@ const page = () => {
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="text" placeholder="Nombre" value={name} onChange={e => setName(e.target.value)} />
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="text" placeholder="Apellidos" value={surnames} onChange={e => setSurnames(e.target.value)} />
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="text" placeholder="Username" value={nickname} onChange={e => setNickname(e.target.value)} />
-                    <input className='bg-transparent border-b border-gray-400 outline-none' type="birthdate" placeholder="Birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
+                    <input className='bg-transparent border-b border-gray-400 outline-none' type="date" placeholder="Birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} />
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Repite la contraseña" value={passwordconfirmation} onChange={e => setConfirmPassword(e.target.value)} />
                     <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>{!isLoading ? "Registrarme" : <Loader />}</button>
