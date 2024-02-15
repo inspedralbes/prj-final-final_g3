@@ -14,15 +14,19 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $events = event::orderBy('date')->orderBy('time')->get();
-
-    if ($events->isEmpty()) {
-        return response()->json(['message' => 'No events found'], 404);
+    {
+        $events = Event::whereNotNull('artist')
+                       ->orderBy('date')
+                       ->orderBy('time')
+                       ->get();
+    
+        if ($events->isEmpty()) {
+            return response()->json(['message' => 'No events found'], 404);
+        }
+    
+        return response()->json(['events' => $events], 200);
     }
-
-    return response()->json(['events' => $events], 200);
-}
+    
 
     /**
      * Show the form for creating a new resource.
