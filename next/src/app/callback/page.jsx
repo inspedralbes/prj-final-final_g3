@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
-import NextAuth from 'next-auth';
-import GoogleProvider from "next-auth/providers/google";
 
 // Components
 import Loader from '../components/Loader';
@@ -65,31 +63,42 @@ const page = () => {
         };
 
         const fetchGoogleToken = async () => {
-            const googleProvider = GoogleProvider({
-                clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-                clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
-            });
-
-            const googleOptions = {
-                code: code,
-                redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI,
-                client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-                client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
-                grant_type: 'authorization_code',
+            let googleData = {};
+            const authOptions = {
+                url: 'https://oauth2.googleapis.com/token',
+                data: new URLSearchParams({
+                    code: code,
+                    client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+                    client_secret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+                    redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI,
+                    grant_type: 'authorization_code',
+                    scope: 'openid profile email'
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
             };
 
             try {
-                const responseToken = await googleProvider.getAccessToken(googleOptions);
+                const responseToken = await axios.post(authOptions.url, authOptions.data, {
+                    headers: authOptions.headers,
+                });
 
-                const googleData = {
-                    tokenInfo: responseToken,
-                };
+                googleData.tokenInfo = responseToken.data;
 
-                const responseUserInfo = await googleProvider.getUserInfo(responseToken);
-
-                googleData.userInfo = responseUserInfo;
-
-                router.push('/');
+                axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+                    headers: {
+                        Authorization: `Bearer ${responseToken.data.access_token}`
+                    }
+                })
+                    .then(response => {
+                        googleData.userInfo = response.data;
+                        console.log(googleData);
+                        router.push('/');
+                    })
+                    .catch(error => {
+                        console.error('Error al hacer la solicitud a Google API:', error);
+                    });
             } catch (error) {
                 console.error('Error during Google authentication:', error);
                 throw new Error('Failed to authenticate with Google');

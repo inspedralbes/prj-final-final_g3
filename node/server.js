@@ -71,7 +71,7 @@ async function storeEvents() {
             const selectResult = await queryDatabase(selectQuery, [id]);
 
             if (selectResult.length > 0) {
-                console.log('Event already exists:', name);
+                console.log('Event already exists NOT INSERTED !!!!!!!:', name);
                 return;
             } else {
                 const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;

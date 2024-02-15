@@ -273,13 +273,13 @@ class UserController extends Controller{
  * )
  */
 
-    public function redirectToAuth() {
-        return redirect()->away(
+    public function redirectToAuth(): JSONResponse {
+        return response()->json([
             Socialite::driver('google')
                 ->stateless()
                 ->redirect()
                 ->getTargetUrl()
-        );
+        ]);
     }
 
     public function handleAuthCallback(): JsonResponse{
