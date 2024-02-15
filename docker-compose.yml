@@ -3,7 +3,7 @@ services:
 
   node:
     container_name: node
-    image: node:20.8.1-bullseye-slim
+    image: arm64v8/node
     volumes:
       - ./node:/usr/src/app
     working_dir: /usr/src/app
@@ -16,7 +16,7 @@ services:
 
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
+    image: arm64v8/phpmyadmin       
     restart: always
     ports:
       - 9091:80
@@ -44,7 +44,7 @@ services:
     volumes:
       - ./next:/usr/src/app
     ports:
-      - 3000:3000
+      - 80:3000
     environment:
       - WATCHPACK_POLLING=true
     command: sh -c "npm install && npm run dev"
