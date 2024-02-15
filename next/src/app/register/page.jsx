@@ -19,7 +19,8 @@ const page = () => {
     const register = async (event) => {
         event.preventDefault();     
         setIsLoading(true);
-      
+
+        
         try {
           const response = await axios.post('http://localhost:8000/api/register', {
             email,

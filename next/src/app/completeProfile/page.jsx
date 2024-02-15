@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Loader from '../components/Loader'
 import { UserLoged } from '../context/UserLoged'
  
@@ -12,12 +12,11 @@ const page = () => {
     const [isLoading, setIsLoading] = useState(false);
     const userInfo = useContext(UserLoged);
     console.log(userInfo.jsonData);
-
+    
     const register = async (event) => {
         event.preventDefault();     
         setIsLoading(true);
-        console.log(birthdate)
-      
+
         try {
           const response = await axios.post('http://localhost:8000/api/register', {
             nickname,
@@ -39,7 +38,8 @@ const page = () => {
                 <h1 className='text-4xl font-semibold'>Completa tu perfil</h1>
                 <form className='flex flex-col gap-6' onSubmit={register}>
                     <input className='bg-transparent border-b border-gray-400 outline-none' type="text" placeholder="Username" value={nickname} onChange={e => setNickname(e.target.value)} />
-                    <input className='bg-transparent border-b border-gray-400 outline-none' type="date" placeholder="Birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />                    <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>{!isLoading ? "Completar usuario" : <Loader />}</button>
+                    <input className='bg-transparent border-b border-gray-400 outline-none' type="date" placeholder="Birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />                    
+                    <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>{!isLoading ? "Completar usuario" : <Loader />}</button>
                 </form>
                 <Link href="/join"><svg className='w-auto h-8' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg></Link>
             </section>

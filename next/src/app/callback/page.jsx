@@ -1,22 +1,19 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
-import NextAuth from 'next-auth';
 import { UserLoged } from '../context/UserLoged'
-
 import GoogleProvider from "next-auth/providers/google";
 
 // Components
 import Loader from '../components/Loader';
 
 const page = () => {
+    const router = useRouter();
     const userInfo = useContext(UserLoged);
 
-    const router = useRouter();
     useState(() => {
-
         const url = new URL(window.location.href);
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
@@ -26,8 +23,11 @@ const page = () => {
         const prompt = url.searchParams.get("prompt");
 
 
+
         const fetchSpotifyToken = async () => {
             let spotifyData = {};
+
+
 
             const authOptions = {
                 url: 'https://accounts.spotify.com/api/token',
@@ -56,7 +56,7 @@ const page = () => {
                 })
                     .then(response => {
                         spotifyData.userInfo = response.data;
-                        userInfo.setJsonData(spotifyData); 
+                        userInfo.setJsonData(spotifyData);
                         router.push('/completeProfile');
                     })
                     .catch(error => {
@@ -107,7 +107,7 @@ const page = () => {
         else if (code && state && scope && authuser && hd && prompt) {
             fetchGoogleToken();
         }
-    }, [router])
+    }, [router, userInfo])
 
     return (
         <Loader />
