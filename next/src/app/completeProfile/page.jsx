@@ -25,7 +25,8 @@ const page = () => {
     console.log(nickname, birthdate, name, email);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/apps/register', {
+      // const response = await axios.post('http://localhost:8000/api/apps/register', {
+      const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/apps/register', {
         nickname,
         birthdate,
         name,
