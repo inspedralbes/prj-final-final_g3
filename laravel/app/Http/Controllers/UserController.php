@@ -281,14 +281,14 @@ class UserController extends Controller{
         ]);
     }
 
-    public function registerWithSpotify(Request $request){
+    public function registerWithApps(Request $request){
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
             'nickname' => $request->nickname,
             'email' => $request->email,
             'birthdate' => $request->birthdate,
-            'loginWith' => 'spotify',
+            'loginWith' => $request->loginWith,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
