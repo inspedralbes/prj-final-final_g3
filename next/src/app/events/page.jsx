@@ -15,7 +15,7 @@ const Page = () => {
 
   useState(() => {
     const fetchData = async () => {
-      console.log("Esta es la info del usuario", userInfo.jsonData.userInfo);
+      // console.log("Esta es la info del usuario", userInfo.jsonData.userInfo);
       try {
         const response = await axios.get('http://localhost:8000/api/events');
         // console.log(await response);
