@@ -23,17 +23,17 @@ const Menu = () => {
         <section className=' w-full sticky bottom-0 py-1 text-white flex justify-around items-center backdrop-blur-lg'>
             <Link href="/" className="flex flex-col justify-center items-center">
                 <Home size="28" />
-                <p className='font-bold text-xs'>Inicio</p>
+                <p className='font-bold text-xs'>Inici</p>
             </Link>
 
             <Link href="/events" className={`flex flex-col justify-center items-center ${currentPath === '/events' ? ' text-orange-400 fill-orange-400' : ''}`}>
                 <Speaker size="28" />
-                <p className='font-bold text-xs'>Eventos</p>
+                <p className='font-bold text-xs'>Events</p>
             </Link>
 
             <Link href={isLogged ? "/chat" : "/join"} className={`flex flex-col justify-center items-center ${currentPath === '/chat' ? ' text-orange-400 fill-orange-400' : ''}`}>
                 <Chat size="28" />
-                <p className='font-bold text-xs'>Chat</p>
+                <p className='font-bold text-xs'>Xat</p>
             </Link>
 
             <Link href={isLogged ? "/perfil" : "/join"} className={`flex flex-col justify-center items-center ${currentPath === '/perfil' ? ' text-orange-400 fill-orange-400' : ''}`}>

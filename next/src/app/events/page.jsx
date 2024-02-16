@@ -10,7 +10,7 @@ import { UserLoged } from '../context/UserLoged'
 const Page = () => {
   const [eventos, setEventos] = useState([]);
   const userInfo = useContext(UserLoged);
-  
+
 
 
   useState(() => {
@@ -41,7 +41,7 @@ const Page = () => {
   return (
     <>
       <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative'>
-        <h1 className='text-center uppercase text-2xl font-bold'>Los proximos eventos mas top</h1>
+        <h1 className='text-center uppercase text-2xl font-bold'>Els propers esdeveniments més top</h1>
 
         <section className='flex flex-col gap-3'>
           {eventos.map((evento, index) => (

@@ -12,30 +12,31 @@ const page = () => {
                             <div className='flex justify-center items-center gap-6'>
                                 <div>
                                     <p>666</p>
-                                    <p className='text-xs text-white/60'>Seguidores</p>
+                                    <p className='text-xs text-white/60'>Seguidors</p>
                                 </div>
                                 <div>
                                     <p>404</p>
-                                    <p className='text-xs text-white/60'>Seguidos</p>
+                                    <p className='text-xs text-white/60'>Seguits</p>
                                 </div>
                                 <div>
                                     <p>5</p>
-                                    <p className='text-xs text-white/60'>Eventos</p>
+                                    <p className='text-xs text-white/60'>Events</p>
                                 </div>
                             </div>
                         </div>
                     </article>
 
                     <div>
-                        <button className='px-8 py-2 rounded-full bg-white text-black font-bold'>Edit Profile</button>
+                        <button className='px-8 py-2 rounded-full bg-white text-black font-bold'>Edita el teu perfil</button>
                     </div>
                 </section>
 
                 <section className='flex flex-col gap-4'>
                     <div className='flex justify-center gap-8'>
                         <h2 className='border-b-2 border-b-white'>Posts</h2>
-                        <h2 className='opacity-60'>Eventos</h2>
+                        <h2 className='opacity-60'>Esdeveniments</h2>
                         <h2 className='opacity-60'>Gustos</h2>
+
                     </div>
                     <section className='grid grid-cols-3 gap-2 px-6'>
                         <article className='h-40 overflow-hidden rounded-lg'>

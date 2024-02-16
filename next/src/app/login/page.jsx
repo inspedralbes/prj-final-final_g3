@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useContext} from 'react'
+import React, { useState, useContext } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
@@ -19,7 +19,7 @@ const page = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const Login = async (event) => {
     setIsLoading(true);
     event.preventDefault();
@@ -29,7 +29,7 @@ const page = () => {
       Loged.setUser(true);
       console.log("Logeado", response.data);
       router.push('/events');
-      
+
     } catch (error) {
       Loged.setUser(false);
       console.error(error);
@@ -40,18 +40,18 @@ const page = () => {
   return (
     <main className='w-screen h-screen bg-background'>
       <section className='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
-        <h1 className='text-4xl font-semibold'>Log in</h1>
+        <h1 className='text-4xl font-semibold'>Inicia sessió</h1>
 
         <form className='flex flex-col gap-6' onSubmit={Login}>
-          <input className='bg-transparent border-b border-gray-400 outline-none' type="email" autoFocus="true" placeholder="Correo" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input className='bg-transparent border-b border-gray-400 outline-none' type="email" autoFocus="true" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Contrasenya" value={password} onChange={(e) => setPassword(e.target.value)} />
 
           <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600' type="submit">
-            {!isLoading ? "Log In" : <Loader />}
+            {!isLoading ? "Inicia sessió" : <Loader />}
           </button>
         </form>
 
-        <LoginMethods forWhat="haz login" />
+        <LoginMethods forWhat="inicia la sessió" />
 
         <Link href="/join"><svg className='w-auto h-8' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg></Link>
       </section>
