@@ -28,6 +28,7 @@ const page = () => {
       // const response = await axios.post('http://localhost:8000/api/login', { email, password });
       const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/login', { email, password });
       Loged.setUser(true);
+      Loged.setJsonData(response.data.data.user);
       console.log("Logeado", response.data);
       router.push('/events');
 
