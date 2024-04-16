@@ -17,8 +17,8 @@ const Page = () => {
     const fetchData = async () => {
       // console.log("Esta es la info del usuario", userInfo.jsonData.userInfo);
       try {
-        // const response = await axios.get('http://localhost:8000/api/events');
-        const response = await axios.get('http://spottunes.daw.inspedralbes.cat:8000/api/events');
+        const response = await axios.get('http://localhost:8000/api/events');
+        // const response = await axios.get('http://spottunes.daw.inspedralbes.cat:8000/api/events');
         // console.log(await response);
 
         const eventos = response.data.events;
