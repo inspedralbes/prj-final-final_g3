@@ -41,7 +41,7 @@ const page = () => {
 
   return (
     <main className='w-screen h-screen bg-background'>
-      <section className='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
+      <section className='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center '>
         <h1 className='text-4xl font-semibold'>Inicia sessió</h1>
 
         <form className='flex flex-col gap-6' onSubmit={Login}>
