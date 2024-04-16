@@ -14,7 +14,9 @@ const Header = () => {
       <h1 className='text-2xl font-bold text-white uppercase'>Spottunes</h1>
       {!isLogged && <Link href='/login'>Inicia sessió</Link>}
     </header>
+
   )
 }
+
 
 export default Header
