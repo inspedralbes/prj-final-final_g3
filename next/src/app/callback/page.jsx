@@ -118,7 +118,9 @@ const page = () => {
     }, [router, userInfo])
 
     return (
-        <Loader />
+        <div className="flex items-center justify-center min-h-screen">
+            <Loader />
+        </div>
     )
 }
 
