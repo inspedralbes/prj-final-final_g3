@@ -1,12 +1,18 @@
 'use client'
 import Link from 'next/link';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import LoginMethods from '../components/LoginMethods'
 import Loader from '../components/Loader'
+import { useRouter } from 'next/navigation'
+import { UserLoged } from '../context/UserLoged'
+
+
 
 
 const page = () => {
+  const Loged = useContext(UserLoged);
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [surnames, setSurnames] = useState('');
@@ -22,8 +28,8 @@ const page = () => {
 
 
     try {
-      // const response = await axios.post('http://localhost:8000/api/register', {
-      const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/register', {
+      const response = await axios.post('http://localhost:8000/api/register', {
+      // const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/register', {
         email,
         name,
         surnames,
@@ -32,8 +38,11 @@ const page = () => {
         birthdate,
         passwordconfirmation,
       });
-
-      console.log(response.data);
+      Loged.setUser(true);
+      Loged.setJsonData(response.data.data.user);
+      Loged.setToken(response.data.data.token);
+      
+      router.push('/events');
 
     } catch (error) {
       console.error('Error fetching data:', error);

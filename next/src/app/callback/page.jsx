@@ -22,12 +22,8 @@ const page = () => {
         const hd = url.searchParams.get("hd");
         const prompt = url.searchParams.get("prompt");
 
-
-
         const fetchSpotifyToken = async () => {
             let spotifyData = {};
-
-
 
             const authOptions = {
                 url: 'https://accounts.spotify.com/api/token',

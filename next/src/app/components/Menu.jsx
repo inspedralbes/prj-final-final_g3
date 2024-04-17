@@ -16,11 +16,10 @@ const Menu = () => {
 
     const router = useRouter();
     const currentPath = usePathname()
-    // console.log(router.pathname);
 
 
     return (
-        <section className=' w-full sticky bottom-0 py-1 text-white flex justify-around items-center backdrop-blur-lg'>
+        <section className=' w-full sticky bottom-0 py-1 text-white flex justify-around items-center bg-background backdrop-blur-lg'>
             <Link href="/" className="flex flex-col justify-center items-center">
                 <Home size="28" />
                 <p className='font-bold text-xs'>Inici</p>

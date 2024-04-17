@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation'
 
 const page = () => {
   const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [password_confirmation, setPasswordConfirmation] = useState('');
   const [birthdate, setBirthdate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const userInfo = useContext(UserLoged);
@@ -25,8 +27,8 @@ const page = () => {
     console.log(nickname, birthdate, name, email);
 
     try {
-      // const response = await axios.post('http://localhost:8000/api/apps/register', {
-      const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/apps/register', {
+      const response = await axios.post('http://localhost:8000/api/apps/register', {
+      // const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/apps/register', {
         nickname,
         birthdate,
         name,
@@ -49,6 +51,8 @@ const page = () => {
       <section className='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
         <h1 className='text-4xl font-semibold'>Completa el teu perfil</h1>
         <form className='flex flex-col gap-6' onSubmit={register}>
+          <input className='bg-transparent border-b border-gray-400 outline-none' type="password" placeholder="Username" value={password} onChange={e => setPassword(e.target.value)} />
+          <input className='bg-transparent border-b border-gray-400 outline-none' type="" placeholder="Username" value={password_confirmation} onChange={e => setPasswordConfirmation(e.target.value)} />
           <input className='bg-transparent border-b border-gray-400 outline-none' type="text" placeholder="Username" value={nickname} onChange={e => setNickname(e.target.value)} />
           <input className='bg-transparent border-b border-gray-400 outline-none' type="date" placeholder="Birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
           <button className='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>{!isLoading ? "Completar usuari" : <Loader />}</button>
