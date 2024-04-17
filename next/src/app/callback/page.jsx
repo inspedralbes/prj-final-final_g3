@@ -93,7 +93,7 @@ const page = () => {
                 });
 
                 googleData.tokenInfo = responseToken.data;
-
+                                
                 axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
                     headers: {
                         Authorization: `Bearer ${responseToken.data.access_token}`
