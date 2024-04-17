@@ -96,16 +96,17 @@ const page = () => {
                     }
                 })
                     .then(response => {
-                        console.log(response);
+                        console.log(response.data);
                         googleData.userInfo = response.data;
-                        router.push('/');
+                        userInfo.setJsonData(googleData);
+                        router.push('/completeProfile');
                     })
                     .catch(error => {
                         console.error('Error al hacer la solicitud a Google API:', error);
                     });
             } catch (error) {
-                // console.error('Error during Google authentication:', error);
-                // throw new Error('Failed to authenticate with Google');
+                console.error('Error during Google authentication:', error);
+                throw new Error('Failed to authenticate with Google');
             }
         };
 
