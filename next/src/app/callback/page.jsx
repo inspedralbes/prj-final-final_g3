@@ -67,7 +67,6 @@ const page = () => {
 
         const fetchGoogleToken = async () => {
             let googleData = {};
-            //"https://accounts.google.com/o/oauth2/auth?client_id=662247141048-6aq29g87hfkgavj7s24cp34a1muao2gu.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Fauth%2Fcallback&scope=openid+profile+email&response_type=code
             const authOptions = {
                 url: 'https://oauth2.googleapis.com/token',
                 data: new URLSearchParams({
