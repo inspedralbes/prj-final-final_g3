@@ -89,23 +89,23 @@ const page = () => {
                 });
 
                 googleData.tokenInfo = responseToken.data;
-                                
+
                 axios.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
                     headers: {
                         Authorization: `Bearer ${responseToken.data.access_token}`
                     }
                 })
                     .then(response => {
+                        console.log(response);
                         googleData.userInfo = response.data;
-                        console.log(googleData);
                         router.push('/');
                     })
                     .catch(error => {
                         console.error('Error al hacer la solicitud a Google API:', error);
                     });
             } catch (error) {
-                console.error('Error during Google authentication:', error);
-                throw new Error('Failed to authenticate with Google');
+                // console.error('Error during Google authentication:', error);
+                // throw new Error('Failed to authenticate with Google');
             }
         };
 
