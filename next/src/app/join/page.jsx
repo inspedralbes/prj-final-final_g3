@@ -5,7 +5,7 @@ import Logo from '../components/Logo'
 
 const page = () => {
     return (
-        <main className='relative flex flex-col w-screen h-screen gap-10 mx-auto bg-background'>
+        <main className='relative flex flex-col w-screen h-screen gap-10 mx-auto bg-background text-white'>
             <header className='py-6 w-[90vw] mx-auto'>
                 <Logo fill="white" size="70" />
             </header>

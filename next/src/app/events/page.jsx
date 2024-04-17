@@ -41,8 +41,8 @@ const Page = () => {
 
   return (
     <>
-      <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative'>
-        <h1 className='text-center uppercase text-2xl font-bold'>Els propers esdeveniments més top</h1>
+      <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-background'>
+        <h1 className='text-center uppercase text-2xl font-bold text-balance'>Els propers esdeveniments més top</h1>
 
         <section className='flex flex-col gap-3'>
           {eventos.map((evento, index) => (
