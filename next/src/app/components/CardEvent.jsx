@@ -17,11 +17,8 @@ const CardEvent = ({ image, name, location, date, people }) => {
         setLiked(!liked);
     };
 
-    const Loged = useContext(UserLoged);
-    const isLogged = Loged.isLoged;
 
     return (
-        <Link href={isLogged ? '#' : '/join'}>
             <div className='relative w-full h-56 rounded-xl overflow-hidden'>
                 <img className='w-full h-full brightness-[.4] object-cover' src={image} alt="" />
                 <div className='absolute bottom-2 left-2'>
@@ -36,7 +33,6 @@ const CardEvent = ({ image, name, location, date, people }) => {
                 >{liked ? <HeartFill size="20" /> : <Heart size="20" />}
                 </button>
             </div>
-        </Link>
     );
 };
 

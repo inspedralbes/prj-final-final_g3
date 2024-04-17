@@ -2,9 +2,12 @@
 
 import React, { useState, useEffect, useDispatch, useContext } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
+
 import CardEvent from '../components/CardEvent';
 import Menu from '../components/Menu';
 import { UserLoged } from '../context/UserLoged'
+
 
 
 const Page = () => {
@@ -39,6 +42,9 @@ const Page = () => {
     fetchData();
   }, []);
 
+  const Loged = useContext(UserLoged);
+  const isLogged = Loged.isLoged;
+
   return (
     <>
       <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-background'>
@@ -46,15 +52,16 @@ const Page = () => {
 
         <section className='flex flex-col gap-3'>
           {eventos.map((evento, index) => (
-            <CardEvent
-              key={index}
-              image={JSON.parse(evento.images)[2]}
-              name={evento.event}
-              location={evento.city}
-              date={evento.date}
-              people={evento.asistentes}
-            />
-
+            <Link href={isLogged ? '#' : '/join'}>
+              <CardEvent
+                key={index}
+                image={JSON.parse(evento.images)[2]}
+                name={evento.event}
+                location={evento.city}
+                date={evento.date}
+                people={evento.asistentes}
+              />
+            </Link>
           ))}
         </section>
       </main>
