@@ -282,9 +282,30 @@ class UserController extends Controller{
     }
 
     public function registerWithSpotify(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'surnames' => 'string',
+            'nickname' => 'required|string|unique:users',
+            'password' => 'required|string',
+            'password_confirmation' => 'required|string|same:password',
+            'email' => 'required|email|unique:users',
+            'birthdate' => 'required|date',
+        ], [
+            'required' => 'El :attribute es obligatorio.',
+            'email' => 'El :attribute debe ser una dirección de correo válida.',
+            'unique' => 'El :attribute ya está en uso.',
+            'date' => 'El :attribute debe ser una fecha válida.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()], 400);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
+            'password' => bcrypt($request->password),
             'nickname' => $request->nickname,
             'email' => $request->email,
             'birthdate' => $request->birthdate,
@@ -364,7 +385,6 @@ class UserController extends Controller{
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()], 400);
         }
-
         $user->birthdate = $request->birthdate;
         $user->nickname = $request->nickname;
         
