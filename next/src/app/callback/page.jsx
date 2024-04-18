@@ -14,6 +14,7 @@ const page = () => {
     const userInfo = useContext(UserLoged);
 
     useState(() => {
+        if (typeof window !== 'undefined') {
         const url = new URL(window.location.href);
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
@@ -115,6 +116,8 @@ const page = () => {
         else if (code && state && scope && authuser && hd && prompt) {
             fetchGoogleToken();
         }
+        }
+        
     }, [router, userInfo])
 
     return (
