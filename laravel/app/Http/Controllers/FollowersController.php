@@ -43,4 +43,12 @@ class FollowersController extends Controller
         return response()->json(['followers' => $followers], 200);
     }
 
+    public function getUserFollowed($userId)
+    {
+        $user = User::findOrFail($userId);
+        $followed = $user->followed()->with('followed')->get();
+
+        return response()->json(['followed' => $followed], 200);
+    }
+
 }

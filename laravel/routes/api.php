@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/{userId}/follow', [FollowersController::class, 'followUser']);
         Route::delete('/{userId}/unfollow', [FollowersController::class, 'unfollowUser']);
         Route::get('/{userId}/followers', [FollowersController::class, 'getUserFollowers']);
+        Route::get('/{userId}/followed', [FollowersController::class, 'getUserFollowed']);
     });
 });
 
