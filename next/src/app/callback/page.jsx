@@ -98,7 +98,12 @@ const page = () => {
                     .then(response => {
                         console.log(response.data);
                         googleData.userInfo = response.data;
+                        console.log(googleData.userInfo);
+                        googleData.userInfo.display_name = googleData.userInfo.given_name;
+                        googleData.userInfo.surnames = googleData.userInfo.family_name;
+                        googleData.userInfo.loginWith = 'google';
                         userInfo.setJsonData(googleData);
+                        
                         router.push('/completeProfile');
                     })
                     .catch(error => {
