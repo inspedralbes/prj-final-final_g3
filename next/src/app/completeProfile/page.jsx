@@ -18,13 +18,21 @@ const page = () => {
   const router = useRouter();
   const name = userInfo.jsonData.userInfo.display_name;
   const email = userInfo.jsonData.userInfo.email;
-  // console.log("Esta es la info", userInfo.jsonData.userInfo);
+  var surnames = null;
+  var loginWith = 'spotify';
+  var google_id = null;
 
-
+  if (userInfo.jsonData.userInfo.surnames) {
+    surnames = userInfo.jsonData.userInfo.surnames;
+  }
+  if (userInfo.jsonData.userInfo.loginWith) {
+    loginWith = userInfo.jsonData.userInfo.loginWith;
+    google_id = userInfo.jsonData.userInfo.id;
+  }
   const register = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    console.log(nickname, birthdate, name, email);
+    console.log(userInfo.jsonData.userInfo);
 
     try {
       const response = await axios.post('http://localhost:8000/api/apps/register', {
@@ -34,7 +42,10 @@ const page = () => {
         nickname,
         birthdate,
         name,
-        email
+        email,
+        ...(surnames && { surnames }),
+        google_id,
+        loginWith
       });
       userInfo.setUser(true);
       router.push('/events');

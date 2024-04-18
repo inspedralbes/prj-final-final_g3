@@ -282,7 +282,6 @@ class UserController extends Controller{
     }
 
     public function registerWithSpotify(Request $request){
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'surnames' => 'string',
@@ -309,7 +308,8 @@ class UserController extends Controller{
             'nickname' => $request->nickname,
             'email' => $request->email,
             'birthdate' => $request->birthdate,
-            'loginWith' => 'spotify',
+            'loginWith' => $request->loginWith,
+            'google_id' => $request->google_id,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
