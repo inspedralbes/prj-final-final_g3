@@ -2,7 +2,7 @@
 
 import React, { useState, useContext } from 'react'
 import Link from 'next/link';
-// import axios from 'axios';
+import axios from 'axios';
 import { useRouter } from 'next/navigation'
 import Loader from '../components/Loader'
 import { UserLoged } from '../context/UserLoged'
@@ -13,12 +13,13 @@ const page = () => {
     const Loged = useContext(UserLoged);
     const router = useRouter();
     const User = Loged.jsonData;
+    const Token = Loged.token;
 
-    const [name, setName] = useState(User.name);
-    const [nickname, setNickname] = useState(User.nickname);
-    const [surnames, setSurname] = useState(User.surnames);
-    const [email, setEmail] = useState(User.email);
-    const [birthdate, setBirthdate] = useState(User.birthdate);
+    const [name, setName] = useState(User && User.name ? User.name : '');
+    const [nickname, setNickname] = useState(User && User.nickname ? User.nickname : '');
+    const [surnames, setSurname] = useState(User && User.surnames ? User.surnames : '');
+    const [email, setEmail] = useState(User && User.email ? User.email : '');
+    const [birthdate, setBirthdate] = useState(User && User.birthdate ? User.birthdate : '');
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -48,10 +49,21 @@ const page = () => {
         event.preventDefault();
 
         try {
-            //   const response = await axios.post('http://localhost:8000/api/login', { email, password });
-            // const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/login', { email, password });
-            Loged.setJsonData(response.data.data.user);
-            router.push('/events');
+            console.log(Token);
+            const response = await axios.put('http://localhost:8000/api/updateInfo', {
+                name: name,
+                nickname: nickname,
+                surnames: surnames,
+                email: email,
+                birthdate: birthdate
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${Token}`
+                }
+            });
+
+            Loged.setJsonData(response.data);
+            router.push('/perfil');
 
         } catch (error) {
             console.error(error);
