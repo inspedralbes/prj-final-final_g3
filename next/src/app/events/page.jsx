@@ -51,10 +51,9 @@ const Page = () => {
         <h1 className='text-center uppercase text-2xl font-bold text-balance'>Els propers esdeveniments més top</h1>
 
         <section className='flex flex-col gap-3'>
-          {eventos.map((evento, index) => (
-            <Link href={isLogged ? '#' : '/join'}>
+          {eventos.map((evento) => (
+            <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}>
               <CardEvent
-                key={index}
                 image={JSON.parse(evento.images)[2]}
                 name={evento.event}
                 location={evento.city}
