@@ -4,19 +4,19 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
     content: String,
-    likes: Number,
+    likes: [{ type: Schema.Types.ObjectId, ref: 'likePost' }],
     comments: Number,
 });
 
 const commentPostSchema = new Schema({
     postId: Number,
     content: String,
-    likes: Number,
+    likes: [{ type: Schema.Types.ObjectId, ref: 'likeComment' }],
     parentId: Number, 
 });
 
 const likePostSchema = new Schema({
-    postId: Number,
+    postId: { type: Schema.Types.ObjectId, ref: 'post' },
     userId: Number,
 });
 
@@ -26,7 +26,7 @@ const likeEventSchema = new Schema({
 });
 
 const likeCommentSchema = new Schema({
-    commentId: Number,
+    commentId: { type: Schema.Types.ObjectId, ref: 'commentPost' },
     userId: Number,
 });
 
