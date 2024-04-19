@@ -398,18 +398,6 @@ class UserController extends Controller{
             return response()->json(['error' => 'No autenticado'], 401);
         }
 
-        $validator = Validator::make($request->all(), [
-            'nickname' => 'required|string',
-            'email' => 'required|email',
-        ], [
-            'required' => 'El :attribute es obligatorio.',
-            'email' => 'El :attribute debe ser una dirección de correo válida.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 400);
-        }
-
         $user->name = $request->name;
         $user->surnames = $request->surnames;
         $user->nickname = $request->nickname;
