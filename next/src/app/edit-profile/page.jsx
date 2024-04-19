@@ -20,6 +20,7 @@ const page = () => {
     const [surnames, setSurname] = useState(User && User.surnames ? User.surnames : '');
     const [email, setEmail] = useState(User && User.email ? User.email : '');
     const [birthdate, setBirthdate] = useState(User && User.birthdate ? User.birthdate : '');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -42,7 +43,6 @@ const page = () => {
     };
 
 
-    const [isLoading, setIsLoading] = useState(false);
 
     const update = async (event) => {
         setIsLoading(true);
