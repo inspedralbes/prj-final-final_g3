@@ -395,6 +395,20 @@ class UserController extends Controller{
         $token= $request->header('Authorization');
         $user = User::where('id', $request->user()->id)->first();
 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'nickname' => 'required|string',
+            'email' => 'required|email',
+        ], [
+            'required' => 'El :attribute es obligatorio.',
+            'string' => 'El :attribute debe ser una cadena de texto.',
+            'email' => 'El :attribute debe ser un correo electrónico válido.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()], 400);
+        }
+
         $user->name = $request->name;
         $user->surnames = $request->surnames;
         $user->nickname = $request->nickname;
