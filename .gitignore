@@ -6,3 +6,4 @@
 # però si que es crearà al fer el docker-compose up
 
 mysql_data/
+mongodb_data/

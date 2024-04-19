@@ -14,6 +14,7 @@ const page = () => {
     const userInfo = useContext(UserLoged);
 
     useState(() => {
+        if (typeof window !== 'undefined') {
         const url = new URL(window.location.href);
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
@@ -97,7 +98,12 @@ const page = () => {
                     .then(response => {
                         console.log(response.data);
                         googleData.userInfo = response.data;
+                        console.log(googleData.userInfo);
+                        googleData.userInfo.display_name = googleData.userInfo.given_name;
+                        googleData.userInfo.surnames = googleData.userInfo.family_name;
+                        googleData.userInfo.loginWith = 'google';
                         userInfo.setJsonData(googleData);
+                        
                         router.push('/completeProfile');
                     })
                     .catch(error => {
@@ -115,6 +121,8 @@ const page = () => {
         else if (code && state && scope && authuser && hd && prompt) {
             fetchGoogleToken();
         }
+        }
+        
     }, [router, userInfo])
 
     return (

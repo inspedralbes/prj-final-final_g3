@@ -6,6 +6,7 @@ import Menu from '../components/Menu'
 import Posts from '../components/PostsProfile'
 import Eventos from '../components/EventosProfile'
 import Gustos from '../components/GustosProfile'
+import Link from 'next/link';
 
 import { UserLoged } from '../context/UserLoged'
 
@@ -41,7 +42,7 @@ const page = () => {
                     </article>
 
                     <div>
-                        <button className='px-8 py-2 rounded-full bg-white text-black font-bold'>Edita el teu perfil</button>
+                        <Link href='/edit-profile' className='px-4 py-2 font-bold text-black bg-white rounded-full hover:bg-primary transition-all duration-300 hover:-translate-y-1'>Edita el perfil</Link>
                     </div>
                 </section>
 

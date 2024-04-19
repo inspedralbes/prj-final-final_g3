@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FollowersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,14 +26,26 @@ Route::get('/auth/callback', [UserController::class, 'handleAuthCallback']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
+    Route::put('/updateInfo', [UserController::class, 'updateInfo']);
+    Route::group(['prefix' => 'users'], function () {
+        Route::post('/{userId}/follow', [FollowersController::class, 'followUser']);
+        Route::delete('/{userId}/unfollow', [FollowersController::class, 'unfollowUser']);
+        Route::get('/{userId}/followers', [FollowersController::class, 'getUserFollowers']);
+        Route::get('/{userId}/followed', [FollowersController::class, 'getUserFollowed']);
+    });
 });
 
 Route::group(['prefix'=>'apps'],function(){
-    Route::post('/register', [UserController::class, 'registerWithSpotify']);
+    Route::post('/register', [UserController::class, 'registerWithApps']);
 });
+
 
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
     Route::get('/', [EventController::class, 'index']);
+    Route::get('/{id}', [EventController::class, 'show']);
+    // Route::post('/', [EventController::class, 'store']);
+    // Route::put('/{id}', [EventController::class, 'update']);
+    // Route::delete('/{id}', [EventController::class, 'destroy']);
 });

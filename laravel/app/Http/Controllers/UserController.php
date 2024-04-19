@@ -281,8 +281,7 @@ class UserController extends Controller{
         ]);
     }
 
-    public function registerWithSpotify(Request $request){
-
+    public function registerWithApps(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'surnames' => 'string',
@@ -309,7 +308,8 @@ class UserController extends Controller{
             'nickname' => $request->nickname,
             'email' => $request->email,
             'birthdate' => $request->birthdate,
-            'loginWith' => 'spotify',
+            'loginWith' => $request->loginWith,
+            'google_id' => $request->google_id,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
@@ -387,6 +387,30 @@ class UserController extends Controller{
         }
         $user->birthdate = $request->birthdate;
         $user->nickname = $request->nickname;
+        
+        return response()->json($user->save());   
+    }
+
+    public function updateInfo (Request $request){
+        $token= $request->header('Authorization');
+        $user = User::where('id', $request->user()->id)->first();
+        if ($token !== $user->token) {
+            return response()->json(['error' => 'No autenticado'], 401);
+        }
+
+        $user->name = $request->name;
+        $user->surnames = $request->surnames;
+        $user->nickname = $request->nickname;
+        $userWithSameNickname = User::where('nickname', $request->nickname)->first();
+        if ($userWithSameNickname && $userWithSameNickname->id != $user->id) {
+            return response()->json(['errors' => ['El nickname ya está en uso.']], 400);
+        }
+        $user->email = $request->email;
+        $userWithSameEmail = User::where('email', $request->email)->first();
+        if ($userWithSameEmail && $userWithSameEmail->id != $user->id) {
+            return response()->json(['errors' => ['El email ya está en uso.']], 400);
+        }
+        $user->birthdate = $request->birthdate;
         
         return response()->json($user->save());   
     }
