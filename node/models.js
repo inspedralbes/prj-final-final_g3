@@ -3,14 +3,12 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-    id: Number,
     content: String,
     likes: Number,
     comments: Number,
 });
 
 const commentPostSchema = new Schema({
-    id: Number,
     postId: Number,
     content: String,
     likes: Number,
@@ -18,19 +16,16 @@ const commentPostSchema = new Schema({
 });
 
 const likePostSchema = new Schema({
-    id: Number,
     postId: Number,
     userId: Number,
 });
 
 const likeEventSchema = new Schema({
-    id: Number,
     eventId: Number,
     userId: Number,
 });
 
 const likeCommentSchema = new Schema({
-    id: Number,
     commentId: Number,
     userId: Number,
 });

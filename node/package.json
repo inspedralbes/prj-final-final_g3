@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node schedule.js",
+    "mongo": "node mongo.js",
     "dev": "nodemon schedule.js -L"
   },
   "license": "ISC",
@@ -14,6 +15,7 @@
     "axios": "^1.6.7",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
+    "minimist": "^1.2.8",
     "mongoose": "^8.3.2",
     "mysql2": "^3.9.1",
     "node-cron": "^3.0.3"
