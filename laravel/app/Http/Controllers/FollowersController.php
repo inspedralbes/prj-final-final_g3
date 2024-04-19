@@ -39,16 +39,18 @@ class FollowersController extends Controller
     {
         $user = User::findOrFail($userId);
         $followers = $user->followers()->with('follower')->get();
+        $count=$followers->count();
 
-        return response()->json(['followers' => $followers], 200);
+        return response()->json(['followers' => $followers,'count'=>$count], 200);
     }
 
     public function getUserFollowed($userId)
     {
         $user = User::findOrFail($userId);
         $followed = $user->followed()->with('followed')->get();
+        $count= $followed->count();
 
-        return response()->json(['followed' => $followed], 200);
+        return response()->json(['followed' => $followed, 'count' => $count], 200);
     }
 
 }
