@@ -394,9 +394,6 @@ class UserController extends Controller{
     public function updateInfo (Request $request){
         $token= $request->header('Authorization');
         $user = User::where('id', $request->user()->id)->first();
-        if ($token !== $user->token) {
-            return response()->json(['error' => 'No autenticado'], 401);
-        }
 
         $user->name = $request->name;
         $user->surnames = $request->surnames;
@@ -411,8 +408,9 @@ class UserController extends Controller{
             return response()->json(['errors' => ['El email ya está en uso.']], 400);
         }
         $user->birthdate = $request->birthdate;
+        $user->save();
         
-        return response()->json($user->save());   
+        return response()->json($user);   
     }
     
 }
