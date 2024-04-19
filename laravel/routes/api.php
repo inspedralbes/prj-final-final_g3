@@ -26,6 +26,7 @@ Route::get('/auth/callback', [UserController::class, 'handleAuthCallback']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
+    Route::put('/updateInfo', [UserController::class, 'updateInfo']);
     Route::group(['prefix' => 'users'], function () {
         Route::post('/{userId}/follow', [FollowersController::class, 'followUser']);
         Route::delete('/{userId}/unfollow', [FollowersController::class, 'unfollowUser']);
@@ -35,7 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 Route::group(['prefix'=>'apps'],function(){
-    Route::post('/register', [UserController::class, 'registerWithSpotify']);
+    Route::post('/register', [UserController::class, 'registerWithApps']);
 });
 
 
