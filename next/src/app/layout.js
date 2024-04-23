@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import React, { useContext } from 'react';
 import UserLogedProvider from "./context/UserLoged";
-
 
 const inter = Inter({ subsets: ["latin"] });
 

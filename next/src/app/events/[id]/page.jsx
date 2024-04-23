@@ -11,7 +11,6 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     const cargarConcierto = async () => {
-      console.log("2");
       try {
         const response = await axios.get(`http://localhost:8000/api/events/${id}`);
         console.log(response);
@@ -24,13 +23,11 @@ const Page = ({ params }) => {
     cargarConcierto();
   }, [id]);
 
-  console.log("1");
 
   if (!datos) {
     return <div className='flex w-full h-screen justify-center items-center'><Loader /></div>;
   }
 
-  console.log("3");
 
   return (
     <>

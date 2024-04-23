@@ -43,6 +43,9 @@ const Page = () => {
   }, []);
 
   const Loged = useContext(UserLoged);
+        if (localStorage.getItem("isLoged")) {
+          Loged.setUser(true);
+        }
   const isLogged = Loged.isLoged;
 
   return (
