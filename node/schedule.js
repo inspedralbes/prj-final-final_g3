@@ -12,9 +12,9 @@ cron.schedule('0 0 0,12 * * *', () => {
     timezone: "Europe/Madrid",
 });
 
-// Ejecuta el método storeEvents() cada hora
+// Ejecuta el método moveEvents() cada hora
 cron.schedule('0 * * * *', () => {
-    server.deletePastEvents();
+    server.movePastEventsToHistory();
 }, {
     scheduled: true,
     timezone: "Europe/Madrid",

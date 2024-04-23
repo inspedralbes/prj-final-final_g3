@@ -84,18 +84,31 @@ async function storeEvents() {
     });
 }
 
-async function deletePastEvents() {
+async function movePastEventsToHistory() {
     try {
         const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const deleteQuery = `DELETE FROM events WHERE CONCAT(date, ' ', time) < ?`;
-        const deleteValues = [now];
-        console.log('Deleting past events...');
+        const selectQuery = `SELECT * FROM events WHERE CONCAT(date, ' ', time) < ?`;
+        const selectValues = [now];
+        console.log('Moving past events to history...');
 
-        const result = await queryDatabase(deleteQuery, deleteValues);
-        console.log(`${result.affectedRows} past events deleted`);
+        const pastEvents = await queryDatabase(selectQuery, selectValues);
+
+        pastEvents.forEach(async event => {
+            const insertQuery = `INSERT INTO historic_events SELECT * FROM events WHERE event_id = ?`;
+            const insertValues = [event.event_id];
+            await queryDatabase(insertQuery, insertValues);
+
+            const deleteQuery = `DELETE FROM events WHERE event_id = ?`;
+            const deleteValues = [event.event_id];
+            await queryDatabase(deleteQuery, deleteValues);
+
+            console.log(`Moved event to history: ${JSON.stringify(event.event)}`);
+        });
+
+        console.log(`${pastEvents.length} past events moved to history`);
     } catch (error) {
-        console.error('Error deleting past events:', error);
+        console.error('Error moving past events to history:', error);
     }
 }
 
@@ -111,7 +124,7 @@ async function queryDatabase(query, values) {
 
 const server = {
     storeEvents,
-    deletePastEvents
+    movePastEventsToHistory
 }
 
 export default server;
