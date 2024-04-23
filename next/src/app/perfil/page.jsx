@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
+import axios from 'axios';
 import Menu from '../components/Menu'
 import Posts from '../components/PostsProfile'
 import Eventos from '../components/EventosProfile'
@@ -12,9 +13,49 @@ import { UserLoged } from '../context/UserLoged'
 
 const page = () => {
     const [selectedSection, setSelectedSection] = useState('Posts');
+    const [followers, setFollowers] = useState('');
+    const [followed, setFollwed] = useState('');
     const Loged = useContext(UserLoged);
     const User = Loged.jsonData;
+    const Token = Loged.token;
+    // const router = useRouter();
     console.log(User);
+    
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                console.log(User.id);
+                const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followers`, {
+                    headers: {
+                        'Authorization': `Bearer ${Token}`
+                    }
+                });
+                setFollowers(response.data.count);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+        const fetchData2 = async () => {
+            try {
+                console.log(User.id);
+                const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followed`, {
+                    headers: {
+                        'Authorization': `Bearer ${Token}`
+                    }
+                });
+                setFollwed(response.data.count);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData2();
+    }, []);
+    
+
+
+
 
     return (
         <>
@@ -26,11 +67,11 @@ const page = () => {
                             <h1 className='text-xl font-semibold'>{User.name}</h1>
                             <div className='flex justify-center items-center gap-6'>
                                 <div>
-                                    <p>666</p>
+                                    <p>{followers}</p>
                                     <p className='text-xs text-white/60'>Seguidors</p>
                                 </div>
                                 <div>
-                                    <p>404</p>
+                                    <p>{followe}</p>
                                     <p className='text-xs text-white/60'>Seguits</p>
                                 </div>
                                 <div>
