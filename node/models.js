@@ -34,9 +34,35 @@ likePostSchema.pre('save', async function(next) {
     }
 });
 
+likeEventSchema.pre('save', async function(next) {
+    try {
+        await models.post.findOneAndUpdate(
+            { _id: this.eventId },
+            { $push: { likes: this._id } },
+            { new: true }
+        );
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 const likeEventSchema = new Schema({
     eventId: Number,
     userId: Number,
+});
+
+likeCommentSchema.pre('save', async function(next) {
+    try {
+        await models.commentPost.findOneAndUpdate(
+            { _id: this.commentId },
+            { $push: { likes: this._id } },
+            { new: true }
+        );
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 const likeCommentSchema = new Schema({
