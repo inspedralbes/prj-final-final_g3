@@ -69,6 +69,17 @@ app.post('/likeEvent', async (req, res) => {
     }
 });
 
+app.get('/likeEvents', async (req, res) => {
+    try {
+        const likeEvents = await models.likeEvent.find({ userId: req.body.userId });
+        console.log("LikeEvents:", likeEvents);
+        res.send(likeEvents);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
