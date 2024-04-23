@@ -71,7 +71,7 @@ const page = () => {
                                     <p className='text-xs text-white/60'>Seguidors</p>
                                 </div>
                                 <div>
-                                    <p>{followe}</p>
+                                    <p>{followed}</p>
                                     <p className='text-xs text-white/60'>Seguits</p>
                                 </div>
                                 <div>
