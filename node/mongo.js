@@ -18,6 +18,8 @@ mongoose.connect('mongodb://root:root@' + host + ':27017/spottunes', { authSourc
     .catch(err => console.error('MongoDB connection error:', err));
 
 
+/* POSTS */
+/* Esta funcion es para guardar un post*/
 app.post('/posts', async (req, res) => {
     const post = req.body;
     try {
@@ -33,6 +35,7 @@ app.post('/posts', async (req, res) => {
     }
 });
 
+/* Esta funcion es para eliminar un post*/
 app.delete('/posts', async (req, res) => {
     try {
         const post = await models.post.findOneAndDelete({ _id: req.body.postId });
@@ -43,6 +46,7 @@ app.delete('/posts', async (req, res) => {
     }
 });
 
+/* Esta funcion es para recibir todos los posts de un usuario y su contenido*/
 app.get('/posts', async (req, res) => {
     try {
         const posts = await models.post.find({ userId: req.body.userId});
@@ -54,6 +58,9 @@ app.get('/posts', async (req, res) => {
     }
 });
 
+/* EVENTS */
+/* Esta funcion es para guardar el like de un evento*/
+
 app.post('/likeEvent', async (req, res) => {
     try {
         const likeEvent = await models.likeEvent.create({ eventId: req.body.eventId, userId: req.body.userId });
@@ -63,6 +70,8 @@ app.post('/likeEvent', async (req, res) => {
         console.error("Error:", error);
     }
 });
+
+/* Esta funcion es para recibir los eventos que un usuario le ha dado like*/
 
 app.get('/likeEvents', async (req, res) => {
     try {
@@ -75,6 +84,7 @@ app.get('/likeEvents', async (req, res) => {
     }
 });
 
+/* Esta funcion es para recoger el numero de likes de un evento*/
 app.get('/likeEvents/:eventId', async (req, res) => {
     try {
         const eventExists = await models.event.exists({ _id: req.params.eventId });
@@ -89,12 +99,62 @@ app.get('/likeEvents/:eventId', async (req, res) => {
         res.status(404).send({ error: error.message });
     }
 });
-
+/* Esta funcion es para quitar el like de un evento cuando el usuario lo quita manualmente*/
 app.delete('/likeEvent', async (req, res) => {
     try {
         const likeEvent = await models.likeEvent.findOneAndDelete({ eventId: req.body.eventId, userId: req.body.userId });
         console.log("LikeEvent deleted:", likeEvent);
         res.send(likeEvent);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+/* LIKES */
+/* Esta funcion es para guardar el like de un post hecho por un usuario */
+app.post('/likePost', async (req, res) => {
+    try {
+        const likePost = await models.likePost.create({ postId: req.body.postId, userId: req.body.userId });
+        console.log("LikePost created:", likePost);
+        res.send(likePost);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+/* Esta funcion es para recibir todos los post a los que un usuario le ha dado like*/
+app.get('/likePosts', async (req, res) => {
+    try {
+        const likePosts = await models.likePost.find({ userId: req.body.userId });
+        console.log("LikePosts:", likePosts);
+        res.send(likePosts);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+/* Esta funcion es devolver cuantos likes tiene un post */
+app.get('/likePosts/:postId', async (req, res) => {
+    try {
+        const postExists = await models.post.exists({ _id: req.params.postId });
+        if (!postExists) {
+            throw new Error("Post does not exist");
+        }
+        const likePostCount = await models.likePost.countDocuments({ postId: req.params.postId });
+        console.log("LikePost count:", likePostCount);
+        res.send({ postLikes: likePostCount });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(404).send({ error: error.message });
+    }
+});
+/* Esta funcion es para cuando un usuario quiere quitar el like de un post */
+app.delete('/likePost', async (req, res) => {
+    try {
+        const likePost = await models.likePost.findOneAndDelete({ postId: req.body.postId, userId: req.body.userId });
+        console.log("LikePost deleted:", likePost);
+        res.send(likePost);
     } catch (error) {
         console.error("Error:", error);
     }
