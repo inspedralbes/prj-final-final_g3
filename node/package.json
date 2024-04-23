@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node schedule.js",
     "mongo": "node mongo.js",
+    "devmongo": "nodemon mongo.js -L",
     "dev": "nodemon schedule.js -L"
   },
   "license": "ISC",

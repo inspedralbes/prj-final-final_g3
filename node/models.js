@@ -6,6 +6,7 @@ const postSchema = new Schema({
     content: String,
     likes: [{ type: Schema.Types.ObjectId, ref: 'likePost' }],
     comments: Number,
+    userId: Number,
 });
 
 const commentPostSchema = new Schema({
@@ -18,6 +19,19 @@ const commentPostSchema = new Schema({
 const likePostSchema = new Schema({
     postId: { type: Schema.Types.ObjectId, ref: 'post' },
     userId: Number,
+});
+
+likePostSchema.pre('save', async function(next) {
+    try {
+        await models.post.findOneAndUpdate(
+            { _id: this.postId },
+            { $push: { likes: this._id } },
+            { new: true }
+        );
+        next();
+    } catch (error) {
+        next(error);
+    }
 });
 
 const likeEventSchema = new Schema({
