@@ -18,7 +18,7 @@ mongoose.connect('mongodb://root:root@' + host + ':27017/spottunes', { authSourc
     .catch(err => console.error('MongoDB connection error:', err));
 
 
-app.post('/createPosts', async (req, res) => {
+app.post('/posts', async (req, res) => {
     const post = req.body;
     try {
         var createdPost = {
@@ -28,6 +28,16 @@ app.post('/createPosts', async (req, res) => {
             userId: post.userId,
         };
         res.send(await models.post.create(createdPost));
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.delete('/posts', async (req, res) => {
+    try {
+        const post = await models.post.findOneAndDelete({ _id: req.body.postId });
+        console.log("Post deleted:", post);
+        res.send("Post deleted successfully");
     } catch (error) {
         console.error("Error:", error);
     }
@@ -67,12 +77,16 @@ app.get('/likeEvents', async (req, res) => {
 
 app.get('/likeEvents/:eventId', async (req, res) => {
     try {
+        const eventExists = await models.event.exists({ _id: req.params.eventId });
+        if (!eventExists) {
+            throw new Error("Event does not exist");
+        }
         const likeEventCount = await models.likeEvent.countDocuments({ eventId: req.params.eventId });
         console.log("LikeEvent count:", likeEventCount);
         res.send({ eventFollowers: likeEventCount });
     } catch (error) {
         console.error("Error:", error);
-        return [];
+        res.status(404).send({ error: error.message });
     }
 });
 
