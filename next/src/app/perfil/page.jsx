@@ -14,6 +14,7 @@ import { UserLoged } from '../context/UserLoged'
 const page = () => {
     const [selectedSection, setSelectedSection] = useState('Posts');
     const [followers, setFollowers] = useState('');
+    const [followed, setFollwed] = useState('');
     const Loged = useContext(UserLoged);
     const User = Loged.jsonData;
     const Token = Loged.token;
@@ -36,6 +37,20 @@ const page = () => {
             }
         };
         fetchData();
+        const fetchData2 = async () => {
+            try {
+                console.log(User.id);
+                const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followed`, {
+                    headers: {
+                        'Authorization': `Bearer ${Token}`
+                    }
+                });
+                setFollwed(response.data.count);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData2();
     }, []);
     
 
@@ -56,7 +71,7 @@ const page = () => {
                                     <p className='text-xs text-white/60'>Seguidors</p>
                                 </div>
                                 <div>
-                                    <p>404</p>
+                                    <p>{followe}</p>
                                     <p className='text-xs text-white/60'>Seguits</p>
                                 </div>
                                 <div>
