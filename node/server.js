@@ -51,6 +51,12 @@ async function storeEvents() {
         console.log('Connected to database');
 
         let allEvents = await getEvents();
+        if (allEvents.length === 0) {
+            console.log('No events to store');
+            return;
+        }
+
+        await cleanObsoleteEvents(allEvents);
 
         allEvents.forEach(async event => {
             const id = event.id || null;
@@ -82,6 +88,37 @@ async function storeEvents() {
         });
 
     });
+}
+
+async function cleanObsoleteEvents(allEvents) {
+    const dbEvents = await queryDatabase('SELECT event_id FROM events');
+    const dbEventIds = dbEvents.map(event => event.event_id);
+
+    const fetchedEventIds = allEvents.map(event => event.id);
+
+    const eventsToDelete = dbEventIds.filter(id => !fetchedEventIds.includes(id));
+    if (eventsToDelete.length === 0) {
+        console.log('No obsolete events');
+        return;
+    }
+
+    for (const eventId of eventsToDelete) {
+        const selectQuery = 'SELECT * FROM events WHERE event_id = ?';
+        const selectResult = await queryDatabase(selectQuery, [eventId]);
+
+        if (selectResult.length > 0) {
+            const eventName = selectResult[0].name; // Assuming 'name' is the column for event name
+
+            const insertQuery = 'INSERT INTO historic_events SELECT * FROM events WHERE event_id = ?';
+            await queryDatabase(insertQuery, [eventId]);
+
+            const deleteQuery = 'DELETE FROM events WHERE event_id = ?';
+            await queryDatabase(deleteQuery, [eventId]);
+
+            console.log(`Moved event: ${eventName} to historic_events`);
+        }
+    }
+
 }
 
 async function movePastEventsToHistory() {
