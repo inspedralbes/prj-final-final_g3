@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
@@ -21,6 +21,7 @@ const page = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const Login = async (event) => {
+    
     setIsLoading(true);
     event.preventDefault();
 
@@ -30,6 +31,8 @@ const page = () => {
       Loged.setUser(true);
       Loged.setJsonData(response.data.data.user);
       Loged.setToken(response.data.data.token);
+      localStorage.setItem('token', response.data.data.token);
+      localStorage.setItem('isLoged', true);
       router.push('/events');
 
     } catch (error) {
