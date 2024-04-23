@@ -76,6 +76,16 @@ app.get('/likeEvents/:eventId', async (req, res) => {
     }
 });
 
+app.delete('/likeEvent', async (req, res) => {
+    try {
+        const likeEvent = await models.likeEvent.findOneAndDelete({ eventId: req.body.eventId, userId: req.body.userId });
+        console.log("LikeEvent deleted:", likeEvent);
+        res.send(likeEvent);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
