@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Spottunes Deploy Actions
 run-name: ${{ github.actor }} is deploying Spottunes 🚀
 on:
   push:
