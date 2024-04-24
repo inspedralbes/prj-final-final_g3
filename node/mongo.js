@@ -72,7 +72,6 @@ app.post('/likeEvent', async (req, res) => {
 });
 
 /* Esta funcion es para recibir los eventos que un usuario le ha dado like*/
-
 app.get('/likeEvents', async (req, res) => {
     try {
         const likeEvents = await models.likeEvent.find({ userId: req.body.userId });
@@ -215,6 +214,53 @@ app.delete('/comments', async (req, res) => {
         console.error("Error:", error);
     }
 });
+
+app.post('/likeComment', async (req, res) => {
+    try {
+        const likeComment = await models.likeComment.create({ commentId: req.body.commentId, userId: req.body.userId });
+        console.log("LikeComment created:", likeComment);
+        res.send(likeComment);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.get('/likeComments', async (req, res) => {
+    try {
+        const likeComments = await models.likeComment.find({ userId: req.body.userId });
+        console.log("LikeComments:", likeComments);
+        res.send(likeComments);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+app.get('/likeComments/:commentId', async (req, res) => {
+    try {
+        const commentExists = await models.commentPost.exists({ _id: req.params.commentId });
+        if (!commentExists) {
+            throw new Error("Comment does not exist");
+        }
+        const likeCommentCount = await models.likeComment.countDocuments({ commentId: req.params.commentId });
+        console.log("LikeComment count:", likeCommentCount);
+        res.send({ commentLikes: likeCommentCount });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(404).send({ error: error.message });
+    }
+});
+
+app.delete('/likeComment', async (req, res) => {
+    try {
+        const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.body.commentId, userId: req.body.userId });
+        console.log("LikeComment deleted:", likeComment);
+        res.send(likeComment);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
