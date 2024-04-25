@@ -79,3 +79,41 @@ jobs:
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:node
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 node/"
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  deployement-next:
+    needs: [docker-compose]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Conexión al servidor y deploy de next
+        run: |
+          echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          cd next
+          cp .env.example .env
+          sed -i 's#NEXT_PUBLIC_SPOTIFY_CLIENT_ID=#NEXT_PUBLIC_SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}#g' .env
+          sed -i 's#NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=#NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}#g' .env
+          sed -i 's#NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=#NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=${{ secrets.SPOTIFY_REDIRECT_URI }}#g' .env
+          sed -i 's#NEXT_PUBLIC_GOOGLE_CLIENT_ID=#NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}#g' .env
+          sed -i 's#NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=#NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}#g' .env
+          sed -i 's#NEXT_PUBLIC_GOOGLE_REDIRECT_URI=#NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}#g' .env
+          cd ${{ github.workspace }}
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d next ] && sudo rm -r next"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "mkdir next"
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./next/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:next
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./next/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:next
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 next/"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  start-docker:
+    needs: [deployment-laravel, deployment-node, deployement-next]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conexión al servidor y start de docker-compose
+        run: |
+          echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker compose up -d"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
