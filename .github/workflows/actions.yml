@@ -7,7 +7,7 @@ on:
       - github-actions
 
 jobs:
-  stop-docker-compose:
+  stop-docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
@@ -22,7 +22,7 @@ jobs:
 
   fill-docker-compose:
     runs-on: ubuntu-latest
-    needs: [stop-docker-compose]
+    needs: [stop-docker]
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
