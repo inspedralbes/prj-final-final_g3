@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - desplegament
 
 jobs:
   stop-docker:
