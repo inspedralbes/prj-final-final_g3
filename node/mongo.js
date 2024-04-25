@@ -8,6 +8,12 @@ const app = express();
 const argv = minimist(process.argv.slice(2));
 const host = argv.host || 'mongodb';
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -72,7 +78,6 @@ app.post('/likeEvent', async (req, res) => {
 });
 
 /* Esta funcion es para recibir los eventos que un usuario le ha dado like*/
-
 app.get('/likeEvents', async (req, res) => {
     try {
         const likeEvents = await models.likeEvent.find({ userId: req.body.userId });
@@ -155,6 +160,108 @@ app.delete('/likePost', async (req, res) => {
         const likePost = await models.likePost.findOneAndDelete({ postId: req.body.postId, userId: req.body.userId });
         console.log("LikePost deleted:", likePost);
         res.send(likePost);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+/* COMMENTS */
+/* Esta funcion sirve para guardar los comentarios de los usuarios y tambien las respuestas a ellos*/
+app.post('/comments', async (req, res) => {
+    const comment = req.body;
+    try {
+        var createdComment = {
+            postId: comment.postId,
+            content: comment.content,
+            likes: [],
+            parentId: comment.parentId,
+        };
+        res.send(await models.commentPost.create(createdComment));
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+/* Esta funcion sirve para recibir todos los comentarios de un post */
+app.get('/comments', async (req, res) => {
+    try {
+        const comments = await models.commentPost.find({ postId: req.body.postId });
+        console.log("Comments:", comments);
+        res.send(comments);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+/* Esta funcion sirve para recibir cuantos comentarios tiene un post */
+app.get('/comments/:postId', async (req, res) => {
+    try {
+        const postExists = await models.post.exists({ _id: req.params.postId });
+        if (!postExists) {
+            throw new Error("Post does not exist");
+        }
+        const commentCount = await models.commentPost.countDocuments({ postId: req.params.postId });
+        console.log("Comment count:", commentCount);
+        res.send({ postComments: commentCount });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(404).send({ error: error.message });
+    }
+});
+
+/* Esta funcion sirve para eliminar un comentario */
+app.delete('/comments', async (req, res) => {
+    try {
+        const comment = await models.commentPost.findOneAndDelete({ _id: req.body.commentId });
+        console.log("Comment deleted:", comment);
+        res.send("Comment deleted successfully");
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.post('/likeComment', async (req, res) => {
+    try {
+        const likeComment = await models.likeComment.create({ commentId: req.body.commentId, userId: req.body.userId });
+        console.log("LikeComment created:", likeComment);
+        res.send(likeComment);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.get('/likeComments', async (req, res) => {
+    try {
+        const likeComments = await models.likeComment.find({ userId: req.body.userId });
+        console.log("LikeComments:", likeComments);
+        res.send(likeComments);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+app.get('/likeComments/:commentId', async (req, res) => {
+    try {
+        const commentExists = await models.commentPost.exists({ _id: req.params.commentId });
+        if (!commentExists) {
+            throw new Error("Comment does not exist");
+        }
+        const likeCommentCount = await models.likeComment.countDocuments({ commentId: req.params.commentId });
+        console.log("LikeComment count:", likeCommentCount);
+        res.send({ commentLikes: likeCommentCount });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(404).send({ error: error.message });
+    }
+});
+
+app.delete('/likeComment', async (req, res) => {
+    try {
+        const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.body.commentId, userId: req.body.userId });
+        console.log("LikeComment deleted:", likeComment);
+        res.send(likeComment);
     } catch (error) {
         console.error("Error:", error);
     }

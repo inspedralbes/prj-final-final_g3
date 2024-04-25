@@ -39,9 +39,29 @@ const likeEventSchema = new Schema({
     userId: Number,
 });
 
+
 const likeCommentSchema = new Schema({
     commentId: { type: Schema.Types.ObjectId, ref: 'commentPost' },
     userId: Number,
+});
+
+
+likeCommentSchema.pre('save', async function(next) {
+    try {
+        await models.commentPost.findOneAndUpdate(
+            { _id: this.commentId },
+            { $push: { likes: this._id } },
+            { new: true }
+        );
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+const imageSchema = new Schema({
+    url: String,
+    postId: Number,
 });
 
 const models = {
@@ -50,6 +70,7 @@ const models = {
     likePost: mongoose.model("likePost", likePostSchema),
     likeEvent: mongoose.model("likeEvent", likeEventSchema),
     likeComment: mongoose.model("likeComment", likeCommentSchema),
+    image: mongoose.model("image", imageSchema),
 };
 
 export default models;
