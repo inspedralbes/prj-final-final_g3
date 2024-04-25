@@ -22,9 +22,9 @@ services:
 
   laravel:
     container_name: laravel
-    build: ./Laravel
+    build: ./laravel
     volumes:
-      - ./Laravel:/var/www/html
+      - ./laravel:/var/www/html
     ports:
       - 8000:80
     environment:
