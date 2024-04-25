@@ -20,11 +20,18 @@ jobs:
           chmod 600 ~/prod_key.pem
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker compose down"
           sed -i 's#MYSQL_ROOT_PASSWORD:#MYSQL_ROOT_PASSWORD:${{ secrets.DB_PASSWORD }}#g' docker-compose.yml
+          echo "db_password"
           sed -i 's#MONGO_INITDB_ROOT_USERNAME:#MONGO_INITDB_ROOT_USERNAME:${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' docker-compose.yml
+          echo "mongo_user_init"
           sed -i 's#MONGO_INITDB_ROOT_PASSWORD:#MONGO_INITDB_ROOT_PASSWORD:${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}#g' docker-compose.yml
+          echo "mongo_password_init"
           sed -i 's#ME_CONFIG_MONGODB_ADMINUSERNAME:#ME_CONFIG_MONGODB_ADMINUSERNAME:${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' docker-compose.yml
+          echo "mongo_user_admin"
           sed -i 's#ME_CONFIG_MONGODB_ADMINPASSWORD:#ME_CONFIG_MONGODB_ADMINPASSWORD:${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}#g' docker-compose.yml
+          echo "mongo_password_admin"
           sed -i 's#ME_CONFIG_BASICAUTH_USERNAME:#ME_CONFIG_BASICAUTH_USERNAME:${{ secrets.MONGO_USER }}#g' docker-compose.yml
+          echo "mongo_user"
           sed -i 's#ME_CONFIG_BASICAUTH_PASSWORD:#ME_CONFIG_BASICAUTH_PASSWORD:${{ secrets.MONGO_PASSWORD }}#g' docker-compose.yml
+          echo "mongo_password"
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./docker-compose.yml ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:docker-compose.yml
       - run: echo "🍏 This job's status is ${{ job.status }}."
