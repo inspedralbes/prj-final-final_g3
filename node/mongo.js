@@ -34,6 +34,7 @@ app.post('/posts', async (req, res) => {
             likes: [],
             comments: 0,
             userId: post.userId,
+            images: []
         };
         res.send(await models.post.create(createdPost));
     } catch (error) {
