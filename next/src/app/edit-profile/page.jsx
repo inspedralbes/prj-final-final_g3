@@ -51,7 +51,7 @@ const page = () => {
         try {
             console.log(Token);
             // const response = await axios.put('http://localhost:8000/api/updateInfo', {
-            const response = await axios.put('http://spottunes.daw.inspedralbes.cat:8000/api/updateInfo', {
+            const response = await axios.put('http://spottunes.daw.inspedralbes.cat:8000/public/api/updateInfo', {
                 name: name,
                 nickname: nickname,
                 surnames: surnames,
