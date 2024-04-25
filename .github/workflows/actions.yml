@@ -18,7 +18,9 @@ jobs:
           echo "Connecting to the server and running docker-compose commands"
           echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
+          echo "Antes del docker compose down"
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker compose down"
+          echo "Vamos a empezar"
           sed -i 's#MYSQL_ROOT_PASSWORD:#MYSQL_ROOT_PASSWORD:${{ secrets.DB_PASSWORD }}#g' docker-compose.yml
           echo "db_password"
           sed -i 's#MONGO_INITDB_ROOT_USERNAME:#MONGO_INITDB_ROOT_USERNAME:${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' docker-compose.yml
