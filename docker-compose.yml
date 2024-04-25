@@ -36,7 +36,7 @@ services:
 
   next:
     container_name: next
-    image: node:20.8.1-bullseye-slim
+    image: arm64v8/node
     working_dir: /usr/src/app
     volumes:
       - ./next:/usr/src/app
