@@ -7,8 +7,22 @@ on:
       - github-actions
 
 jobs:
-  docker-compose:
+  stop-docker-compose:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Conexión al servidor y stop de docker-compose
+        run: |
+          echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker compose down"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  fill-docker-compose:
+    runs-on: ubuntu-latest
+    needs: [stop-docker-compose]
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
@@ -18,7 +32,6 @@ jobs:
           echo "Connecting to the server and running docker-compose commands"
           echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker compose down"
           sed -i 's#MYSQL_ROOT_PASSWORD:#MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}#g' docker-compose.yml
           sed -i 's#MONGO_INITDB_ROOT_USERNAME:#MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' docker-compose.yml
           sed -i 's#MONGO_INITDB_ROOT_PASSWORD:#MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}#g' docker-compose.yml
@@ -30,7 +43,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   deployment-laravel:
-    needs: [docker-compose]
+    needs: [fill-docker-compose]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
@@ -55,7 +68,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   deployment-node:
-    needs: [docker-compose]
+    needs: [fill-docker-compose]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
@@ -81,7 +94,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   deployement-next:
-    needs: [docker-compose]
+    needs: [fill-docker-compose]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
