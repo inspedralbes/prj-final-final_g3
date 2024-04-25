@@ -56,7 +56,7 @@ app.delete('/posts', async (req, res) => {
 /* Esta funcion es para recibir todos los posts de un usuario y su contenido*/
 app.get('/posts', async (req, res) => {
     try {
-        const posts = await models.post.find({ userId: req.body.userId});
+        const posts = await models.post.find({ userId: req.query.userId});
         console.log("Posts:", posts);
         res.send(posts);
     } catch (error) {
@@ -81,7 +81,7 @@ app.post('/likeEvent', async (req, res) => {
 /* Esta funcion es para recibir los eventos que un usuario le ha dado like*/
 app.get('/likeEvents', async (req, res) => {
     try {
-        const likeEvents = await models.likeEvent.find({ userId: req.body.userId });
+        const likeEvents = await models.likeEvent.find({ userId: req.query.userId });
         console.log("LikeEvents:", likeEvents);
         res.send(likeEvents);
     } catch (error) {
@@ -131,7 +131,7 @@ app.post('/likePost', async (req, res) => {
 /* Esta funcion es para recibir todos los post a los que un usuario le ha dado like*/
 app.get('/likePosts', async (req, res) => {
     try {
-        const likePosts = await models.likePost.find({ userId: req.body.userId });
+        const likePosts = await models.likePost.find({ userId: req.query.userId });
         console.log("LikePosts:", likePosts);
         res.send(likePosts);
     } catch (error) {
@@ -234,7 +234,7 @@ app.post('/likeComment', async (req, res) => {
 
 app.get('/likeComments', async (req, res) => {
     try {
-        const likeComments = await models.likeComment.find({ userId: req.body.userId });
+        const likeComments = await models.likeComment.find({ userId: req.query.userId });
         console.log("LikeComments:", likeComments);
         res.send(likeComments);
     } catch (error) {
