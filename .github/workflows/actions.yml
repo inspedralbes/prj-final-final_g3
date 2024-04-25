@@ -27,7 +27,6 @@ jobs:
           sed -i 's#ME_CONFIG_BASICAUTH_USERNAME:#ME_CONFIG_BASICAUTH_USERNAME:${{ secrets.MONGO_USER }}#g' docker-compose.yml
           sed -i 's#ME_CONFIG_BASICAUTH_PASSWORD:#ME_CONFIG_BASICAUTH_PASSWORD:${{ secrets.MONGO_PASSWORD }}#g' docker-compose.yml
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./docker-compose.yml ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:docker-compose.yml
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker-compose down"
       - run:
           echo "🍏 This job's status is ${{ job.status }}."
 
