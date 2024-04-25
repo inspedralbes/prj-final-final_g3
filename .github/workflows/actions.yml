@@ -27,40 +27,4 @@ jobs:
           sed -i 's#ME_CONFIG_BASICAUTH_USERNAME:#ME_CONFIG_BASICAUTH_USERNAME:${{ secrets.MONGO_USER }}#g' docker-compose.yml
           sed -i 's#ME_CONFIG_BASICAUTH_PASSWORD:#ME_CONFIG_BASICAUTH_PASSWORD:${{ secrets.MONGO_PASSWORD }}#g' docker-compose.yml
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./docker-compose.yml ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:docker-compose.yml
-      - run:
-          echo "🍏 This job's status is ${{ job.status }}."
-
-          # deployment-laravel:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout del código
-  #       uses: actions/checkout@v4
-
-  #     - name: Conexión al servidor y deploy de laravel
-  #       run: |
-  #         echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
-  #         chmod 600 ~/prod_key.pem
-  #         cd laravel
-  #         cp .env.example .env
-  #         sed -i 's/DB_HOST=/DB_HOST=db/g' .env
-  #         sed -i 's/DB_DATABASE=/DB_DATABASE=spottunes/g' .env
-  #         sed -i 's/DB_USERNAME=/DB_USERNAME=${{ secrets.DB_USERNAME }}/g' .env
-  #         sed -i 's#DB_PASSWORD=#DB_PASSWORD=${{ secrets.DB_PASSWORD }}#g' .env
-  #         cd ${{ github.workspace }}
-  #         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d laravel ] && sudo rm -r laravel"
-  #         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "mkdir laravel"
-  #         scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./laravel/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:laravel
-  #         scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./laravel/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:laravel
-  #         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 laravel/"
-  #     - run: echo "🍏 This job's status is ${{ job.status }}."
-
-  # deploy-node:
-  #   steps:
-  #     - name: Checkout del código
-  #       uses: actions/checkout@v4
-
-  #     - name: Conexión al servidor y deploy del node
-  #       run: |
-  #         echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
-  #         chmod 600 ~/prod_key.pem
-  #         cd node
+      - run: echo "🍏 This job's status is ${{ job.status }}."
