@@ -39,19 +39,6 @@ const likeEventSchema = new Schema({
     userId: Number,
 });
 
-likeEventSchema.pre('save', async function(next) {
-    try {
-        await models.event.findOneAndUpdate(
-            { _id: this.eventId },
-            { $push: { likes: this._id } },
-            { new: true }
-        );
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
-
 const likeCommentSchema = new Schema({
     commentId: { type: Schema.Types.ObjectId, ref: 'commentPost' },
     userId: Number,

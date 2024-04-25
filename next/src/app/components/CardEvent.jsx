@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { UserLoged } from '../context/UserLoged'
@@ -15,20 +15,52 @@ const CardEvent = ({ image, name, location, date, people, eventId }) => {
     const Loged = useContext(UserLoged);
     const User = Loged.jsonData;
     
-    const toggleLike = async () => {
-        
-        
-        console.log(User.id)
-        try {
-            const response = await axios.post('http://localhost:8080/likeEvent', {
-                eventId: eventId,
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('http://localhost:8080/likeEvents', {
                 userId: User.id
+            
             });
-            console.log(response)
-            setLiked(!liked);
-        } catch (error) {
+            console.log('Hola Eventos MG', await response)
+
+          } catch (error) {
             console.error('Error fetching data:', error);
+          }
+        };
+        fetchData();
+      }, []);
+
+    const toggleLike = async () => {
+
+
+        console.log(User.id)
+        if (!liked) {
+            try {
+                const response = await axios.post('http://localhost:8080/likeEvent', {
+                    eventId: eventId,
+                    userId: User.id
+                });
+                console.log(response)
+                setLiked(true);
+            } catch (error) {
+                setLiked(false);
+                console.error('Error fetching data:', error);
+            }
+        } else {
+            try {
+                const response = await axios.delete('http://localhost:8080/likeEvent', {
+                    eventId: eventId,
+                    userId: User.id
+                });
+                console.log(response)
+                setLiked(false);
+            } catch (error) {
+                setLiked(true);
+                console.error('Error fetching data:', error);
+            }
         }
+
     };
 
 
