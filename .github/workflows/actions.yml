@@ -7,13 +7,13 @@ on:
       - github-actions
 
 jobs:
-  deployment:
+  deployment-laravel:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: Conexión al servidor
+      - name: Conexión al servidor y deploy de laravel
         run: |
           echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
@@ -32,3 +32,14 @@ jobs:
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 laravel/"
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "docker compose up -d"
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  # deploy-node:
+  #   steps:
+  #     - name: Checkout del código
+  #       uses: actions/checkout@v4
+
+  #     - name: Conexión al servidor y deploy del node
+  #       run: |
+  #         echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
+  #         chmod 600 ~/prod_key.pem
+  #         cd node
