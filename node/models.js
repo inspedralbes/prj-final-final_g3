@@ -40,10 +40,6 @@ const likeEventSchema = new Schema({
     userId: Number,
 });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a1e84440b65c4b8ceb6c44c96257dbf48bf106b9
 const likeCommentSchema = new Schema({
     commentId: { type: Schema.Types.ObjectId, ref: 'commentPost' },
     userId: Number,
