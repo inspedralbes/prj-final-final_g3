@@ -26,7 +26,8 @@ const page = () => {
         const fetchData = async () => {
             try {
                 console.log(User.id);
-                const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followers`, {
+                // const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followers`, {
+                const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/api/users/${User.id}/followers`, {
                     headers: {
                         'Authorization': `Bearer ${Token}`
                     }
@@ -40,7 +41,8 @@ const page = () => {
         const fetchData2 = async () => {
             try {
                 console.log(User.id);
-                const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followed`, {
+                // const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followed`, {
+                const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/api/users/${User.id}/followed`, {
                     headers: {
                         'Authorization': `Bearer ${Token}`
                     }

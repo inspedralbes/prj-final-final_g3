@@ -12,7 +12,8 @@ const Page = ({ params }) => {
   useEffect(() => {
     const cargarConcierto = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/events/${id}`);
+        // const response = await axios.get(`http://localhost:8000/api/events/${id}`);
+        const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/api/events/${id}`);
         console.log(response);
         setDatos(response.data.event);
       } catch (error) {
