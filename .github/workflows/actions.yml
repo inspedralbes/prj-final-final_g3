@@ -106,6 +106,8 @@ jobs:
           cd next
           cp .env.example .env
           sed -i 's#NEXT_PUBLIC_SPOTIFY_CLIENT_ID=#NEXT_PUBLIC_SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}#g' .env
+          sed -i 's#NEXT_PUBLIC_ENV=#NEXT_PUBLIC_ENV=production#g' .env
+          sed -i 's#NEXT_PUBLIC_LARAVEL_PROD_URL=#NEXT_PUBLIC_LARAVEL_PROD_URL=${{ secrets.LARAVEL_PROD_URL }}#g' .env
           sed -i 's#NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=#NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}#g' .env
           sed -i 's#NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=#NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=${{ secrets.SPOTIFY_REDIRECT_URI }}#g' .env
           sed -i 's#NEXT_PUBLIC_GOOGLE_CLIENT_ID=#NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}#g' .env
