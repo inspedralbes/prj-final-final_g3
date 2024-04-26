@@ -108,7 +108,7 @@ app.get('/likeEvents/:eventId', async (req, res) => {
 /* Esta funcion es para quitar el like de un evento cuando el usuario lo quita manualmente*/
 app.delete('/likeEvent', async (req, res) => {
     try {
-        const likeEvent = await models.likeEvent.findOneAndDelete({ eventId: req.body.eventId, userId: req.body.userId });
+        const likeEvent = await models.likeEvent.findOneAndDelete({ eventId: req.query.eventId, userId: req.query.userId });
         console.log("LikeEvent deleted:", likeEvent);
         res.send(likeEvent);
     } catch (error) {

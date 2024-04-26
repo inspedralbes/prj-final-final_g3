@@ -7,7 +7,6 @@ import Hero from './components/Hero'
 export default function Page() {
   return (
     <>
-
       <Background />
       <Header />
       <main className='w-[90%] mx-auto'>
