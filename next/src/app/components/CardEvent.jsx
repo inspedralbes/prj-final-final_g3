@@ -14,10 +14,11 @@ const CardEvent = ({ image, name, location, date, people, eventId }) => {
     const [liked, setLiked] = useState(false);
     const Loged = useContext(UserLoged);
     const User = Loged.jsonData;
-    
+    const isLogged = Loged.isLoged;
+
     const toggleLike = async () => {
-        
-        
+
+
         console.log(User.id)
         try {
             // const response = await axios.post('http://localhost:8080/likeEvent', {

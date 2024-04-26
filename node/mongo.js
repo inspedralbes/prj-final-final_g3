@@ -34,6 +34,7 @@ app.post('/posts', async (req, res) => {
             likes: [],
             comments: 0,
             userId: post.userId,
+            images: []
         };
         res.send(await models.post.create(createdPost));
     } catch (error) {
@@ -55,7 +56,7 @@ app.delete('/posts', async (req, res) => {
 /* Esta funcion es para recibir todos los posts de un usuario y su contenido*/
 app.get('/posts', async (req, res) => {
     try {
-        const posts = await models.post.find({ userId: req.body.userId});
+        const posts = await models.post.find({ userId: req.query.userId});
         console.log("Posts:", posts);
         res.send(posts);
     } catch (error) {
@@ -80,7 +81,7 @@ app.post('/likeEvent', async (req, res) => {
 /* Esta funcion es para recibir los eventos que un usuario le ha dado like*/
 app.get('/likeEvents', async (req, res) => {
     try {
-        const likeEvents = await models.likeEvent.find({ userId: req.body.userId });
+        const likeEvents = await models.likeEvent.find({ userId: req.query.userId });
         console.log("LikeEvents:", likeEvents);
         res.send(likeEvents);
     } catch (error) {
@@ -130,7 +131,7 @@ app.post('/likePost', async (req, res) => {
 /* Esta funcion es para recibir todos los post a los que un usuario le ha dado like*/
 app.get('/likePosts', async (req, res) => {
     try {
-        const likePosts = await models.likePost.find({ userId: req.body.userId });
+        const likePosts = await models.likePost.find({ userId: req.query.userId });
         console.log("LikePosts:", likePosts);
         res.send(likePosts);
     } catch (error) {
@@ -221,6 +222,9 @@ app.delete('/comments', async (req, res) => {
     }
 });
 
+/* LIKES A COMENTARIOS */
+
+/* Guardar el like de un comentario */
 app.post('/likeComment', async (req, res) => {
     try {
         const likeComment = await models.likeComment.create({ commentId: req.body.commentId, userId: req.body.userId });
@@ -231,9 +235,11 @@ app.post('/likeComment', async (req, res) => {
     }
 });
 
+
+/* Recibir todos los comentarios a los que un usuario le ha dado like */
 app.get('/likeComments', async (req, res) => {
     try {
-        const likeComments = await models.likeComment.find({ userId: req.body.userId });
+        const likeComments = await models.likeComment.find({ userId: req.query.userId });
         console.log("LikeComments:", likeComments);
         res.send(likeComments);
     } catch (error) {
@@ -242,6 +248,8 @@ app.get('/likeComments', async (req, res) => {
     }
 });
 
+
+/* Recibir cuantos likes tiene un comentario */
 app.get('/likeComments/:commentId', async (req, res) => {
     try {
         const commentExists = await models.commentPost.exists({ _id: req.params.commentId });
@@ -257,6 +265,7 @@ app.get('/likeComments/:commentId', async (req, res) => {
     }
 });
 
+/* Eliminar el like de un comentario */
 app.delete('/likeComment', async (req, res) => {
     try {
         const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.body.commentId, userId: req.body.userId });
@@ -266,6 +275,44 @@ app.delete('/likeComment', async (req, res) => {
         console.error("Error:", error);
     }
 });
+
+/* IMAGENES */ 
+
+app.post('/images', async (req, res) => {
+    const image = req.body;
+    try {
+        var createdImage = {
+            url: image.url,
+            postId: image.postId,
+        };
+        res.send(await models.image.create(createdImage));
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.get('/images', async (req, res) => {
+    try {
+        const images = await models.image.find({ postId: req.query.postId });
+        console.log("Images:", images);
+        res.send(images);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+app.delete('/images', async (req, res) => {
+    try {
+        const image = await models.image.findOneAndDelete({ _id: req.body.imageId });
+        console.log("Image deleted:", image);
+        res.send("Image deleted successfully");
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+
 
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
