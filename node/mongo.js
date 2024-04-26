@@ -45,7 +45,7 @@ app.post('/posts', async (req, res) => {
 /* Esta funcion es para eliminar un post*/
 app.delete('/posts', async (req, res) => {
     try {
-        const post = await models.post.findOneAndDelete({ _id: req.body.postId });
+        const post = await models.post.findOneAndDelete({ _id: req.query.postId });
         console.log("Post deleted:", post);
         res.send("Post deleted successfully");
     } catch (error) {
@@ -158,7 +158,7 @@ app.get('/likePosts/:postId', async (req, res) => {
 /* Esta funcion es para cuando un usuario quiere quitar el like de un post */
 app.delete('/likePost', async (req, res) => {
     try {
-        const likePost = await models.likePost.findOneAndDelete({ postId: req.body.postId, userId: req.body.userId });
+        const likePost = await models.likePost.findOneAndDelete({ postId: req.query.postId, userId: req.query.userId });
         console.log("LikePost deleted:", likePost);
         res.send(likePost);
     } catch (error) {
@@ -214,7 +214,7 @@ app.get('/comments/:postId', async (req, res) => {
 /* Esta funcion sirve para eliminar un comentario */
 app.delete('/comments', async (req, res) => {
     try {
-        const comment = await models.commentPost.findOneAndDelete({ _id: req.body.commentId });
+        const comment = await models.commentPost.findOneAndDelete({ _id: req.query.commentId });
         console.log("Comment deleted:", comment);
         res.send("Comment deleted successfully");
     } catch (error) {
@@ -222,6 +222,9 @@ app.delete('/comments', async (req, res) => {
     }
 });
 
+/* LIKES A COMENTARIOS */
+
+/* Guardar el like de un comentario */
 app.post('/likeComment', async (req, res) => {
     try {
         const likeComment = await models.likeComment.create({ commentId: req.body.commentId, userId: req.body.userId });
@@ -232,6 +235,8 @@ app.post('/likeComment', async (req, res) => {
     }
 });
 
+
+/* Recibir todos los comentarios a los que un usuario le ha dado like */
 app.get('/likeComments', async (req, res) => {
     try {
         const likeComments = await models.likeComment.find({ userId: req.query.userId });
@@ -243,6 +248,8 @@ app.get('/likeComments', async (req, res) => {
     }
 });
 
+
+/* Recibir cuantos likes tiene un comentario */
 app.get('/likeComments/:commentId', async (req, res) => {
     try {
         const commentExists = await models.commentPost.exists({ _id: req.params.commentId });
@@ -258,15 +265,54 @@ app.get('/likeComments/:commentId', async (req, res) => {
     }
 });
 
+/* Eliminar el like de un comentario */
 app.delete('/likeComment', async (req, res) => {
     try {
-        const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.body.commentId, userId: req.body.userId });
+        const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.query.commentId, userId: req.query.userId });
         console.log("LikeComment deleted:", likeComment);
         res.send(likeComment);
     } catch (error) {
         console.error("Error:", error);
     }
 });
+
+/* IMAGENES */ 
+
+app.post('/images', async (req, res) => {
+    const image = req.body;
+    try {
+        var createdImage = {
+            url: image.url,
+            postId: image.postId,
+        };
+        res.send(await models.image.create(createdImage));
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.get('/images', async (req, res) => {
+    try {
+        const images = await models.image.find({ postId: req.query.postId });
+        console.log("Images:", images);
+        res.send(images);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+app.delete('/images', async (req, res) => {
+    try {
+        const image = await models.image.findOneAndDelete({ _id: req.query.imageId });
+        console.log("Image deleted:", image);
+        res.send("Image deleted successfully");
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+
 
 app.listen(8080, () => {
     console.log('Server is running on port 8080');

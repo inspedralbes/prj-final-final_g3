@@ -16,6 +16,7 @@ const CardEvent = ({ image, name, location, date, people, eventId, like }) => {
     const [liked, setLiked] = useState(like);
     const Loged = useContext(UserLoged);
     const User = Loged.jsonData;
+    const isLogged = Loged.isLoged;
 
     const toggleLike = async () => {
         console.log(User.id)

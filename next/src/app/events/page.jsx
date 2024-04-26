@@ -46,6 +46,11 @@ const Page = () => {
     fetchData();
   }, []);
 
+
+  const Loged = useContext(UserLoged);
+  Loged.setUser(true);
+  const isLogged = Loged.isLoged;
+
   return (
     <>
       <main className='w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-background'>
@@ -55,7 +60,12 @@ const Page = () => {
           {eventos.map((evento) => {
             const like = eventosLike.some(likedEvent => likedEvent.eventId === evento.id);
             return (
-              // <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}>
+            <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}
+            onClick={(e) => {
+              if (e.target.closest('button')) {
+                  e.preventDefault();
+              }
+          }}>
               <CardEvent
                 image={JSON.parse(evento.images)[2]}
                 name={evento.event}
@@ -65,9 +75,8 @@ const Page = () => {
                 eventId={evento.id}
                 like={like}
               />
-              // </Link>
-            );
-          })}
+            </Link>
+          ))}
         </section>
       </main>
       <Menu />
