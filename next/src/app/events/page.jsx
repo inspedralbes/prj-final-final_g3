@@ -53,7 +53,12 @@ const Page = () => {
 
         <section className='flex flex-col gap-3'>
           {eventos.map((evento) => (
-            // <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}>
+            <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}
+            onClick={(e) => {
+              if (e.target.closest('button')) {
+                  e.preventDefault();
+              }
+          }}>
               <CardEvent
                 image={JSON.parse(evento.images)[2]}
                 name={evento.event}
@@ -62,7 +67,7 @@ const Page = () => {
                 people={evento.asistentes}
                 eventId={evento.id}
               />
-            // </Link>
+            </Link>
           ))}
         </section>
       </main>
