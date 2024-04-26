@@ -1,58 +1,31 @@
-'use client'
+"use client";
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
 export const UserLoged = React.createContext();
 
 export default function UserLogedProvider({ children }) {
-    const [isLoged, setUser] = useState(false);
-    const [token, setToken] = useState(null);
-    const [jsonData, setJsonData] = useState([]);
+    const initialToken = localStorage.getItem("token");
+    const [token, setToken] = useState(initialToken);
+    const [isLoged, setUser] = useState(initialToken ? true : false);
+    const [jsonData, setJsonData] = useState(() => {
+        const item = localStorage.getItem("userInfo");
+        return item ? JSON.parse(item) : [];
+    });
 
     useEffect(() => {
-      const userLoged = localStorage.getItem('userLoged')
-      console.log('Usuario logeado?' + userLoged);
-      if (userLoged) {
-        setUser(true)
-      }
-    }, false)
-    
-    useEffect(() => {
-      const userToken = localStorage.getItem('token')
-      console.log('Token:' + userToken);
-      if (userToken) {
-        setToken(userToken)
-      }
-    }, null)
+        localStorage.setItem("token", token);
+    }, [token]);
 
     useEffect(() => {
-      const item = localStorage.getItem("jsonData");
-      console.log('jsonData:' + item);
-      let userInfo;
-      if (item) {
-          userInfo = JSON.parse(item);
-          if (userInfo.length > 0) {
-              setJsonData(userInfo);
-          }
-      }
-  }, []);
+        localStorage.setItem("userInfo", JSON.stringify(jsonData));
+    }, [jsonData]);
 
-    
-    useEffect(() => {
-      localStorage.setItem('isLoged', isLoged)
-    }, [isLoged])
-
-    useEffect(() => {
-      localStorage.setItem('token', token)
-    }, [token])
-
-    useEffect(() => {
-      localStorage.setItem('jsonData', JSON.stringify(jsonData))
-    }, [jsonData])
-
-  return (
-    <UserLoged.Provider value={{ isLoged, setUser, jsonData, setJsonData, token, setToken }}>
-      {children}
-    </UserLoged.Provider>
-  );
+    return (
+        <UserLoged.Provider
+            value={{ isLoged, setUser, jsonData, setJsonData, token, setToken }}
+        >
+            {children}
+        </UserLoged.Provider>
+    );
 }

@@ -32,9 +32,6 @@ const page = () => {
       Loged.setJsonData(response.data.data.user);
       Loged.setToken(response.data.data.token);
       
-      localStorage.setItem('jsonData', JSON.stringify(response.data.data.user));
-      localStorage.setItem('token', response.data.data.token);
-      localStorage.setItem('isLoged', true);
       router.push('/events');
 
     } catch (error) {
