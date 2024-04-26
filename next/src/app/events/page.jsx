@@ -60,23 +60,24 @@ const Page = () => {
           {eventos.map((evento) => {
             const like = eventosLike.some(likedEvent => likedEvent.eventId === evento.id);
             return (
-            <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}
-            onClick={(e) => {
-              if (e.target.closest('button')) {
-                  e.preventDefault();
-              }
-          }}>
-              <CardEvent
-                image={JSON.parse(evento.images)[2]}
-                name={evento.event}
-                location={evento.city}
-                date={evento.date}
-                people={evento.asistentes}
-                eventId={evento.id}
-                like={like}
-              />
-            </Link>
-          ))}
+              <Link key={evento.id} href={isLogged ? `/events/${evento.id}` : '/join'}
+                onClick={(e) => {
+                  if (e.target.closest('button')) {
+                    e.preventDefault();
+                  }
+                }}>
+                <CardEvent
+                  image={JSON.parse(evento.images)[2]}
+                  name={evento.event}
+                  location={evento.city}
+                  date={evento.date}
+                  people={evento.asistentes}
+                  eventId={evento.id}
+                  like={like}
+                />
+              </Link>
+            );
+          })}
         </section>
       </main>
       <Menu />
