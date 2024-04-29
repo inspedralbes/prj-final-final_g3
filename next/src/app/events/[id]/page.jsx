@@ -4,6 +4,7 @@ import axios from 'axios';
 import Loader from '../../components/Loader'
 import MapPin from '@/app/components/Icons/MapPin';
 import Music from '@/app/components/Icons/Music';
+import Menu from '../../components/Menu';
 
 const Page = ({ params }) => {
   const { id } = params;
@@ -31,6 +32,7 @@ const Page = ({ params }) => {
 
   return (
     <>
+    <main className='min-h-screen'>
       <div className='h-[218px] relative'>
         <img src={JSON.parse(datos.images)[2]} className='w-full h-full object-cover' alt={`Imagen del  ${datos.event}`} />
         <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-b from-50% from-transparent to-[#212121]'></div>
@@ -43,6 +45,11 @@ const Page = ({ params }) => {
         <h3 className='text[#CACACA] text-sm'>2.487 personas inscritas</h3>
         <div className='w-full h-[2px] bg-[#888888]'></div>
       </article>
+
+    </main>
+
+
+      <Menu />
     </>
   )
 }
