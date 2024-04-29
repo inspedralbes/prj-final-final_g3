@@ -54,7 +54,14 @@ const page = () => {
                     .then(response => {
                         spotifyData.userInfo = response.data;
                         userInfo.setJsonData(spotifyData);
-                        router.push('/completeProfile');
+                        try {
+                            const response = axios.post('http://localhost:8000/api/apps/checkEmail', spotifyData.userInfo.email);
+                            console.log(response);
+                            router.push('/completeProfile');
+                        } catch (error) {
+                            router.push('/events');
+                            console.error('', error);
+                        }
                     })
                     .catch(error => {
                         console.error('Error al hacer la solicitud a Spotify API:', error);
