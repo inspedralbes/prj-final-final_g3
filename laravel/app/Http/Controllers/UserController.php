@@ -427,4 +427,12 @@ class UserController extends Controller{
         return response()->json($user);   
     }
     
+    public function checkMail(Request $request){
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            return response()->json(['errors' => ['El email ya está en uso.']], 400);
+        }else{
+            return response()->json(['success' => 'El email está disponible'], 200);
+        }
+    }
 }
