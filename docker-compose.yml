@@ -13,6 +13,16 @@ services:
     depends_on:
       - db
 
+  nodeChat:
+    container_name: nodeChat
+    image: node:20.8.1-bullseye-slim
+    volumes:
+      - ./nodeChat:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - 8085:8080
+    command: sh -c "npm install && npm run dev"
+  
 
   phpmyadmin:
     container_name: phpmyadmin
