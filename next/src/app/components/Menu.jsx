@@ -25,7 +25,7 @@ const Menu = () => {
                 <p className='font-bold text-xs'>Inici</p>
             </Link>
 
-            <Link href="/events" className={`flex flex-col justify-center items-center ${currentPath === '/events' ? ' text-orange-400 fill-orange-400' : ''}`}>
+            <Link href="/events" className={`flex flex-col justify-center items-center ${currentPath.startsWith('/events') ? ' text-orange-400 fill-orange-400' : ''}`}>
                 <Speaker size="28" />
                 <p className='font-bold text-xs'>Events</p>
             </Link>
