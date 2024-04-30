@@ -51,15 +51,24 @@ const page = () => {
                         Authorization: `Bearer ${responseToken.data.access_token}`
                     }
                 })
-                    .then(response => {
+                    .then(async response => {
                         spotifyData.userInfo = response.data;
                         userInfo.setJsonData(spotifyData);
                         try {
-                            const response = axios.post('http://localhost:8000/api/apps/checkEmail', spotifyData.userInfo.email);
-                            console.log(response);
-                            router.push('/completeProfile');
+                            console.log(spotifyData.userInfo.email);
+                            const response1 = await axios.get('http://localhost:8000/api/apps/checkEmail', {
+                                params: {
+                                    email: spotifyData.userInfo.email
+                                }
+                            });
+                            console.log('Numero',response1);
+
+                            if (response1.status === 200) {
+                                router.push('/completeProfile');
+                            } else if (response1.status === 201) {
+                                router.push('/events');
+                            }
                         } catch (error) {
-                            router.push('/events');
                             console.error('', error);
                         }
                     })
