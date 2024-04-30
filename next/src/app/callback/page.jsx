@@ -111,7 +111,7 @@ const page = () => {
                         Authorization: `Bearer ${responseToken.data.access_token}`
                     }
                 })
-                    .then(response => {
+                    .then(async response => {
                         console.log(response.data);
                         googleData.userInfo = response.data;
                         console.log(googleData.userInfo);
@@ -119,8 +119,23 @@ const page = () => {
                         googleData.userInfo.surnames = googleData.userInfo.family_name;
                         googleData.userInfo.loginWith = 'google';
                         userInfo.setJsonData(googleData);
-                        
-                        router.push('/completeProfile');
+                        try {
+                            console.log(googleData.userInfo.email);
+                            const response1 = await axios.get('http://localhost:8000/api/apps/checkEmail', {
+                                params: {
+                                    email: googleData.userInfo.email
+                                }
+                            });
+                            console.log('Numero',response1);
+
+                            if (response1.status === 200) {
+                                router.push('/completeProfile');
+                            } else if (response1.status === 201) {
+                                router.push('/events');
+                            }
+                        } catch (error) {
+                            console.error('', error);
+                        }
                     })
                     .catch(error => {
                         console.error('Error al hacer la solicitud a Google API:', error);

@@ -15,6 +15,7 @@ const Page = () => {
   const User = userInfo.jsonData;
 
   useEffect(() => {
+    console.log('Numero ID', User);
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
