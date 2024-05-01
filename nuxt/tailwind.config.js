@@ -2,7 +2,12 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#EEC227",
+        background: "#212121",
+      },
+    },
   },
   plugins: [],
 }
