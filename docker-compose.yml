@@ -1,6 +1,4 @@
-
 services:
-
   node:
     container_name: node
     image: node:20.8.1-bullseye-slim
@@ -12,7 +10,6 @@ services:
     command: sh -c "npm install && npm run dev && npm run devmongo"
     depends_on:
       - db
-
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -36,20 +33,20 @@ services:
     restart: always
     depends_on:
       - db
-  
-  next:
-    container_name: next
-    image: node:20.8.1-bullseye-slim
-    working_dir: /usr/src/app
-    volumes:
-      - ./next:/usr/src/app
-    ports:
-      - 3000:3000
-    environment:
-      - WATCHPACK_POLLING=true
-    command: sh -c "npm install && npm run dev"
-    depends_on:
-      - node
+
+  # next:
+  #   container_name: next
+  #   image: node:20.8.1-bullseye-slim
+  #   working_dir: /usr/src/app
+  #   volumes:
+  #     - ./next:/usr/src/app
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - WATCHPACK_POLLING=true
+  #   command: sh -c "npm install && npm run dev"
+  #   depends_on:
+  #     - node
 
   db:
     container_name: db
@@ -65,7 +62,7 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
       - ./mysql/dades.sql:/docker-entrypoint-initdb.d/dades.sql
-  
+
   mongodb:
     container_name: mongodb
     image: mongo:latest
@@ -92,4 +89,3 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: root
       ME_CONFIG_BASICAUTH_PASSWORD: root
       ME_CONFIG_MONGODB_SERVER: mongodb
-    
