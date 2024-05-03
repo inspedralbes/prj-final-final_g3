@@ -20,33 +20,58 @@
             <LoginMethods forWhat="inicia sessió" />
 
             <NuxtLink href='/join' class='text-white'>
-                <svg class='w-auto h-8' xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
-                    strokeLinecap="round" strokeLinejoin="round">
+                <svg class='w-auto h-8' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M5 12l14 0" />
                     <path d="M5 12l6 6" />
                     <path d="M5 12l6 -6" />
                 </svg>
             </NuxtLink>
-            
+
         </section>
     </main>
 </template>
 
 <script>
+import axios from 'axios';
+import Loader from '~/components/Loader.vue';
+import { useStores } from '~/stores/counter';
+
 export default {
     data() {
         return {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
             isLoading: false,
         };
     },
 
     methods: {
         async login() {
+            const store = useStores();
+
             this.isLoading = true;
+            try {
+                const response = await axios.post('http://localhost:8000/api/login', {
+                    email: this.email,
+                    password: this.password
+                });
+
+                store.setUserInfo({
+                    id: response.data.data.user.id,
+                    name: response.data.data.user.name,
+                    surnames: response.data.data.user.surnames,
+                    email: response.data.data.user.email,
+                    token: response.data.data.token,
+                });
+                store.setLoggedIn(true);
+
+                this.$router.push('/events');
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 }
