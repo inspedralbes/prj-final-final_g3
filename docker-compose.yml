@@ -45,7 +45,8 @@ services:
       - 3000:3000
     environment:
       - WATCHPACK_POLLING=true
-    command: sh -c "npx nuxi@latest init nuxt"
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "npm install -g npm@10.7.0 && npm install && npm run dev"
     depends_on:
       - node
 
