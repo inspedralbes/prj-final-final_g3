@@ -1,6 +1,4 @@
-
 services:
-
   node:
     container_name: node
     image: node:20.8.1-bullseye-slim
@@ -12,7 +10,6 @@ services:
     command: sh -c "npm install && npm run dev && npm run devmongo"
     depends_on:
       - db
-
 
   phpmyadmin:
     container_name: phpmyadmin
@@ -36,6 +33,7 @@ services:
     restart: always
     depends_on:
       - db
+      -nuxt
   
   next:
     container_name: next
@@ -51,6 +49,7 @@ services:
     depends_on:
       - node
 
+
   db:
     container_name: db
     image: mysql:8.2.0
@@ -65,7 +64,7 @@ services:
     volumes:
       - ./mysql_data:/var/lib/mysql
       - ./mysql/dades.sql:/docker-entrypoint-initdb.d/dades.sql
-  
+
   mongodb:
     container_name: mongodb
     image: mongo:latest
@@ -92,4 +91,3 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: root
       ME_CONFIG_BASICAUTH_PASSWORD: root
       ME_CONFIG_MONGODB_SERVER: mongodb
-    
