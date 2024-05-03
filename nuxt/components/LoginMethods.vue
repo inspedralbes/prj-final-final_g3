@@ -27,9 +27,9 @@ export default {
 
     methods: {
         redirectToGoogle() {
-            const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-            const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
-            const state = generateRandomString(16);
+            const clientId = this.$config.public.GOOGLE_CLIENT_ID;
+            const redirectUri = this.$config.public.GOOGLE_REDIRECT_URI;
+            const state = this.generateRandomString(16);
             const scopes = [
                 'openid',
                 'profile',
@@ -43,9 +43,9 @@ export default {
         },
 
         redirectToSpotify() {
-            const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
-            const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
-            const state = generateRandomString(16);
+            const clientId = this.$config.public.SPOTIFY_CLIENT_ID;
+            const redirectUri = this.$config.public.SPOTIFY_REDIRECT_URI;
+            const state = this.generateRandomString(16);
             const scope = 'user-read-email user-library-read user-top-read';
             const url = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}&state=${state}`;
             window.location.href = url;
