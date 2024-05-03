@@ -2,7 +2,7 @@
     <main class='w-screen h-screen bg-background'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold text-white'>Registra't</h1>
-            <form class="flex flex-col gap-6" @submit="register">
+            <form class="flex flex-col gap-6" @submit.prevent="register">
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="email" placeholder="Email"
                     v-model="email" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="text" placeholder="Nom"
@@ -42,16 +42,20 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Loader from '~/components/Loader.vue';
+
+
 export default {
     data() {
         return {
-            email: "",
-            name: "",
-            surnames: "",
-            nickname: "",
-            birthdate: "",
-            password: "",
-            passwordconfirmation: "",
+            email: '',
+            name: '',
+            surnames: '',
+            nickname: '',
+            birthdate: '',
+            password: '',
+            passwordconfirmation: '',
             isLoading: false,
         };
     },
@@ -62,17 +66,25 @@ export default {
 
             try {
                 const response = await axios.post('http://localhost:8000/api/register', {
-                    // const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/api/register', {
-                    email,
-                    name,
-                    surnames,
-                    nickname,
-                    password,
-                    birthdate,
-                    passwordconfirmation,
+                    email: this.email,
+                    name: this.name,
+                    surnames: this.surnames,
+                    nickname: this.nickname,
+                    password: this.password,
+                    birthdate: this.birthdate,
+                    passwordconfirmation: this.passwordconfirmation
                 });
-                //Guardar la info del user en pinia
-
+                store.setUserInfo({
+                    id: response.data.data.user.id,
+                    name: response.data.data.user.name,
+                    surnames: response.data.data.user.surnames,
+                    email: response.data.data.user.email,
+                    token: response.data.data.token,
+                });
+                store.setLoggedIn(true);
+                
+                this.$router.push('/events');
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
