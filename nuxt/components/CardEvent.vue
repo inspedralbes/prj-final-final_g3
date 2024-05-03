@@ -13,7 +13,6 @@
             <p class='text-white flex items-center gap-1'>
                 <IconsUsers size="18" /> persones
             </p>
-            <p class='text-white flex items-center gap-1'> likes</p>
         </div>
 
         <button v-if="liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
