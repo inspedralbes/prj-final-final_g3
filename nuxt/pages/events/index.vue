@@ -12,7 +12,7 @@ nuxt_deprecated/pages/profile.vuenuxt_deprecated/pages/profile.vue<template>
       </div>
     </section>
   </main>
-  <!-- <Menu /> -->
+  <Menu />
 </template>
 
 <script>

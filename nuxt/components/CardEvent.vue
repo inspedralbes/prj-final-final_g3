@@ -5,24 +5,24 @@
         <div class='absolute bottom-2 left-2'>
             <h2 class='text-white text-xl font-semibold text-left'>{{ event.event }}</h2>
             <p class='text-white flex items-center gap-1'>
-                <IconsMapPin size="18" />{{ event.city }}
+                <IconsMapPin class="size-4" />{{ event.city }}
             </p>
             <p class='text-white flex items-center gap-1'>
-                <IconsCalendar size="18" />{{ event.date }}
+                <IconsCalendar class="size-4" />{{ event.date }}
             </p>
             <p class='text-white flex items-center gap-1'>
-                <IconsUsers size="18" /> persones
+                <IconsUsers class="size-4" /> persones
             </p>
         </div>
 
         <button v-if="liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
             @click="toggleLike(eventId)">
-            <IconsHeartFill size="20" />
+            <IconsHeartFill class="size-5" />
         </button>
 
         <button v-if="!liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-green-500 hover:bg-green-700"
             @click="toggleLike(eventId)">
-            <IconsHeart size="20" />
+            <IconsHeart class="size-5" />
         </button>
 
     </div>
