@@ -24,7 +24,8 @@ export default {
         return {
         }
     },
-
+    created() {
+    },
     methods: {
         redirectToGoogle() {
             const clientId = this.$config.public.GOOGLE_CLIENT_ID;

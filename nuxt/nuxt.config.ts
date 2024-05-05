@@ -8,16 +8,16 @@ export default defineNuxtConfig({
   ],
   runtimeConfig:{
     public:{
-      ENV: process.env.ENV,
-      API_DEV_URI: process.env.API_DEV_URL,
-      API_PROD_URI: process.env.API_PROD_URL,
-      SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
-      SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
-      SPOTIFY_REDIRECT_URI: process.env.SPOTIFY_REDIRECT_URI,
-      GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-      GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-      GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
-      TICKETMASTER_API_KEY: process.env.TICKETMASTER_API_KEY,
+      ENV: process.env.VITE_APP_ENV,
+      API_DEV_URI: process.env.VITE_APP_API_DEV_URL,
+      API_PROD_URI: process.env.VITE_APP_API_PROD_URL,
+      SPOTIFY_CLIENT_ID: process.env.VITE_APP_SPOTIFY_CLIENT_ID,
+      SPOTIFY_CLIENT_SECRET: process.env.VITE_APP_SPOTIFY_CLIENT_SECRET,
+      SPOTIFY_REDIRECT_URI: process.env.VITE_APP_SPOTIFY_REDIRECT_URI,
+      GOOGLE_CLIENT_ID: process.env.VITE_APP_GOOGLE_CLIENT_ID,
+      GOOGLE_CLIENT_SECRET: process.env.VITE_APP_GOOGLE_CLIENT_SECRET,
+      GOOGLE_REDIRECT_URI: process.env.VITE_APP_GOOGLE_REDIRECT_URI,
+      TICKETMASTER_API_KEY: process.env.VITE_APP_TICKETMASTER_API_KEY,
     }
   }
 })

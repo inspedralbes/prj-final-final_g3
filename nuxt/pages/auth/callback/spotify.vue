@@ -17,7 +17,9 @@ export default {
     },
     created() {
         this.getParams();
-        console.log(comManager.getSpotifyToken(this.code, this.state));
+    },
+    mounted() {
+        this.fetchSpotifyToken();
     },
     methods: {
         getParams() {
@@ -27,6 +29,14 @@ export default {
             this.code = code;
             this.state = state;
         },
+        async fetchSpotifyToken() {
+            try {
+                const response = await comManager.getSpotifyToken(this.code, this.state);
+                console.log("Respuesta:", response);
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }
 }
 </script>
