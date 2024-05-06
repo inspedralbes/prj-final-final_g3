@@ -45,7 +45,7 @@
     </article>
   </main>
 
-  <Menu />
+  <!-- <Menu /> -->
 </template>
 
 <script>

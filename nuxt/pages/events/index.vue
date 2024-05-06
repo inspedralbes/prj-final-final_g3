@@ -1,5 +1,4 @@
-nuxt_deprecated/pages/profile.vuenuxt_deprecated/pages/profile.vue<template>
-  
+<template>
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-background">
     <h1 class="text-center uppercase text-2xl font-bold text-balance">Els propers esdeveniments més top</h1>
 
@@ -12,7 +11,7 @@ nuxt_deprecated/pages/profile.vuenuxt_deprecated/pages/profile.vue<template>
       </div>
     </section>
   </main>
-  <Menu />
+  <!-- <Menu /> -->
 </template>
 
 <script>
