@@ -44,7 +44,6 @@ services:
     restart: always
     depends_on:
       - db
-      -nuxt
   
   next:
     container_name: next

@@ -4,7 +4,7 @@
     
         <header class='w-[90%] py-4 mx-auto flex justify-between'>
         <h1 class='text-2xl font-bold text-white uppercase'>Spottunes</h1>
-        <NuxtLink to="/login" class="text-white">Inicia sessió</NuxtLink>
+        <NuxtLink to="/chatPrueba" class="text-white">Inicia sessió</NuxtLink>
     </header>
     
     <main class='w-[90%] mx-auto'>
