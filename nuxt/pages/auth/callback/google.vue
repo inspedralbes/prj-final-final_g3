@@ -1,5 +1,5 @@
 <template>
-
+    <h1>Callback de Google</h1>
 </template>
 
 <script>
