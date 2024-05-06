@@ -9,7 +9,7 @@
       </div>
     </section>
   </main>
-  <!-- <Menu /> -->
+  <Menu />
 </template>
 
 <script>
