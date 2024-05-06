@@ -110,9 +110,9 @@ async function getGoogleToken(urlParams) {
   }
 }
 
-const loginManager = {
+const authManager = {
   getSpotifyToken,
   getGoogleToken,
 };
 
-export default loginManager;
+export default authManager;

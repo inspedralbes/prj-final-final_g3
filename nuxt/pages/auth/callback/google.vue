@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import loginManager from '@/managers/loginManager.js';
+import authManager from '@/managers/authManager.js';
 
 export default {
     data() {
@@ -42,7 +42,7 @@ export default {
         },
         async fetchGoogleToken() {
             try {
-                const response = await loginManager.getGoogleToken(this.urlParams);
+                const response = await authManager.getGoogleToken(this.urlParams);
                 console.log("Respuesta:", response);
             } catch (error) {
                 console.error(error);

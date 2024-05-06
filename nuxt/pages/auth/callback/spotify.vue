@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import loginManager from '@/managers/loginManager.js';
+import authManager from '@/managers/authManager.js';
 
 export default {
     data() {
@@ -28,7 +28,7 @@ export default {
         },
         async fetchSpotifyToken() {
             try {
-                const response = await loginManager.getSpotifyToken(this.code, this.state);
+                const response = await authManager.getSpotifyToken(this.code, this.state);
                 console.log("Respuesta:", response);
             } catch (error) {
                 console.error(error);
