@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import comManager from '@/managers/comManager.js';
+
 export default {
     data() {
         return {
