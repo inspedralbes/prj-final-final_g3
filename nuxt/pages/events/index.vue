@@ -5,7 +5,7 @@
       <div v-for="evento in eventos" :key="evento.id">
         <!-- <NuxtLink :to="isLogged ? `/events/${evento.id}` : '/join'"
                        @click="preventDefault($event)"> -->
-                       <CardEvent :event=evento></CardEvent>
+        <CardEvent :event=evento></CardEvent>
         <!-- </NuxtLink> -->
       </div>
     </section>
@@ -15,39 +15,22 @@
 
 <script>
 import axios from 'axios';
+import { useAppStore } from '@/stores/counter.js'
+import comManager from '@/managers/comManager.js';
 
 export default {
   data() {
     return {
-      eventos: [],
+      store: useAppStore(),
+      eventos: computed(() => this.store.events),
       eventosLike: [],
     };
   },
   methods: {
-    async fetchEvents() {
-      try {
-        const response = await axios.get('http://localhost:8000/api/events');
-        const eventos = response.data.events;
-        const eventosAgrupados = {};
-        eventos.forEach((evento) => {
-          const key = `${evento.artist}-${evento.date}`;
-          if (!eventosAgrupados[key] || evento.event.length < eventosAgrupados[key].event.length) {
-            eventosAgrupados[key] = evento;
-          }
-          // try {
-          //       const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
-          //       setEventosLike(response.data);
-          // } catch (error) {
-          //       console.error('Error fetching data:', error);
-          // }
-        });
-        this.eventos = Object.values(eventosAgrupados);
-        // console.log(this.eventos);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    },
 
+  },
+  created() {
+    comManager.getEvents()
   },
   mounted() {
     this.fetchEvents()

@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useAppStore } from "@/stores/counter.js";
 
 let env = import.meta.env.VITE_APP_ENV;
 let url;
+const store = useAppStore();
 
 if (env.toLowerCase() === "development") {
   url = import.meta.env.VITE_APP_API_DEV_URL;
@@ -107,9 +109,51 @@ async function getGoogleToken(urlParams) {
   }
 }
 
+async function getEvents() {
+  try {
+    const response = await axios.get(`${url}/api/events`);
+    const eventos = response.data.events;
+    const eventosAgrupados = {};
+    eventos.forEach((evento) => {
+      const key = `${evento.artist}-${evento.date}`;
+      if (
+        !eventosAgrupados[key] ||
+        evento.event.length < eventosAgrupados[key].event.length
+      ) {
+        eventosAgrupados[key] = evento;
+      }
+    });
+    store.setEvents(Object.values(eventosAgrupados));
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+  // try {
+  // const response = await axios.get('http://localhost:8000/api/events');
+  // const eventos = response.data.events;
+  // const eventosAgrupados = {};
+  // eventos.forEach((evento) => {
+  // const key = `${evento.artist}-${evento.date}`;
+  // if (!eventosAgrupados[key] || evento.event.length < eventosAgrupados[key].event.length) {
+  //   eventosAgrupados[key] = evento;
+  // }
+  // try {
+  //       const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
+  //       setEventosLike(response.data);
+  // } catch (error) {
+  //       console.error('Error fetching data:', error);
+  // }
+  // });
+  // this.eventos = Object.values(eventosAgrupados);
+  // console.log(this.eventos);
+  // } catch (error) {
+  // console.error('Error fetching data:', error);
+  // }
+}
+
 const comManager = {
   getSpotifyToken,
   getGoogleToken,
+  getEvents,
 };
 
 export default comManager;
