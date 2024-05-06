@@ -30,10 +30,10 @@ export default {
 
   },
   created() {
-    comManager.getEvents()
+    // comManager.getEvents()
   },
   mounted() {
-    this.fetchEvents()
+
   }
 };
 </script>
