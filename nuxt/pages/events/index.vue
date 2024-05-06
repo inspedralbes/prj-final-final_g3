@@ -1,8 +1,6 @@
-nuxt_deprecated/pages/profile.vuenuxt_deprecated/pages/profile.vue<template>
-  
-  <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative">
-    <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
-
+<template>
+  <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-background">
+    <h1 class="text-center uppercase text-2xl font-bold text-balance">Els propers esdeveniments més top</h1>
     <section class="flex flex-col gap-3">
       <div v-for="evento in eventos" :key="evento.id">
         <!-- <NuxtLink :to="isLogged ? `/events/${evento.id}` : '/join'"
@@ -12,7 +10,7 @@ nuxt_deprecated/pages/profile.vuenuxt_deprecated/pages/profile.vue<template>
       </div>
     </section>
   </main>
-  <Menu />
+  <!-- <Menu /> -->
 </template>
 
 <script>
@@ -36,6 +34,12 @@ export default {
           if (!eventosAgrupados[key] || evento.event.length < eventosAgrupados[key].event.length) {
             eventosAgrupados[key] = evento;
           }
+          // try {
+          //       const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
+          //       setEventosLike(response.data);
+          // } catch (error) {
+          //       console.error('Error fetching data:', error);
+          // }
         });
         this.eventos = Object.values(eventosAgrupados);
         // console.log(this.eventos);
