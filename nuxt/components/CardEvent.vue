@@ -11,7 +11,7 @@
                 <IconsCalendar class="size-4" />{{ event.date }}
             </p>
             <p class='text-white flex items-center gap-1'>
-                <IconsUsers class="size-4" /> persones
+                <IconsUsers class="size-4" />300 inscritos
             </p>
         </div>
 

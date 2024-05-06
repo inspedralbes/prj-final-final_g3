@@ -1,5 +1,9 @@
 <template>
-  <div class="bg-background">
     <NuxtPage />
-  </div>
 </template>
+
+<style>
+  body{
+    background-color: #212121;
+  }
+</style>
