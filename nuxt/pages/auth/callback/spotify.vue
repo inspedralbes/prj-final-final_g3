@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <h1>Callback Spotify</h1>
-    </div>
+
 </template>
 
 <script>
@@ -10,7 +8,6 @@ import comManager from '@/managers/comManager.js';
 export default {
     data() {
         return {
-            url: "",
             code: "",
             state: ""
         }

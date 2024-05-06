@@ -60,8 +60,11 @@ async function getSpotifyToken(code, state) {
   }
 }
 
+async function getGoogleToken() {}
+
 const comManager = {
   getSpotifyToken,
+  getGoogleToken,
 };
 
 export default comManager;
