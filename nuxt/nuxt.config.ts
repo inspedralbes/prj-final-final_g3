@@ -11,6 +11,8 @@ export default defineNuxtConfig({
       ENV: process.env.VITE_APP_ENV,
       API_DEV_URI: process.env.VITE_APP_API_DEV_URL,
       API_PROD_URI: process.env.VITE_APP_API_PROD_URL,
+      MONGO_API_DEV_URI: process.env.VITE_APP_MONGO_API_DEV_URL,
+      MONGO_API_PROD_URI: process.env.VITE_APP_MONGO_API_PROD_URL,
       SPOTIFY_CLIENT_ID: process.env.VITE_APP_SPOTIFY_CLIENT_ID,
       SPOTIFY_CLIENT_SECRET: process.env.VITE_APP_SPOTIFY_CLIENT_SECRET,
       SPOTIFY_REDIRECT_URI: process.env.VITE_APP_SPOTIFY_REDIRECT_URI,
