@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useAppStore } from "@/stores/counter.js";
+import { useStores } from "@/stores/counter.js";
 
 let env = import.meta.env.VITE_APP_ENV;
 let url;
-const store = useAppStore();
 
 if (env.toLowerCase() === "development") {
   url = import.meta.env.VITE_APP_API_DEV_URL;
@@ -110,8 +109,9 @@ async function getGoogleToken(urlParams) {
 }
 
 async function getEvents() {
+  const store = useStores();
   try {
-    const response = await axios.get(`${url}/api/events`);
+    const response = await axios.get(`${url}/events`);
     const eventos = response.data.events;
     const eventosAgrupados = {};
     eventos.forEach((evento) => {

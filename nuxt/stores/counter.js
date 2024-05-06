@@ -27,7 +27,9 @@ export const useStores = defineStore("counter", {
     setLoggedIn(value) {
       this.loggedIn = value;
     },
-    setEvents(events) {},
+    setEvents(events) {
+      this.events = events;
+    },
     getUserInfo() {
       return this.userInfo;
     },
