@@ -32,8 +32,6 @@
 <script>
 import axios from 'axios';
 import { useStores } from '~/stores/counter';
-const store = useStores();
-            const User = store.getUserInfo();
 
 export default {
     data() {
@@ -51,7 +49,8 @@ export default {
     methods: {
         async toggleLike(eventId) {
 
-
+            const store = useStores();
+            const User = store.getUserInfo();
             if (!this.liked) {
                 try {
                     const response = await axios.post('http://localhost:8080/likeEvent', {
@@ -76,6 +75,8 @@ export default {
             }
         },
         async fetchData() {
+            const store = useStores();
+            const User = store.getUserInfo();
             try {
                 const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
                 setEventosLike(response.data);
