@@ -10,6 +10,7 @@ if (env.toLowerCase() === "development") {
   url_api_mongo = import.meta.env.VITE_APP_API_DEV_MONGO_URL;
 } else if (env.toLowerCase() === "production") {
   url = import.meta.env.VITE_APP_API_PROD_URL;
+  url_api_mongo = import.meta.env.VITE_APP_API_PROD_MONGO_URL;
 }
 
 async function getEvents() {
