@@ -20,7 +20,7 @@ export default {
         this.getParams();
     },
     mounted() {
-
+        this.fetchGoogleToken();
     },
     methods: {
         getParams() {
@@ -37,7 +37,14 @@ export default {
             this.urlParams.authuser = authuser;
             this.urlParams.hd = hd;
             this.urlParams.prompt = prompt;
-
+        },
+        async fetchGoogleToken() {
+            try {
+                const response = await comManager.getGoogleToken(this.urlParams);
+                console.log("Respuesta:", response);
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 }

@@ -60,7 +60,52 @@ async function getSpotifyToken(code, state) {
   }
 }
 
-async function getGoogleToken() {}
+async function getGoogleToken(urlParams) {
+  let googleData = {};
+  const authOptions = {
+    url: "https://oauth2.googleapis.com/token",
+    data: new URLSearchParams({
+      code: urlParams.code,
+      client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
+      client_secret: import.meta.env.VITE_APP_GOOGLE_CLIENT_SECRET,
+      redirect_uri: import.meta.env.VITE_APP_GOOGLE_REDIRECT_URI,
+      grant_type: "authorization_code",
+      scope: "openid profile email",
+    }),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  };
+
+  try {
+    const responseToken = await axios.post(authOptions.url, authOptions.data, {
+      headers: authOptions.headers,
+    });
+
+    googleData.tokenInfo = responseToken.data;
+
+    // Devolver una nueva promesa para esperar la solicitud GET
+    return new Promise((resolve, reject) => {
+      axios
+        .get("https://openidconnect.googleapis.com/v1/userinfo", {
+          headers: {
+            Authorization: `Bearer ${responseToken.data.access_token}`,
+          },
+        })
+        .then((response) => {
+          googleData.userInfo = response.data;
+          resolve(googleData);
+        })
+        .catch((error) => {
+          console.error("Error making request to Google API:", error);
+          reject(error);
+        });
+    });
+  } catch (error) {
+    console.error("Error during Google authentication:", error);
+    throw new Error("Failed to authenticate with Google");
+  }
+}
 
 const comManager = {
   getSpotifyToken,
