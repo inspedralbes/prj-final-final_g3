@@ -36,6 +36,12 @@ export default {
           if (!eventosAgrupados[key] || evento.event.length < eventosAgrupados[key].event.length) {
             eventosAgrupados[key] = evento;
           }
+          // try {
+          //       const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
+          //       setEventosLike(response.data);
+          // } catch (error) {
+          //       console.error('Error fetching data:', error);
+          // }
         });
         this.eventos = Object.values(eventosAgrupados);
         // console.log(this.eventos);
