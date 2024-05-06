@@ -1,3 +1,5 @@
+
+
 <template>
     <main class='bg-background flex flex-col gap-10 min-h-screen'>
         <section class='bg-background flex flex-col items-center gap-6'>
@@ -56,9 +58,11 @@
             <GustosProfile v-if="selectedSection === 'Gustos'" />
         </section>
     </main>
+    <Menu />
 </template>
 
 <script>
+
 export default {
     data() {
         return {

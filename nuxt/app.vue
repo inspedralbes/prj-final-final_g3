@@ -1,3 +1,5 @@
 <template>
-  <NuxtPage />
+  <div class="bg-background">
+    <NuxtPage />
+  </div>
 </template>

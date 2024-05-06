@@ -5,13 +5,13 @@
         <div class='absolute bottom-2 left-2'>
             <h2 class='text-white text-xl font-semibold text-left'>{{ event.event }}</h2>
             <p class='text-white flex items-center gap-1'>
-                <IconsMapPin size="18" />{{ event.city }}
+                <IconsMapPin class="size-4" />{{ event.city }}
             </p>
             <p class='text-white flex items-center gap-1'>
-                <IconsCalendar size="18" />{{ event.date }}
+                <IconsCalendar class="size-4" />{{ event.date }}
             </p>
             <p class='text-white flex items-center gap-1'>
-                <IconsUsers size="18" /> persones
+                <IconsUsers class="size-4" /> persones
             </p>
         </div>
 
