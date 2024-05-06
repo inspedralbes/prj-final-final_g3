@@ -11,16 +11,16 @@
                 <IconsCalendar class="size-4" />{{ event.date }}
             </p>
             <p class='text-white flex items-center gap-1'>
-                <IconsUsers class="size-4" /> persones
+                <IconsUsers class="size-4" />300 inscritos
             </p>
         </div>
 
-        <button v-if="liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
+        <button v-if="liked" class="absolute bottom-2 right-2 p-1 rounded-lg text-white bg-red-500 hover:bg-red-700"
             @click="toggleLike(eventId)">
             <IconsHeartFill class="size-5" />
         </button>
 
-        <button v-if="!liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-green-500 hover:bg-green-700"
+        <button v-if="!liked" class="absolute bottom-2 right-2 p-1 rounded-lg text-white bg-green-500 hover:bg-green-700"
             @click="toggleLike(eventId)">
             <IconsHeart class="size-5" />
         </button>
