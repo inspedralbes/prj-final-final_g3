@@ -45,7 +45,7 @@ app.post('/posts', async (req, res) => {
 /* Esta funcion es para eliminar un post*/
 app.delete('/posts', async (req, res) => {
     try {
-        const post = await models.post.findOneAndDelete({ _id: req.body.postId });
+        const post = await models.post.findOneAndDelete({ _id: req.query.postId });
         console.log("Post deleted:", post);
         res.send("Post deleted successfully");
     } catch (error) {
@@ -108,7 +108,7 @@ app.get('/likeEvents/:eventId', async (req, res) => {
 /* Esta funcion es para quitar el like de un evento cuando el usuario lo quita manualmente*/
 app.delete('/likeEvent', async (req, res) => {
     try {
-        const likeEvent = await models.likeEvent.findOneAndDelete({ eventId: req.body.eventId, userId: req.body.userId });
+        const likeEvent = await models.likeEvent.findOneAndDelete({ eventId: req.query.eventId, userId: req.query.userId });
         console.log("LikeEvent deleted:", likeEvent);
         res.send(likeEvent);
     } catch (error) {
@@ -158,7 +158,7 @@ app.get('/likePosts/:postId', async (req, res) => {
 /* Esta funcion es para cuando un usuario quiere quitar el like de un post */
 app.delete('/likePost', async (req, res) => {
     try {
-        const likePost = await models.likePost.findOneAndDelete({ postId: req.body.postId, userId: req.body.userId });
+        const likePost = await models.likePost.findOneAndDelete({ postId: req.query.postId, userId: req.query.userId });
         console.log("LikePost deleted:", likePost);
         res.send(likePost);
     } catch (error) {
@@ -214,7 +214,7 @@ app.get('/comments/:postId', async (req, res) => {
 /* Esta funcion sirve para eliminar un comentario */
 app.delete('/comments', async (req, res) => {
     try {
-        const comment = await models.commentPost.findOneAndDelete({ _id: req.body.commentId });
+        const comment = await models.commentPost.findOneAndDelete({ _id: req.query.commentId });
         console.log("Comment deleted:", comment);
         res.send("Comment deleted successfully");
     } catch (error) {
@@ -268,7 +268,7 @@ app.get('/likeComments/:commentId', async (req, res) => {
 /* Eliminar el like de un comentario */
 app.delete('/likeComment', async (req, res) => {
     try {
-        const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.body.commentId, userId: req.body.userId });
+        const likeComment = await models.likeComment.findOneAndDelete({ commentId: req.query.commentId, userId: req.query.userId });
         console.log("LikeComment deleted:", likeComment);
         res.send(likeComment);
     } catch (error) {
@@ -304,7 +304,7 @@ app.get('/images', async (req, res) => {
 
 app.delete('/images', async (req, res) => {
     try {
-        const image = await models.image.findOneAndDelete({ _id: req.body.imageId });
+        const image = await models.image.findOneAndDelete({ _id: req.query.imageId });
         console.log("Image deleted:", image);
         res.send("Image deleted successfully");
     } catch (error) {
