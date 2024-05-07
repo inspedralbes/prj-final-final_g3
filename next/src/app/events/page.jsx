@@ -17,7 +17,8 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
+        // const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
+        const response = await axios.get(`http://prespottunes.daw.inspedralbes.cat:8080/likeEvents?userId=${User.id}`);
         setEventosLike(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
