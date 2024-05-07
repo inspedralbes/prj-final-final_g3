@@ -110,9 +110,43 @@ async function getGoogleToken(urlParams) {
   }
 }
 
+async function register(userData) {
+  try {
+    const response = await axios.post(`${url_api}/register`, {
+      email: userData.email,
+      name: userData.name,
+      surnames: userData.surnames,
+      nickname: userData.nickname,
+      password: userData.password,
+      birthdate: userData.birthdate,
+      passwordconfirmation: userData.passwordconfirmation,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw new Error("Failed to register user");
+  }
+}
+
+async function login(userData) {
+  try {
+    const response = await axios.post(`${url_api}/login`, {
+      email: userData.email,
+      password: userData.password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    throw new Error("Failed to log in user");
+  }
+}
+
 const authManager = {
   getSpotifyToken,
   getGoogleToken,
+  register,
+  login,
 };
 
 export default authManager;
