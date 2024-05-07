@@ -21,7 +21,8 @@ const Page = () => {
       // console.log("Esta es la info del usuario", userInfo.jsonData.userInfo);
       try {
         // const response = await axios.get('http://localhost:8000/api/events');
-        const response = await axios.get('http://spottunes.daw.inspedralbes.cat:8000/public/api/events');
+        // const response = await axios.get('http://spottunes.daw.inspedralbes.cat:8000/public/api/events');
+        const response = await axios.get('http://prespottunes.daw.inspedralbes.cat:8000/public/api/events');
         // console.log(await response);
 
         const eventos = response.data.events;

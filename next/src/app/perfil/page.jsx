@@ -27,7 +27,8 @@ const page = () => {
             try {
                 console.log(User.id);
                 // const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followers`, {
-                const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/public/api/users/${User.id}/followers`, {
+                // const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/public/api/users/${User.id}/followers`, {
+                const response = await axios.get(`http://prespottunes.daw.inspedralbes.cat:8000/public/api/users/${User.id}/followers`, {
                     headers: {
                         'Authorization': `Bearer ${Token}`
                     }
@@ -42,7 +43,8 @@ const page = () => {
             try {
                 console.log(User.id);
                 // const response = await axios.get(`http://localhost:8000/api/users/${User.id}/followed`, {
-                const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/public/api/users/${User.id}/followed`, {
+                // const response = await axios.get(`http://spottunes.daw.inspedralbes.cat:8000/public/api/users/${User.id}/followed`, {
+                const response = await axios.get(`https://spottunes.daw.inspedralbes.cat:8000/public/api/users/${User.id}/followed`, {
                     headers: {
                         'Authorization': `Bearer ${Token}`
                     }
