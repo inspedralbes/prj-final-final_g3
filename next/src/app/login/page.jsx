@@ -28,7 +28,7 @@ const page = () => {
     try {
       // const response = await axios.post('http://localhost:8000/api/login', { email, password });
       // const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/public/api/login', { email, password });
-      const response = await axios.post('http://prespottunes.daw.inspedralbes.cat:8000/public/api/login', { email, password });
+      const response = await axios.post('http://prespottunes.daw.inspedralbes.cat/laravel/login', { email, password });
       Loged.setUser(true);
       Loged.setJsonData(response.data.data.user);
       Loged.setToken(response.data.data.token);

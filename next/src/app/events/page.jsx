@@ -18,7 +18,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         // const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
-        const response = await axios.get(`http://prespottunes.daw.inspedralbes.cat:8080/likeEvents?userId=${User.id}`);
+        const response = await axios.get(`http://prespottunes.daw.inspedralbes.cat/node/likeEvents?userId=${User.id}`);
         setEventosLike(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -32,7 +32,7 @@ const Page = () => {
       try {
         // const response = await axios.get('http://localhost:8000/api/events');
         // const response = await axios.get('http://spottunes.daw.inspedralbes.cat:8000/public/api/events');
-        const response = await axios.get('http://prespottunes.daw.inspedralbes.cat:8000/public/api/events');
+        const response = await axios.get('http://prespottunes.daw.inspedralbes.cat/laravel/events');
         // console.log(await response);
 
         const eventos = response.data.events;

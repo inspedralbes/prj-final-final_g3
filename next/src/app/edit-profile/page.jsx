@@ -52,7 +52,7 @@ const page = () => {
             console.log(Token);
             // const response = await axios.put('http://localhost:8000/api/updateInfo', {
             // const response = await axios.put('http://spottunes.daw.inspedralbes.cat:8000/public/api/updateInfo', {
-            const response = await axios.put('http://prespottunes.daw.inspedralbes.cat:8000/public/api/updateInfo', {
+            const response = await axios.put('http://prespottunes.daw.inspedralbes.cat/laravel/updateInfo', {
                 name: name,
                 nickname: nickname,
                 surnames: surnames,

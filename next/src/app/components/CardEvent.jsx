@@ -23,7 +23,7 @@ const CardEvent = ({ image, name, location, date, people, eventId, like }) => {
         console.log(User.id)
         try {
             // const response = await axios.post('http://localhost:8080/likeEvent', {
-            const response = await axios.post('http://prespottunes.daw.inspedralbes.cat:8080/likeEvent', {
+            const response = await axios.post('http://prespottunes.daw.inspedralbes.cat/node/likeEvent', {
                 eventId: eventId,
                 userId: User.id
             });

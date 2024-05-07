@@ -37,7 +37,7 @@ const page = () => {
     try {
       // const response = await axios.post('http://localhost:8000/api/apps/register', {
       // const response = await axios.post('http://spottunes.daw.inspedralbes.cat:8000/public/api/apps/register', {
-      const response = await axios.post('http://prespottunes.daw.inspedralbes.cat:8000/public/api/apps/register', {
+      const response = await axios.post('http://prespottunes.daw.inspedralbes.cat/laravel/apps/register', {
         password,
         password_confirmation,
         nickname,
