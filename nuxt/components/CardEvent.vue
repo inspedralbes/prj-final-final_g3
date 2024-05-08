@@ -1,27 +1,29 @@
 <template>
 
     <div class='relative w-full h-56 rounded-xl overflow-hidden'>
-        <img class='w-full h-full brightness-[.4] object-cover' :src="JSON.parse(event.images)[2]" alt="" />,
-        <div class='absolute bottom-2 left-2'>
-            <h2 class='text-white text-xl font-semibold text-left'>{{ event.event }}</h2>
-            <p class='text-white flex items-center gap-1'>
-                <IconsMapPin class="size-4" />{{ event.city }}
-            </p>
-            <p class='text-white flex items-center gap-1'>
-                <IconsCalendar class="size-4" />{{ event.date }}
-            </p>
-            <p class='text-white flex items-center gap-1'>
-                <IconsUsers class="size-4" />300 inscritos
-            </p>
-        </div>
+        <NuxtLink :to="store.getLoggedIn() ? `/events/${event.id}` : '/join'">
+            <img class='w-full h-full brightness-[.4] object-cover' :src="JSON.parse(event.images)[2]" alt="" />
+            <div class='absolute bottom-2 left-2'>
+                <h2 class='text-white text-xl font-semibold text-left'>{{ event.event }}</h2>
+                <p class='text-white flex items-center gap-1'>
+                    <IconsMapPin class="size-4" />{{ event.city }}
+                </p>
+                <p class='text-white flex items-center gap-1'>
+                    <IconsCalendar class="size-4" />{{ event.date }}
+                </p>
+                <p class='text-white flex items-center gap-1'>
+                    <IconsUsers class="size-4" />300 inscritos
+                </p>
+            </div>
+        </NuxtLink>
 
-        <button v-if="liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
-            @click="toggleLike(event.id)">
+        <button v-if="event.like" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
+            @click="toggleLike(event.id, event.like)">
             <IconsHeartFill size="20" />
         </button>
 
-        <button v-if="!liked" class="absolute bottom-2 right-2 p-1 rounded-lg bg-green-500 hover:bg-green-700"
-            @click="toggleLike(event.id)">
+        <button v-else class="absolute bottom-2 right-2 p-1 rounded-lg bg-green-500 hover:bg-green-700"
+            @click="toggleLike(event.id,event.like)">
             <IconsHeart size="20" />
         </button>
 
@@ -32,13 +34,14 @@
 <script>
 import axios from 'axios';
 import { useStores } from '~/stores/counter';
-const store = useStores();
-            const User = store.getUserInfo();
 
 export default {
     data() {
+        const store = useStores();
         return {
-            liked: false
+            store: useStores(),
+            liked: false,
+            events: computed(() => store.events),
         }
 
     },
@@ -49,44 +52,40 @@ export default {
         }
     },
     methods: {
-        async toggleLike(eventId) {
+        async toggleLike(eventId, like) {
 
-
-            if (!this.liked) {
+            const store = useStores();
+            const User = store.getUserInfo();
+           
+            if (!like) {
                 try {
                     const response = await axios.post('http://localhost:8080/likeEvent', {
                         eventId: eventId,
                         userId: User.id
                     });
-                    console.log(response)
-                    this.liked = true;
+                    store.events[this.findIndex(eventId)].like = true;
                 } catch (error) {
-                    this.liked = false;
+                    store.events[this.findIndex(eventId)].like = false;
                     console.error('Error fetching data:', error);
                 }
             } else {
                 try {
                     const response = await axios.delete(`http://localhost:8080/likeEvent?eventId=${eventId}&userId=${User.id}`);
                     console.log(response)
-                    this.liked = false;
+                    store.events[this.findIndex(eventId)].like = false;
                 } catch (error) {
-                    this.liked = true;
+                    store.events[this.findIndex(eventId)].like = true;
                     console.error('Error fetching data:', error);
                 }
             }
         },
-        async fetchData() {
-            try {
-                const response = await axios.get(`http://localhost:8080/likeEvents?userId=${User.id}`);
-                setEventosLike(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+        findIndex(eventId) {
+            return this.events.findIndex(event => event.id === eventId);
         }
     },
     mounted() {
-        this.fetchData();
-        console.log(this.event);
+        // console.log(this.findIndex(this.event.id))
+        // console.log(this.events[this.findIndex(this.event.id)].like)
     }
 }
 </script>

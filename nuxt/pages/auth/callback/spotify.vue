@@ -1,0 +1,41 @@
+<template>
+
+</template>
+
+<script>
+import authManager from '@/managers/authManager.js';
+
+export default {
+    data() {
+        return {
+            code: "",
+            state: ""
+        }
+    },
+    created() {
+        this.getParams();
+    },
+    mounted() {
+        this.fetchSpotifyToken();
+    },
+    methods: {
+        getParams() {
+            const code = this.$route.query.code;
+            const state = this.$route.query.state;
+
+            this.code = code;
+            this.state = state;
+        },
+        async fetchSpotifyToken() {
+            try {
+                const response = await authManager.getSpotifyToken(this.code, this.state);
+                console.log("Respuesta:", response);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+}
+</script>
+
+<style scoped></style>

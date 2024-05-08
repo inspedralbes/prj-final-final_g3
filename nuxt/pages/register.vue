@@ -80,6 +80,8 @@ export default {
                     surnames: response.data.data.user.surnames,
                     email: response.data.data.user.email,
                     token: response.data.data.token,
+                    birthdate: response.data.data.user.birthdate,
+                    nickname: response.data.data.user.nickname
                 });
                 store.setLoggedIn(true);
                 
