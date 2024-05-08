@@ -8,7 +8,7 @@
       <main class="bg-black h-[93vh] flex justify-between items-start px-[5%] pt-4">
         <div class="w-full flex justify-between items-start"> <!-- Cambio en esta línea -->
           <img class="size-14 rounded-full object-cover" src="https://i.ytimg.com/vi/LuWV8Wh00Nk/maxresdefault.jpg" alt="">
-            <textarea v-model="content" class="w-full h-52 bg-transparent outline-none px-2 flex-grow resize-none" placeholder="Escribe aqui..."></textarea>
+            <textarea v-model="content" class="w-full h-52 bg-transparent outline-none px-2 flex-grow resize-none" autofocus placeholder="Escribe aqui..."></textarea>
           <button class="rounded-full p-1 bg-[#818181]">
             <AddImage class="size-5" />
           </button>
@@ -31,16 +31,15 @@
       return {
         content: "",
         image: null,
-        userId: useStores().userInfo.id
       }
     },
 
     methods: {
       async post() {
-        console.log(this.content)
+        const userId = useStores().userInfo.id
         try {
           await axios.post('http://localhost:8080/posts', { 
-            content: this.content, userId: this.userId})
+            content: this.content, userId: userId})
           this.$router.push('/events')
         } catch (error) {
           console.log(error)

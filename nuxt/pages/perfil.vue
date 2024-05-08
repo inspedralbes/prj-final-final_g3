@@ -19,7 +19,7 @@
                             <p class='text-xs text-white/60'>Seguits</p>
                         </div>
                         <div>
-                            <p class="text-white">5</p>
+                            <p class="te+xt-white">5</p>
                             <p class='text-xs text-white/60'>Events</p>
                         </div>
                     </div>
