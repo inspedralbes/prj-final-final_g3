@@ -46,19 +46,6 @@
           console.log(error)
         }
       },
-
-      // async post() {
-      //   const formData = new FormData()
-      //   formData.append('content', this.content)
-      //   formData.append('image', this.image)
-      //   try {
-      //     await this.$axios.post('/posts', formData)
-      //     this.$router.push('/events')
-      //   } catch (error) {
-      //     console.log(error)
-      //   }
-      // },
-      
     }
 
   }
