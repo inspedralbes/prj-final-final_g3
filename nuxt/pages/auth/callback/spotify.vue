@@ -4,10 +4,12 @@
 
 <script>
 import authManager from '@/managers/authManager.js';
+import { useStores } from '@/stores/counter.js';
 
 export default {
     data() {
         return {
+            store: useStores(),
             code: "",
             state: ""
         }
@@ -29,9 +31,11 @@ export default {
         async fetchSpotifyToken() {
             try {
                 const response = await authManager.getSpotifyToken(this.code, this.state);
-                console.log("Respuesta:", response);
+                this.store.setInfoOnRegister(response);
+                this.$router.push('/completar');
             } catch (error) {
                 console.error(error);
+                this.$router.push('/join');
             }
         }
     }

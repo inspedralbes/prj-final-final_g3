@@ -50,6 +50,7 @@ async function getSpotifyToken(code, state) {
         })
         .then((response) => {
           spotifyData.userInfo = response.data;
+          spotifyData.userInfo.loginWith = "spotify";
           resolve(spotifyData);
         })
         .catch((error) => {
@@ -97,6 +98,9 @@ async function getGoogleToken(urlParams) {
         })
         .then((response) => {
           googleData.userInfo = response.data;
+          googleData.userInfo.display_name = googleData.userInfo.given_name;
+          googleData.userInfo.surnames = googleData.userInfo.family_name;
+          googleData.userInfo.loginWith = "google";
           resolve(googleData);
         })
         .catch((error) => {
@@ -118,7 +122,7 @@ async function register(userData) {
       surnames: userData.surnames,
       nickname: userData.nickname,
       password: userData.password,
-      birthdate: userData.birthdate,
+      birthdate: userData.birthday,
       passwordconfirmation: userData.passwordconfirmation,
     });
 
@@ -142,10 +146,31 @@ async function login(userData) {
   }
 }
 
+async function completeProfile(userData) {
+  try {
+    const response = await axios.post(`${url_api}/register`, {
+      email: userData.email,
+      name: userData.name,
+      surnames: userData.surnames,
+      nickname: userData.nickname,
+      password: userData.password,
+      birthdate: userData.birthdate,
+      passwordconfirmation: userData.passwordconfirmation,
+      loginWith: userData.loginWith,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error completing profile:", error);
+    throw new Error("Failed to complete profile");
+  }
+}
+
 const authManager = {
   getSpotifyToken,
   getGoogleToken,
   register,
+  completeProfile,
   login,
 };
 
