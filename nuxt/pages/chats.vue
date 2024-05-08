@@ -12,6 +12,7 @@
             </div>
         </header>
 
+        <nuxt-link to="chat">
         <main class="flex justify-between items-center gap-2">
             <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
             <div class="flex flex-col justify-center items-start gap-1 max-w-64">
@@ -24,10 +25,8 @@
                 <p class="text-sm rounded-full bg-primary size-6 flex justify-center items-center">2</p>
             </div>
         </main>
-
+        </nuxt-link>
         <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
-        
-
     </section>
     <Menu/>
 </template>

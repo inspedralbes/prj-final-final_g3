@@ -1,7 +1,7 @@
 <template>
     <section class="w-[90vw] min-h-screen mx-auto text-white">
         <header class="h-[12vh] flex justify-between items-center bg-black">
-            <NuxtLink to="/events">
+            <NuxtLink to="/chats">
                 <Arrow class="size-6" />
             </NuxtLink>
 
@@ -59,6 +59,8 @@ import CircleDots from '~/components/Icons/CircleDots.vue'
 import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
+import { useStores } from '@/stores/counter';
+
 
 export default {
     components: {
@@ -76,6 +78,11 @@ export default {
     },
     methods: {
         sendMessage() {
+            socketMessage={
+                id: useStores.getId(),
+                message: this.message,
+                state: 'enviado'
+            }
             socket.emit('message', this.message);
             this.message = '';
         } 

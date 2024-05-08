@@ -31,6 +31,9 @@ export const useStores = defineStore("counter",{
         },
         getLoggedIn() {
             return this.loggedIn;
+        },
+        getId(){
+            return this.userInfo.id;
         }
     },
 });
