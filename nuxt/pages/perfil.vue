@@ -1,5 +1,3 @@
-
-
 <template>
     <main class='bg-background flex flex-col gap-10 min-h-screen'>
         <section class='bg-background flex flex-col items-center gap-6'>

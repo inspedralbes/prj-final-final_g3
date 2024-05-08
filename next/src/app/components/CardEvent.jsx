@@ -21,6 +21,8 @@ const CardEvent = ({ image, name, location, date, people, eventId, like }) => {
 
     const toggleLike = async () => {
         console.log(User.id)
+
+        
         if (!liked) {
             try {
                 const response = await axios.post('http://localhost:8080/likeEvent', {
