@@ -27,6 +27,9 @@ export const useStores = defineStore("counter", {
       this.userInfo.token = userInfo.token;
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
+    },   
+    getId(){
+       return this.userInfo.id;
     },
     setLoggedIn(value) {
       this.loggedIn = value;

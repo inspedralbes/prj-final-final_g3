@@ -6,6 +6,7 @@ use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowersController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,8 @@ Route::group(['prefix' => 'events'], function () {
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
     // Route::delete('/{id}', [EventController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'messages'], function () {
+    Route::post('/', [MessageController::class, 'saveMessage']);
 });

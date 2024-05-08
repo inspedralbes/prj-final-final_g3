@@ -14,7 +14,7 @@
                 <Plus class="size-6 text-black" />
             </NuxtLink>
 
-            <NuxtLink to="/chat" class="flex flex-col justify-center items-center" exact-active-class="text-orange-400 fill-orange-400">
+            <NuxtLink to="/chats" class="flex flex-col justify-center items-center" exact-active-class="text-orange-400 fill-orange-400">
                 <Chat class="size-7" />
                 <p class='font-bold text-xs'>Xat</p>
             </NuxtLink>
