@@ -53,7 +53,7 @@
 
             </div>
 
-            <PostsProfile v-if="selectedSection === 'Posts'" />
+            <PostsProfile class="w-[90%] mx-auto" v-if="selectedSection === 'Posts'" />
             <EventosProfile v-if="selectedSection === 'Eventos'" />
             <GustosProfile v-if="selectedSection === 'Gustos'" />
         </section>
@@ -62,13 +62,15 @@
 </template>
 
 <script>
+import { useStores } from '~/stores/counter';
 
 export default {
+
     data() {
         return {
             selectedSection: 'Posts',
             User: {
-                name: 'User Name',
+                name: useStores().userInfo.name,
                 followers: 0,
                 followed: 0
             }
