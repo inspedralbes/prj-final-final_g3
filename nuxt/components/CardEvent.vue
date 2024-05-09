@@ -23,7 +23,7 @@
         </button>
 
         <button v-else class="absolute bottom-2 right-2 p-1 rounded-lg bg-green-500 hover:bg-green-700"
-            @click="toggleLike(event.id,event.like)">
+            @click="toggleLike(event.id, event.like)">
             <IconsHeart size="20" />
         </button>
 
@@ -53,10 +53,9 @@ export default {
     },
     methods: {
         async toggleLike(eventId, like) {
-
             const store = useStores();
             const User = store.getUserInfo();
-           
+
             if (!like) {
                 try {
                     const response = await axios.post('http://localhost:8080/likeEvent', {
@@ -71,7 +70,6 @@ export default {
             } else {
                 try {
                     const response = await axios.delete(`http://localhost:8080/likeEvent?eventId=${eventId}&userId=${User.id}`);
-                    console.log(response)
                     store.events[this.findIndex(eventId)].like = false;
                 } catch (error) {
                     store.events[this.findIndex(eventId)].like = true;
