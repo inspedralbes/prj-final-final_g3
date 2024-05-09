@@ -26,7 +26,8 @@ class MessageController extends Controller
         }
         
         $message = new Message($request->all());
-        return $message->save();
+        $message->save();
+        return $message;
         
     }
     public function getMessages(Request $request){
