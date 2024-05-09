@@ -12,7 +12,10 @@
                     <p class="text-sm">@{{ userInfo.name}}{{ userInfo.surnames }}</p>
                 </div>
             </div>
-            <button><Dots/></button>
+            <button>
+                <!-- <Dots/> -->
+                <PostDropDown />
+            </button>
         </header>
 
         <p class="px-3 text-sm">{{ post.content }}</p>
