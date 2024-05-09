@@ -1,5 +1,5 @@
 <template>
-  <main class='min-h-screen relative'>
+  <!-- <main class='min-h-screen relative'>
     <header class='w-[80%] flex justify-between absolute top-4 left-1/2 -translate-x-1/2 z-10'>
       <Link href='/events'>
       <Arrow class="size-6" />
@@ -43,9 +43,9 @@
       <h3 class='text[#CACACA] text-sm'>2.487 personas inscritas</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
     </article>
-  </main>
+  </main> -->
 
-  <!-- <Menu /> -->
+  <Menu />
 </template>
 
 <script>

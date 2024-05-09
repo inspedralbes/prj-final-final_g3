@@ -15,7 +15,6 @@ export default {
         },
     },
     mounted() {
-        console.log("Size:", this.size);
     },
     methods: {
     }

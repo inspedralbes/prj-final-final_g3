@@ -1,5 +1,3 @@
-
-
 <template>
     <main class='bg-background flex flex-col gap-10 min-h-screen'>
         <section class='bg-background flex flex-col items-center gap-6'>
@@ -19,7 +17,7 @@
                             <p class='text-xs text-white/60'>Seguits</p>
                         </div>
                         <div>
-                            <p class="text-white">5</p>
+                            <p class="te+xt-white">5</p>
                             <p class='text-xs text-white/60'>Events</p>
                         </div>
                     </div>
@@ -53,7 +51,7 @@
 
             </div>
 
-            <PostsProfile v-if="selectedSection === 'Posts'" />
+            <PostsProfile class="w-[90%] mx-auto" v-if="selectedSection === 'Posts'" />
             <EventosProfile v-if="selectedSection === 'Eventos'" />
             <GustosProfile v-if="selectedSection === 'Gustos'" />
         </section>
@@ -62,13 +60,15 @@
 </template>
 
 <script>
+import { useStores } from '~/stores/counter';
 
 export default {
+
     data() {
         return {
             selectedSection: 'Posts',
             User: {
-                name: 'User Name',
+                name: useStores().userInfo.name,
                 followers: 0,
                 followed: 0
             }
