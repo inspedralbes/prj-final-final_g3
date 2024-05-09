@@ -7,13 +7,12 @@
                 <div class="flex flex-col">
                     <div class="flex items-center gap-3">
                         <h3 class="font-bold">{{ userInfo.name }}</h3>
-                        <p class="text-xs">Hace 22h</p>
+                        <p class="text-xs text-gray-300">Hace 22h</p>
                     </div>
                     <p class="text-sm">@{{ userInfo.name}}{{ userInfo.surnames }}</p>
                 </div>
             </div>
             <button>
-                <!-- <Dots/> -->
                 <PostDropDown />
             </button>
         </header>
@@ -21,7 +20,17 @@
         <p class="px-3 text-sm">{{ post.content }}</p>
         <img class="px-3 rounded"src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
         
-        <footer></footer>
+        <footer class="flex items-center gap-6 px-3 py-2">
+            <button class="flex items-center gap-1 text-sm">
+                <IconsMessage class="size-5"/>
+                <p>{{ post.comments }}</p>
+            </button>
+
+            <button class="flex items-center gap-1 text-sm">
+                <IconsHeart class="size-5"/>
+                <p>{{ post.likes.length }}</p>
+            </button>
+        </footer>
     </article>
 </section>
 </template>
@@ -29,12 +38,8 @@
 <script>
 import axios from 'axios'
 import { useStores } from '~/stores/counter';
-import Dots from './Icons/CircleDots.vue'
 
 export default {
-    components: {
-        Dots,
-    },
 
     data() {
         return {
@@ -50,6 +55,7 @@ export default {
                 const response = await axios.get(`http://localhost:8080/posts?userId=${userId}`);
                 this.posts = response.data.reverse()
                 console.log(this.posts)
+                     
             } catch (error) {
                 console.log(error)
             }
