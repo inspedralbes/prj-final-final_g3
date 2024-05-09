@@ -11,6 +11,8 @@ export const useStores = defineStore("counter", {
       nickname: "",
       email: "",
       token: "",
+      nickname: "",
+      birthdate: "",
     },
     events: [],
   }),
@@ -27,6 +29,11 @@ export const useStores = defineStore("counter", {
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.email = userInfo.email;
       this.userInfo.token = userInfo.token;
+      this.userInfo.nickname = userInfo.nickname;
+      this.userInfo.birthdate = userInfo.birthdate;
+    },   
+    getId(){
+       return this.userInfo.id;
     },
     setLoggedIn(value) {
       this.loggedIn = value;
@@ -47,5 +54,8 @@ export const useStores = defineStore("counter", {
     getInfoOnRegister() {
       return this.infoOnRegister;
     },
+    getToken() {
+      return this.userInfo.token;
+    } 
   },
 });
