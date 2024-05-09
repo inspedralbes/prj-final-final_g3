@@ -54,4 +54,5 @@ Route::group(['prefix' => 'events'], function () {
 
 Route::group(['prefix' => 'messages'], function () {
     Route::post('/', [MessageController::class, 'saveMessage']);
+    // Route::get('/', [MessageController::class, 'getAllMessages']);
 });

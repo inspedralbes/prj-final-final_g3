@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('sent_at')->useCurrent();
             $table->timestamp('read_at')->nullable();
             $table->enum('state', ['enviado', 'recibido', 'leído'])->default('enviado');
+            $table->timestamps();
             
         });
     }

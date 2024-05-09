@@ -1,13 +1,22 @@
 import axios from "axios";
 
-const url = `http://localhost:8000/api/messages`;
+const url = `http://localhost:8000/api/messages/`;
 
-function getMessages() {
-  return axios.get(url);
+async function insertMessage(message) {
+  try {
+    const response = await axios.post(url, {
+      chat_id : message.chat_id,
+      user_id : message.id,
+      content : message.content,
+    });
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const manager = {
-    getMessages,
+  insertMessage,
 };
 
 export default manager;
