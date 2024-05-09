@@ -50,6 +50,7 @@ async function getSpotifyToken(code, state) {
         })
         .then((response) => {
           spotifyData.userInfo = response.data;
+          spotifyData.userInfo.loginWith = "spotify";
           resolve(spotifyData);
         })
         .catch((error) => {
@@ -97,6 +98,9 @@ async function getGoogleToken(urlParams) {
         })
         .then((response) => {
           googleData.userInfo = response.data;
+          googleData.userInfo.display_name = googleData.userInfo.given_name;
+          googleData.userInfo.surnames = googleData.userInfo.family_name;
+          googleData.userInfo.loginWith = "google";
           resolve(googleData);
         })
         .catch((error) => {
@@ -110,9 +114,64 @@ async function getGoogleToken(urlParams) {
   }
 }
 
+async function register(userData) {
+  try {
+    const response = await axios.post(`${url_api}/register`, {
+      email: userData.email,
+      name: userData.name,
+      surnames: userData.surnames,
+      nickname: userData.nickname,
+      password: userData.password,
+      birthdate: userData.birthday,
+      passwordconfirmation: userData.passwordconfirmation,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error registering user:", error);
+    throw new Error("Failed to register user");
+  }
+}
+
+async function login(userData) {
+  try {
+    const response = await axios.post(`${url_api}/login`, {
+      email: userData.email,
+      password: userData.password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    throw new Error("Failed to log in user");
+  }
+}
+
+async function completeProfile(userData) {
+  try {
+    const response = await axios.post(`${url_api}/register`, {
+      email: userData.email,
+      name: userData.name,
+      surnames: userData.surnames,
+      nickname: userData.nickname,
+      password: userData.password,
+      birthdate: userData.birthdate,
+      passwordconfirmation: userData.passwordconfirmation,
+      loginWith: userData.loginWith,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error completing profile:", error);
+    throw new Error("Failed to complete profile");
+  }
+}
+
 const authManager = {
   getSpotifyToken,
   getGoogleToken,
+  register,
+  completeProfile,
+  login,
 };
 
 export default authManager;

@@ -4,10 +4,12 @@
 
 <script>
 import authManager from '@/managers/authManager.js';
+import { useStores } from '@/stores/counter.js';
 
 export default {
     data() {
         return {
+            store: useStores(),
             urlParams: {
                 code: '',
                 state: '',
@@ -43,9 +45,11 @@ export default {
         async fetchGoogleToken() {
             try {
                 const response = await authManager.getGoogleToken(this.urlParams);
-                console.log("Respuesta:", response);
+                this.store.setInfoOnRegister(response);
+                this.$router.push('/completar');
             } catch (error) {
                 console.error(error);
+                this.$router.push('/join');
             }
         }
     }

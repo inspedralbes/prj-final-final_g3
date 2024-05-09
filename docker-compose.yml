@@ -46,7 +46,7 @@ services:
     restart: always
     depends_on:
       - db
-  
+
   next:
     container_name: next
     image: node:20.8.1-bullseye-slim
@@ -61,7 +61,6 @@ services:
     command: sh -c "npm install -g npm@10.7.0 && npm install && npm run dev"
     depends_on:
       - node
-
 
   db:
     container_name: db
