@@ -60,9 +60,11 @@ import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
+const store = useStores();
 
 
 export default {
+
     components: {
         Arrow,
         Flag,
@@ -78,14 +80,24 @@ export default {
     },
     methods: {
         sendMessage() {
-            socketMessage={
-                id: useStores.getId(),
-                message: this.message,
-                state: 'enviado'
+            this.message = {
+                chat_id: 1,
+                id: store.getId(),
+                content: this.message
             }
             socket.emit('message', this.message);
             this.message = '';
-        } 
+        },
+        genTimeStamp(){
+            const actualDate = new Date();
+            const year = actualDate.getFullYear().toString();
+            const month = (actualDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = actualDate.getDate().toString().padStart(2, '0');
+            const hours = actualDate.getHours().toString().padStart(2, '0');
+            const minutes = actualDate.getMinutes().toString().padStart(2, '0');
+            const seconds = actualDate.getSeconds().toString().padStart(2, '0');
+            return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+        }, 
     },
     mounted(){
         socket.on('message', (message) => {

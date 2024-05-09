@@ -8,7 +8,6 @@ const postSchema = new Schema({
     comments: Number,
     userId: Number,
     images: [{ type: Schema.Types.ObjectId, ref: 'image' }],
-    images: [{ type: Schema.Types.ObjectId, ref: 'image' }],
 });
 
 const commentPostSchema = new Schema({
