@@ -76,10 +76,9 @@ async function unlikeAnEvent(eventID) {
   const store = useStores();
   const User = store.getUserInfo();
   try {
-    const response = await axios.delete(`${url_api_mongo}/likeEvent`, {
-      userId: User.id,
-      eventId: eventID,
-    });
+    const response = await axios.delete(
+      `${url_api_mongo}/likeEvent?eventId=${eventID}&userId=${User.id}`
+    );
     return response;
   } catch (error) {
     console.error("Error fetching data:", error);

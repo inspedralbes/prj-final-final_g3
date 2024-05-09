@@ -67,7 +67,7 @@ export default {
             }
         },
         findIndex(eventId) {
-            return this.events.findIndex(event => event.id === eventId);
+            return this.store.getEvents().findIndex(event => event.id === eventId);
         }
     },
     mounted() {
