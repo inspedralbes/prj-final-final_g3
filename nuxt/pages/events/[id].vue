@@ -7,10 +7,10 @@
 
       <button @click="toggleLike" :class="{
         'px-4 py-1 text-black font-semibold rounded-full text-sm transition duration-300': true,
-        'bg-red-400 hover:bg-red-600 text-white': liked,
-        'bg-white hover:bg-green-500 hover:text-white': !liked
+        'bg-red-400 hover:bg-red-600 text-white': event.like,
+        'bg-white hover:bg-green-500 hover:text-white': !event.like
       }">
-        {{ liked ? 'Siguiendo' : 'Seguir' }}
+        {{ event.like ? 'Siguiendo' : 'Seguir' }}
       </button>
     </header>
     <div class='h-[218px] relative'>
@@ -47,12 +47,12 @@
 
 <script>
 import { useStores } from '@/stores/counter.js';
+import comManager from '@/managers/comManager.js';
 
 export default {
   data() {
     return {
       store: useStores(),
-      liked: false,
       eventID: parseInt(this.$route.params.id),
       event: {},
       eventImage: ''
@@ -68,8 +68,24 @@ export default {
     getEventById() {
       this.event = this.store.events.find(event => event.id === this.eventID);
     },
-    toggleLike() {
-      this.liked = !this.liked;
+    async toggleLike() {
+      let response;
+      if (!this.event.like) {
+        response = await comManager.likeAnEvent(this.event.id)
+        if (response.status === 200) {
+          this.event.like = true
+          this.store.events[this.findIndex(this.event.id)].like = true;
+        }
+      } else {
+        response = await comManager.unlikeAnEvent(this.event.id)
+        if (response.status === 200) {
+          this.event.like = false
+          this.store.events[this.findIndex(this.event.id)].like = false;
+        }
+      }
+    },
+    findIndex(eventId) {
+      return this.store.getEvents().findIndex(event => event.id === eventId);
     }
   },
   computed: {
