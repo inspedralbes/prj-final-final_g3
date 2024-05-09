@@ -166,12 +166,28 @@ async function completeProfile(userData) {
   }
 }
 
+async function checkEmail(email) {
+  try {
+    const response = await axios.get(`${url_api}/apps/checkEmail`, {
+      params: {
+        email: email,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error checking email:", error);
+    throw new Error("Failed to check email");
+  }
+}
+
 const authManager = {
   getSpotifyToken,
   getGoogleToken,
   register,
   completeProfile,
   login,
+  checkEmail,
 };
 
 export default authManager;
