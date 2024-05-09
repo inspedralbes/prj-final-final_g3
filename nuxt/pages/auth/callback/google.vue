@@ -1,5 +1,7 @@
 <template>
-    <h1>Callback de Google</h1>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <Loader v-if="isLoading" />
+    </div>
 </template>
 
 <script>
@@ -10,6 +12,7 @@ export default {
     data() {
         return {
             store: useStores(),
+            isLoading: true,
             urlParams: {
                 code: '',
                 state: '',
@@ -45,8 +48,25 @@ export default {
         async fetchGoogleToken() {
             try {
                 const response = await authManager.getGoogleToken(this.urlParams);
-                this.store.setInfoOnRegister(response);
-                this.$router.push('/completar');
+                const responseIfExists = await authManager.checkEmail(response.userInfo.email);
+                if (responseIfExists.status === 202) {
+                    this.store.setInfoOnRegister(response);
+                    this.$router.push('/completar');
+                } else if (responseIfExists.status === 200) {
+                    this.store.setUserInfo({
+                        id: responseIfExists.data.data.user.id,
+                        name: responseIfExists.data.data.user.name,
+                        surnames: responseIfExists.data.data.user.surnames,
+                        email: responseIfExists.data.data.user.email,
+                        token: responseIfExists.data.data.token,
+                        birthdate: responseIfExists.data.data.user.birthdate,
+                        nickname: responseIfExists.data.data.user.nickname
+                    });
+                    this.store.setLoggedIn(true);
+
+                    this.isLoading = false;
+                    this.$router.push('/events');
+                }
             } catch (error) {
                 console.error(error);
                 this.$router.push('/join');

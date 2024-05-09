@@ -28,25 +28,20 @@ async function getEvents() {
         eventosAgrupados[key] = evento;
       }
     });
-    console.log(store.getLoggedIn());
     if (store.getLoggedIn()) {
-
       const likedEventIds = await getLikeEvents();
-      
+
       Object.values(eventosAgrupados).forEach((evento) => {
         evento.like = likedEventIds.includes(evento.id);
       });
 
-      console.log("Eventos filtrados", Object.values(eventosAgrupados));
       store.setEvents(Object.values(eventosAgrupados));
     } else {
       store.setEvents(Object.values(eventosAgrupados));
     }
-    
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
 
   // try {
   // const response = await axios.get('http://localhost:8000/api/events');
@@ -75,11 +70,13 @@ async function getLikeEvents() {
   const store = useStores();
   const User = store.getUserInfo();
   try {
-    const response = await axios.get(`${url_api_mongo}/likeEvents?userId=${User.id}`);
+    const response = await axios.get(
+      `${url_api_mongo}/likeEvents?userId=${User.id}`
+    );
     // console.log(response.data);
-    return response.data.map(like => like.eventId);
+    return response.data.map((like) => like.eventId);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   }
 }
 
