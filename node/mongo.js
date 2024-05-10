@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 const mongoUser = process.env.MONGO_USER;
 const mongoPassword = process.env.MONGO_PASSWORD;
 
+console.log(mongoUser, mongoPassword);
 mongoose
   .connect(`mongodb://${mongoUser}:${mongoPassword}@${host}:27017/spottunes`, {
     authSource: "admin",
