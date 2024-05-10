@@ -18,10 +18,16 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const mongoUser = process.env.MONGO_USER;
+const mongoPassword = process.env.MONGO_PASSWORD;
+
 mongoose
-  .connect("mongodb://root:root@" + host + ":27017/spottunes", {
-    authSource: "admin",
-  })
+  .connect(
+    `mongodb://${mongoUser}:${mongoPassword}@"${host}":27017/spottunes`,
+    {
+      authSource: "admin",
+    }
+  )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

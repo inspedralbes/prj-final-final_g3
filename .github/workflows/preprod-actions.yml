@@ -83,6 +83,8 @@ jobs:
           sed -i 's/DB_DATABASE=/DB_DATABASE=spottunes/g' .env
           sed -i 's/DB_USERNAME=/DB_USERNAME=${{ secrets.DB_USERNAME }}/g' .env
           sed -i 's#DB_PASSWORD=#DB_PASSWORD=${{ secrets.DB_PASSWORD }}#g' .env
+          sed -i 's#MONGO_USER=#MONGO_USER=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' .env
+          sed -i 's#MONGO_PASSWORD=#MONGO_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}#g' .env
           sed -i 's#TICKETMASTER_API_KEY=#TICKETMASTER_API_KEY=${{ secrets.TICKETMASTER_API_KEY }}#g' .env
           cd ${{ github.workspace }}
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "[ -d node ] && sudo rm -r node"
@@ -92,7 +94,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "chmod -R 775 node/"
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  deployement-nuxt:
+  deployment-nuxt:
     needs: [fill-docker-compose]
     runs-on: ubuntu-latest
     steps:
@@ -124,7 +126,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   start-docker:
-    needs: [deployment-laravel, deployment-node, deployement-nuxt]
+    needs: [deployment-laravel, deployment-node, deployment-nuxt]
     runs-on: ubuntu-latest
     steps:
       - name: Conexión al servidor y start de docker-compose
