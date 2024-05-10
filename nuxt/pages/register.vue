@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Loader from '~/components/Loader.vue';
 import { useStores } from '~/stores/counter';
 import authManager from '@/managers/authManager';
@@ -78,45 +77,26 @@ export default {
 
 
             const response = await authManager.register(userData);
-            console.log(response);
 
-            this.store.setUserInfo({
-                id: response.data.user.id,
-                name: response.data.user.name,
-                surnames: response.data.user.surnames,
-                email: response.data.user.email,
-                token: response.data.token,
-            });
-
-            try {
-                const response = await axios.post('http://localhost:8000/api/register', {
-                    email: this.email,
-                    name: this.name,
-                    surnames: this.surnames,
-                    nickname: this.nickname,
-                    password: this.password,
-                    birthdate: this.birthdate,
-                    passwordconfirmation: this.passwordconfirmation
+            if (response.status === 200) {
+                const user = response.data.data.user;
+                const token = response.data.data.token;
+                this.store.setUserInfo({
+                    id: user.id,
+                    name: user.name,
+                    surnames: user.surnames,
+                    email: user.email,
+                    token: token,
+                    birthdate: user.birthdate,
+                    nickname: user.nickname
                 });
-                store.setUserInfo({
-                    id: response.data.data.user.id,
-                    name: response.data.data.user.name,
-                    surnames: response.data.data.user.surnames,
-                    email: response.data.data.user.email,
-                    token: response.data.data.token,
-                    birthdate: response.data.data.user.birthdate,
-                    nickname: response.data.data.user.nickname
-                });
-                store.setLoggedIn(true);
-                
+                this.store.setLoggedIn(true);
+                this.isLoading = false;
                 this.$router.push('/events');
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+            } else {
+
             }
 
-            this.isLoading = false;
-            this.$router.push('/events');
 
         }
     }

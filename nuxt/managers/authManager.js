@@ -122,11 +122,10 @@ async function register(userData) {
       surnames: userData.surnames,
       nickname: userData.nickname,
       password: userData.password,
-      birthdate: userData.birthday,
+      birthdate: userData.birthdate,
       passwordconfirmation: userData.passwordconfirmation,
     });
-
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error registering user:", error);
     throw new Error("Failed to register user");
@@ -139,8 +138,9 @@ async function login(userData) {
       email: userData.email,
       password: userData.password,
     });
-    return response.data;
+    return response;
   } catch (error) {
+    console.log(error);
     console.error("Error logging in user:", error);
     throw new Error("Failed to log in user");
   }

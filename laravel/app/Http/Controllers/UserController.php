@@ -424,7 +424,7 @@ class UserController extends Controller{
         $user->birthdate = $request->birthdate;
         $user->save();
         
-        return response()->json($user);   
+        return response()->json($user, 200);
     }
     
     public function checkEmail(Request $request){

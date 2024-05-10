@@ -18,7 +18,7 @@ export const useStores = defineStore("counter", {
   }),
   persist: {
     storage: persistedState.localStorage,
-    paths: ["userInfo", "loggedIn"],
+    paths: ["userInfo", "loggedIn", "events"],
   },
   actions: {
     // SETTERS
@@ -31,9 +31,9 @@ export const useStores = defineStore("counter", {
       this.userInfo.token = userInfo.token;
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
-    },   
-    getId(){
-       return this.userInfo.id;
+    },
+    getId() {
+      return this.userInfo.id;
     },
     setLoggedIn(value) {
       this.loggedIn = value;
@@ -56,6 +56,9 @@ export const useStores = defineStore("counter", {
     },
     getToken() {
       return this.userInfo.token;
-    } 
+    },
+    getEvents() {
+      return this.events;
+    },
   },
 });
