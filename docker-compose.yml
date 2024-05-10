@@ -7,31 +7,34 @@ services:
     working_dir: /usr/src/app
     ports:
       - 8080:8080
-    command: sh -c "npm install && npm run dev"
+    command: sh -c "npm install && npm run start"
+    restart: always
     depends_on:
       - db
 
-  nodeChat:
-    container_name: nodeChat
-    image: node:20.8.1-bullseye-slim
-    volumes:
-      - ./nodeChat:/usr/src/app
-    working_dir: /usr/src/app
-    ports:
-      - 8085:8080
-    command: sh -c "npm install && npm run dev"
-    depends_on:
-      - laravel
+  # nodeChat:
+  #   container_name: nodeChat
+  #   image: arm64v8/node
+  #   volumes:
+  #     - ./nodeChat:/usr/src/app
+  #   working_dir: /usr/src/app
+  #   ports:
+  #     - 8085:8080
+  #   command: sh -c "npm install && node index.js"
+  #   restart: always
+  #   depends_on:
+  #     - laravel
 
   nodeMongo:
     container_name: nodeMongo
-    image: node:20.8.1-bullseye-slim
+    image: arm64v8/node
     volumes:
       - ./node:/usr/src/app
     working_dir: /usr/src/app
     ports:
       - 8086:8080
-    command: sh -c "npm install && npm run devmongo"
+    command: sh -c "npm install && npm run mongo"
+    restart: always
     depends_on:
       - mongodb
 
@@ -58,17 +61,20 @@ services:
     depends_on:
       - db
 
-  next:
-    container_name: next
+  nuxt:
+    container_name: nuxt
     image: arm64v8/node
     working_dir: /usr/src/app
     volumes:
-      - ./next:/usr/src/app
+      - ./nuxt:/usr/src/app
     ports:
       - 3000:3000
     environment:
       - WATCHPACK_POLLING=true
-    command: sh -c "npm install && npm run dev"
+      - CHOKIDAR_USEPOLLING=true
+    tmpfs:
+      - /tmp
+    command: sh -c "node ./server/index.mjs -- --host=http://prespottunes.daw.inspedralbes.cat:8081"
     depends_on:
       - node
 
