@@ -56,19 +56,18 @@ export default {
                 password: this.password
             }
 
-
             const response = await authManager.login(userData);
 
             this.store.setUserInfo({
-                id: response.data.data.user.id,
-                name: response.data.data.user.name,
-                surnames: response.data.data.user.surnames,
-                email: response.data.data.user.email,
-                token: response.data.data.token,
-                birthdate: response.data.data.user.birthdate,
-                nickname: response.data.data.user.nickname
+                id: response.data.user.id,
+                name: response.data.user.name,
+                surnames: response.data.user.surnames,
+                email: response.data.user.email,
+                token: response.data.token,
+                birthdate: response.data.user.birthdate,
+                nickname: response.data.user.nickname
             });
-            store.setLoggedIn(true);
+            this.store.setLoggedIn(true);
 
             this.isLoading = false;
             this.$router.push('/events');
