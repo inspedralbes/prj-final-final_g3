@@ -31,11 +31,9 @@
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
                 <!-- <p class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary">Q va bro, esta durmiendo</p> -->
-                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al
-                    concierto de Quevedo ?</p>
-                <div class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary"
-                    v-for="msg in messages" :key="msg.id">
-                    <p>{{ msg }}</p>
+                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
+                <div v-for="msg in messages.data" :key="msg.id" :class="{'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId()}">
+                    <p>{{ msg.content }}</p>
                 </div>
             </div>
         </article>
@@ -63,7 +61,7 @@ import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
-
+import comChat  from '@/managers/chatManager.js';
 
 export default {
     components: {
@@ -100,12 +98,20 @@ export default {
             const seconds = actualDate.getSeconds().toString().padStart(2, '0');
             return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
         },
+        async fetchMessages() {
+            this.messages = await comChat.getAllMessages(1);
+            console.log(this.messages);
+        },
     },
     mounted() {
         socket.on('message', (message) => {
             this.messages.push(message);
         });
-    }
+
+        this.fetchMessages();
+    },
+    
+
 
 }
 </script>

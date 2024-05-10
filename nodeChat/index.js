@@ -20,10 +20,14 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
-    manager.insertMessage(message);
-    socket.emit('message', message);
+    manager.insertMessage(message)
+      .then(response => {
+        socket.emit('message', response);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   });
-  
 });
 
 

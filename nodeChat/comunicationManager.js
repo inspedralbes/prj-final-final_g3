@@ -1,6 +1,9 @@
 import axios from "axios";
+import dotenv from 'dotenv';
 
-const url = `http://laravel/api/messages/`;
+dotenv.config();
+
+const url = process.env.API_URL;
 
 async function insertMessage(message) {
   try {
@@ -9,7 +12,7 @@ async function insertMessage(message) {
       user_id : message.id,
       content : message.content,
     });
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
