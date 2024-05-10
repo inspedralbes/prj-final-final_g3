@@ -88,33 +88,6 @@ export default {
                 token: response.data.token,
             });
 
-            try {
-                const response = await axios.post('http://localhost:8000/api/register', {
-                    email: this.email,
-                    name: this.name,
-                    surnames: this.surnames,
-                    nickname: this.nickname,
-                    password: this.password,
-                    birthdate: this.birthdate,
-                    passwordconfirmation: this.passwordconfirmation
-                });
-                store.setUserInfo({
-                    id: response.data.data.user.id,
-                    name: response.data.data.user.name,
-                    surnames: response.data.data.user.surnames,
-                    email: response.data.data.user.email,
-                    token: response.data.data.token,
-                    birthdate: response.data.data.user.birthdate,
-                    nickname: response.data.data.user.nickname
-                });
-                store.setLoggedIn(true);
-                
-                this.$router.push('/events');
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-
             this.isLoading = false;
             this.$router.push('/events');
 
