@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import models from "./models.js";
 import minimist from "minimist";
 import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
@@ -21,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 const mongoUser = process.env.MONGO_USER;
 const mongoPassword = process.env.MONGO_PASSWORD;
 
+console.log(mongoUser, mongoPassword);
+console.log(`mongodb://${mongoUser}:${mongoPassword}@${host}:27017/spottunes`);
 mongoose
   .connect(`mongodb://${mongoUser}:${mongoPassword}@${host}:27017/spottunes`, {
     authSource: "admin",
