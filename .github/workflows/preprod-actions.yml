@@ -118,6 +118,7 @@ jobs:
           sed -i 's#VITE_APP_GOOGLE_CLIENT_SECRET=#VITE_APP_GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}#g' .env
           sed -i 's#VITE_APP_GOOGLE_REDIRECT_URI=#VITE_APP_GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}#g' .env
           npm run build
+          echo 'hola'
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PRE_USER }}@${{ secrets.PRE_HOST }} "[ -d nuxt ] && sudo rm -r nuxt"
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r .output ${{ secrets.PRE_USER }}@${{ secrets.PRE_HOST }}:nuxt
       - run: echo "🍏 This job's status is ${{ job.status }}."
