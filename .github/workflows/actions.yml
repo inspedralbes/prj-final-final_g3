@@ -21,7 +21,7 @@ jobs:
 
   fill-docker-compose:
     runs-on: ubuntu-latest
-    # needs: [stop-docker]
+    needs: [stop-docker]
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
