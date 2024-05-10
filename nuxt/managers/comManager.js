@@ -85,10 +85,23 @@ async function unlikeAnEvent(eventID) {
   }
 }
 
+async function searchUsers(param) {
+  console.log(param);
+  try {
+    const response = await axios.post(`${url_api}/apps/searchUsers`,{
+      param: param
+    });
+  return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+}
 const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  searchUsers,
 };
 
 export default comManager;

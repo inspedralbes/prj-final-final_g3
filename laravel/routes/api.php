@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::group(['prefix'=>'apps'],function(){
     Route::post('/register', [UserController::class, 'registerWithApps']);
+    Route::post('/searchUsers', [UserController::class, 'searchUsers']);
     Route::get('/checkEmail', [UserController::class, 'checkEmail']);
 });
 

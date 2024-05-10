@@ -426,6 +426,20 @@ class UserController extends Controller{
         
         return response()->json($user);   
     }
+    /**
+     * Funcion para el buscador recibe parametros y tiene que devolver todos los usuarios que coincidan con lo que comienzen por esos parametros
+     */
+    public function searchUsers(Request $request){
+        $param = $request->input('param');
+        if (empty($param)) {
+            return response()->json(['message' => 'No hay resultados en tu búsqueda'],400);
+        }
+        $users = User::where('nickname', 'like', $param.'%')->get();
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'No hay resultados en tu búsqueda'],400);
+        }
+        return response()->json($users, 200);
+    }
     
     public function checkEmail(Request $request){
         $user = User::where('email', $request->email)->first();
