@@ -21,6 +21,7 @@ const CardEvent = ({ image, name, location, date, people, eventId, like }) => {
 
     const toggleLike = async () => {
         console.log(User.id)
+<<<<<<< HEAD
         try {
             // const response = await axios.post('http://localhost:8080/likeEvent', {
             const response = await axios.post('http://prespottunes.daw.inspedralbes.cat/node/likeEvent', {
@@ -31,6 +32,31 @@ const CardEvent = ({ image, name, location, date, people, eventId, like }) => {
             setLiked(!liked);
         } catch (error) {
             console.error('Error fetching data:', error);
+=======
+
+        
+        if (!liked) {
+            try {
+                const response = await axios.post('http://localhost:8080/likeEvent', {
+                    eventId: eventId,
+                    userId: User.id
+                });
+                console.log(response)
+                setLiked(true);
+            } catch (error) {
+                setLiked(false);
+                console.error('Error fetching data:', error);
+            }
+        } else {
+            try {
+                const response = await axios.delete(`http://localhost:8080/likeEvent?eventId=${eventId}&userId=${User.id}`);
+                console.log(response)
+                setLiked(false);
+            } catch (error) {
+                setLiked(true);
+                console.error('Error fetching data:', error);
+            }
+>>>>>>> dev
         }
     };
 
