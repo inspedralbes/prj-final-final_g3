@@ -6,7 +6,7 @@ import express from "express";
 const app = express();
 
 const argv = minimist(process.argv.slice(2));
-const host = argv.host || "mongo";
+const host = argv.host || "mongodb";
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose
-  .connect("mongo://root:root@" + host + ":27017/spottunes", {
+  .connect("mongodb://root:root@" + host + ":27017/spottunes", {
     authSource: "admin",
   })
   .then(() => console.log("MongoDB connected"))
