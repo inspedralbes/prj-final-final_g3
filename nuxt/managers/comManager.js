@@ -61,6 +61,7 @@ async function getLikeEvents() {
 async function likeAnEvent(eventID) {
   const store = useStores();
   const User = store.getUserInfo();
+  console.log(`${url_api_mongo}/likeEvent`);
   try {
     const response = await axios.post(`${url_api_mongo}/likeEvent`, {
       userId: User.id,
