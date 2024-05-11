@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { useStores } from '~/stores/counter';
 import authManager from '~/managers/authManager';
 

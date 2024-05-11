@@ -2,14 +2,11 @@ import axios from "axios";
 
 let env = import.meta.env.VITE_APP_ENV;
 let url_api;
-let url_api_mongo;
 
 if (env.toLowerCase() === "development") {
   url_api = import.meta.env.VITE_APP_API_DEV_URL;
-  url_api_mongo = import.meta.env.VITE_APP_API_DEV_MONGO_URL;
 } else if (env.toLowerCase() === "production") {
-  url = import.meta.env.VITE_APP_API_PROD_URL;
-  url_api_mongo = import.meta.env.VITE_APP_API_PROD_MONGO_URL;
+  url_api = import.meta.env.VITE_APP_API_PROD_URL;
 }
 
 async function getSpotifyToken(code, state) {
