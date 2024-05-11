@@ -1,10 +1,9 @@
 <template>
-    <main class='w-screen h-screen bg-background'>
+    <!-- <main class='w-screen h-screen bg-background'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center '>
             <h1 class='text-4xl font-semibold text-white'>Inicia sessió</h1>
 
-            <!-- <form class='flex flex-col gap-6' @submit.prevent="login"> -->
-            <form class='flex flex-col gap-6'>
+            <form class='flex flex-col gap-6' @submit.prevent="login">
                 <input class='bg-transparent border-b border-gray-400 outline-none text-white' type="email"
                     autoFocus="true" placeholder="E-mail" v-model="email" />
                 <input class='bg-transparent border-b border-gray-400 outline-none text-white' type="password"
@@ -31,11 +30,10 @@
             </NuxtLink>
 
         </section>
-    </main>
+    </main> -->
 </template>
 
 <script>
-import axios from 'axios';
 import { useStores } from '~/stores/counter';
 import authManager from '~/managers/authManager';
 
