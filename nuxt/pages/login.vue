@@ -1,5 +1,6 @@
 <template>
-    <main class='w-screen h-screen bg-background'>
+    <h1>hola</h1>
+    <!-- <main class='w-screen h-screen bg-background'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center '>
             <h1 class='text-4xl font-semibold text-white'>Inicia sessió</h1>
 
@@ -30,7 +31,7 @@
             </NuxtLink>
 
         </section>
-    </main>
+    </main> -->
 </template>
 
 <script>
