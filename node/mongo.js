@@ -31,14 +31,6 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
-app.get("/hola", (req, res) => {
-  res.send("Hola Mundo");
-});
-
 /* POSTS */
 /* Esta funcion es para guardar un post*/
 app.post("/posts", async (req, res) => {
