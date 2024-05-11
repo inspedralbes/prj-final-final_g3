@@ -1,7 +1,7 @@
 <template>
     <main class='relative flex flex-col w-screen h-screen gap-10 mx-auto bg-background text-white'>
         <header class='py-6 w-[90vw] mx-auto'>
-            <NuxtLink href='/' class='flex items-center gap-2'>
+            <NuxtLink to='/' class='flex items-center gap-2'>
                 <Logo class="text-white size-16" />
             </NuxtLink>
         </header>
@@ -14,9 +14,9 @@
             </article>
 
             <div class='flex flex-col justify-center w-full gap-6'>
-                <NuxtLink href='/login' class='bg-[#464646] rounded-full font-bold py-3 text-center'>Inicia sessió
+                <NuxtLink to='/login' class='bg-[#464646] rounded-full font-bold py-3 text-center'>Inicia sessió
                 </NuxtLink>
-                <NuxtLink href='/register'
+                <NuxtLink to='/register'
                     class='py-3 font-bold text-center transition-all rounded-full duration-200 bg-gradient-to-r from-orange-600 to-yellow-600 hover:bg-white hover:text-black'>
                     Crea un compte</NuxtLink>
             </div>
