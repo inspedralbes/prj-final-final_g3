@@ -18,12 +18,12 @@
         </NuxtLink>
 
         <button v-if="event.like" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
-            @click="toggleLike(event.id, event.like)">
+            @click="toggleLike">
             <IconsHeartFill size="20" />
         </button>
 
         <button v-else class="absolute bottom-2 right-2 p-1 rounded-lg bg-green-500 hover:bg-green-700"
-            @click="toggleLike(event.id,event.like)">
+            @click="toggleLike">
             <IconsHeart size="20" />
         </button>
 
@@ -32,16 +32,14 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { useStores } from '~/stores/counter';
+import comManager from '@/managers/comManager.js'
 
 export default {
     data() {
         const store = useStores();
         return {
             store: useStores(),
-            liked: false,
-            events: computed(() => store.events),
         }
 
     },
@@ -52,40 +50,28 @@ export default {
         }
     },
     methods: {
-        async toggleLike(eventId, like) {
-
-            const store = useStores();
-            const User = store.getUserInfo();
-           
-            if (!like) {
-                try {
-                    const response = await axios.post('http://localhost:8080/likeEvent', {
-                        eventId: eventId,
-                        userId: User.id
-                    });
-                    store.events[this.findIndex(eventId)].like = true;
-                } catch (error) {
-                    store.events[this.findIndex(eventId)].like = false;
-                    console.error('Error fetching data:', error);
+        async toggleLike() {
+            let response;
+            if (!this.event.like) {
+                response = await comManager.likeAnEvent(this.event.id)
+                if (response.status === 200) {
+                    this.event.like = true
+                    this.store.events[this.findIndex(this.event.id)].like = true;
                 }
             } else {
-                try {
-                    const response = await axios.delete(`http://localhost:8080/likeEvent?eventId=${eventId}&userId=${User.id}`);
-                    console.log(response)
-                    store.events[this.findIndex(eventId)].like = false;
-                } catch (error) {
-                    store.events[this.findIndex(eventId)].like = true;
-                    console.error('Error fetching data:', error);
+                response = await comManager.unlikeAnEvent(this.event.id)
+                if (response.status === 200) {
+                    this.event.like = false
+                    this.store.events[this.findIndex(this.event.id)].like = false;
                 }
             }
         },
         findIndex(eventId) {
-            return this.events.findIndex(event => event.id === eventId);
+            return this.store.getEvents().findIndex(event => event.id === eventId);
         }
     },
     mounted() {
-        // console.log(this.findIndex(this.event.id))
-        // console.log(this.events[this.findIndex(this.event.id)].like)
+
     }
 }
 </script>

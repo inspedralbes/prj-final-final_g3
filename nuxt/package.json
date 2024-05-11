@@ -15,7 +15,7 @@
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "nuxt": "^3.11.2",
-    "nuxt-socket-io": "^3.0.13",
+    "nuxt-socket-io": "^3.0.10",
     "pinia": "^2.1.7",
     "socket.io-client": "^4.7.5",
     "vue": "^3.4.21",

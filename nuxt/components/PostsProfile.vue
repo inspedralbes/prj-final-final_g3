@@ -1,5 +1,6 @@
 <template>
     <section>
+
         <article v-for="post in posts" class="flex flex-col gap-2 bg-black rounded mb-4">
             <header class=" flex justify-between items-center py-2 px-3">
                 <div class="flex justify-center items-center gap-3">
@@ -9,19 +10,24 @@
                     <div class="flex flex-col">
                         <div class="flex items-center gap-3">
                             <h3 class="font-bold">{{ userInfo.name }}</h3>
+
                             <p class="text-xs text-gray-300">Hace 22h</p>
+
                         </div>
                         <p class="text-sm">@{{ userInfo.name }}{{ userInfo.surnames }}</p>
                     </div>
                 </div>
                 <button>
+
                     <PostDropDown />
+
                 </button>
             </header>
 
             <p class="px-3 text-sm">{{ post.content }}</p>
             <img class="px-3 rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg"
                 alt="">
+
 
             <footer class="flex items-center gap-6 px-3 py-2">
                 <button class="flex items-center gap-1 text-sm">
@@ -36,6 +42,7 @@
             </footer>
         </article>
     </section>
+
 </template>
 
 <script>
@@ -57,6 +64,7 @@ export default {
             try {
                 const response = await axios.get(`http://localhost:8080/posts?userId=${userId}`);
                 this.posts = response.data.reverse()
+
                 this.posts = this.posts.map(post => ({
                     ...post,
                     liked: false,
@@ -82,8 +90,9 @@ export default {
                     }
                 }
                 console.log('liked')
+
             } catch (error) {
-                console.log(error)
+
             }
         },
 
@@ -117,7 +126,7 @@ export default {
     },
 
     created() {
-        this.getPosts()
+        // this.getPosts()
     }
 }
 </script>
