@@ -36,7 +36,7 @@
 
 <script>
 import { useStores } from '~/stores/counter';
-import authManager from '~/managers/authManager';
+// import authManager from '~/managers/authManager';
 
 export default {
     data() {
