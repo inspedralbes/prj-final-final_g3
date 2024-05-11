@@ -49,32 +49,32 @@ export default {
 
     methods: {
         async login() {
-            this.isLoading = true;
-            const userData = {
-                email: this.email,
-                password: this.password
-            }
+            // this.isLoading = true;
+            // const userData = {
+            //     email: this.email,
+            //     password: this.password
+            // }
 
-            const response = await authManager.login(userData);
+            // const response = await authManager.login(userData);
 
-            if (response.status === 200) {
-                const user = response.data.data.user;
-                const token = response.data.data.token;
-                this.store.setUserInfo({
-                    id: user.id,
-                    name: user.name,
-                    surnames: user.surnames,
-                    email: user.email,
-                    token: token,
-                    birthdate: user.birthdate,
-                    nickname: user.nickname
-                });
-                this.store.setLoggedIn(true);
-                this.isLoading = false;
-                this.$router.push('/events');
-            } else {
+            // if (response.status === 200) {
+            //     const user = response.data.data.user;
+            //     const token = response.data.data.token;
+            //     this.store.setUserInfo({
+            //         id: user.id,
+            //         name: user.name,
+            //         surnames: user.surnames,
+            //         email: user.email,
+            //         token: token,
+            //         birthdate: user.birthdate,
+            //         nickname: user.nickname
+            //     });
+            //     this.store.setLoggedIn(true);
+            //     this.isLoading = false;
+            //     this.$router.push('/events');
+            // } else {
 
-            }
+            // }
         }
     }
 }
