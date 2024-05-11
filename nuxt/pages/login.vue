@@ -3,7 +3,8 @@
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center '>
             <h1 class='text-4xl font-semibold text-white'>Inicia sessió</h1>
 
-            <form class='flex flex-col gap-6' @submit.prevent="login">
+            <!-- <form class='flex flex-col gap-6' @submit.prevent="login"> -->
+            <form class='flex flex-col gap-6'>
                 <input class='bg-transparent border-b border-gray-400 outline-none text-white' type="email"
                     autoFocus="true" placeholder="E-mail" v-model="email" />
                 <input class='bg-transparent border-b border-gray-400 outline-none text-white' type="password"

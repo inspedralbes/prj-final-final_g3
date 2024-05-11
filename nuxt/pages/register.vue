@@ -2,7 +2,8 @@
     <main class='w-screen h-screen bg-background'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold text-white'>Registra't</h1>
-            <form class="flex flex-col gap-6" @submit.prevent="register">
+            <!-- <form class="flex flex-col gap-6" @submit.prevent="register"> -->
+            <form class="flex flex-col gap-6">
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="email"
                     placeholder="Email" v-model="email" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="text"
