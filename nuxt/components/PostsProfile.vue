@@ -36,7 +36,8 @@
                 </button>
 
                 <button @click="clickLike(post._id)" class="flex items-center gap-1 text-sm">
-                    <IconsHeart class="size-5" />
+                    <IconsHeartFill v-if="post.liked" class="size-5 text-red-500" />
+                    <IconsHeart v-else class="size-5" />
                     <p>{{ post.likes.length }}</p>
                 </button>
             </footer>
