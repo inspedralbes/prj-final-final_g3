@@ -85,6 +85,27 @@ async function unlikeAnEvent(eventID) {
   }
 }
 
+async function post(content){
+  const store = useStores();
+  const userID = store.getId()
+  try{
+    await axios.post(`${url_api_mongo}/posts`, {
+      content: content,
+      userId: userID
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function deletePost(postID){
+  try{
+    await axios.delete(`${url_api_mongo}/posts?_id=${postID}`);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 async function getPosts() {
     const store = useStores();
     const userID = store.getId()
@@ -124,6 +145,8 @@ const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  post,
+  deletePost,
   getPosts,
   likePost,
   unlikePost,

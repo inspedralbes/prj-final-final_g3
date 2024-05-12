@@ -19,7 +19,7 @@
                 </div>
                 <button>
 
-                    <PostDropDown />
+                    <PostDropDown :postId=" post._id "/>
 
                 </button>
             </header>

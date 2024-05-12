@@ -12,7 +12,7 @@
       <Button class="flex items-center justify-start gap-2 w-full px-3 py-2 text-sm hover:bg-primary">
         <IconsPencil class="size-4" /> Editar
       </Button>
-      <Button class="flex items-center justify-start gap-2 w-full px-3 py-2 text-sm hover:bg-primary">
+      <Button @click="deletePost" class="flex items-center justify-start gap-2 w-full px-3 py-2 text-sm hover:bg-primary">
         <IconsTrash class="size-4" /> Eliminar
       </Button>
     </div>
@@ -20,7 +20,16 @@
 </template>
 
 <script>
+import comManager from '@/managers/comManager.js';
+
 export default {
+  props: {
+    postId: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
       isOpen: false,
@@ -28,6 +37,17 @@ export default {
   },
 
   methods: {
+
+    async deletePost(){
+      console.log('Deleting post', this.postId)
+      await comManager.deletePost(this.postId)
+      console.log('Post deleted')
+    },
+
+
+
+
+
     dropDown() {
       this.isOpen = !this.isOpen;
     },
