@@ -35,6 +35,19 @@ likePostSchema.pre('save', async function(next) {
     }
 });
 
+likePostSchema.pre('remove', async function(next) {
+    try {
+        await models.post.findOneAndDelete(
+            { _id: this.postId },
+            { $pull: { likes: this._id } },
+            { new: true }
+        );
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
 const likeEventSchema = new Schema({
     eventId: Number,
     userId: Number,

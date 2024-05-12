@@ -37,7 +37,8 @@ class MessageController extends Controller
             'chat_id' => 'integer'
         ]);
 
-        $messages = Message::where('chat_id', $request->chat_id)->latest()->paginate(10)->reverse()->toJson();
+        
+        $messages = Message::where('chat_id', $request->chat_id)->latest()->paginate(10)->toJson();
 
         return $messages;
     }

@@ -22,6 +22,7 @@ io.on('connection', (socket) => {
   socket.on('message', (message) => {
     manager.insertMessage(message)
       .then(response => {
+        console.log(response);
         socket.emit('message', response);
       })
       .catch(error => {
