@@ -36,9 +36,6 @@
                 </svg>
             </NuxtLink>
         </section>
-
-
-
     </main>
 </template>
 
