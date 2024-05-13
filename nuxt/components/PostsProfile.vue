@@ -14,7 +14,7 @@
                             <p class="text-xs text-gray-300">Hace 22h</p>
 
                         </div>
-                        <p class="text-sm">@{{ userInfo.name }}{{ userInfo.surnames }}</p>
+                        <p class="text-sm">@{{ userInfo.nickname }}</p>
                     </div>
                 </div>
                 <button>
@@ -125,6 +125,7 @@ export default {
 
     created() {
         this.getPosts()
+        console.log(this.userInfo)
     }
 }
 </script>
