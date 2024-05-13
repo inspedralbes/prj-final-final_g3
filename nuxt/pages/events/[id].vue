@@ -24,23 +24,24 @@
       <div class='flex justify-between items-center'>
         <div class='space-y-1'>
           <h2 class='font-semibold text-sm flex gap-1 items-center'>
-            <MapPin class="size-5" /> {{ event.city }}
+            <IconsMapPin class="size-5" /> {{ event.city }}
           </h2>
           <h2 class='font-semibold text-sm flex gap-1 items-center'>
-            <Music class="size-5" /> {{ event.venue }}
+            <IconsMusic class="size-5" /> {{ event.venue }}
           </h2>
         </div>
         <div class='space-y-1'>
           <h2 class='font-semibold text-sm flex gap-1 items-center'>
-            <Calendar class="size-5" /> {{ event.date }}
+            <IconsCalendar class="size-5" /> {{ event.date }}
           </h2>
           <h2 class='font-semibold text-sm flex gap-1 items-center'>
-            <Clock class="size-5" /> {{ event.time }}
+            <IconsClock class="size-5" /> {{ event.time }}
           </h2>
         </div>
       </div>
-      <!-- <h3 class='text[#CACACA] text-sm'>2.487 personas inscritas</h3> -->
+      <h3 class='text[#CACACA] text-sm'>2.487 personas inscritas</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
+      <UserCardEvent/>
     </article>
   </main>
 </template>
