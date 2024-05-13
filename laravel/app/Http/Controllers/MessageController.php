@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Message;
-use Illuminate\Support\Facades\Validator; // Agrega esta línea
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
 
 
 
@@ -26,15 +27,20 @@ class MessageController extends Controller
         }
         
         $message = new Message($request->all());
-        return $message->save();
+        $message->save();
+        return $message;
         
     }
+    
     public function getMessages(Request $request){
         $request->validate([
             'chat_id' => 'integer'
         ]);
 
-        return Message::where('chat_id', $request->chat_id)->get();
+        
+        $messages = Message::where('chat_id', $request->chat_id)->latest()->paginate(10)->toJson();
+
+        return $messages;
     }
 
     public function getAllMessages(){

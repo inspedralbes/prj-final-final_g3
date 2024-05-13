@@ -20,11 +20,15 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   socket.on('message', (message) => {
-    console.log('Mensaje recibido: ', message);
-    manager.insertMessage(message);
-    // socket.emit('message', message);
+    manager.insertMessage(message)
+      .then(response => {
+        console.log(response);
+        socket.emit('message', response);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   });
-  
 });
 
 
