@@ -196,7 +196,7 @@ class UserController extends Controller{
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'surnames' => 'required|string',
+            // 'surnames' => 'required|string',
             'nickname' => 'required|string|unique:users',
             'email' => 'required|email|unique:users',
             'birthdate' => 'required|date',
@@ -424,21 +424,21 @@ class UserController extends Controller{
         $user->birthdate = $request->birthdate;
         $user->save();
         
-        return response()->json($user);   
+        return response()->json($user, 200);
     }
     
     public function checkEmail(Request $request){
         $user = User::where('email', $request->email)->first();
         if ($user) {
-            return response()->json(['errors' => ['El email ya está en uso.']], 400);
             $user = User::where('email', $request['email'])->first();
             $token = $user->createToken('Spottunes')->plainTextToken;
-                $response = [
-                    'user' => $user,
-                    'token' => $token,
-                ];
+            $response = [
+                'user' => $user,
+                'token' => $token,
+            ];
+            return response()->json(['success' => 'El email ya está en uso, haciendo Login', 'data' => $response], 200);
         }else{
-            return response()->json(['success' => 'El email está disponible'], 200);
+            return response()->json(['success' => 'El email está disponible'], 202);
         }
     }
 }
