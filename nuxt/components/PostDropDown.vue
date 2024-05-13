@@ -42,7 +42,6 @@ export default {
     async deletePost() {
       console.log('Deleting post', this.postId)
       await comManager.deletePost(this.postId)
-      console.log('Post deleted')
     },
 
     dropDown() {
