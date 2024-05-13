@@ -100,7 +100,7 @@ async function post(content){
 
 async function deletePost(postID){
   try{
-    await axios.delete(`${url_api_mongo}/posts?_id=${postID}`);
+    await axios.delete(`${url_api_mongo}/posts?postId=${postID}`);
   } catch (error) {
     console.error("Error fetching data:", error);
   }

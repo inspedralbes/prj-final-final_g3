@@ -185,8 +185,6 @@ app.delete("/likePost", async (req, res) => {
       { $pull: { likes: likePost._id } }
     );
 
-    
-
     console.log("LikePost deleted:", likePost._id);
     res.send(likePost);
   } catch (error) {
