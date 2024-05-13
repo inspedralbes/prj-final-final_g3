@@ -85,10 +85,71 @@ async function unlikeAnEvent(eventID) {
   }
 }
 
+async function post(content){
+  const store = useStores();
+  const userID = store.getId()
+  try{
+    await axios.post(`${url_api_mongo}/posts`, {
+      content: content,
+      userId: userID
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function deletePost(postID){
+  try{
+    await axios.delete(`${url_api_mongo}/posts?_id=${postID}`);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getPosts() {
+    const store = useStores();
+    const userID = store.getId()
+
+    try{
+      const response = await axios.get(`${url_api_mongo}/posts?userId=${userID}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+async function likePost(postID){
+  const store = useStores();
+  const userID = store.getId()
+  try{
+    await axios.post(`${url_api_mongo}/likePost`, {
+      postId: postID,
+      userId: userID
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function unlikePost(postID){
+  const store = useStores();
+  const userID = store.getId()
+  try{
+    await axios.delete(`${url_api_mongo}/likePost?postId=${postID}&userId=${userID}`);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  post,
+  deletePost,
+  getPosts,
+  likePost,
+  unlikePost,
 };
 
 export default comManager;

@@ -19,7 +19,7 @@
                 </div>
                 <button>
 
-                    <PostDropDown />
+                    <PostDropDown :postId=" post._id "/>
 
                 </button>
             </header>
@@ -35,8 +35,9 @@
                     <p>{{ post.comments }}</p>
                 </button>
 
-                <button @click="unLike(post._id)" class="flex items-center gap-1 text-sm">
-                    <IconsHeart class="size-5" />
+                <button @click="clickLike(post._id)" class="flex items-center gap-1 text-sm">
+                    <IconsHeartFill v-if="post.liked" class="size-5 text-red-500" />
+                    <IconsHeart v-else class="size-5" />
                     <p>{{ post.likes.length }}</p>
                 </button>
             </footer>
@@ -48,6 +49,7 @@
 <script>
 import axios from 'axios'
 import { useStores } from '~/stores/counter';
+import comManager from '@/managers/comManager.js';
 
 export default {
 
@@ -60,65 +62,59 @@ export default {
 
     methods: {
         async getPosts() {
-            const userId = useStores().userInfo.id;
-            try {
-                const response = await axios.get(`http://localhost:8080/posts?userId=${userId}`);
-                this.posts = response.data.reverse()
+            this.posts = await comManager.getPosts()
 
-                this.posts = this.posts.map(post => ({
-                    ...post,
-                    liked: false,
-                }));
-                console.log(this.posts)
-
-            } catch (error) {
-                console.log(error)
-            }
+            this.posts.reverse()
+            this.posts = this.posts.map(post => ({
+                ...post,
+                liked: false,
+            }));
+            console.log(this.posts)
         },
 
-        async like(id) {
-            try {
-                await axios.post(`http://localhost:8080/likePost`, {
-                    postId: id,
-                    userId: useStores().userInfo.id
-                });
+        // async like(id) {
+        //     for (let i = 0; i < this.posts.length; i++) {
+        //         if (this.posts[i]._id === id) {
+        //             this.posts[i].likes.length++;
+        //             this.posts[i].liked = true;
+        //         }
+        //     }
+        //     console.log('liked')
+        // },
 
-                for (let i = 0; i < this.posts.length; i++) {
-                    if (this.posts[i]._id === id) {
-                        this.posts[i].likes.length++;
-                        this.posts[i].liked = true;
-                    }
-                }
-                console.log('liked')
-
-            } catch (error) {
-
-            }
-        },
-
-        async unLike(id) {
-            try {
-                await axios.delete(`http://localhost:8080/likePost?postId=${id}?userId${useStores().userInfo.id}`);
-
-                for (let i = 0; i < this.posts.length; i++) {
-                    if (this.posts[i]._id === id) {
-                        this.posts[i].likes.length--;
-                        this.posts[i].liked = false;
-                    }
-                }
-                console.log('unliked')
-            } catch (error) {
-                console.log(error)
-            }
-        },
+        // async unLike(id) {
+        //     for (let i = 0; i < this.posts.length; i++) {
+        //         if (this.posts[i]._id === id) {
+        //             this.posts[i].likes.length--;
+        //             this.posts[i].liked = false;
+        //         }
+        //     }
+        //     console.log('unliked')
+        // },
 
         clickLike(id) {
             for (let i = 0; i < this.posts.length; i++) {
                 if (this.posts[i]._id === id) {
                     if (this.posts[i].liked) {
-                        this.unLike(id)
+                        comManager.unlikePost(id)
+
+                        for (let i = 0; i < this.posts.length; i++) {
+                            if (this.posts[i]._id === id) {
+                                this.posts[i].likes.length--;
+                                this.posts[i].liked = false;
+                            }
+                        }
+                        console.log('unliked')
                     } else {
-                        this.like(id)
+                        comManager.likePost(id)
+
+                        for (let i = 0; i < this.posts.length; i++) {
+                            if (this.posts[i]._id === id) {
+                                this.posts[i].likes.length++;
+                                this.posts[i].liked = true;
+                            }
+                        }
+                        console.log('liked')
                     }
                 }
             }
@@ -126,7 +122,7 @@ export default {
     },
 
     created() {
-        // this.getPosts()
+        this.getPosts()
     }
 }
 </script>
