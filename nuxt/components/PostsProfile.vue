@@ -1,6 +1,7 @@
 <template>
-    <!-- <section>
-        <article v-for="post in posts" class="flex flex-col gap-2 bg-black rounded mb-4">
+    <section>
+
+        <article v-for="(post, index) in posts" :key="post.id" class="flex flex-col gap-2 bg-black rounded mb-4">
             <header class=" flex justify-between items-center py-2 px-3">
                 <div class="flex justify-center items-center gap-3">
                     <img class="size-12 rounded-full object-cover"
@@ -9,34 +10,44 @@
                     <div class="flex flex-col">
                         <div class="flex items-center gap-3">
                             <h3 class="font-bold">{{ userInfo.name }}</h3>
-                            <p class="text-xs">Hace 22h</p>
+
+                            <p class="text-xs text-gray-300">Hace 22h</p>
+
                         </div>
-                        <p class="text-sm">@{{ userInfo.name }}{{ userInfo.surnames }}</p>
+                        <p class="text-sm">@{{ userInfo.nickname }}</p>
                     </div>
                 </div>
-                <button>
-                    <Dots />
-                </button>
+                    <PostDropDown :postId=" post._id "/>
             </header>
 
             <p class="px-3 text-sm">{{ post.content }}</p>
             <img class="px-3 rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg"
                 alt="">
 
-            <footer></footer>
+
+            <footer class="flex items-center gap-6 px-3 py-2">
+                <button class="flex items-center gap-1 text-sm">
+                    <IconsMessage class="size-5" />
+                    <p>{{ post.comments }}</p>
+                </button>
+
+                <button @click="clickLike(post._id)" class="flex items-center gap-1 text-sm">
+                    <IconsHeartFill v-if="post.liked" class="size-5 text-red-500" />
+                    <IconsHeart v-else class="size-5" />
+                    <p>{{ post.likes.length }}</p>
+                </button>
+            </footer>
         </article>
-    </section> -->
+    </section>
+
 </template>
 
 <script>
 import axios from 'axios'
 import { useStores } from '~/stores/counter';
-import Dots from './Icons/CircleDots.vue'
+import comManager from '@/managers/comManager.js';
 
 export default {
-    components: {
-        Dots,
-    },
 
     data() {
         return {
@@ -47,18 +58,64 @@ export default {
 
     methods: {
         async getPosts() {
-            const userId = useStores().userInfo.id;
-            try {
-                const response = await axios.get(`http://localhost:8080/posts?userId=${userId}`);
-                this.posts = response.data.reverse()
-            } catch (error) {
+            this.posts = await comManager.getPosts()
+            if (this.posts.length != 0) {
+                this.posts.reverse()
+            }
 
+            this.posts = this.posts.map(post => ({
+                ...post,
+                liked: false,
+            }));
+            console.log(this.posts)
+            this.getLikesPosts()
+        },
+
+        async getLikesPosts() {
+            this.likedPosts = await comManager.getLikePosts()
+            console.log(this.likedPosts)
+
+            for (let i = 0; i < this.posts.length; i++) {
+                for (let j = 0; j < this.likedPosts.length; j++) {
+                    if (this.posts[i]._id === this.likedPosts[j]) {
+                        this.posts[i].liked = true;
+                    }
+                }
             }
         },
+
+        clickLike(id) {
+            for (let i = 0; i < this.posts.length; i++) {
+                if (this.posts[i]._id === id) {
+                    if (this.posts[i].liked) {
+                        comManager.unlikePost(id)
+
+                        for (let i = 0; i < this.posts.length; i++) {
+                            if (this.posts[i]._id === id) {
+                                this.posts[i].likes.length--;
+                                this.posts[i].liked = false;
+                            }
+                        }
+                        console.log('unliked')
+                    } else {
+                        comManager.likePost(id)
+
+                        for (let i = 0; i < this.posts.length; i++) {
+                            if (this.posts[i]._id === id) {
+                                this.posts[i].likes.length++;
+                                this.posts[i].liked = true;
+                            }
+                        }
+                        console.log('liked')
+                    }
+                }
+            }
+        }
     },
 
     created() {
-        // this.getPosts()
+        this.getPosts()
+        console.log(this.userInfo)
     }
 }
 </script>

@@ -19,6 +19,10 @@ use App\Http\Controllers\MessageController;
 |
 */
 
+Route::get('/', function () {
+    return response()->json(['message' => 'Hello World!']);
+});
+
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
@@ -54,4 +58,5 @@ Route::group(['prefix' => 'events'], function () {
 
 Route::group(['prefix' => 'messages'], function () {
     Route::post('/', [MessageController::class, 'saveMessage']);
+    Route::get('/{chat_id}', [MessageController::class, 'getMessages']);
 });

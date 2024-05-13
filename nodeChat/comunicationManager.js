@@ -1,13 +1,25 @@
 import axios from "axios";
+import dotenv from 'dotenv';
 
-const url = `http://localhost:8000/api/messages`;
+dotenv.config();
 
-function getMessages() {
-  return axios.get(url);
+const url = process.env.API_URL;
+
+async function insertMessage(message) {
+  try {
+    const response = await axios.post(url, {
+      chat_id : message.chat_id,
+      user_id : message.id,
+      content : message.content,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const manager = {
-    getMessages,
+  insertMessage,
 };
 
 export default manager;

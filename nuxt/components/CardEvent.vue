@@ -51,6 +51,7 @@ export default {
     },
     methods: {
         async toggleLike() {
+            if(!this.store.getLoggedIn()) return this.$router.push('/join');
             let response;
             if (!this.event.like) {
                 response = await comManager.likeAnEvent(this.event.id)
