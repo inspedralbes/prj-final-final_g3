@@ -178,7 +178,16 @@ app.delete("/likePost", async (req, res) => {
       postId: req.query.postId,
       userId: req.query.userId,
     });
-    console.log("LikePost deleted:", likePost);
+
+    // Remove the _id from the likes array of the post
+    await models.post.updateOne(
+      { _id: req.query.postId },
+      { $pull: { likes: likePost._id } }
+    );
+
+    
+
+    console.log("LikePost deleted:", likePost._id);
     res.send(likePost);
   } catch (error) {
     console.error("Error:", error);

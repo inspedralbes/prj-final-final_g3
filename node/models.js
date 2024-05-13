@@ -35,33 +35,29 @@ likePostSchema.pre("save", async function (next) {
   }
 });
 
-likePostSchema.pre("remove", async function (next) {
-  try {
-    const post = await models.post.findOneAndDelete(
-      { _id: this.postId },
-      { $pull: { likes: this._id } }
-    );
-    if (!post) {
-      throw new Error("No se encontró el post asociado al like.");
-    }
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
-likePostSchema.pre('remove', async function(next) {
+likePostSchema.post("remove", { document: true }, async function (doc) {
     try {
-        await models.post.findOneAndDelete(
-            { _id: this.postId },
-            { $pull: { likes: this._id } },
-            { new: true }
-        );
-        next();
+      const postId = doc.postId;
+      const userId = doc.userId;
+      
+      // Actualizar el documento del post para eliminar el like del array de likes
+      const post = await models.post.findByIdAndUpdate(
+        postId,
+        { $pull: { likes: userId } },
+        { new: true }
+      );
+      
+      if (!post) {
+        throw new Error("No se encontró el post asociado al like.");
+      }
+      
+      console.log("Like eliminado del array de likes en el documento del post.");
     } catch (error) {
-        next(error);
+      console.error("Error al eliminar el like del array de likes en el documento del post:", error);
     }
 });
+  
+  
 
 const likeEventSchema = new Schema({
   eventId: Number,
