@@ -1,7 +1,7 @@
 <template>
     <section>
 
-        <article v-for="post in posts" class="flex flex-col gap-2 bg-black rounded mb-4">
+        <article v-for="(post, index) in posts" :key="post.id" class="flex flex-col gap-2 bg-black rounded mb-4">
             <header class=" flex justify-between items-center py-2 px-3">
                 <div class="flex justify-center items-center gap-3">
                     <img class="size-12 rounded-full object-cover"
@@ -17,11 +17,7 @@
                         <p class="text-sm">@{{ userInfo.nickname }}</p>
                     </div>
                 </div>
-                <button>
-
                     <PostDropDown :postId=" post._id "/>
-
-                </button>
             </header>
 
             <p class="px-3 text-sm">{{ post.content }}</p>
@@ -72,27 +68,21 @@ export default {
                 liked: false,
             }));
             console.log(this.posts)
+            this.getLikesPosts()
         },
 
-        // async like(id) {
-        //     for (let i = 0; i < this.posts.length; i++) {
-        //         if (this.posts[i]._id === id) {
-        //             this.posts[i].likes.length++;
-        //             this.posts[i].liked = true;
-        //         }
-        //     }
-        //     console.log('liked')
-        // },
+        async getLikesPosts() {
+            this.likedPosts = await comManager.getLikePosts()
+            console.log(this.likedPosts)
 
-        // async unLike(id) {
-        //     for (let i = 0; i < this.posts.length; i++) {
-        //         if (this.posts[i]._id === id) {
-        //             this.posts[i].likes.length--;
-        //             this.posts[i].liked = false;
-        //         }
-        //     }
-        //     console.log('unliked')
-        // },
+            for (let i = 0; i < this.posts.length; i++) {
+                for (let j = 0; j < this.likedPosts.length; j++) {
+                    if (this.posts[i]._id === this.likedPosts[j]) {
+                        this.posts[i].liked = true;
+                    }
+                }
+            }
+        },
 
         clickLike(id) {
             for (let i = 0; i < this.posts.length; i++) {

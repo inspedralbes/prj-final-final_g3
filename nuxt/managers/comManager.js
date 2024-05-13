@@ -118,6 +118,19 @@ async function getPosts() {
     }
   }
 
+  async function getLikePosts() {
+    const store = useStores();
+    const userID = store.getId()
+    try {
+      const response = await axios.get(
+        `${url_api_mongo}/likePosts?userId=${userID}`
+      );
+      return response.data.map((like) => like.postId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
 async function likePost(postID){
   const store = useStores();
   const userID = store.getId()
@@ -148,6 +161,7 @@ const comManager = {
   post,
   deletePost,
   getPosts,
+  getLikePosts,
   likePost,
   unlikePost,
 };
