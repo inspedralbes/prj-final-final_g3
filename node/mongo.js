@@ -48,15 +48,16 @@ app.post("/posts", async (req, res) => {
 
 /* Esta funcion es para eliminar un post*/
 app.delete("/posts", async (req, res) => {
-    try {
-        const post = await models.post.findOneAndDelete({
-            _id: req.query.postId,
-        });
-        console.log("Post deleted:", post);
-        res.send("Post deleted successfully");
-    } catch (error) {
-        console.error("Error:", error);
-    }
+  try {
+    const post = await models.post.findOneAndDelete({ _id: req.query.postId });
+    
+    await models.likePost.deleteMany({ postId: post._id });
+
+    console.log("Post deleted:", post);
+    res.send("Post deleted successfully");
+  } catch (error) {
+    console.error("Error:", error);
+  }
 });
 
 /* Esta funcion es para recibir todos los posts de un usuario y su contenido*/
