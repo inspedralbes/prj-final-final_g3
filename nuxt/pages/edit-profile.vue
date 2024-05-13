@@ -53,6 +53,8 @@ export default {
     };
   },
   mounted() {
+    if(!this.store.getLoggedIn()) return this.$router.push('/join');
+
     const userInfo = this.store.getUserInfo();
     this.name = userInfo.name;
     this.nickname = userInfo.nickname;

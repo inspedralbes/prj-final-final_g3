@@ -7,3 +7,5 @@
 
 mysql_data/
 mongodb_data/
+next/
+nuxt_deprecated/

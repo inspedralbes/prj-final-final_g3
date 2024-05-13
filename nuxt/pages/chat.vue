@@ -76,6 +76,7 @@ export default {
             messages: [],
             message: '',
             pagination:{}
+
         }
     },
     methods: {
@@ -106,6 +107,7 @@ export default {
         },
     },
     mounted() {
+    if(!this.store.getLoggedIn()) return this.$router.push('/join');
     socket.on('message', (message) => {
         this.messages.push(message);
         this.$nextTick(() => {
@@ -118,7 +120,6 @@ export default {
     this.fetchMessages();
 },
     
-
 
 }
 </script>

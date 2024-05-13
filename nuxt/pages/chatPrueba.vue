@@ -10,12 +10,14 @@
 
 <script>
 import { socket } from '../socket';
+import { useStores } from '@/stores/counter';
 
 export default {
     data() {
         return {
             messages: [],
-            message: ''
+            message: '',
+            store: useStores()
         }
     },
     methods: {
@@ -25,6 +27,8 @@ export default {
         }
     },
     mounted(){
+        if(!this.store.getLoggedIn()) return this.$router.push('/join');
+
         socket.on('message', (message) => {
             this.messages.push(message);
         });

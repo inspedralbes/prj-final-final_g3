@@ -63,6 +63,7 @@ export default {
     this.getEventById();
   },
   mounted() {
+    if(!this.store.getLoggedIn()) return this.$router.push('/join');
 
   },
   methods: {

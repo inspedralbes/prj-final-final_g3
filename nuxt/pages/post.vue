@@ -31,6 +31,7 @@ export default {
     return {
       content: "",
       image: null,
+      store: useStores()
     }
   },
 
@@ -40,6 +41,9 @@ export default {
       console.log('Post created')
       this.$router.push('/events')
     },
+  },
+  mounted(){
+    if(!this.store.getLoggedIn()) return this.$router.push('/join');
   }
 
 }
