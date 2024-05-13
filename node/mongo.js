@@ -53,6 +53,9 @@ app.post("/posts", async (req, res) => {
 app.delete("/posts", async (req, res) => {
   try {
     const post = await models.post.findOneAndDelete({ _id: req.query.postId });
+
+    await models.likePost.deleteMany({ postId: post._id });
+
     console.log("Post deleted:", post);
     res.send("Post deleted successfully");
   } catch (error) {
@@ -105,7 +108,9 @@ app.get("/likeEvents", async (req, res) => {
 /* Esta funcion es para recoger el numero de likes de un evento*/
 app.get("/likeEvents/:eventId", async (req, res) => {
   try {
-    const eventExists = await models.event.exists({ _id: req.params.eventId });
+    const eventExists = await models.event.exists({
+      _id: req.params.eventId,
+    });
     if (!eventExists) {
       throw new Error("Event does not exist");
     }
@@ -151,7 +156,9 @@ app.post("/likePost", async (req, res) => {
 /* Esta funcion es para recibir todos los post a los que un usuario le ha dado like*/
 app.get("/likePosts", async (req, res) => {
   try {
-    const likePosts = await models.likePost.find({ userId: req.query.userId });
+    const likePosts = await models.likePost.find({
+      userId: req.query.userId,
+    });
     console.log("LikePosts:", likePosts);
     res.send(likePosts);
   } catch (error) {
@@ -184,7 +191,14 @@ app.delete("/likePost", async (req, res) => {
       postId: req.query.postId,
       userId: req.query.userId,
     });
-    console.log("LikePost deleted:", likePost);
+
+    // Remove the _id from the likes array of the post
+    await models.post.updateOne(
+      { _id: req.query.postId },
+      { $pull: { likes: likePost._id } }
+    );
+
+    console.log("LikePost deleted:", likePost._id);
     res.send(likePost);
   } catch (error) {
     console.error("Error:", error);
@@ -211,7 +225,9 @@ app.post("/comments", async (req, res) => {
 /* Esta funcion sirve para recibir todos los comentarios de un post */
 app.get("/comments", async (req, res) => {
   try {
-    const comments = await models.commentPost.find({ postId: req.body.postId });
+    const comments = await models.commentPost.find({
+      postId: req.body.postId,
+    });
     console.log("Comments:", comments);
     res.send(comments);
   } catch (error) {
