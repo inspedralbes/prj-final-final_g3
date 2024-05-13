@@ -3,20 +3,11 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-<<<<<<< HEAD
     content: String,
     likes: [{ type: Schema.Types.ObjectId, ref: 'likePost' }],
     comments: Number,
     userId: Number,
     images: [{ type: Schema.Types.ObjectId, ref: 'image' }],
-=======
-  content: String,
-  likes: [{ type: Schema.Types.ObjectId, ref: "likePost" }],
-  comments: Number,
-  userId: Number,
-  images: [{ type: Schema.Types.ObjectId, ref: "image" }],
-  images: [{ type: Schema.Types.ObjectId, ref: "image" }],
->>>>>>> 4d49b6a4070f7d995069e7aa69aa8ce4875baedb
 });
 
 const commentPostSchema = new Schema({
