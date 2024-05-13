@@ -7,10 +7,10 @@
     </header>
 
     <main class="bg-black h-[93vh] flex justify-between items-start px-[5%] pt-4">
-      <div class="w-full flex justify-between items-start">
+      <div class="w-full flex justify-between items-start h-full">
         <img class="size-14 rounded-full object-cover" src="https://i.ytimg.com/vi/LuWV8Wh00Nk/maxresdefault.jpg"
           alt="">
-        <textarea v-model="content" class="w-full h-52 bg-transparent outline-none px-2 flex-grow resize-none" autofocus
+        <textarea ref="textarea" v-model="content" class="w-full h-full bg-transparent outline-none px-2 flex-grow resize-none" autofocus
           placeholder="Escribe aqui..."></textarea>
         <button class="rounded-full p-1 bg-[#818181]">
           <IconsAddImage class="size-5" />
@@ -43,6 +43,7 @@ export default {
     },
   },
   mounted(){
+    this.$refs.textarea.focus();
     if(!this.store.getLoggedIn()) return this.$router.push('/join');
   }
 
