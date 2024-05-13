@@ -33,6 +33,7 @@ export default {
     return {
       content: "",
       image: null,
+      store: useStores()
     }
   },
 
@@ -48,6 +49,9 @@ export default {
         console.log(error)
       }
     },
+  },
+  mounted(){
+    if(!this.store.getLoggedIn()) return this.$router.push('/join');
   }
 
 }

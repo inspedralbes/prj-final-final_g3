@@ -72,7 +72,8 @@ export default {
                 name: useStores().userInfo.name,
                 followers: 0,
                 followed: 0
-            }
+            },
+            store: useStores()
         }
     },
 
@@ -80,6 +81,9 @@ export default {
         setSelectedSection(section) {
             this.selectedSection = section
         }
+    },
+    mounted() {
+        if(!this.store.getLoggedIn()) return this.$router.push('/join');
     }
 }
 </script>
