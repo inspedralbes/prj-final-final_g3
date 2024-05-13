@@ -63,8 +63,10 @@ export default {
     methods: {
         async getPosts() {
             this.posts = await comManager.getPosts()
+            if (this.posts.length != 0) {
+                this.posts.reverse()
+            }
 
-            this.posts.reverse()
             this.posts = this.posts.map(post => ({
                 ...post,
                 liked: false,
