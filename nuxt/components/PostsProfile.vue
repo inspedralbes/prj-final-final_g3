@@ -1,5 +1,6 @@
 <template>
-    <!-- <section>
+    <section>
+
         <article v-for="post in posts" class="flex flex-col gap-2 bg-black rounded mb-4">
             <header class=" flex justify-between items-center py-2 px-3">
                 <div class="flex justify-center items-center gap-3">
@@ -9,13 +10,17 @@
                     <div class="flex flex-col">
                         <div class="flex items-center gap-3">
                             <h3 class="font-bold">{{ userInfo.name }}</h3>
-                            <p class="text-xs">Hace 22h</p>
+
+                            <p class="text-xs text-gray-300">Hace 22h</p>
+
                         </div>
                         <p class="text-sm">@{{ userInfo.name }}{{ userInfo.surnames }}</p>
                     </div>
                 </div>
                 <button>
-                    <Dots />
+
+                    <PostDropDown />
+
                 </button>
             </header>
 
@@ -23,20 +28,28 @@
             <img class="px-3 rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg"
                 alt="">
 
-            <footer></footer>
+
+            <footer class="flex items-center gap-6 px-3 py-2">
+                <button class="flex items-center gap-1 text-sm">
+                    <IconsMessage class="size-5" />
+                    <p>{{ post.comments }}</p>
+                </button>
+
+                <button @click="unLike(post._id)" class="flex items-center gap-1 text-sm">
+                    <IconsHeart class="size-5" />
+                    <p>{{ post.likes.length }}</p>
+                </button>
+            </footer>
         </article>
-    </section> -->
+    </section>
+
 </template>
 
 <script>
 import axios from 'axios'
 import { useStores } from '~/stores/counter';
-import Dots from './Icons/CircleDots.vue'
 
 export default {
-    components: {
-        Dots,
-    },
 
     data() {
         return {
@@ -51,10 +64,65 @@ export default {
             try {
                 const response = await axios.get(`http://localhost:8080/posts?userId=${userId}`);
                 this.posts = response.data.reverse()
+
+                this.posts = this.posts.map(post => ({
+                    ...post,
+                    liked: false,
+                }));
+                console.log(this.posts)
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        async like(id) {
+            try {
+                await axios.post(`http://localhost:8080/likePost`, {
+                    postId: id,
+                    userId: useStores().userInfo.id
+                });
+
+                for (let i = 0; i < this.posts.length; i++) {
+                    if (this.posts[i]._id === id) {
+                        this.posts[i].likes.length++;
+                        this.posts[i].liked = true;
+                    }
+                }
+                console.log('liked')
+
             } catch (error) {
 
             }
         },
+
+        async unLike(id) {
+            try {
+                await axios.delete(`http://localhost:8080/likePost?postId=${id}?userId${useStores().userInfo.id}`);
+
+                for (let i = 0; i < this.posts.length; i++) {
+                    if (this.posts[i]._id === id) {
+                        this.posts[i].likes.length--;
+                        this.posts[i].liked = false;
+                    }
+                }
+                console.log('unliked')
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        clickLike(id) {
+            for (let i = 0; i < this.posts.length; i++) {
+                if (this.posts[i]._id === id) {
+                    if (this.posts[i].liked) {
+                        this.unLike(id)
+                    } else {
+                        this.like(id)
+                    }
+                }
+            }
+        }
     },
 
     created() {
