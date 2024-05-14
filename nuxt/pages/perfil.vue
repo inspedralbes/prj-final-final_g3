@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import userManager from '~/managers/userManager';
 import { useStores } from '~/stores/counter';
 
 export default {
@@ -70,8 +72,8 @@ export default {
             User: {
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
-                followers: 0,
-                followed: 0
+                followers: '',
+                followed: ''
             },
             store: useStores()
         }
@@ -80,10 +82,21 @@ export default {
     methods: {
         setSelectedSection(section) {
             this.selectedSection = section
+        },
+        async getFollowers() {
+            const followers = await userManager.getFollowers();
+            this.User.followers = followers;
+        },
+        async getFollowed() {
+            const followed = await userManager.getFollowed();
+            this.User.followed = followed;
         }
     },
     mounted() {
-        if(!this.store.getLoggedIn()) return this.$router.push('/join');
+        if (!this.store.getLoggedIn()) return this.$router.push('/join');
+        this.getFollowers(); 
+        this.getFollowed();
+
     }
 }
 </script>
