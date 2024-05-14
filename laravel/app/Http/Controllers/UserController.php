@@ -432,11 +432,11 @@ class UserController extends Controller{
     public function searchUsers(Request $request){
         $param = $request->input('param');
         if (empty($param)) {
-            return response()->json(['message' => 'No hay resultados en tu búsqueda'],400);
+            return response()->json(['message' => 'No hay resultados en tu búsqueda'],201);
         }
         $users = User::where('nickname', 'like', $param.'%')->get();
         if ($users->isEmpty()) {
-            return response()->json(['message' => 'No hay resultados en tu búsqueda'],400);
+            return response()->json(['message' => 'No hay resultados en tu búsqueda'],202);
         }
         return response()->json($users, 200);
     }

@@ -86,12 +86,11 @@ async function unlikeAnEvent(eventID) {
 }
 
 async function searchUsers(param) {
-  console.log(param);
   try {
     const response = await axios.post(`${url_api}/apps/searchUsers`,{
       param: param
     });
-  return response.data;
+  return response;
   } catch (error) {
     console.error("Error fetching data:", error);
   }

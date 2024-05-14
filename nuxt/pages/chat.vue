@@ -31,8 +31,10 @@
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
                 <!-- <p class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary">Q va bro, esta durmiendo</p> -->
-                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
-                <div class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary" v-for="msg in messages" :key="msg.id">
+                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al
+                    concierto de Quevedo ?</p>
+                <div class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary"
+                    v-for="msg in messages" :key="msg.id">
                     <p>{{ msg }}</p>
                 </div>
             </div>
@@ -43,7 +45,8 @@
                 <button class="rounded-full bg-[#7C7C7C] p-[6px]">
                     <Plus class="size-5 border-white border-2 rounded-full" />
                 </button>
-                <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none" placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage()" v-model="message"> 
+                <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
+                    placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage()" v-model="message">
             </div>
             <button class="bg-primary rounded-full p-[6px]">
                 <Send class="size-5" />
@@ -73,21 +76,30 @@ export default {
     data() {
         return {
             messages: [],
-            message: ''
+            message: '',
+            UsuarioActual:{}
+        }
+    },
+    props: {
+        user: {
+            type: Object,
+            required: true
         }
     },
     methods: {
         sendMessage() {
-            socketMessage={
+            socketMessage = {
                 id: useStores.getId(),
                 message: this.message,
                 state: 'enviado'
             }
             socket.emit('message', this.message);
             this.message = '';
-        } 
+        }
     },
-    mounted(){
+    mounted() {
+        this.UsuarioActual = this.user;
+        console.log(this.UsuarioActual);
         socket.on('message', (message) => {
             this.messages.push(message);
         });
