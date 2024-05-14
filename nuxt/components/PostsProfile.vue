@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { useStores } from '~/stores/counter';
 import comManager from '@/managers/comManager.js';
 
