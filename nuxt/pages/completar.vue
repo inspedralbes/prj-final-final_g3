@@ -51,12 +51,8 @@ export default {
         }
     },
     created() {
-        if (!this.store.getInfoOnRegister().userInfo) {
-            this.$router.push('/join');
-        }
     },
     mounted() {
-        if(!this.store.getLoggedIn()) return this.$router.push('/join');
 
         if (this.store.getInfoOnRegister()) {
             this.name = this.store.getInfoOnRegister().userInfo.display_name;
