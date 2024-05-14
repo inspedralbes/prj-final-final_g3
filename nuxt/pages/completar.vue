@@ -53,7 +53,6 @@ export default {
     created() {
     },
     mounted() {
-
         if (this.store.getInfoOnRegister()) {
             this.name = this.store.getInfoOnRegister().userInfo.display_name;
             this.email = this.store.getInfoOnRegister().userInfo.email;
