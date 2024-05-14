@@ -33,10 +33,26 @@ async function updateUser(user, token) {
   }
 }
 
+async function logout(){
+  const store = useStores();
+  try{
+    const response = await axios.post(`${url_api}/logout`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`
+      }
+    });
+    console.log(response);
+    store.setLogout();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 async function getFollowers() {
   const store = useStores();
   try {
-    const response = await axios.get(`${url_api}/users/followers/${store.getId()}`, {
+    console.log(store.getToken());
+    await axios.get(`${url_api}/users/followers/${store.getId()}`, {
       headers: {
         Authorization: `Bearer ${store.getToken()}`,
       },
@@ -64,6 +80,7 @@ async function getFollowed() {
 
 const userManager = {
   updateUser,
+  logout,
   getFollowers,
   getFollowed,
 };

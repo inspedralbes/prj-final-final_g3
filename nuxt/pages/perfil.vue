@@ -1,5 +1,7 @@
 <template>
     <main class='bg-background flex flex-col gap-10 min-h-screen'>
+        <Logout class="absolute top-3 right-5"/>
+
         <section class='bg-background flex flex-col items-center gap-6'>
             <article class='w-full px-2 py-4 flex justify-around items-center'>
                 <img class='size-24 rounded-full object-cover'
