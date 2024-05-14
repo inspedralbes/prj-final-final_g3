@@ -1,7 +1,7 @@
 <template>
     <section>
-        <transition-group name="list" >
-            <article v-for="(post, index) in posts" :key="post.id" class="flex flex-col gap-2 bg-black rounded mb-4">
+        <transition-group name="fade" tag="div" class="relative">
+            <article v-for="post in posts" :key="post.id" class="flex flex-col gap-2 bg-black rounded mb-4">
                 <header class=" flex justify-between items-center py-2 px-3">
                     <div class="flex justify-center items-center gap-3">
                         <img class="size-12 rounded-full object-cover"
@@ -127,19 +127,19 @@ export default {
 </script>
 
 <style scoped>
-.list-move,
-.list-enter-active,
-.list-leave-active {
-    transition: all .5s ease;
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 1s ease;
 }
 
-.list-enter-from,
-.list-leave-to {
+.fade-enter-from,
+.fade-leave-to {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(50px);
 }
 
-.list-leave-active {
+.fade-leave-active {
     position: absolute;
 }
 </style>
