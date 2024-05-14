@@ -258,6 +258,10 @@ app.delete("/comments", async (req, res) => {
         const comment = await models.commentPost.findOneAndDelete({
             _id: req.query.commentId,
         });
+
+        await models.likeComment.deleteMany({ commentId: comment._id });
+        await models.commentPost.deleteMany({ parentId: comment._id });
+
         console.log("Comment deleted:", comment);
         res.send("Comment deleted successfully");
     } catch (error) {
