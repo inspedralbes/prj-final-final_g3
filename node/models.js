@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     content: String,
     likes: [{ type: Schema.Types.ObjectId, ref: 'likePost' }],
-    comments: Number,
+    comments: [{ type: Schema.Types.ObjectId, ref: 'commentPost' }],
     userId: Number,
     images: [{ type: Schema.Types.ObjectId, ref: 'image' }],
 });
@@ -56,7 +56,6 @@ likePostSchema.post("remove", { document: true }, async function (doc) {
       console.error("Error al eliminar el like del array de likes en el documento del post:", error);
     }
 });
-  
   
 
 const likeEventSchema = new Schema({

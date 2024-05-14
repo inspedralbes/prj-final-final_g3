@@ -36,7 +36,7 @@ app.post("/posts", async (req, res) => {
         var createdPost = {
             content: post.content,
             likes: [],
-            comments: 0,
+            comments: [],
             userId: post.userId,
             images: [],
         };
@@ -329,7 +329,6 @@ app.delete("/likeComment", async (req, res) => {
 });
 
 /* IMAGENES */
-
 app.post("/images", async (req, res) => {
     const image = req.body;
     try {
