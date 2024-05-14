@@ -52,6 +52,7 @@ app.delete("/posts", async (req, res) => {
     const post = await models.post.findOneAndDelete({ _id: req.query.postId });
     
     await models.likePost.deleteMany({ postId: post._id });
+    await models.commentPost.deleteMany({ postId: post._id });
 
     console.log("Post deleted:", post);
     res.send("Post deleted successfully");
