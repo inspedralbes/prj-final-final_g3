@@ -1,5 +1,5 @@
-name: Spottunes Deploy Actions
-run-name: ${{ github.actor }} is deploying Spottunes 🚀
+name: Spottunes Deploy on Production Actions
+run-name: ${{ github.actor }} is deploying Spottunes in Server 🚀
 on:
   push:
     branches:
@@ -77,7 +77,6 @@ jobs:
         run: |
           echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
-          echo "hola"
           cd node
           cp .env.example .env
           sed -i 's/DB_HOST=/DB_HOST=db/g' .env
