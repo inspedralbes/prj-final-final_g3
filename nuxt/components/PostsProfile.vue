@@ -28,7 +28,7 @@
                 <footer class="flex items-center gap-6 px-3 py-2">
                     <button class="flex items-center gap-1 text-sm">
                         <IconsMessage class="size-5" />
-                        <p>{{ post.comments }}</p>
+                        <p>{{ post.comments.length }}</p>
                     </button>
 
                     <button @click="clickLike(post._id)" class="flex items-center gap-1 text-sm">
