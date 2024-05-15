@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- Barra de busqueda -->
-            <div class="relative w-full">
-                <input v-model="param" @input="searchUsers" type="text" id="simple-search"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Busca a usuarios para inicar un chat..." required />
-            </div>
+        <div class="relative w-full">
+            <input v-model="param" @input="searchUsers" type="text" id="simple-search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Busca a usuarios para inicar un chat..." required />
+        </div>
 
         <!-- Lista de usuarios que devuelve el buscador -->
         <main class="flex justify-center items-center mt-8">
