@@ -106,12 +106,6 @@ app.get("/likeEvents", async (req, res) => {
 /* Esta funcion es para recoger el numero de likes de un evento*/
 app.get("/likeEvents/:eventId", async (req, res) => {
     try {
-        const eventExists = await models.event.exists({
-            _id: req.params.eventId,
-        });
-        if (!eventExists) {
-            throw new Error("Event does not exist");
-        }
         const likeEventCount = await models.likeEvent.countDocuments({
             eventId: req.params.eventId,
         });
@@ -122,6 +116,24 @@ app.get("/likeEvents/:eventId", async (req, res) => {
         res.status(404).send({ error: error.message });
     }
 });
+
+app.get("/likeEvents/:eventId/followers", async (req, res) => {
+    
+    const page = req.query.p || 0;
+    const followersperPage = 10;
+
+    try{
+        const likeEventFollowers = await models.likeEvent.find({
+            eventId: req.params.eventId,
+        }).skip(page * followersperPage).limit(followersperPage);
+        console.log("LikeEvent followers:", likeEventFollowers);
+        res.send(likeEventFollowers);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(404).send({ error: error.message });
+    }
+});
+
 /* Esta funcion es para quitar el like de un evento cuando el usuario lo quita manualmente*/
 app.delete("/likeEvent", async (req, res) => {
     try {
@@ -164,6 +176,8 @@ app.get("/likePosts", async (req, res) => {
         return [];
     }
 });
+
+
 
 /* Esta funcion es devolver cuantos likes tiene un post */
 app.get("/likePosts/:postId", async (req, res) => {

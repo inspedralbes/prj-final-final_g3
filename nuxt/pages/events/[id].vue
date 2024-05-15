@@ -39,7 +39,7 @@
           </h2>
         </div>
       </div>
-      <h3 class='text[#CACACA] text-sm'>2.487 personas inscritas</h3>
+      <h3 class='text[#CACACA] text-sm'>{{ counterFollowers }} personas inscritas</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
       <UserCardEvent/>
     </article>
@@ -56,7 +56,9 @@ export default {
       store: useStores(),
       eventID: parseInt(this.$route.params.id),
       event: {},
-      eventImage: ''
+      eventImage: '',
+      counterFollowers: 0,
+      page: 0
     }
   },
   created() {
@@ -64,7 +66,8 @@ export default {
   },
   mounted() {
     if(!this.store.getLoggedIn()) return this.$router.push('/join');
-
+    this.getEventCounterFollowers();
+    this.getFollowers();
   },
   methods: {
     getEventById() {
@@ -76,18 +79,31 @@ export default {
         response = await comManager.likeAnEvent(this.event.id)
         if (response.status === 200) {
           this.event.like = true
+          this.counterFollowers += 1;
           this.store.events[this.findIndex(this.event.id)].like = true;
         }
       } else {
         response = await comManager.unlikeAnEvent(this.event.id)
         if (response.status === 200) {
           this.event.like = false
+          this.counterFollowers -= 1;
           this.store.events[this.findIndex(this.event.id)].like = false;
         }
       }
     },
     findIndex(eventId) {
       return this.store.getEvents().findIndex(event => event.id === eventId);
+    },
+    async getEventCounterFollowers() {
+      const response = await comManager.getEventCounterFollowers(this.event.id);
+      this.counterFollowers = response.data.eventFollowers;
+    },
+    async getFollowers(){
+      const response = await comManager.getEventFollowers(this.event.id,this.page);
+      if (response.length == 10){
+        page++;
+      }
+      console.log(response.data);
     }
   },
   computed: {
