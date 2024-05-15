@@ -25,11 +25,11 @@ Route::get('/', function () {
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/auth', [UserController::class, 'redirectToAuth']);
 Route::get('/auth/callback', [UserController::class, 'handleAuthCallback']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [UserController::class, 'logout']);
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
     Route::put('/updateInfo', [UserController::class, 'updateInfo']);
     Route::group(['prefix' => 'users'], function () {
