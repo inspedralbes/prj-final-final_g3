@@ -117,6 +117,13 @@ export default {
 
         comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
             console.log(res);
+            // if (res[0].chat_id) {
+            //     this.chat_id = res[0].chat_id;
+            //     console.log('Chat existente');
+            //     console.log(this.chat_id);
+            // } else {
+            //     console.log('Chat no existente');
+            // }
         });
 
     },

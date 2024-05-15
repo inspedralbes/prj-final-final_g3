@@ -30,7 +30,10 @@ class ChatController extends Controller
 
         if ($chatExists) {
             $messages = Message::where('chat_id', $chatExists->id)->get();
-            return response()->json($messages);
+            return response()->json([
+                'chatExists' => $chatExists,
+                'messages' => $messages
+            ]);
         } else {
             $chat = new Chat();
             $chat->name = $user_id . ' - ' . $contact_id;
