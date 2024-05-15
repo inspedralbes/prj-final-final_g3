@@ -75,7 +75,6 @@ app.get("/posts", async (req, res) => {
 
 /* EVENTS */
 /* Esta funcion es para guardar el like de un evento*/
-
 app.post("/likeEvent", async (req, res) => {
     try {
         const likeEvent = await models.likeEvent.create({
@@ -182,6 +181,7 @@ app.get("/likePosts/:postId", async (req, res) => {
         res.status(404).send({ error: error.message });
     }
 });
+
 /* Esta funcion es para cuando un usuario quiere quitar el like de un post */
 app.delete("/likePost", async (req, res) => {
     try {
