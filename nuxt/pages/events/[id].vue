@@ -41,7 +41,12 @@
       </div>
       <h3 class='text[#CACACA] text-sm'>{{ counterFollowers }} personas inscritas</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
-      <UserCardEvent/>
+      <div v-for="follower in followers" :key="follower.id">
+        <UserCardEvent :follower="follower" />
+      </div>
+      <div v-if="loadingFollowers" class="flex justify-center items-center">
+        <div class="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600"></div>
+      </div>
     </article>
   </main>
 </template>
@@ -60,14 +65,15 @@ export default {
       counterFollowers: 0,
       page: 0,
       followers: [],
-
+      loadingFollowers: false,
+      noFollowers: false
     }
   },
   created() {
     this.getEventById();
   },
   mounted() {
-    if(!this.store.getLoggedIn()) return this.$router.push('/join');
+    if (!this.store.getLoggedIn()) return this.$router.push('/join');
     this.getEventCounterFollowers();
     this.getFollowers();
   },
@@ -82,6 +88,7 @@ export default {
         if (response.status === 200) {
           this.event.like = true
           this.counterFollowers += 1;
+          this.followers.push(this.store.getUserInfo());
           this.store.events[this.findIndex(this.event.id)].like = true;
         }
       } else {
@@ -89,6 +96,7 @@ export default {
         if (response.status === 200) {
           this.event.like = false
           this.counterFollowers -= 1;
+          this.followers = this.followers.filter(follower => follower.id !== this.store.getUserInfo().id);
           this.store.events[this.findIndex(this.event.id)].like = false;
         }
       }
@@ -100,31 +108,43 @@ export default {
       const response = await comManager.getEventCounterFollowers(this.event.id);
       this.counterFollowers = response.data.eventFollowers;
     },
-    async getFollowers(){
-      const response = await comManager.getEventFollowers(this.event.id,this.page);
+    async getFollowers() {
+      this.loadingFollowers = true;
+      const response = await comManager.getEventFollowers(this.event.id, this.page);
       const followersMongo = response.data;
+      if (followersMongo.length === 0) {
+        console.log('No hay más followers');
+        this.loadingFollowers = false;
+        this.noFollowers = true;
+      }else{
+        if (followersMongo.length === 10) {
+          this.page++;
+        }
+        for (const follower of followersMongo) {
+          const userResponse = await comManager.getUserById(follower.userId, this.store.getToken());
+          this.followers.push(userResponse.data);
+        }
+        this.loadingFollowers = false;
 
-      if (response.length == 10){
-        page++;
       }
-
-      followersMongo.forEach(follower => {
-        comManager.getUserById(follower.userId,this.store.getToken()).then(response => {
-          this.followers.push(response.data);
-          console.log(this.followers);
-        });
-      });
-      
     }
   },
-  computed: {
-
-  },
+  computed: {},
   watch: {
     event() {
       const imagesJSON = JSON.parse(this.event.images);
       this.eventImage = imagesJSON[2];
+    },
+    noFollowers() {
+      if (this.followers.length === 0) {
+        this.noFollowers = true;
+        console.log('No hay followers');
+      }else{
+        this.noFollowers = false;
+        console.log('Hay followers');
+      }
     }
+
   }
 }
 </script>
