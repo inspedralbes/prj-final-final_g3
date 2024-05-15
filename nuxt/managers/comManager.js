@@ -186,6 +186,21 @@ async function getEventFollowers(id,page){
   }
 }
 
+async function getUserById(id,token){
+  try{
+    const response = await axios.get(`${url_api}/users/${id}`,{
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    
+    });
+    return response
+  } catch (error) { 
+    console.error("Error fetching data:", error);
+  }
+
+} 
+
 
 const comManager = {
   getEvents,
@@ -199,7 +214,8 @@ const comManager = {
   likePost,
   unlikePost,
   getEventCounterFollowers,
-  getEventFollowers
+  getEventFollowers,
+  getUserById
 };
 
 export default comManager;

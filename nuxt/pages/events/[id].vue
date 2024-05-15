@@ -58,7 +58,9 @@ export default {
       event: {},
       eventImage: '',
       counterFollowers: 0,
-      page: 0
+      page: 0,
+      followers: [],
+
     }
   },
   created() {
@@ -100,10 +102,19 @@ export default {
     },
     async getFollowers(){
       const response = await comManager.getEventFollowers(this.event.id,this.page);
+      const followersMongo = response.data;
+
       if (response.length == 10){
         page++;
       }
-      console.log(response.data);
+
+      followersMongo.forEach(follower => {
+        comManager.getUserById(follower.userId,this.store.getToken()).then(response => {
+          this.followers.push(response.data);
+          console.log(this.followers);
+        });
+      });
+      
     }
   },
   computed: {
