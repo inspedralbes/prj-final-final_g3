@@ -21,10 +21,7 @@
                 </header>
 
                 <p class="px-3 text-sm">{{ post.content }}</p>
-                <img class="px-3 rounded"
-                    src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
-
-
+                <img class="px-3 rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
                 <footer class="flex items-center gap-6 px-3 py-2">
                     <button class="flex items-center gap-1 text-sm">
                         <IconsMessage class="size-5" />
