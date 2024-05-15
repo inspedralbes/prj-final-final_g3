@@ -3,7 +3,7 @@
         class="w-full h-screen bg-white/20 absolute top-0 left-0 flex justify-center items-center backdrop-blur-sm">
         <article class="bg-black w-[90%] px-4 rounded-md py-1">
             <header class="w-full flex justify-between items-center py-2">
-                <button @click="closeModal">
+                <button @click="closeModal" class="hover:bg-gray-700/40 transition duration-300 rounded-full p-1">
                     <IconsCross class="size-6" />
                 </button>
                 <div class="flex items-center gap-3">
