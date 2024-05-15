@@ -36,10 +36,21 @@
 <script>
 import AddChat from '~/components/Icons/AddChat.vue'
 import Search from '~/components/Icons/Search.vue'
+import { useStores } from '~/stores/counter'
+
     export default {
+        data(){
+            return {
+                store: useStores(),
+            }
+        },
         components: {
             AddChat,
             Search,
+            
+        },
+        mounted() {
+            if(!this.store.getLoggedIn()) return this.$router.push('/join');
         }
     }
 </script>

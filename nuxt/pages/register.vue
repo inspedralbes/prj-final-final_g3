@@ -26,14 +26,15 @@
 
             <LoginMethods forWhat="registra't" />
 
-            <NuxtLink href='/join' class='text-white'><svg class='w-auto h-8' xmlns="http://www.w3.org/2000/svg"
+            <NuxtLink to='/join' class='text-white'><svg class='w-auto h-8' xmlns="http://www.w3.org/2000/svg"
                     width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none"
                     strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M5 12l14 0" />
                     <path d="M5 12l6 6" />
                     <path d="M5 12l6 -6" />
-                </svg></NuxtLink>
+                </svg>
+            </NuxtLink>
         </section>
 
 
@@ -42,7 +43,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Loader from '~/components/Loader.vue';
 import { useStores } from '~/stores/counter';
 import authManager from '@/managers/authManager';
@@ -78,18 +78,26 @@ export default {
 
 
             const response = await authManager.register(userData);
-            console.log(response);
 
-            this.store.setUserInfo({
-                id: response.data.user.id,
-                name: response.data.user.name,
-                surnames: response.data.user.surnames,
-                email: response.data.user.email,
-                token: response.data.token,
-            });
+            if (response.status === 200) {
+                const user = response.data.data.user;
+                const token = response.data.data.token;
+                this.store.setUserInfo({
+                    id: user.id,
+                    name: user.name,
+                    surnames: user.surnames,
+                    email: user.email,
+                    token: token,
+                    birthdate: user.birthdate,
+                    nickname: user.nickname
+                });
+                this.store.setLoggedIn(true);
+                this.isLoading = false;
+                this.$router.push('/events');
+            } else {
 
-            this.isLoading = false;
-            this.$router.push('/events');
+            }
+
 
         }
     }

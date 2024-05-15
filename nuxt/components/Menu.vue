@@ -10,16 +10,16 @@
             <p class='font-bold text-xs'>Events</p>
         </NuxtLink>
 
-        <NuxtLink to="/post" class="flex flex-col justify-center items-center bg-white py-[2px] px-2 rounded-md" exact-active-class="text-orange-400 fill-orange-400">
+        <NuxtLink :to="store.getLoggedIn() ? '/post' : '/join'" class="flex flex-col justify-center items-center bg-white py-[2px] px-2 rounded-md" exact-active-class="text-orange-400 fill-orange-400">
             <Plus class="size-6 text-black" />
         </NuxtLink>
 
-        <NuxtLink to="/chats" class="flex flex-col justify-center items-center" exact-active-class="text-orange-400 fill-orange-400">
+        <NuxtLink :to="store.getLoggedIn() ? '/chats' : '/join'" class="flex flex-col justify-center items-center" exact-active-class="text-orange-400 fill-orange-400">
             <Chat class="size-7" />
             <p class='font-bold text-xs'>Xat</p>
         </NuxtLink>
 
-        <NuxtLink to="/perfil" class="flex flex-col justify-center items-center" exact-active-class="text-orange-400 fill-orange-400">
+        <NuxtLink :to="store.getLoggedIn() ? '/perfil' : '/join'" class="flex flex-col justify-center items-center" exact-active-class="text-orange-400 fill-orange-400">
             <User class="size-7" />
             <p class='font-bold text-xs'>Perfil</p>
         </NuxtLink>
@@ -32,8 +32,14 @@ import Speaker from './Icons/Speaker.vue'
 import Plus from './Icons/Plus.vue'
 import Chat from './Icons/Chat.vue'
 import User from './Icons/User.vue'
+import { useStores } from '~/stores/counter';
 
 export default {
+    data() {
+        return {
+            store: useStores(),
+        }
+    },
     components: {
     Home,
     Speaker,

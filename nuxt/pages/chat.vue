@@ -27,15 +27,14 @@
             </div>
         </header>
 
-        <article class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
+        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
-                <!-- <p class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary">Q va bro, esta durmiendo</p> -->
-                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al
-                    concierto de Quevedo ?</p>
-                <div class="max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl  bg-primary"
-                    v-for="msg in messages" :key="msg.id">
-                    <p>{{ msg }}</p>
+
+                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
+                <div v-for="msg in messages" :key="msg.id" :class="{'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId()}">
+                    <p>{{ msg.content }}</p>
+
                 </div>
             </div>
         </article>
@@ -63,7 +62,7 @@ import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
-
+import comChat  from '@/managers/chatManager.js';
 
 export default {
     components: {
@@ -75,15 +74,10 @@ export default {
     },
     data() {
         return {
+            store: useStores(),
             messages: [],
             message: '',
-            UsuarioActual:{}
-        }
-    },
-    props: {
-        user: {
-            type: Object,
-            required: true
+            pagination:{}
         }
     },
     methods: {
@@ -98,12 +92,47 @@ export default {
         }
     },
     mounted() {
-        this.UsuarioActual = this.user;
-        console.log(this.UsuarioActual);
         socket.on('message', (message) => {
             this.messages.push(message);
+            this.message = {
+                chat_id: 1,
+                id: this.store.getId(),
+                content: this.message
+            }
+            socket.emit('message', this.message);
+            this.message = '';
+        },
+        genTimeStamp() {
+            const actualDate = new Date();
+            const year = actualDate.getFullYear().toString();
+            const month = (actualDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = actualDate.getDate().toString().padStart(2, '0');
+            const hours = actualDate.getHours().toString().padStart(2, '0');
+            const minutes = actualDate.getMinutes().toString().padStart(2, '0');
+            const seconds = actualDate.getSeconds().toString().padStart(2, '0');
+            return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+        },
+        async fetchMessages() {
+            const result = await comChat.getAllMessages(1);
+            this.messages = result.data.reverse();
+            delete result.data;
+            this.pagination = result;
+        },
+    },
+    mounted() {
+    if(!this.store.getLoggedIn()) return this.$router.push('/join');
+    socket.on('message', (message) => {
+        this.messages.push(message);
+        this.$nextTick(() => {
+            if (this.$refs.messageContainer) {
+                this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
+            }
         });
-    }
+    });
+
+    this.fetchMessages();
+},
+    
 
 }
 </script>

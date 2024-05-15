@@ -6,7 +6,16 @@
 </template>
 
 <script>
+import { useStores } from '~/stores/counter';
+
     export default {
-        
+        data() {
+            return {
+                store: useStores(),
+            }
+        },
+        mounted(){
+            if(!this.store.getLoggedIn()) return this.$router.push('/join');
+        }
     }
 </script>

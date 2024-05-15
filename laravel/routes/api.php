@@ -19,6 +19,10 @@ use App\Http\Controllers\MessageController;
 |
 */
 
+Route::get('/', function () {
+    return response()->json(['message' => 'Hello World!']);
+});
+
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
@@ -29,10 +33,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
     Route::put('/updateInfo', [UserController::class, 'updateInfo']);
     Route::group(['prefix' => 'users'], function () {
-        Route::post('/{userId}/follow', [FollowersController::class, 'followUser']);
-        Route::delete('/{userId}/unfollow', [FollowersController::class, 'unfollowUser']);
-        Route::get('/{userId}/followers', [FollowersController::class, 'getUserFollowers']);
-        Route::get('/{userId}/followed', [FollowersController::class, 'getUserFollowed']);
+        Route::post('/follow/{userId}', [FollowersController::class, 'followUser']);
+        Route::delete('/unfollow/{userId}', [FollowersController::class, 'unfollowUser']);
+        Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
+        Route::get('/followed/{userId}', [FollowersController::class, 'getUserFollowed']);
     });
 });
 
@@ -55,4 +59,5 @@ Route::group(['prefix' => 'events'], function () {
 
 Route::group(['prefix' => 'messages'], function () {
     Route::post('/', [MessageController::class, 'saveMessage']);
+    Route::get('/{chat_id}', [MessageController::class, 'getMessages']);
 });

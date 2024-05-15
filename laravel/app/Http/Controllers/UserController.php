@@ -424,7 +424,7 @@ class UserController extends Controller{
         $user->birthdate = $request->birthdate;
         $user->save();
         
-        return response()->json($user);   
+        return response()->json($user, 200);
     }
     /**
      * Funcion para el buscador recibe parametros y tiene que devolver todos los usuarios que coincidan con lo que comienzen por esos parametros
