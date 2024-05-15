@@ -15,6 +15,7 @@ export const useStores = defineStore("counter", {
       birthdate: "",
     },
     events: [],
+    chatUser: {},
   }),
   persist: {
     storage: persistedState.localStorage,
@@ -32,9 +33,6 @@ export const useStores = defineStore("counter", {
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
     },
-    getId() {
-      return this.userInfo.id;
-    },
     setLoggedIn(value) {
       this.loggedIn = value;
     },
@@ -48,9 +46,14 @@ export const useStores = defineStore("counter", {
       this.userInfo = {};
       this.loggedIn = false;
     },
-
+    setChatUser(user) {
+      this.chatUser = user;
+    },
 
     // GETTERS
+    getId() {
+      return this.userInfo.id;
+    },
     getUserInfo() {
       return this.userInfo;
     },
@@ -65,6 +68,9 @@ export const useStores = defineStore("counter", {
     },
     getEvents() {
       return this.events;
+    },
+    getChatUser() {
+      return this.chatUser;
     },
   },
 });

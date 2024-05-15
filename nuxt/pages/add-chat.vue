@@ -38,10 +38,12 @@
 
 <script>
 import comManager from '~/managers/comManager';
+import { useStores } from '@/stores/counter.js';
 
 export default {
     data() {
         return {
+            store: useStores(),
             param: '',
             users: [],
             filteredUsers: [],
@@ -56,7 +58,6 @@ export default {
             if (response.data.length > 0) {
                 this.empty = false;
                 this.users = response.data;
-                console.log(this.users);
                 this.filteredUsers = this.users.map(user => ({ id: user.id, nickname: user.nickname, avatar: user.avatar }));
             } else {
                 this.empty = true;
@@ -64,7 +65,8 @@ export default {
             }
         },
         goToChat(user) {
-            this.$router.push({ name: 'chat', params: { id: user.id } });
+            this.store.setChatUser(user);
+            this.$router.push('/chat');
         },
     },
 }

@@ -13,8 +13,8 @@
                     <div class="absolute bottom-1 right-1 size-3 rounded-full bg-green-400"></div>
                 </div>
                 <div class="flex flex-col gap-1 items-start">
-                    <h1 class="text-sm font-semibold">User name</h1>
-                    <p class="text-xs text-gray-300">Online</p>
+                    <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
+                    <!-- <p class="text-xs text-gray-300">Online</p> -->
                 </div>
             </article>
             <div class="flex items-center justify-center gap-2">
@@ -30,8 +30,8 @@
         <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
-                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
-                <div v-for="msg in messages" :key="msg.id" :class="{'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId()}">
+                <div v-for="msg in messages" :key="msg.id"
+                    :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId() }">
                     <p>{{ msg.content }}</p>
                 </div>
             </div>
@@ -60,7 +60,7 @@ import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
-import comChat  from '@/managers/chatManager.js';
+import comChat from '@/managers/chatManager.js';
 
 export default {
     components: {
@@ -75,29 +75,23 @@ export default {
             store: useStores(),
             messages: [],
             message: '',
-            pagination:{}
+            pagination: {},
+            contact: {},
+            chat_id: 0,
 
         }
     },
     methods: {
         sendMessage() {
             this.message = {
-                chat_id: 1,
-                id: this.store.getId(),
+                chat_id: this.chat_id,
+                nameChat: `${this.store.getId()} - ${this.contact.id}`,
+                user_id: this.store.getId(),
+                contact_id: this.contact.id,
                 content: this.message
             }
             socket.emit('message', this.message);
             this.message = '';
-        },
-        genTimeStamp() {
-            const actualDate = new Date();
-            const year = actualDate.getFullYear().toString();
-            const month = (actualDate.getMonth() + 1).toString().padStart(2, '0');
-            const day = actualDate.getDate().toString().padStart(2, '0');
-            const hours = actualDate.getHours().toString().padStart(2, '0');
-            const minutes = actualDate.getMinutes().toString().padStart(2, '0');
-            const seconds = actualDate.getSeconds().toString().padStart(2, '0');
-            return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
         },
         async fetchMessages() {
             const result = await comChat.getAllMessages(1);
@@ -107,19 +101,26 @@ export default {
         },
     },
     mounted() {
-    if(!this.store.getLoggedIn()) return this.$router.push('/join');
-    socket.on('message', (message) => {
-        this.messages.push(message);
-        this.$nextTick(() => {
-            if (this.$refs.messageContainer) {
-                this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
-            }
+        if (!this.store.getLoggedIn()) return this.$router.push('/join');
+        socket.on('message', (message) => {
+            this.messages.push(message);
+            this.chat_id = message.chat_id;
+            this.$nextTick(() => {
+                if (this.$refs.messageContainer) {
+                    this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
+                }
+            });
         });
-    });
 
-    this.fetchMessages();
-},
-    
+        this.fetchMessages();
+        this.contact = this.store.getChatUser();
+
+        comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
+            console.log(res);
+        });
+
+    },
+
 
 }
 </script>
