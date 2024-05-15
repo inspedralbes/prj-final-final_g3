@@ -16,7 +16,7 @@
                 </p>
             </div>
         </NuxtLink>
-
+        
         <button v-if="event.like" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
             @click="toggleLike">
             <IconsHeartFill size="20" />

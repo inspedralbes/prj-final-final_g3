@@ -13,6 +13,8 @@ if (env.toLowerCase() === "development") {
   url_api_mongo = import.meta.env.VITE_APP_API_PROD_MONGO_URL;
 }
 
+
+
 async function getEvents() {
   const store = useStores();
   try {
@@ -83,6 +85,18 @@ async function unlikeAnEvent(eventID) {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
+}
+
+async function searchUsers(param) {
+  try {
+    const response = await axios.post(`${url_api}/apps/searchUsers`,{
+      param: param
+    });
+  return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
 }
 
 async function post(content){
@@ -158,6 +172,7 @@ const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  searchUsers,
   post,
   deletePost,
   getPosts,

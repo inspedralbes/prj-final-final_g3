@@ -36,7 +36,7 @@ app.post("/posts", async (req, res) => {
         var createdPost = {
             content: post.content,
             likes: [],
-            comments: 0,
+            comments: [],
             userId: post.userId,
             images: [],
         };
@@ -52,6 +52,7 @@ app.delete("/posts", async (req, res) => {
     const post = await models.post.findOneAndDelete({ _id: req.query.postId });
     
     await models.likePost.deleteMany({ postId: post._id });
+    await models.commentPost.deleteMany({ postId: post._id });
 
     console.log("Post deleted:", post);
     res.send("Post deleted successfully");
@@ -257,6 +258,10 @@ app.delete("/comments", async (req, res) => {
         const comment = await models.commentPost.findOneAndDelete({
             _id: req.query.commentId,
         });
+
+        await models.likeComment.deleteMany({ commentId: comment._id });
+        await models.commentPost.deleteMany({ parentId: comment._id });
+
         console.log("Comment deleted:", comment);
         res.send("Comment deleted successfully");
     } catch (error) {
@@ -329,7 +334,6 @@ app.delete("/likeComment", async (req, res) => {
 });
 
 /* IMAGENES */
-
 app.post("/images", async (req, res) => {
     const image = req.body;
     try {

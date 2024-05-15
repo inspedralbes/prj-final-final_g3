@@ -5,10 +5,11 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     content: String,
     likes: [{ type: Schema.Types.ObjectId, ref: 'likePost' }],
-    comments: Number,
+    comments: [{ type: Schema.Types.ObjectId, ref: 'commentPost' }],
     userId: Number,
     images: [{ type: Schema.Types.ObjectId, ref: 'image' }],
 });
+
 
 const commentPostSchema = new Schema({
   postId: Number,
@@ -16,6 +17,20 @@ const commentPostSchema = new Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: "likeComment" }],
   parentId: Number,
 });
+
+commentPostSchema.pre("save", async function (next) {
+  try {
+    await models.post.findOneAndUpdate(
+      { _id: this.postId },
+      { $push: { comments: this._id } },
+      { new: true }
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 const likePostSchema = new Schema({
   postId: { type: Schema.Types.ObjectId, ref: "post" },
@@ -34,30 +49,6 @@ likePostSchema.pre("save", async function (next) {
     next(error);
   }
 });
-
-likePostSchema.post("remove", { document: true }, async function (doc) {
-    try {
-      const postId = doc.postId;
-      const userId = doc.userId;
-      
-      // Actualizar el documento del post para eliminar el like del array de likes
-      const post = await models.post.findByIdAndUpdate(
-        postId,
-        { $pull: { likes: userId } },
-        { new: true }
-      );
-      
-      if (!post) {
-        throw new Error("No se encontró el post asociado al like.");
-      }
-      
-      console.log("Like eliminado del array de likes en el documento del post.");
-    } catch (error) {
-      console.error("Error al eliminar el like del array de likes en el documento del post:", error);
-    }
-});
-  
-  
 
 const likeEventSchema = new Schema({
   eventId: Number,

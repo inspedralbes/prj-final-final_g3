@@ -33,6 +33,20 @@ async function updateUser(user, token) {
   }
 }
 
+async function logout() {
+  const store = useStores();
+  try {
+    await axios.post(`${url_api}/logout`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`
+      }
+    });
+    store.setLogout();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 async function getFollowers() {
   const store = useStores();
   try {
@@ -45,7 +59,7 @@ async function getFollowers() {
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
-} 
+}
 
 async function getFollowed() {
   const store = useStores();
@@ -59,11 +73,12 @@ async function getFollowed() {
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
-} 
+}
 
 
 const userManager = {
   updateUser,
+  logout,
   getFollowers,
   getFollowed,
 };

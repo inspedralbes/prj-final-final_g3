@@ -10,7 +10,7 @@
             <p class='font-bold text-xs'>Events</p>
         </NuxtLink>
 
-        <NuxtLink :to="store.getLoggedIn() ? '/posts' : '/join'" class="flex flex-col justify-center items-center bg-white py-[2px] px-2 rounded-md" exact-active-class="text-orange-400 fill-orange-400">
+        <NuxtLink :to="store.getLoggedIn() ? '/post' : '/join'" class="flex flex-col justify-center items-center bg-white py-[2px] px-2 rounded-md" exact-active-class="text-orange-400 fill-orange-400">
             <Plus class="size-6 text-black" />
         </NuxtLink>
 
