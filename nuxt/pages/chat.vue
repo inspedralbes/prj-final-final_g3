@@ -30,9 +30,11 @@
         <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
+
                 <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
                 <div v-for="msg in messages" :key="msg.id" :class="{'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId()}">
                     <p>{{ msg.content }}</p>
+
                 </div>
             </div>
         </article>
@@ -76,11 +78,22 @@ export default {
             messages: [],
             message: '',
             pagination:{}
-
         }
     },
     methods: {
         sendMessage() {
+            socketMessage = {
+                id: useStores.getId(),
+                message: this.message,
+                state: 'enviado'
+            }
+            socket.emit('message', this.message);
+            this.message = '';
+        }
+    },
+    mounted() {
+        socket.on('message', (message) => {
+            this.messages.push(message);
             this.message = {
                 chat_id: 1,
                 id: this.store.getId(),

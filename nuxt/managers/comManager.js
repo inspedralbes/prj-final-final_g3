@@ -85,6 +85,18 @@ async function unlikeAnEvent(eventID) {
   }
 }
 
+async function searchUsers(param) {
+  try {
+    const response = await axios.post(`${url_api}/apps/searchUsers`,{
+      param: param
+    });
+  return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+}
+
 async function post(content){
   const store = useStores();
   const userID = store.getId()
@@ -158,6 +170,7 @@ const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  searchUsers,
   post,
   deletePost,
   getPosts,
