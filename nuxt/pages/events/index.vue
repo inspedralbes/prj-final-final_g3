@@ -38,8 +38,6 @@ export default {
               this.location.city = data.city; 
               this.location.country = data.country;
               this.location.province = data.province;
-              console.log("Geolocation: ", this.location);  
-
             })
           },
           error => {
