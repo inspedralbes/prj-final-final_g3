@@ -168,6 +168,18 @@ async function unlikePost(postID){
   }
 }
 
+
+async function commentPost(postID, content){
+  try{
+    await axios.post(`${url_api_mongo}/comments`, {
+      postId: postID,
+      content: content,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+    
 async function getEventCounterFollowers(id){
   try{
     const response = await axios.get(`${url_api_mongo}/likeEvents/${id}?eventId=${id}`);
@@ -186,6 +198,7 @@ async function getEventFollowers(id,page){
   }
 }
 
+
 async function getUserById(id,token){
   try{
     const response = await axios.get(`${url_api}/users/${id}`,{
@@ -201,7 +214,6 @@ async function getUserById(id,token){
 
 } 
 
-
 const comManager = {
   getEvents,
   likeAnEvent,
@@ -213,6 +225,7 @@ const comManager = {
   getLikePosts,
   likePost,
   unlikePost,
+  commentPost,
   getEventCounterFollowers,
   getEventFollowers,
   getUserById
