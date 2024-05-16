@@ -13,6 +13,8 @@ if (env.toLowerCase() === "development") {
   url_api_mongo = import.meta.env.VITE_APP_API_PROD_MONGO_URL;
 }
 
+
+
 async function getEvents() {
   const store = useStores();
   try {
@@ -85,6 +87,18 @@ async function unlikeAnEvent(eventID) {
   }
 }
 
+async function searchUsers(param) {
+  try {
+    const response = await axios.post(`${url_api}/apps/searchUsers`,{
+      param: param
+    });
+  return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+}
+
 async function post(content){
   const store = useStores();
   const userID = store.getId()
@@ -154,6 +168,7 @@ async function unlikePost(postID){
   }
 }
 
+
 async function commentPost(postID, content){
   try{
     await axios.post(`${url_api_mongo}/comments`, {
@@ -164,11 +179,46 @@ async function commentPost(postID, content){
     console.error("Error fetching data:", error);
   }
 }
+    
+async function getEventCounterFollowers(id){
+  try{
+    const response = await axios.get(`${url_api_mongo}/likeEvents/${id}?eventId=${id}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getEventFollowers(id,page){
+  try{
+    const response = await axios.get(`${url_api_mongo}/likeEvents/${id}/followers?p=${page}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+
+async function getUserById(id,token){
+  try{
+    const response = await axios.get(`${url_api}/users/${id}`,{
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    
+    });
+    return response
+  } catch (error) { 
+    console.error("Error fetching data:", error);
+  }
+
+} 
 
 const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  searchUsers,
   post,
   deletePost,
   getPosts,
@@ -176,6 +226,9 @@ const comManager = {
   likePost,
   unlikePost,
   commentPost,
+  getEventCounterFollowers,
+  getEventFollowers,
+  getUserById
 };
 
 export default comManager;

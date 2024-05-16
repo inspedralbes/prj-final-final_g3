@@ -25,11 +25,11 @@ Route::get('/', function () {
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/auth', [UserController::class, 'redirectToAuth']);
 Route::get('/auth/callback', [UserController::class, 'handleAuthCallback']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [UserController::class, 'logout']);
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
     Route::put('/updateInfo', [UserController::class, 'updateInfo']);
     Route::group(['prefix' => 'users'], function () {
@@ -37,11 +37,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/unfollow/{userId}', [FollowersController::class, 'unfollowUser']);
         Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
         Route::get('/followed/{userId}', [FollowersController::class, 'getUserFollowed']);
+        Route::get('/{id}', [UserController::class, 'userById']);
+
     });
 });
 
 Route::group(['prefix'=>'apps'],function(){
     Route::post('/register', [UserController::class, 'registerWithApps']);
+    Route::post('/searchUsers', [UserController::class, 'searchUsers']);
     Route::get('/checkEmail', [UserController::class, 'checkEmail']);
 });
 
@@ -50,6 +53,7 @@ Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
     Route::get('/', [EventController::class, 'index']);
+    Route::get('/locations', [EventController::class, 'getLocations']);
     Route::get('/{id}', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);

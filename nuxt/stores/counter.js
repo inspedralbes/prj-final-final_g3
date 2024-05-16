@@ -44,6 +44,12 @@ export const useStores = defineStore("counter", {
     setInfoOnRegister(info) {
       this.infoOnRegister = info;
     },
+    setLogout() {
+      this.userInfo = {};
+      this.loggedIn = false;
+    },
+
+
     // GETTERS
     getUserInfo() {
       return this.userInfo;

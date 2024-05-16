@@ -21,10 +21,7 @@
                 </header>
 
                 <p class="px-3 text-sm">{{ post.content }}</p>
-                <img class="px-3 rounded"
-                    src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
-
-
+                <img class="px-3 rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
                 <footer class="flex items-center gap-6 px-3 py-2">
                     <button @click="mostrarModal(post)" class="flex items-center gap-1 text-sm">
                         <IconsMessage class="size-5" />
@@ -73,13 +70,11 @@ export default {
                 ...post,
                 liked: false,
             }));
-            console.log(this.posts)
             this.getLikesPosts()
         },
 
         async getLikesPosts() {
             this.likedPosts = await comManager.getLikePosts()
-            console.log(this.likedPosts)
 
             for (let i = 0; i < this.posts.length; i++) {
                 for (let j = 0; j < this.likedPosts.length; j++) {
@@ -102,7 +97,6 @@ export default {
                                 this.posts[i].liked = false;
                             }
                         }
-                        console.log('unliked')
                     } else {
                         comManager.likePost(id)
 
@@ -112,7 +106,6 @@ export default {
                                 this.posts[i].liked = true;
                             }
                         }
-                        console.log('liked')
                     }
                 }
             }
@@ -132,7 +125,6 @@ export default {
 
     created() {
         this.getPosts()
-        console.log(this.userInfo)
     }
 }
 </script>
