@@ -1,7 +1,21 @@
 <template>
+  <UModal v-model="modals.filter">
+    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+      <template #header>
+        <Placeholder class="h-8" />
+      </template>
+
+      <Placeholder class="h-32" />
+
+      <template #footer>
+        <Placeholder class="h-8" />
+      </template>
+    </UCard>
+  </UModal>
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
-    <section class="flex flex-col gap-3">
+    <button @click="modals.filter = !modals.filter">Abrir filtros</button>
+    <section class=" flex flex-col gap-3">
       <div v-for="evento in eventos" :key="evento.id">
         <CardEvent :event="evento" />
       </div>
@@ -20,7 +34,9 @@ export default {
       store: useStores(),
       eventos: computed(() => this.store.events),
       eventosLike: [],
-      open: true,
+      modals: {
+        filter: false,
+      }
     };
   },
   methods: {

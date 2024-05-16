@@ -15,10 +15,11 @@ export const useStores = defineStore("counter", {
       birthdate: "",
     },
     events: [],
+    locations: [],
   }),
   persist: {
     storage: persistedState.localStorage,
-    paths: ["userInfo", "loggedIn", "events"],
+    paths: ["userInfo", "loggedIn", "events", "locations"],
   },
   actions: {
     // SETTERS
@@ -48,7 +49,9 @@ export const useStores = defineStore("counter", {
       this.userInfo = {};
       this.loggedIn = false;
     },
-
+    setLocations(locations) {
+      this.locations = locations;
+    },
 
     // GETTERS
     getUserInfo() {
@@ -65,6 +68,9 @@ export const useStores = defineStore("counter", {
     },
     getEvents() {
       return this.events;
+    },
+    getLocations() {
+      return this.locations;
     },
   },
 });
