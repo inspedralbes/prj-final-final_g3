@@ -47,10 +47,12 @@
       <div v-if="loadingFollowers" class="flex justify-center items-center">
         <div class="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600"></div>
       </div>
-      <div v-if="noFollowers" class="flex justify-center items-center">
+      <div v-if="noFollowersComputed" class="flex justify-center items-center">
         No hay ningun seguidor en este evento
       </div>
-      <button type="button" v-if="loadMoreFollowers" @click="getFollowers()" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Ver mas seguidores...</button>
+      <button type="button" v-if="loadMoreFollowers" @click="getFollowers()"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Ver
+        mas seguidores...</button>
     </article>
   </main>
 </template>
@@ -70,7 +72,6 @@ export default {
       page: 0,
       followers: [],
       loadingFollowers: false,
-      noFollowers: false,
       loadMoreFollowers: false
     }
   },
@@ -118,21 +119,18 @@ export default {
 
       const response = await comManager.getEventFollowers(this.event.id, this.page);
       const followersMongo = response.data;
-      
+
+
       if (followersMongo.length === 0) {
-
         this.loadingFollowers = false;
-        this.noFollowers = true;
         this.loadMoreFollowers = false;
-
-      }else{
+      } else {
         var confirmLoadMore = false;
         if (followersMongo.length === 10) {
           this.page++;
           confirmLoadMore = true;
-        }else{
+        } else {
           this.loadMoreFollowers = false;
-
         }
 
         for (const follower of followersMongo) {
@@ -142,28 +140,26 @@ export default {
         this.loadingFollowers = false;
         if (confirmLoadMore) {
           this.loadMoreFollowers = true;
-        }else{
+        } else {
           this.loadMoreFollowers = false;
         }
       }
     }
   },
-  computed: {},
+  computed: {
+    noFollowersComputed() {
+      if (this.followers.length === 0 && !this.loadingFollowers) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   watch: {
     event() {
       const imagesJSON = JSON.parse(this.event.images);
       this.eventImage = imagesJSON[2];
-    },
-    // noFollowers() {
-    //   if (this.followers.length === 0) {
-    //     this.noFollowers = true;
-    //     console.log('No hay followers');
-    //   }else{
-    //     this.noFollowers = false;
-    //     console.log('Hay followers');
-    //   }
-    // }
-
+    }
   }
 }
 </script>
