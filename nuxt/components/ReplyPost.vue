@@ -79,7 +79,8 @@ export default {
         },
 
         async sendReply() {
-            await comManager.commentPost(this.post.id, this.comment);
+            await comManager.commentPost(this.post._id, this.comment);
+            this.$emit('replyed', this.post._id);
             this.$emit('close');
         },
 

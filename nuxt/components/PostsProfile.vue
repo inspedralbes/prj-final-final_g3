@@ -1,7 +1,7 @@
 <template>
     <section ref="mySection">
         <transition-group name="fade" tag="div" class="relative">
-            <article v-for="post in posts" :key="post.id" class="flex flex-col gap-2 bg-black rounded mb-4">
+            <article v-for="post in posts" :key="post._id" class="flex flex-col gap-2 bg-black rounded mb-4">
                 <header class=" flex justify-between items-center py-2 px-3">
                     <div class="flex justify-center items-center gap-3">
                         <img class="size-12 rounded-full object-cover"
@@ -21,7 +21,8 @@
                 </header>
 
                 <p class="px-3 text-sm">{{ post.content }}</p>
-                <img class="px-3 rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
+                <img class="px-3 rounded"
+                    src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
                 <footer class="flex items-center gap-6 px-3 py-2">
                     <button @click="mostrarModal(post)" class="flex items-center gap-1 text-sm">
                         <IconsMessage class="size-5" />
@@ -37,11 +38,12 @@
             </article>
         </transition-group>
     </section>
-    
+
     <transition name="fadeReply" tag="div">
-        <ReplyPost v-if="replyPostModal" @close="mostrarModal" :post="this.postReply" :name="this.userInfo.name" :nickname="userInfo.nickname"/>
+        <ReplyPost v-if="replyPostModal" @close="mostrarModal" @replyed="increaseComments(postId)" :post="this.postReply"
+            :name="this.userInfo.name" :nickname="userInfo.nickname" />
     </transition>
-    
+
 </template>
 
 <script>
@@ -64,6 +66,7 @@ export default {
             this.posts = await comManager.getPosts()
             if (this.posts.length != 0) {
                 this.posts.reverse()
+                console.log("POSTS: " + JSON.stringify(this.posts))
             }
 
             this.posts = this.posts.map(post => ({
@@ -120,7 +123,17 @@ export default {
             this.postReply = post
             this.replyPostModal = !this.replyPostModal
             this.$refs.mySection.classList.toggle('no-scroll');
-        }
+        },
+
+        increaseComments(postId) {
+            console.log(postId)
+            for (let i = 0; i < this.posts.length; i++) {
+                if (this.posts[i]._id === postId) {
+                    this.posts[i].comments.length++;
+                }
+            }
+        },
+
     },
 
     created() {
@@ -165,7 +178,7 @@ export default {
 }
 
 .no-scroll {
-  overflow: hidden;
-  height: 100%;
+    overflow: hidden;
+    height: 100%;
 }
 </style>
