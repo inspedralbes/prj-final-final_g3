@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
+    "@nuxt/ui"
   ],
   runtimeConfig:{
     public:{
