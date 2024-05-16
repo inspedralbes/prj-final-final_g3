@@ -1,5 +1,5 @@
 <template>
-  <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-background">
+  <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <section class="flex flex-col gap-3">
       <div v-for="evento in eventos" :key="evento.id">
@@ -20,6 +20,7 @@ export default {
       store: useStores(),
       eventos: computed(() => this.store.events),
       eventosLike: [],
+      open: true,
     };
   },
   methods: {

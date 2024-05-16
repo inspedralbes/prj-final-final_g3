@@ -2,10 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: [
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/tailwindcss',
-    // "@nuxt/ui"
+  '@pinia/nuxt', 
+  // '@nuxtjs/tailwindcss',
+  '@pinia-plugin-persistedstate/nuxt', 
+  "@nuxt/ui"
   ],
   runtimeConfig:{
     public:{
