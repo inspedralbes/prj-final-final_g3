@@ -20,15 +20,45 @@ export default {
       store: useStores(),
       eventos: computed(() => this.store.events),
       eventosLike: [],
+      location: {},
     };
   },
   methods: {
+    fetchGeolocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.location = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+          comManager.convertGeolocation(this.location.latitude, this.location.longitude)
+            .then(response => {
+              const data = response.data.address;
+              this.location.city = data.city; 
+              this.location.country = data.country;
+              this.location.province = data.province;
+              console.log("Geolocation: ", this.location);  
+
+            })
+          },
+          error => {
+            console.error("Error getting geolocation: ", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    },
+
 
   },
   created() {
   },
   mounted() {
-    comManager.getEvents()
+    comManager.getEvents(),
+    this.fetchGeolocation();
+
   }
 };
 </script>
