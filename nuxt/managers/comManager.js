@@ -154,6 +154,17 @@ async function unlikePost(postID){
   }
 }
 
+async function commentPost(postID, content){
+  try{
+    await axios.post(`${url_api_mongo}/comments`, {
+      postId: postID,
+      content: content,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 const comManager = {
   getEvents,
   likeAnEvent,
@@ -164,6 +175,7 @@ const comManager = {
   getLikePosts,
   likePost,
   unlikePost,
+  commentPost,
 };
 
 export default comManager;

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section ref="mySection">
         <transition-group name="fade" tag="div" class="relative">
             <article v-for="post in posts" :key="post.id" class="flex flex-col gap-2 bg-black rounded mb-4">
                 <header class=" flex justify-between items-center py-2 px-3">
@@ -126,6 +126,7 @@ export default {
         mostrarModal(post) {
             this.postReply = post
             this.replyPostModal = !this.replyPostModal
+            this.$refs.mySection.classList.toggle('no-scroll');
         }
     },
 
@@ -169,5 +170,10 @@ export default {
 
 .fadeReply-leave-active {
     position: absolute;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
 }
 </style>
