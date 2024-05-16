@@ -33,19 +33,7 @@ async function updateUser(user, token) {
   }
 }
 
-async function logout() {
-  const store = useStores();
-  try {
-    await axios.post(`${url_api}/logout`, {
-      headers: {
-        Authorization: `Bearer ${store.getToken()}`
-      }
-    });
-    store.setLogout();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
+
 
 async function getFollowers() {
   const store = useStores();
@@ -78,7 +66,6 @@ async function getFollowed() {
 
 const userManager = {
   updateUser,
-  logout,
   getFollowers,
   getFollowed,
 };

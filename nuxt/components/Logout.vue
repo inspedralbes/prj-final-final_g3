@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import userManager from '~/managers/userManager';
+import authManager from '~/managers/authManager';
 export default {
 
     methods: {
         async logout() {
-            await userManager.logout()
+            await authManager.logout()
                 .then(() => {
                     this.$router.push('/events');
                 })
