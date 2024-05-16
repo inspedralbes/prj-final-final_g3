@@ -466,4 +466,15 @@ class UserController extends Controller
             return response()->json(['success' => 'El email está disponible'], 202);
         }
     }
+
+    public function userById(Request $request){
+        $user = User::select('id', 'nickname', 'avatar')->where('id', $request->id)->first();
+
+        if ($user) {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
+        }
+    }
+
 }
