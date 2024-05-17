@@ -40,7 +40,7 @@
     </section>
 
     <transition name="fadeReply" tag="div">
-        <ReplyPost v-if="replyPostModal" @close="mostrarModal" @replyed="increaseComments(postId)" :post="this.postReply"
+        <ReplyPost v-if="replyPostModal" @close="mostrarModal" @replyed="increaseComments($event)" :post="this.postReply"
             :name="this.userInfo.name" :nickname="userInfo.nickname" />
     </transition>
 
@@ -125,10 +125,10 @@ export default {
             this.$refs.mySection.classList.toggle('no-scroll');
         },
 
-        increaseComments(postId) {
-            console.log(postId)
+        increaseComments(id) {
+            console.log(id)
             for (let i = 0; i < this.posts.length; i++) {
-                if (this.posts[i]._id === postId) {
+                if (this.posts[i]._id === id) {
                     this.posts[i].comments.length++;
                 }
             }
