@@ -370,6 +370,78 @@ app.delete("/images", async (req, res) => {
     }
 });
 
+app.post("/chat", async (req, res) => {
+    const chat = req.body;
+    try {
+        let chatExists = await models.chat.findOne({
+            $or: [
+                { user_id: chat.userId, contact_id: chat.contactId },
+                { user_id: chat.contactId, contact_id: chat.userId }
+            ]
+        });
+
+        if (chatExists) {
+            let messages = await models.message.find({ chat_id: chatExists._id });
+            return res.json({
+                chatExists: chatExists,
+                messages: messages
+            });
+        }else{
+            var createdChat = {
+                name: `${chat.user_id}` + `-` + `${chat.contact_id}`,
+                user_id: chat.user_id,
+                contact_id: chat.contact_id,
+                accepted: false,
+            };
+            res.send(await models.chat.create(createdChat));
+        }
+ 
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.post("/message", async (req, res) => {
+    const message = req.body;
+    try {
+        let chatId = message.chat_id;
+
+        if (!chatId) {
+            let existingChat = await Chat.findOne({
+                user_id: message.user_id,
+                contact_id: message.contact_id
+            });
+
+            if (!existingChat) {
+                const newChat = new Chat({
+                    name: message.nameChat || `${message.user_id}-${message.contact_id}`,
+                    user_id: message.user_id,
+                    contact_id: message.contact_id,
+                    accepted: false
+                });
+                
+                await newChat.save();
+                chatId = newChat._id;
+            } else {
+                chatId = existingChat._id;
+            }
+        }
+        
+        var createdMessage = {
+            chat_id: message.chatId,
+            user_id: message.user_id,
+            content: message.content,
+            sent_at: message.sent_at,
+            read_at: message.read_at,
+            state: message.state
+        };
+        res.send(await models.message.create(createdMessage));
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });

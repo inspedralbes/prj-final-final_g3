@@ -78,6 +78,23 @@ const imageSchema = new Schema({
   postId: Number,
 });
 
+const chatSchema = new Schema({
+  name: String,
+  user_id: Number,
+  contact_id: Number,
+  accepted: Boolean
+
+});
+
+const messageSchema = new Schema({
+  chat_id: Number,
+  content: String,
+  user_id: Number,
+  sent_at: { type: Date, default: Date.now },
+  read_at: Date,
+  state: { type: String, enum: ['enviado', 'recibido', 'leído'] }
+});
+
 const models = {
   post: mongoose.model("post", postSchema),
   commentPost: mongoose.model("commentPost", commentPostSchema),
@@ -85,6 +102,8 @@ const models = {
   likeEvent: mongoose.model("likeEvent", likeEventSchema),
   likeComment: mongoose.model("likeComment", likeCommentSchema),
   image: mongoose.model("image", imageSchema),
+  chat: mongoose.model("chat", chatSchema),
+  message: mongoose.model("message", messageSchema)
 };
 
 export default models;
