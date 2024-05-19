@@ -46,7 +46,7 @@
                     placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage()" v-model="message">
             </div>
             <button class="bg-primary rounded-full p-[6px]">
-                <Send class="size-5" />
+                <Send class="size-5" @click="loadMore()" />
             </button>
         </footer>
     </section>
@@ -95,17 +95,25 @@ export default {
             this.message = '';
         },
         async fetchMessages() {
-            console.log(this.chat_id);
-            const result = await comChat.getAllMessages(this.chat_id);
-            this.messages = result.data.reverse();
-            delete result.data;
-            this.pagination = result;
+            const result = await comChat.getFirst10Messages(this.chat_id);
+            this.messages = result.reverse();
+            console.log(result);
+            
         },
+
+        async loadMore(){
+            const id = this.messages[0]._id;
+            const result = await comChat.getMessages(this.chat_id, id);
+            this.messages.unshift(...result.reverse());
+            console.log(result);
+        }
+
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
         socket.on('message', (message) => {
+            console.log(this.messages);
             this.messages.push(message);
             this.chat_id = message.chat_id;
             this.$nextTick(() => {
@@ -115,13 +123,11 @@ export default {
             });
         });
 
-        
-        this.fetchMessages();
         this.contact = this.store.getChatUser();
 
         comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
             this.chat_id = res.chatExists._id;
-            console.log(this.chat_id);
+            this.fetchMessages();
         });
 
     },

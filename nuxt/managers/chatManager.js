@@ -35,9 +35,40 @@ async function checkChat(user_id, contact_id) {
   }
 }
 
+async function getFirst10Messages(chat_id) {
+  try {
+    const response = await axios.get(`${url_api_mongo}/messages`, {
+      params: {
+        chat_id: chat_id
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getMessages(chat_id, message_id) {
+
+  try{
+    const response = await axios.get(`${url_api_mongo}/get10messages`, {
+      params: {
+        chat_id: chat_id,
+        message_id: message_id
+      }
+    });
+    return response.data;
+  }catch(error){
+    console.log(error);
+  }
+}
+
+
 const comChat = {
   checkChat,
   getAllMessages,
+  getFirst10Messages,
+  getMessages
 };
 
 export default comChat;

@@ -21,8 +21,9 @@ async function insertMessage(message) {
   }
 }
 
+
 const manager = {
-  insertMessage,
+  insertMessage
 };
 
 export default manager;

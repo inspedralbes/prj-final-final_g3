@@ -411,7 +411,6 @@ app.post("/chat", async (req, res) => {
 
 app.post("/message", async (req, res) => {
     const message = req.body;
-    console.log("Message:", message);
     try {
         let chatId = message.chat_id;
 
@@ -422,8 +421,6 @@ app.post("/message", async (req, res) => {
                 { user_id: req.body.contact_id, contact_id: req.body.user_id }
                 ]
             });
-
-            console.log("ChatExists:", chatExists);
 
             if (chatExists == null) {
                 const newChat = await models.chat.create({
@@ -453,6 +450,30 @@ app.post("/message", async (req, res) => {
     }
 });
 
+app.get("/messages", async (req, res) => {
+    try {
+        const messages = await models.message.find({ chat_id: req.query.chat_id }).limit(10).sort({ sent_at: -1 });
+        console.log("Messages:", messages);
+        res.send(messages);
+    } catch (error) {
+        console.error("Error:", error);
+        res.send([]);
+    }
+});
+
+app.get("/get10messages", async (req, res) => {
+    try {
+        const messages = await models.message.find({ 
+            chat_id: req.query.chat_id,
+            _id: { $lt: req.query.message_id }
+        }).limit(10).sort({ sent_at: -1 });
+        console.log("Messages:", messages);
+        res.send(messages);
+    } catch (error) {
+        console.error("Error:", error);
+        res.send([]);
+    }
+});
 
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
