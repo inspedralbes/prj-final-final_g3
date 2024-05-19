@@ -94,7 +94,8 @@ export default {
             this.message = '';
         },
         async fetchMessages() {
-            const result = await comChat.getAllMessages(1);
+            console.log(this.chat_id);
+            const result = await comChat.getAllMessages(this.chat_id);
             this.messages = result.data.reverse();
             delete result.data;
             this.pagination = result;
@@ -102,6 +103,7 @@ export default {
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
         socket.on('message', (message) => {
             this.messages.push(message);
             this.chat_id = message.chat_id;
@@ -112,19 +114,13 @@ export default {
             });
         });
 
+        comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
+            this.chat_id = res.chatExists._id;
+            console.log(this.chat_id);
+        });
+
         this.fetchMessages();
         this.contact = this.store.getChatUser();
-
-        comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
-            console.log(res);
-            // if (res[0].chat_id) {
-            //     this.chat_id = res[0].chat_id;
-            //     console.log('Chat existente');
-            //     console.log(this.chat_id);
-            // } else {
-            //     console.log('Chat no existente');
-            // }
-        });
 
     },
 

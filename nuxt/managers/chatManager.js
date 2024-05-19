@@ -25,7 +25,7 @@ async function getAllMessages(idChat) {
 
 async function checkChat(user_id, contact_id) {
   try {
-    const response = await axios.post(`${url_api}/chats/search`, {
+    const response = await axios.post(`${url_api_mongo}/chat`, {
       user_id: user_id,
       contact_id: contact_id,
     });

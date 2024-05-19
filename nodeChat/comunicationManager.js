@@ -7,13 +7,14 @@ const url = process.env.API_URL;
 
 async function insertMessage(message) {
   try {
-    const response = await axios.post(url, {
+    const response = await axios.post(`${url}message`, {
       chat_id: message.chat_id,
       nameChat: message.nameChat,
       user_id: message.user_id,
       contact_id: message.contact_id,
       content: message.content,
     });
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);

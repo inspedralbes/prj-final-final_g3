@@ -372,21 +372,29 @@ app.delete("/images", async (req, res) => {
 
 app.post("/chat", async (req, res) => {
     const chat = req.body;
+    console.log("Chat:", req.body);
     try {
         let chatExists = await models.chat.findOne({
             $or: [
-                { user_id: chat.userId, contact_id: chat.contactId },
-                { user_id: chat.contactId, contact_id: chat.userId }
+            { user_id: req.body.user_id, contact_id: req.body.contact_id },
+            { user_id: req.body.contact_id, contact_id: req.body.user_id }
             ]
         });
 
-        if (chatExists) {
-            let messages = await models.message.find({ chat_id: chatExists._id });
-            return res.json({
-                chatExists: chatExists,
-                messages: messages
-            });
-        }else{
+        console.log("ChatExists:", chatExists);
+
+        if (chatExists != null) {
+            let messages;
+            try {
+                messages = await models.message.find({ chat_id: chatExists._id });
+                return res.json({
+                    chatExists: chatExists,
+                    messages: messages
+                });
+            } catch (error) {
+                res.json({ chatExists: chatExists });
+            }
+        } else {
             var createdChat = {
                 name: `${chat.user_id}` + `-` + `${chat.contact_id}`,
                 user_id: chat.user_id,
@@ -406,13 +414,13 @@ app.post("/message", async (req, res) => {
     try {
         let chatId = message.chat_id;
 
-        if (!chatId) {
+        if (chatId != null) {
             let existingChat = await Chat.findOne({
                 user_id: message.user_id,
                 contact_id: message.contact_id
             });
 
-            if (!existingChat) {
+            if (existingChat != null) {
                 const newChat = new Chat({
                     name: message.nameChat || `${message.user_id}-${message.contact_id}`,
                     user_id: message.user_id,
