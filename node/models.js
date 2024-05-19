@@ -87,7 +87,7 @@ const chatSchema = new Schema({
 });
 
 const messageSchema = new Schema({
-  chat_id: Number,
+  chat_id: { type: Schema.Types.ObjectId, ref: "chat" },
   content: String,
   user_id: Number,
   sent_at: { type: Date, default: Date.now },

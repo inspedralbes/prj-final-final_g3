@@ -90,6 +90,7 @@ export default {
                 contact_id: this.contact.id,
                 content: this.message
             }
+
             socket.emit('message', this.message);
             this.message = '';
         },
