@@ -17,8 +17,7 @@ async function getLocations() {
   const store = useStores();
   try {
     const response = await axios.get(`${url_api}/events/locations`);
-    // store.setLocations(response.data);
-    console.log("Locations fetched:", response.data);
+    store.setLocations(response.data);
   } catch (error) {
     console.error("Error fetching locations:", error);
     throw error;

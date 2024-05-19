@@ -25,7 +25,6 @@
 
 <script>
 import { useStores } from '~/stores/counter';
-import eventManager from '~/managers/eventManager';
 
 export default {
     data() {
@@ -36,7 +35,6 @@ export default {
     created() {
     },
     mounted() {
-        eventManager.getLocations()
     }
 }
 </script>

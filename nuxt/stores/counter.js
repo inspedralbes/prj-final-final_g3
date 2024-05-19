@@ -50,7 +50,7 @@ export const useStores = defineStore("counter", {
       this.loggedIn = false;
     },
     setLocations(locations) {
-      this.locations = locations;
+      this.locations = locations.locations;
     },
 
     // GETTERS
