@@ -20,9 +20,13 @@
                     <PostDropDown @postDeleted="deletePostAnim($event)" :postId="post._id" />
                 </header>
 
-                <p class="px-3 text-sm">{{ post.content }}</p>
-                <img class="px-3 rounded"
-                    src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" alt="">
+                <NuxtLink :to="`/post/${post._id}`">
+                    <p class="px-3 text-sm">{{ post.content }}</p>
+                    <img class="px-3 rounded"
+                        src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" 
+                        alt="">
+                </NuxtLink>
+
                 <footer class="flex items-center gap-6 px-3 py-2">
                     <button @click="mostrarModal(post)" class="flex items-center gap-1 text-sm">
                         <IconsMessage class="size-5" />

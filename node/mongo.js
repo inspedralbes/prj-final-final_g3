@@ -73,6 +73,18 @@ app.get("/posts", async (req, res) => {
     }
 });
 
+/* Esta funcion es para recibir un post en concreto */
+app.get("/posts/:postId", async (req, res) => {
+    try {
+        const post = await models.post.findOne({ _id: req.params.postId });
+        console.log("Post:", post);
+        res.send(post);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(404).send({ error: error.message });
+    }
+});
+
 /* EVENTS */
 /* Esta funcion es para guardar el like de un evento*/
 
