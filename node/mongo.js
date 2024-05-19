@@ -250,7 +250,7 @@ app.post("/comments", async (req, res) => {
 app.get("/comments", async (req, res) => {
     try {
         const comments = await models.commentPost.find({
-            postId: req.body.postId,
+            postId: req.query.postId,
         });
         console.log("Comments:", comments);
         res.send(comments);
