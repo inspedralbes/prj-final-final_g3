@@ -2,7 +2,7 @@
   <main class="min-h-screen relative">
     <header class='w-[80%] flex justify-between absolute top-4 left-1/2 -translate-x-1/2 z-10'>
       <NuxtLink to='/events'>
-        <IconsLeftArrow class="size- bg-black rounded-full bg-opacity-60" />
+        <IconsLeftArrow class="size-6 bg-black rounded-full bg-opacity-60" />
       </NuxtLink>
 
       <button @click="toggleLike" :class="{

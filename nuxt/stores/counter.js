@@ -15,13 +15,17 @@ export const useStores = defineStore("counter", {
       birthdate: "",
     },
     events: [],
+    individualPostInfo: {},
   }),
   persist: {
     storage: persistedState.localStorage,
     paths: ["userInfo", "loggedIn", "events"],
   },
+
   actions: {
-    // SETTERS
+    /* -------------------------------------------------------------------------- */
+    /*                                   SETTERS                                  */
+    /* -------------------------------------------------------------------------- */
     setUserInfo(userInfo) {
       this.userInfo.id = userInfo.id;
       this.userInfo.name = userInfo.name;
@@ -50,7 +54,9 @@ export const useStores = defineStore("counter", {
     },
 
 
-    // GETTERS
+    /* -------------------------------------------------------------------------- */
+    /*                                   GETTERS                                  */
+    /* -------------------------------------------------------------------------- */
     getUserInfo() {
       return this.userInfo;
     },
