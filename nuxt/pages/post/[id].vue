@@ -54,22 +54,21 @@
             </div>
         </article>
 
-        <article v-for="comment in comments" class="my-10">
-            <header class="flex gap-3 items-center mb-3">
-                <img class="size-12 rounded-full object-cover"
-                    src="https://prod.assets.earlygamecdn.com/images/MultiVersus-Finn.jpg?transform=banner2x_webp"
-                    alt="">
-                <div>
-                    <h2 class="font-bold">User name</h2>
-                    <p class="text-sm text-gray-400">@nickname</p>
-                </div>
-            </header>
+        <transition-group name="fade">
+            <article v-for="(comment, index) in comments" :key="index" class="my-10">
+                <header class="flex gap-3 items-center mb-3">
+                    <img class="size-12 rounded-full object-cover"
+                        src="https://prod.assets.earlygamecdn.com/images/MultiVersus-Finn.jpg?transform=banner2x_webp"
+                        alt="">
+                    <div>
+                        <h2 class="font-bold">User name</h2>
+                        <p class="text-sm text-gray-400">@nickname</p>
+                    </div>
+                </header>
                 <p>{{ comment.content }}</p>
-        </article>
-
+            </article>
+        </transition-group>
     </section>
-
-
 
 </template>
 
@@ -90,8 +89,7 @@ export default {
     methods: {
         async getPost() {
             try {
-                const response = await axios.get(`http://localhost:8086/posts/${this.postId}`)
-                this.post = response.data;
+                this.post = await comManager.getPostById(this.postId)
                 console.log(this.post)
                 this.getComments()
             } catch (error) {
@@ -101,8 +99,8 @@ export default {
 
         async getComments() {
             try {
-                const response = await axios.get(`http://localhost:8086/comments?postId=${this.postId}`)
-                this.comments = response.data.reverse();
+                this.comments = await comManager.getComments(this.postId)
+                this.comments.reverse();
                 console.log(this.comments)
             } catch (error) {
                 console.error(error)
@@ -111,6 +109,8 @@ export default {
 
         async sendReply() {
             await comManager.commentPost(this.post._id, this.comment);
+            this.comment = '';
+            this.getComments();
             console.log("Comentario enviado")
         },
 
@@ -130,3 +130,21 @@ export default {
     }
 }
 </script>
+
+<style>
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+    transition: all .5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.fade-leave-active {
+    position: absolute;
+}
+</style>

@@ -132,6 +132,15 @@ async function getPosts() {
     }
   }
 
+  async function getPostById(postID) {
+    try{
+      const response = await axios.get(`${url_api_mongo}/posts/${postID}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
   async function getLikePosts() {
     const store = useStores();
     const userID = store.getId()
@@ -179,6 +188,16 @@ async function commentPost(postID, content){
     console.error("Error fetching data:", error);
   }
 }
+
+async function getComments(postID){
+  try{
+    const response = await axios.get(`${url_api_mongo}/comments?postId=${postID}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+}
     
 async function getEventCounterFollowers(id){
   try{
@@ -222,10 +241,12 @@ const comManager = {
   post,
   deletePost,
   getPosts,
+  getPostById,
   getLikePosts,
   likePost,
   unlikePost,
   commentPost,
+  getComments,
   getEventCounterFollowers,
   getEventFollowers,
   getUserById
