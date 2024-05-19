@@ -91,7 +91,7 @@ const messageSchema = new Schema({
   content: String,
   user_id: Number,
   sent_at: { type: Date, default: Date.now },
-  read_at: Date,
+  read_at: { type: Date, default: null },
   state: { type: String, enum: ['enviado', 'recibido', 'leído'] }
 });
 

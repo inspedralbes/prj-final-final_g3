@@ -416,12 +416,16 @@ app.post("/message", async (req, res) => {
         let chatId = message.chat_id;
 
         if (chatId != null) {
-            let existingChat = await models.chat.findOne({
-                user_id: message.user_id,
-                contact_id: message.contact_id
+            let chatExists = await models.chat.findOne({
+                $or: [
+                { user_id: req.body.user_id, contact_id: req.body.contact_id },
+                { user_id: req.body.contact_id, contact_id: req.body.user_id }
+                ]
             });
 
-            if (existingChat != null) {
+            console.log("ChatExists:", chatExists);
+
+            if (chatExists == null) {
                 const newChat = await models.chat.create({
                     name: message.nameChat || `${message.user_id}-${message.contact_id}`,
                     user_id: message.user_id,
@@ -431,7 +435,7 @@ app.post("/message", async (req, res) => {
 
                 chatId = newChat._id;
             } else {
-                chatId = existingChat._id;
+                chatId = chatExists._id;
             }
         }
         
@@ -441,7 +445,7 @@ app.post("/message", async (req, res) => {
             content: message.content,
             sent_at: message.sent_at,
             read_at: message.read_at,
-            state: message.state
+            state: 'enviado'
         };
         res.send(await models.message.create(createdMessage));
     } catch (error) {

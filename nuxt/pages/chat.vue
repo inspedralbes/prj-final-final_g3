@@ -85,7 +85,7 @@ export default {
         sendMessage() {
             this.message = {
                 chat_id: this.chat_id,
-                nameChat: `${this.store.getId()} - ${this.contact.id}`,
+                nameChat: `${this.store.getId()}-${this.contact.id}`,
                 user_id: this.store.getId(),
                 contact_id: this.contact.id,
                 content: this.message
@@ -115,13 +115,14 @@ export default {
             });
         });
 
+        
+        this.fetchMessages();
+        this.contact = this.store.getChatUser();
+
         comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
             this.chat_id = res.chatExists._id;
             console.log(this.chat_id);
         });
-
-        this.fetchMessages();
-        this.contact = this.store.getChatUser();
 
     },
 
