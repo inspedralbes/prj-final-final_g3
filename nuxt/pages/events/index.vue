@@ -8,12 +8,12 @@
             Filtres
           </h3>
           <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-            @click="isOpen = false" />
+            @click="modals.filter = !modals.filter" />
         </div>
       </template>
       <UDivider label="Ciutats" class="mb-4" />
-      <USelectMenu option-attribute="city" color="gray" v-model="citySelected" :options="locations" multiple
-        placeholder="Selecciona les ciutats">
+      <USelectMenu searchable searchable-placeholder="Busca la teva ciutat..." option-attribute="city" color="gray"
+        v-model="citySelected" :options="locations" multiple placeholder="Selecciona les ciutats">
       </USelectMenu>
       <div class="mt-2 flex flex-wrap">
         <UButton v-for="city in citySelected" color="gray" :label="city.city" variant="outline"
@@ -21,8 +21,8 @@
       </div>
       <div v-if="citySelected.length > 0">
         <UDivider label="Espais" class="my-4" />
-        <USelectMenu color="gray" v-model="venueSelected" :options="getVenues" multiple
-          placeholder="Selecciona els espais" />
+        <USelectMenu searchable searchable-placeholder="Busca el teu espai..." color="gray" v-model="venueSelected"
+          :options="getVenues" multiple placeholder="Selecciona els espais" />
         <div class="mt-2 flex flex-wrap">
           <UButton v-for="venue in venueSelected" color="gray" :label="venue" variant="outline"
             icon="i-heroicons-x-mark-20-solid" class="m-1 ml-0" @click="deleteVenue(venue)" />
