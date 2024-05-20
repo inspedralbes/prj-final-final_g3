@@ -142,6 +142,22 @@ async function getPosts() {
     console.error("Error fetching data:", error);
   }
 }
+    try{
+      const response = await axios.get(`${url_api_mongo}/posts?userId=${userID}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  async function getPostById(postID) {
+    try{
+      const response = await axios.get(`${url_api_mongo}/posts/${postID}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
 
 async function getLikePosts() {
   const store = useStores();
@@ -181,11 +197,53 @@ async function unlikePost(postID) {
   }
 }
 
-async function getEventCounterFollowers(id) {
-  try {
-    const response = await axios.get(
-      `${url_api_mongo}/likeEvents/${id}?eventId=${id}`
-    );
+
+async function commentPost(postID, content){
+  try{
+    await axios.post(`${url_api_mongo}/comments`, {
+      postId: postID,
+      content: content,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+
+async function commentPost(postID, content){
+  try{
+    await axios.post(`${url_api_mongo}/comments`, {
+      postId: postID,
+      content: content,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getComments(postID){
+  try{
+    const response = await axios.get(`${url_api_mongo}/comments?postId=${postID}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+}
+
+async function getComments(postID){
+  try{
+    const response = await axios.get(`${url_api_mongo}/comments?postId=${postID}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
+}
+
+async function getEventCounterFollowers(id){
+  try{
+    const response = await axios.get(`${url_api_mongo}/likeEvents/${id}?eventId=${id}`);
     return response;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -203,6 +261,7 @@ async function getEventFollowers(id, page) {
   }
 }
 
+
 async function getUserById(id, token) {
   try {
     const response = await axios.get(`${url_api}/users/${id}`, {
@@ -214,7 +273,8 @@ async function getUserById(id, token) {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-}
+
+} 
 
 const comManager = {
   getEvents,
@@ -225,9 +285,12 @@ const comManager = {
   post,
   deletePost,
   getPosts,
+  getPostById,
   getLikePosts,
   likePost,
   unlikePost,
+  commentPost,
+  getComments,
   getEventCounterFollowers,
   getEventFollowers,
   getUserById,

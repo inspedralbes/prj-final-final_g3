@@ -3,16 +3,18 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-    content: String,
-    likes: [{ type: Schema.Types.ObjectId, ref: 'likePost' }],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'commentPost' }],
-    userId: Number,
-    images: [{ type: Schema.Types.ObjectId, ref: 'image' }],
+  content: String,
+  likes: [{ type: Schema.Types.ObjectId, ref: "likePost" }],
+  comments: [{ type: Schema.Types.ObjectId, ref: "commentPost" }],
+  userId: Number,
+  images: [{ type: Schema.Types.ObjectId, ref: "image" }],
 });
 
-
 const commentPostSchema = new Schema({
-  postId: Number,
+  postId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   content: String,
   likes: [{ type: Schema.Types.ObjectId, ref: "likeComment" }],
   parentId: Number,
@@ -30,7 +32,6 @@ commentPostSchema.pre("save", async function (next) {
     next(error);
   }
 });
-
 
 const likePostSchema = new Schema({
   postId: { type: Schema.Types.ObjectId, ref: "post" },

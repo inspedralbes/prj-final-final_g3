@@ -53,7 +53,7 @@
 
             </div>
 
-            <PostsProfile class="w-[90%] mx-auto overflow-hidden relative" v-if="selectedSection === 'Posts'" />
+            <PostsProfile class="w-[90%] mx-auto overflow-hidden" v-if="selectedSection === 'Posts'" />
             <EventosProfile v-if="selectedSection === 'Eventos'" />
             <GustosProfile v-if="selectedSection === 'Gustos'" />
         </section>
