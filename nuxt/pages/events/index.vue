@@ -28,9 +28,11 @@
             icon="i-heroicons-x-mark-20-solid" class="m-1 ml-0" @click="deleteVenue(venue)" />
         </div>
       </div>
-      <template v-if="citySelected.length > 0" #footer>
-        <UButton @click="resetFilters" color="red" label="Restaurar filtres"></UButton>
-        <UButton @click="filterEvents" label="Guardar filtres"></UButton>
+      <template #footer v-if="citySelected.length > 0">
+        <div class="flex justify-between">
+          <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton>
+          <UButton @click="filterEvents" label="Guardar filtres"></UButton>
+        </div>
       </template>
     </UCard>
   </USlideover>
