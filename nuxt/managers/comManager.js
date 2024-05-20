@@ -16,7 +16,7 @@ if (env.toLowerCase() === "development") {
 async function getEvents() {
   const store = useStores();
   try {
-    const response = await axios.get(`${url_api}/events`);
+    const response = await axios.get(`${url_api}/events/all`);
     const eventos = response.data.events;
     const eventosAgrupados = {};
     eventos.forEach((evento) => {
@@ -39,6 +39,20 @@ async function getEvents() {
     } else {
       store.setEvents(Object.values(eventosAgrupados));
     }
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getFilteredEvents(cities, venues) {
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/byLocation`, {
+      cities: cities,
+      venues: venues,
+    });
+    // console.log(response.data.events);
+    return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -204,6 +218,7 @@ async function getUserById(id, token) {
 
 const comManager = {
   getEvents,
+  getFilteredEvents,
   likeAnEvent,
   unlikeAnEvent,
   searchUsers,

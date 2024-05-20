@@ -28,6 +28,10 @@
             icon="i-heroicons-x-mark-20-solid" class="m-1 ml-0" @click="deleteVenue(venue)" />
         </div>
       </div>
+      <template v-if="citySelected.length > 0" #footer>
+        <UButton @click="resetFilters" color="red" label="Restaurar filtres"></UButton>
+        <UButton @click="filterEvents" label="Guardar filtres"></UButton>
+      </template>
     </UCard>
   </USlideover>
 
@@ -35,7 +39,7 @@
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <button @click="modals.filter = !modals.filter">Obrir filtres</button>
     <section class=" flex flex-col gap-3">
-      <div v-for="evento in eventos" :key="evento.id">
+      <div v-for="evento in eventosFiltrados.length > 0 ? eventosFiltrados : eventos" :key="evento.id">
         <CardEvent :event="evento" />
       </div>
     </section>
@@ -53,6 +57,7 @@ export default {
     return {
       store: useStores(),
       eventos: computed(() => this.store.events),
+      eventosFiltrados: [],
       eventosLike: [],
       locations: computed(() => this.store.locations),
       citySelected: [],
@@ -69,6 +74,18 @@ export default {
     },
     deleteVenue(venue) {
       this.venueSelected = this.venueSelected.filter(v => v !== venue)
+    },
+    filterEvents() {
+      comManager.getFilteredEvents(this.citySelected, this.venueSelected)
+        .then((response) => {
+          this.eventosFiltrados = response;
+          this.modals.filter = false
+        })
+    },
+    resetFilters() {
+      this.citySelected = []
+      this.venueSelected = []
+      this.eventosFiltrados = []
     }
   },
   created() {
