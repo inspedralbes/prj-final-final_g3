@@ -41,7 +41,7 @@
       </div>
       <h3 class='text[#CACACA] text-sm'>{{ counterFollowers }} personas inscritas</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
-      <div v-for="follower in followers" :key="follower.id">
+      <div v-if="mostrarSeg" v-for="follower in followers" :key="follower.id">
         <UserCardEvent :follower="follower" />
       </div>
       <div v-if="loadingFollowers" class="flex justify-center items-center">
@@ -72,7 +72,8 @@ export default {
       page: 0,
       followers: [],
       loadingFollowers: false,
-      loadMoreFollowers: false
+      loadMoreFollowers: false,
+      mostrarSeg: false
     }
   },
   created() {
@@ -116,6 +117,7 @@ export default {
     },
     async getFollowers() {
       this.loadingFollowers = true;
+      this.mostrarSeg = false;
 
       const response = await comManager.getEventFollowers(this.event.id, this.page);
       const followersMongo = response.data;
@@ -144,6 +146,7 @@ export default {
           this.loadMoreFollowers = false;
         }
       }
+      this.mostrarSeg = true;
     }
   },
   computed: {
