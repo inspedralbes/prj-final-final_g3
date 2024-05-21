@@ -18,7 +18,7 @@
             <main class="flex justify-between items-center gap-2">
                 <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
                 <div class="flex flex-col justify-center items-start gap-1 max-w-64">
-                    <h2 class="font-bold">test</h2>
+                    <h2 class="font-bold">{{chat.nickname}}</h2>
                     <p class="text-sm">Tienes mensajes sin leer</p>
                 </div>
                 <div class="flex flex-col justify-center items-center gap-2">
@@ -55,10 +55,11 @@ import comChat from '@/managers/chatManager.js';
                     } else {
                         userId = chat.contact_id;
                     }
-                    chats.
+                    const userChat = await comChat.getUserChats(userId);
+                    chat.nickname = userChat.nickname;
+                    chat.avatar = userChat.avatar;
                 });
                 this.chats = chats;
-                console.log(chats);
             }
         },
         components: {
