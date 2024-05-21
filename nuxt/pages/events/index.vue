@@ -67,7 +67,7 @@ export default {
       modals: {
         filter: false,
       },
-      location: {},
+      userLocation: {},
     };
   },
   methods: {
@@ -94,16 +94,16 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
-            this.location = {
+            this.userLocation = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
             comManager.convertGeolocation(this.location.latitude, this.location.longitude)
               .then(response => {
                 const data = response.data.address;
-                this.location.city = data.city;
-                this.location.country = data.country;
-                this.location.province = data.province;
+                this.userLocation.city = data.city;
+                this.userLocation.country = data.country;
+                this.userLocation.province = data.province;
               })
           },
           error => {
