@@ -130,7 +130,6 @@ async function deletePost(postID) {
     console.error("Error fetching data:", error);
   }
 }
-s;
 
 async function getPosts() {
   const store = useStores();
