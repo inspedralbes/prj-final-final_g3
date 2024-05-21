@@ -66,7 +66,7 @@ export default {
       venueSelected: [],
       modals: {
         filter: false,
-      }
+      },
       location: {},
     };
   },
@@ -89,7 +89,8 @@ export default {
       this.citySelected = []
       this.venueSelected = []
       this.eventosFiltrados = []
-    }    fetchGeolocation() {
+    },
+    fetchGeolocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
@@ -97,13 +98,13 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
-          comManager.convertGeolocation(this.location.latitude, this.location.longitude)
-            .then(response => {
-              const data = response.data.address;
-              this.location.city = data.city; 
-              this.location.country = data.country;
-              this.location.province = data.province;
-            })
+            comManager.convertGeolocation(this.location.latitude, this.location.longitude)
+              .then(response => {
+                const data = response.data.address;
+                this.location.city = data.city;
+                this.location.country = data.country;
+                this.location.province = data.province;
+              })
           },
           error => {
             console.error("Error getting geolocation: ", error);
@@ -119,10 +120,9 @@ export default {
   created() {
   },
   mounted() {
-    comManager.getEvents(),
-    this.fetchGeolocation();
-
+    comManager.getEvents();
     eventManager.getLocations()
+    this.fetchGeolocation();
   },
   computed: {
     getVenues() {

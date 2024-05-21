@@ -234,10 +234,9 @@ async function getUserById(id, token) {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
 }
 
-async function convertGeolocation(lat,lng){
+async function convertGeolocation(lat, lng) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
   try {
     const response = await axios.get(url);
@@ -245,9 +244,7 @@ async function convertGeolocation(lat,lng){
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-  
 }
-
 
 const comManager = {
   getEvents,
@@ -265,8 +262,8 @@ const comManager = {
   getEventFollowers,
   getUserById,
   commentPost,
-  getPostById,,
-  convertGeolocation
+  getPostById,
+  convertGeolocation,
 };
 
 export default comManager;
