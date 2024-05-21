@@ -7,7 +7,7 @@ const postSchema = new Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: "likePost" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "commentPost" }],
   userId: Number,
-  images: [{ type: Schema.Types.ObjectId, ref: "image" }],
+  image: String,
 });
 
 const commentPostSchema = new Schema({
@@ -74,18 +74,12 @@ likeCommentSchema.pre("save", async function (next) {
   }
 });
 
-const imageSchema = new Schema({
-  url: String,
-  postId: Number,
-});
-
 const models = {
   post: mongoose.model("post", postSchema),
   commentPost: mongoose.model("commentPost", commentPostSchema),
   likePost: mongoose.model("likePost", likePostSchema),
   likeEvent: mongoose.model("likeEvent", likeEventSchema),
   likeComment: mongoose.model("likeComment", likeCommentSchema),
-  image: mongoose.model("image", imageSchema),
 };
 
 export default models;

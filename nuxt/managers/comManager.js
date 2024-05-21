@@ -110,13 +110,14 @@ async function searchUsers(param) {
   }
 }
 
-async function post(content) {
+async function post(content, link) {
   const store = useStores();
   const userID = store.getId();
   try {
     await axios.post(`${url_api_mongo}/posts`, {
       content: content,
       userId: userID,
+      image: link,
     });
   } catch (error) {
     console.error("Error fetching data:", error);

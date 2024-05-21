@@ -23,7 +23,7 @@
                 <NuxtLink :to="`/post/${post._id}`">
                     <p class="px-3 text-sm">{{ post.content }}</p>
                     <img class="px-3 rounded"
-                        src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" 
+                        :src="post.image" 
                         alt="">
                 </NuxtLink>
 

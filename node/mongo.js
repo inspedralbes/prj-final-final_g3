@@ -3,10 +3,18 @@ import models from "./models.js";
 import minimist from "minimist";
 import express from "express";
 
+import multer from "multer";
+import sharp from "sharp";
+import fs from "fs";
+
 const app = express();
+app.use(express.static("./imgs"));
 
 const argv = minimist(process.argv.slice(2));
 const host = argv.host || "mongodb";
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+const hostimgs = argv.host || "localhost";
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -38,9 +46,10 @@ app.post("/posts", async (req, res) => {
             likes: [],
             comments: [],
             userId: post.userId,
-            images: [],
+            image: post.image,
         };
         res.send(await models.post.create(createdPost));
+
     } catch (error) {
         console.error("Error:", error);
     }
@@ -48,17 +57,19 @@ app.post("/posts", async (req, res) => {
 
 /* Esta funcion es para eliminar un post*/
 app.delete("/posts", async (req, res) => {
-  try {
-    const post = await models.post.findOneAndDelete({ _id: req.query.postId });
-    
-    await models.likePost.deleteMany({ postId: post._id });
-    await models.commentPost.deleteMany({ postId: post._id });
+    try {
+        const post = await models.post.findOneAndDelete({
+            _id: req.query.postId,
+        });
 
-    console.log("Post deleted:", post);
-    res.send("Post deleted successfully");
-  } catch (error) {
-    console.error("Error:", error);
-  }
+        await models.likePost.deleteMany({ postId: post._id });
+        await models.commentPost.deleteMany({ postId: post._id });
+
+        console.log("Post deleted:", post);
+        res.send("Post deleted successfully");
+    } catch (error) {
+        console.error("Error:", error);
+    }
 });
 
 /* Esta funcion es para recibir todos los posts de un usuario y su contenido*/
@@ -130,14 +141,16 @@ app.get("/likeEvents/:eventId", async (req, res) => {
 });
 
 app.get("/likeEvents/:eventId/followers", async (req, res) => {
-    
     const page = req.query.p || 0;
     const followersperPage = 10;
 
-    try{
-        const likeEventFollowers = await models.likeEvent.find({
-            eventId: req.params.eventId,
-        }).skip(page * followersperPage).limit(followersperPage);
+    try {
+        const likeEventFollowers = await models.likeEvent
+            .find({
+                eventId: req.params.eventId,
+            })
+            .skip(page * followersperPage)
+            .limit(followersperPage);
         console.log("LikeEvent followers:", likeEventFollowers);
         res.send(likeEventFollowers);
     } catch (error) {
@@ -188,8 +201,6 @@ app.get("/likePosts", async (req, res) => {
         return [];
     }
 });
-
-
 
 /* Esta funcion es devolver cuantos likes tiene un post */
 app.get("/likePosts/:postId", async (req, res) => {
@@ -360,40 +371,21 @@ app.delete("/likeComment", async (req, res) => {
 });
 
 /* IMAGENES */
-app.post("/images", async (req, res) => {
-    const image = req.body;
-    try {
-        var createdImage = {
-            url: image.url,
-            postId: image.postId,
-        };
-        res.send(await models.image.create(createdImage));
-    } catch (error) {
-        console.error("Error:", error);
-    }
-});
-
-app.get("/images", async (req, res) => {
-    try {
-        const images = await models.image.find({ postId: req.query.postId });
-        console.log("Images:", images);
-        res.send(images);
-    } catch (error) {
-        console.error("Error:", error);
-        return [];
-    }
-});
-
-app.delete("/images", async (req, res) => {
-    try {
-        const image = await models.image.findOneAndDelete({
-            _id: req.query.imageId,
-        });
-        console.log("Image deleted:", image);
-        res.send("Image deleted successfully");
-    } catch (error) {
-        console.error("Error:", error);
-    }
+app.post("/uploadImage", upload.single("img"), async (req, res) => {
+    console.log(req.file);
+    fs.access("./imgs", (error) => {
+        if (error) {
+            fs.mkdirSync("./imgs");
+        }
+    });
+    const { buffer, originalname } = req.file;
+    const timestamp = new Date().toISOString();
+    const ref = `${timestamp}.png`;
+    await sharp(buffer)
+        .png({ quality: 60 })
+        .toFile("./imgs/" + ref);
+    const link = `http://${hostimgs}:8086/${ref}`;
+    return res.json({ link });
 });
 
 app.listen(8080, () => {

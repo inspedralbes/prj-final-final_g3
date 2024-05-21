@@ -17,7 +17,7 @@
             </header>
             <article>
                 <p>{{ post.content }}</p>
-                <img class="rounded" src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg"
+                <img class="rounded" :src="post.image"
                     alt="">
             </article>
             <footer class="flex justify-between items-center gap-6 px-1 py-2">
@@ -50,7 +50,7 @@
                     placeholder="Publica tu respuesta..."></textarea>
 
                 <button @click="sendReply"
-                    class="bg-primary rounded-full px-4 py-1 font-semibold text-sm hover:bg-primary/80 transition duration-200">Reply</button>
+                    class="bg-primary rounded-full px-4 py-1 font-semibold text-sm hover:bg-primaryDark transition duration-200">Reply</button>
             </div>
         </article>
 

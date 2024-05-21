@@ -10,7 +10,7 @@
                         <IconsAddImage class="size-5" />
                     </button>
                     <button @click="sendReply"
-                        class="bg-primary rounded-full px-4 py-1 font-semibold text-sm hover:bg-primary/80 transition duration-200">Reply</button>
+                        class="bg-primary rounded-full px-4 py-1 font-semibold text-sm hover:bg-primaryDark transition duration-200">Reply</button>
                 </div>
             </header>
             <main>
