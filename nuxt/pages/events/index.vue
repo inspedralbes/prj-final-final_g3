@@ -11,7 +11,9 @@
             @click="modals.filter = !modals.filter" />
         </div>
       </template>
-      <UDivider label="Ciutats" class="mb-4" />
+      <UDivider :label="`Distancia (${distance}km)`" class="mb-4" />
+      <URange color="orange" :max="1500" v-model="distance"></URange>
+      <UDivider label="Ciutats" class="my-4" />
       <USelectMenu searchable searchable-placeholder="Busca la teva ciutat..." option-attribute="city" color="gray"
         v-model="citySelected" :options="locations" multiple placeholder="Selecciona les ciutats">
       </USelectMenu>
@@ -28,7 +30,7 @@
             icon="i-heroicons-x-mark-20-solid" class="m-1 ml-0" @click="deleteVenue(venue)" />
         </div>
       </div>
-      <template #footer v-if="citySelected.length > 0">
+      <template #footer>
         <div class="flex justify-between">
           <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton>
           <UButton @click="filterEvents" label="Guardar filtres"></UButton>
@@ -67,6 +69,7 @@ export default {
       modals: {
         filter: false,
       },
+      distance: 1500,
       userLocation: {},
     };
   },
@@ -98,12 +101,13 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
+            console.log(this.userLocation)
             comManager.convertGeolocation(this.userLocation.latitude, this.userLocation.longitude)
               .then(response => {
-                const data = response.data.address;
-                this.userLocation.city = data.city;
-                this.userLocation.country = data.country;
-                this.userLocation.province = data.province;
+                this.userLocation.city = response.city;
+                this.userLocation.country = response.country;
+                this.userLocation.province = response.province;
+                console.log(this.userLocation)
               })
           },
           error => {
@@ -118,9 +122,9 @@ export default {
   created() {
   },
   mounted() {
+    this.fetchGeolocation();
     comManager.getEvents();
     eventManager.getLocations()
-    this.fetchGeolocation();
   },
   computed: {
     getVenues() {

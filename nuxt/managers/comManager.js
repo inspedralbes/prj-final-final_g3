@@ -237,10 +237,33 @@ async function getUserById(id, token) {
 }
 
 async function convertGeolocation(lat, lng) {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+  const mapboxToken = import.meta.env.VITE_APP_MAPBOX_TOKEN;
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxToken}`;
+
   try {
     const response = await axios.get(url);
-    return response;
+    const features = response.data.features;
+
+    // Inicializamos variables para ciudad, provincia y país
+    let city = "";
+    let province = "";
+    let country = "";
+
+    if (features && features.length > 0) {
+      // Iteramos sobre las características para encontrar los datos deseados
+      features.forEach((feature) => {
+        if (feature.place_type.includes("place")) {
+          city = feature.text;
+        } else if (feature.place_type.includes("region")) {
+          province = feature.text;
+        } else if (feature.place_type.includes("country")) {
+          country = feature.text;
+        }
+      });
+    }
+
+    // Retornamos un objeto con los datos requeridos
+    return { city, province, country };
   } catch (error) {
     console.error("Error fetching data:", error);
   }
