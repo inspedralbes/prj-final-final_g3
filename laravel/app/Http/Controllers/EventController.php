@@ -145,19 +145,32 @@ class EventController extends Controller
 
     public function getLocations()
     {
-        $cities = Event::select('city')->distinct()->get();
+        $countries = Event::select('country')->distinct()->get();
         $locations = [];
-
-        foreach ($cities as $city) {
-            $venues = Event::where('city', $city->city)->select('venue')->distinct()->pluck('venue')->toArray();
-            $locations[] = [
-                'city' => $city->city,
-                'venues' => $venues
-            ];
+    
+        foreach ($countries as $country) {
+            $cities = Event::where('country', $country->country)->select('city')->distinct()->get();
+            $countryCities = [];
+    
+            foreach ($cities as $city) {
+                $venues = Event::where('country', $country->country)
+                               ->where('city', $city->city)
+                               ->select('venue')
+                               ->distinct()
+                               ->pluck('venue')
+                               ->toArray();
+    
+                // Agregar los venues bajo cada ciudad
+                $countryCities[$city->city] = $venues;
+            }
+    
+            // Agregar las ciudades bajo cada país
+            $locations[$country->country] = $countryCities;
         }
-
+    
         return response()->json(['locations' => $locations], 200);
     }
+    
 
     /**
      * Store a newly created resource in storage.
