@@ -17,7 +17,6 @@ async function getLocations() {
   const store = useStores();
   try {
     const response = await axios.get(`${url_api}/events/locations`);
-    console.log("Locations:", response.data);
     store.setLocations(response.data);
   } catch (error) {
     console.error("Error fetching locations:", error);
@@ -26,7 +25,6 @@ async function getLocations() {
 }
 
 async function getEventsByDistance(lat, lon, distance) {
-  console.log(lat, lon, distance);
   const store = useStores();
   try {
     const response = await axios.post(`${url_api}/events/byDistance`, {
@@ -34,17 +32,35 @@ async function getEventsByDistance(lat, lon, distance) {
       longitude: lon,
       distance: distance,
     });
-    console.log(response.data.events);
-    // return response.data.events;
+    return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
 }
 
+async function getFilteredEvents(data) {
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/byLocation`, {
+      countries: data.countries,
+      cities: data.cities,
+      venues: data.venues,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      distance: data.distance,
+    });
+    // console.log(response.data.events);
+    return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 const eventManager = {
   getLocations,
   getEventsByDistance,
+  getFilteredEvents,
 };
 
 export default eventManager;

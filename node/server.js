@@ -67,9 +67,6 @@ async function storeEvents() {
     allEvents.forEach(async (event) => {
       const id = event.id || null;
 
-      const selectQuery = `SELECT * FROM events WHERE event_id = ?`;
-      const selectResult = await queryDatabase(selectQuery, [id]);
-
       const name = event.name || null;
       const artist =
         event._embedded &&
@@ -142,6 +139,9 @@ async function storeEvents() {
       const images = event.images
         ? JSON.stringify(event.images.map((image) => image.url))
         : null;
+
+      const selectQuery = `SELECT * FROM events WHERE event_id = ?`;
+      const selectResult = await queryDatabase(selectQuery, [id]);
 
       if (selectResult.length > 0) {
         console.log(`Event already exists, NOT INSERTED: ${name}`);

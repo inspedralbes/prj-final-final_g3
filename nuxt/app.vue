@@ -4,6 +4,7 @@
 
 <script>
 import userManager from '@/managers/userManager.js';
+import eventManager from './managers/eventManager.js';
 
 export default {
   data() {
@@ -15,6 +16,7 @@ export default {
   },
   mounted() {
     this.fetchGeolocation()
+    eventManager.getLocations()
   },
   methods: {
     fetchGeolocation() {

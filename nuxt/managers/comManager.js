@@ -44,20 +44,6 @@ async function getEvents() {
   }
 }
 
-async function getFilteredEvents(cities, venues) {
-  const store = useStores();
-  try {
-    const response = await axios.post(`${url_api}/events/byLocation`, {
-      cities: cities,
-      venues: venues,
-    });
-    // console.log(response.data.events);
-    return response.data.events;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
 async function getLikeEvents() {
   const store = useStores();
   const User = store.getUserInfo();
@@ -238,7 +224,6 @@ async function getUserById(id, token) {
 
 const comManager = {
   getEvents,
-  getFilteredEvents,
   likeAnEvent,
   unlikeAnEvent,
   searchUsers,
