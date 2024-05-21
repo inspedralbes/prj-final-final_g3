@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import mysql from "mysql2";
 import axios, { all } from "axios";
+import { get } from "mongoose";
 
 dotenv.config();
 
@@ -10,6 +11,18 @@ const db = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
 });
+
+async function getCoordinates(venue) {
+  if (!venue) return;
+  const encodedPlaceName = encodeURIComponent(venue);
+  return axios
+    .get(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodedPlaceName}`
+    )
+    .then((res) => {
+      console.log(res.data[0]);
+    });
+}
 
 async function getEvents() {
   let currentPage = 0;
@@ -89,6 +102,7 @@ async function storeEvents() {
         event._embedded.venues[0].city
           ? event._embedded.venues[0].city.name
           : null;
+      const coordinates = getCoordinates(venue);
       const genre =
         event.classifications && event.classifications[0].genre
           ? event.classifications[0].genre.name
@@ -117,7 +131,7 @@ async function storeEvents() {
         console.log(`Event already exists, NOT INSERTED: ${name}`);
         return;
       } else {
-        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, coordinates, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
         const values = [
           id,
           name,
@@ -126,6 +140,7 @@ async function storeEvents() {
           time,
           venue,
           city,
+          coordinates,
           genre,
           subgenre,
           minPrice,
@@ -213,6 +228,7 @@ async function queryDatabase(query, values) {
 const server = {
   storeEvents,
   movePastEventsToHistory,
+  getCoordinates,
 };
 
 export default server;
