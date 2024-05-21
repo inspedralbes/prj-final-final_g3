@@ -30,8 +30,10 @@
         <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
-                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
-                <div v-for="msg in messages" :key="msg.id" :class="{'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId()}">
+                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al
+                    concierto de Quevedo ?</p>
+                <div v-for="msg in messages" :key="msg.id"
+                    :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-[#FF8A1E]': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId() }">
                     <p>{{ msg.content }}</p>
                 </div>
             </div>
@@ -45,7 +47,7 @@
                 <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
                     placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage()" v-model="message">
             </div>
-            <button class="bg-primary rounded-full p-[6px]">
+            <button class="bg-[#FF8A1E] rounded-full p-[6px]">
                 <Send class="size-5" />
             </button>
         </footer>
@@ -60,7 +62,7 @@ import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
-import comChat  from '@/managers/chatManager.js';
+import comChat from '@/managers/chatManager.js';
 
 export default {
     components: {
@@ -75,7 +77,7 @@ export default {
             store: useStores(),
             messages: [],
             message: '',
-            pagination:{}
+            pagination: {}
 
         }
     },
@@ -107,19 +109,19 @@ export default {
         },
     },
     mounted() {
-    if(!this.store.getLoggedIn()) return this.$router.push('/join');
-    socket.on('message', (message) => {
-        this.messages.push(message);
-        this.$nextTick(() => {
-            if (this.$refs.messageContainer) {
-                this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
-            }
+        if (!this.store.getLoggedIn()) return this.$router.push('/join');
+        socket.on('message', (message) => {
+            this.messages.push(message);
+            this.$nextTick(() => {
+                if (this.$refs.messageContainer) {
+                    this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
+                }
+            });
         });
-    });
 
-    this.fetchMessages();
-},
-    
+        this.fetchMessages();
+    },
+
 
 }
 </script>

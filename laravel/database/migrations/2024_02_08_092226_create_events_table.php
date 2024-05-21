@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('time')->nullable();
             $table->string('venue')->nullable();
             $table->string('city')->nullable();
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
             $table->string('genre')->nullable();
             $table->string('subgenre')->nullable();
             $table->float('minprice')->nullable();

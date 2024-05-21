@@ -149,7 +149,7 @@ async function login(userData) {
 async function logout() {
   const store = useStores();
   try {
-    await axios.post(`${url_api}/logout`, {
+    await axios.post(`${url_api}/logout`, null, {
       headers: {
         Authorization: `Bearer ${store.getToken()}`
       }
