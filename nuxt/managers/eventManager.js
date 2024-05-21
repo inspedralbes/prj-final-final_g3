@@ -29,8 +29,8 @@ async function getEventsByDistance(lat, lon, distance) {
   const store = useStores();
   try {
     const response = await axios.post(`${url_api}/events/byDistance`, {
-      lat: lat,
-      lon: lon,
+      latitude: lat,
+      longitude: lon,
       distance: distance,
     });
     console.log(response.data.events);

@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import mysql from "mysql2";
 import axios, { all } from "axios";
 import { get } from "mongoose";
+import e from "cors";
+import i18next from "./i18n.js";
 
 dotenv.config();
 
@@ -11,40 +13,6 @@ const db = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
 });
-
-const mapboxToken = process.env.MAPBOX_TOKEN;
-
-async function getCoordinates(venue, city) {
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-    venue
-  )},${encodeURIComponent(city)}.json`;
-
-  try {
-    const response = await axios.get(url, {
-      params: {
-        access_token: mapboxToken,
-        limit: 1,
-        language: "es",
-      },
-    });
-    if (response.data.features.length > 0) {
-      const lugar = response.data.features[0];
-      const coordenadas = lugar.geometry.coordinates;
-      const pais = lugar.context.find((ctx) => ctx.id.includes("country")).text;
-
-      return {
-        latitude: coordenadas[1],
-        longitude: coordenadas[0],
-        country: pais,
-      };
-    } else {
-      throw new Error("No matches found for the venue and city provided");
-    }
-  } catch (error) {
-    console.error("Error obtaining data:", error);
-    throw error;
-  }
-}
 
 async function getEvents() {
   let currentPage = 0;
@@ -128,15 +96,29 @@ async function storeEvents() {
           ? event._embedded.venues[0].city.name
           : null;
 
-      let latitude = null;
-      let longitude = null;
-      let country = null;
+      const latitude =
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues[0].location
+          ? event._embedded.venues[0].location.latitude
+          : null;
 
-      if (selectQuery.length > 0) {
-        const data = await getCoordinates(venue, city);
-        latitude = data.latitude;
-        longitude = data.longitude;
-        country = data.country;
+      const longitude =
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues[0].location
+          ? event._embedded.venues[0].location.longitude
+          : null;
+
+      let country =
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues[0].country
+          ? event._embedded.venues[0].country.name
+          : null;
+
+      if (country) {
+        country = country ? i18next.t(country) : null;
       }
 
       const genre =
@@ -165,7 +147,7 @@ async function storeEvents() {
         console.log(`Event already exists, NOT INSERTED: ${name}`);
         return;
       } else {
-        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, country latitude,longitude, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES 
+        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, country, latitude,longitude, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES 
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
           id,
@@ -265,7 +247,6 @@ async function queryDatabase(query, values) {
 const server = {
   storeEvents,
   movePastEventsToHistory,
-  getCoordinates,
 };
 
 export default server;
