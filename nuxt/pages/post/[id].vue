@@ -58,7 +58,7 @@
             <article v-for="(comment, index) in comments" :key="index" class="my-10">
                 <header class="flex gap-3 items-center mb-3">
                     <img class="size-12 rounded-full object-cover"
-                        src="https://prod.assets.earlygamecdn.com/images/MultiVersus-Finn.jpg?transform=banner2x_webp"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUz0dtNxNaD_vn6SfekehVrH89mKFLWEbQRRFA8hrihw&s"
                         alt="">
                     <div>
                         <h2 class="font-bold">User name</h2>
