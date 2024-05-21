@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
     Route::put('/updateInfo', [UserController::class, 'updateInfo']);
     Route::group(['prefix' => 'users'], function () {
+        Route::get('/followers', [FollowersController::class, 'getFollowers']);
         Route::post('/follow/{userId}', [FollowersController::class, 'followUser']);
         Route::delete('/unfollow/{userId}', [FollowersController::class, 'unfollowUser']);
         Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
