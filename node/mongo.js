@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose
-    .connect("mongodb://root:root@" + host + ":27017/spottunes", {
+    .connect("mongodb://root:root@" + host + ":27017", { // ERROR XXX colection
         authSource: "admin",
     })
     .then(() => console.log("MongoDB connected"))
