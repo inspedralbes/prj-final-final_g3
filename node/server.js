@@ -20,13 +20,23 @@ async function getCoordinates(venue) {
     const response = await axios.get(url, {
       params: {
         access_token: mapboxToken,
+        language: "es", // Para obtener los resultados en español
       },
     });
     const data = response.data;
-    // Extraer las coordenadas del primer resultado
+    // Extraer las coordenadas y el país del primer resultado
     if (data.features && data.features.length > 0) {
       const [longitud, latitud] = data.features[0].center;
-      return { latitud, longitud };
+      let country = "";
+
+      // Iterar sobre las características para encontrar el país
+      data.features[0].context.forEach((contextItem) => {
+        if (contextItem.id.startsWith("country")) {
+          country = contextItem.text;
+        }
+      });
+
+      return { latitud, longitud, country };
     } else {
       return null;
     }
@@ -63,8 +73,7 @@ async function getEvents() {
       currentPage++;
     } catch (error) {
       console.error(
-        "Could not retrieve data from the Ticketmaster API:",
-        error.response
+        `Could not retrieve data from the Ticketmaster API: ${error.response.status} - ${error.response.statusText}`
       );
       return [];
     }
@@ -89,6 +98,10 @@ async function storeEvents() {
 
     allEvents.forEach(async (event) => {
       const id = event.id || null;
+
+      const selectQuery = `SELECT * FROM events WHERE event_id = ?`;
+      const selectResult = await queryDatabase(selectQuery, [id]);
+
       const name = event.name || null;
       const artist =
         event._embedded &&
@@ -115,9 +128,14 @@ async function storeEvents() {
           ? event._embedded.venues[0].city.name
           : null;
 
-      const coordinates = await getCoordinates(venue);
-      const latitude = coordinates ? coordinates.latitud : null;
-      const longitude = coordinates ? coordinates.longitud : null;
+      let latitude = null;
+      let longitude = null;
+
+      if (selectQuery.length > 0) {
+        const coordinates = await getCoordinates(venue);
+        latitude = coordinates ? coordinates.latitud : null;
+        longitude = coordinates ? coordinates.longitud : null;
+      }
 
       const genre =
         event.classifications && event.classifications[0].genre
@@ -136,12 +154,10 @@ async function storeEvents() {
           ? event.priceRanges[0].max
           : null;
       const promoter = event.promoter ? event.promoter.name : null;
+
       const images = event.images
         ? JSON.stringify(event.images.map((image) => image.url))
         : null;
-
-      const selectQuery = `SELECT * FROM events WHERE event_id = ?`;
-      const selectResult = await queryDatabase(selectQuery, [id]);
 
       if (selectResult.length > 0) {
         console.log(`Event already exists, NOT INSERTED: ${name}`);

@@ -16,6 +16,7 @@ export const useStores = defineStore("counter", {
     },
     events: [],
     locations: [],
+    userLocation: {},
     individualPostInfo: {},
   }),
   persist: {
@@ -56,6 +57,10 @@ export const useStores = defineStore("counter", {
     setLocations(locations) {
       this.locations = locations.locations;
     },
+    setUserLocation(location) {
+      this.userLocation = location;
+      console.log(this.userLocation);
+    },
 
     /* -------------------------------------------------------------------------- */
     /*                                   GETTERS                                  */
@@ -77,6 +82,9 @@ export const useStores = defineStore("counter", {
     },
     getLocations() {
       return this.locations;
+    },
+    getUserLocation() {
+      return this.userLocation;
     },
   },
 });

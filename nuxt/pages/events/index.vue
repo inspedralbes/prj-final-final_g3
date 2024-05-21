@@ -69,8 +69,8 @@ export default {
       modals: {
         filter: false,
       },
-      distance: 1500,
-      userLocation: {},
+      distance: 50,
+      userLocation: computed(() => this.store.userLocation),
     };
   },
   methods: {
@@ -93,36 +93,11 @@ export default {
       this.venueSelected = []
       this.eventosFiltrados = []
     },
-    fetchGeolocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            this.userLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            };
-            console.log(this.userLocation)
-            comManager.convertGeolocation(this.userLocation.latitude, this.userLocation.longitude)
-              .then(response => {
-                this.userLocation.city = response.city;
-                this.userLocation.country = response.country;
-                this.userLocation.province = response.province;
-                console.log(this.userLocation)
-              })
-          },
-          error => {
-            console.error("Error getting geolocation: ", error);
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported by this browser.");
-      }
-    },
+
   },
   created() {
   },
   mounted() {
-    this.fetchGeolocation();
     comManager.getEvents();
     eventManager.getLocations()
   },
