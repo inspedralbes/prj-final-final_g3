@@ -67,6 +67,7 @@ export default {
       modals: {
         filter: false,
       }
+      location: {},
     };
   },
   methods: {
@@ -88,12 +89,39 @@ export default {
       this.citySelected = []
       this.venueSelected = []
       this.eventosFiltrados = []
-    }
+    }    fetchGeolocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.location = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+          comManager.convertGeolocation(this.location.latitude, this.location.longitude)
+            .then(response => {
+              const data = response.data.address;
+              this.location.city = data.city; 
+              this.location.country = data.country;
+              this.location.province = data.province;
+            })
+          },
+          error => {
+            console.error("Error getting geolocation: ", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    },
+
+
   },
   created() {
   },
   mounted() {
-    comManager.getEvents()
+    comManager.getEvents(),
+    this.fetchGeolocation();
+
     eventManager.getLocations()
   },
   computed: {
