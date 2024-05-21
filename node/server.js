@@ -12,16 +12,28 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
+const mapboxToken = process.env.MAPBOX_TOKEN;
+
 async function getCoordinates(venue) {
-  if (!venue) return;
-  const encodedPlaceName = encodeURIComponent(venue);
-  return axios
-    .get(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodedPlaceName}`
-    )
-    .then((res) => {
-      console.log(res.data[0]);
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${venue}.json`;
+  try {
+    const response = await axios.get(url, {
+      params: {
+        access_token: mapboxToken,
+      },
     });
+    const data = response.data;
+    // Extraer las coordenadas del primer resultado
+    if (data.features && data.features.length > 0) {
+      const [longitud, latitud] = data.features[0].center;
+      return { latitud, longitud };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error al obtener las coordenadas:", error);
+    return null;
+  }
 }
 
 async function getEvents() {
@@ -52,7 +64,7 @@ async function getEvents() {
     } catch (error) {
       console.error(
         "Could not retrieve data from the Ticketmaster API:",
-        error.response.status
+        error.response
       );
       return [];
     }
@@ -102,7 +114,11 @@ async function storeEvents() {
         event._embedded.venues[0].city
           ? event._embedded.venues[0].city.name
           : null;
-      const coordinates = getCoordinates(venue);
+
+      const coordinates = await getCoordinates(venue);
+      const latitude = coordinates ? coordinates.latitud : null;
+      const longitude = coordinates ? coordinates.longitud : null;
+
       const genre =
         event.classifications && event.classifications[0].genre
           ? event.classifications[0].genre.name
@@ -131,7 +147,7 @@ async function storeEvents() {
         console.log(`Event already exists, NOT INSERTED: ${name}`);
         return;
       } else {
-        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, coordinates, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, latitude,longitude, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
         const values = [
           id,
           name,
@@ -140,7 +156,8 @@ async function storeEvents() {
           time,
           venue,
           city,
-          coordinates,
+          latitude,
+          longitude,
           genre,
           subgenre,
           minPrice,
