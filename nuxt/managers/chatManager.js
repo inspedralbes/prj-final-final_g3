@@ -63,12 +63,26 @@ async function getMessages(chat_id, message_id) {
   }
 }
 
+async function getChats(user_id) {
+  try {
+    const response = await axios.get(`${url_api_mongo}/chats`,{
+      params: { 
+        user_id: user_id 
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 
 const comChat = {
   checkChat,
   getAllMessages,
   getFirst10Messages,
-  getMessages
+  getMessages,
+  getChats
 };
 
 export default comChat;

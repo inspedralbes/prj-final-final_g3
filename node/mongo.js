@@ -409,6 +409,23 @@ app.post("/chat", async (req, res) => {
     }
 });
 
+app.get("/chats", async (req, res) => {
+    try {
+        const chats = await models.chat.find({
+            $or: [
+            { user_id: req.query.user_id },
+            { contact_id: req.query.user_id }
+            ]
+        });
+        console.log("Chats:", chats);
+        res.send(chats);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+
 app.post("/message", async (req, res) => {
     const message = req.body;
     try {
@@ -466,7 +483,7 @@ app.get("/get10messages", async (req, res) => {
         const messages = await models.message.find({ 
             chat_id: req.query.chat_id,
             _id: { $lt: req.query.message_id }
-        }).limit(10).sort({ sent_at: -1 });
+        }).limit(45).sort({ sent_at: -1 });
         console.log("Messages:", messages);
         res.send(messages);
     } catch (error) {

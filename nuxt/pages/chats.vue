@@ -14,19 +14,18 @@
             </div>
         </header>
 
-        <NuxtLink to="/chat">
-        <main class="flex justify-between items-center gap-2">
-            <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
-            <div class="flex flex-col justify-center items-start gap-1 max-w-64">
-                <h2 class="font-bold">User name</h2>
-                <p class="text-sm">Ultimo mensaje o mensaje no leido que le ha enviado otro usuario a este.
-                </p>
-            </div>
-            <div class="flex flex-col justify-center items-center gap-2">
-                <p class="text-xs text-[#ADADAD]">Hace 1h</p>
-                <p class="text-sm rounded-full bg-primary size-6 flex justify-center items-center">2</p>
-            </div>
-        </main>
+        <NuxtLink to="/chat" v-for="chat in chats" :key="chat.id">
+            <main class="flex justify-between items-center gap-2">
+                <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
+                <div class="flex flex-col justify-center items-start gap-1 max-w-64">
+                    <h2 class="font-bold">test</h2>
+                    <p class="text-sm">Tienes mensajes sin leer</p>
+                </div>
+                <div class="flex flex-col justify-center items-center gap-2">
+                    <p class="text-xs text-[#ADADAD]">hace 1h</p>
+                    <p class="text-sm rounded-full bg-primary size-6 flex justify-center items-center">1</p>
+                </div>
+            </main>
         </NuxtLink>
         <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
     </section>
@@ -37,11 +36,21 @@
 import AddChat from '~/components/Icons/AddChat.vue'
 import Search from '~/components/Icons/Search.vue'
 import { useStores } from '~/stores/counter'
+import comChat from '@/managers/chatManager.js';
+
 
     export default {
         data(){
             return {
                 store: useStores(),
+                chats: []
+            }
+        },
+        methods: {
+            async getChats(){
+                const chats = await comChat.getChats(this.store.getId());
+                this.chats = chats;
+                console.log(chats);
             }
         },
         components: {
@@ -51,6 +60,7 @@ import { useStores } from '~/stores/counter'
         },
         mounted() {
             if(!this.store.getLoggedIn()) return this.$router.push('/join');
+            this.getChats();
         }
     }
 </script>
