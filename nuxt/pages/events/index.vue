@@ -148,6 +148,18 @@ export default {
       let events;
       events = await eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, this.distance)
       this.eventosFiltrados = events;
+      this.countrySelected[0] = this.userLocation.country;
+      if (this.userLocation.city) {
+        const city = this.locations.find(location => location.city === this.userLocation.city);
+        if (city) {
+          this.citySelected = [city];
+        } else {
+          const province = this.locations.find(location => location.province === this.userLocation.city);
+          if (province) {
+            this.citySelected = [province];
+          }
+        }
+      }
     }
   }
 };

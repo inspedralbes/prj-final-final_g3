@@ -76,7 +76,7 @@ async function convertGeolocation(lat, lng) {
     const response = await axios.get(url, {
       params: {
         access_token: mapboxToken,
-        language: "es", // Para obtener los resultados en español
+        language: "ca", // Para obtener los resultados en español
       },
     });
     const features = response.data.features;
@@ -103,7 +103,7 @@ async function convertGeolocation(lat, lng) {
       latitude: lat,
       longitude: lng,
       city: city,
-      province: province,
+      province: province.replace("província de ", ""),
       country: country,
     };
 
