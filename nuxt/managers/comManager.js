@@ -60,6 +60,51 @@ async function getLikeEvents() {
   }
 }
 
+async function follow(userId) {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.post(`${url_api}/users/follow/${userId}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error("Error following user:", error);
+  }
+}
+
+async function unfollow(userId) {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.delete(`${url_api}/users/unfollow/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response;
+  } catch (error) {
+    console.error("Error unfollowing user:", error);
+  }
+}
+
+async function getFollowers() {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.get(`${url_api}/users/followers`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching followers:", error);
+  }
+}
+
 async function likeAnEvent(eventID) {
   const store = useStores();
   const User = store.getUserInfo();
@@ -215,7 +260,10 @@ const comManager = {
   unlikePost,
   getEventCounterFollowers,
   getEventFollowers,
-  getUserById
+  getUserById,
+  follow,
+  unfollow,
+  getFollowers
 };
 
 export default comManager;

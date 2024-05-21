@@ -13,6 +13,7 @@ export const useStores = defineStore("counter", {
       token: "",
       nickname: "",
       birthdate: "",
+      followedUsers: []
     },
     events: [],
   }),
@@ -47,6 +48,9 @@ export const useStores = defineStore("counter", {
     setLogout() {
       this.userInfo = {};
       this.loggedIn = false;
+    },
+    setFollowedUsers(followedUsers) {
+      this.followedUsers = followedUsers;
     },
 
 
