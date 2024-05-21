@@ -201,17 +201,6 @@ async function commentPost(postID, content) {
   }
 }
 
-async function commentPost(postID, content) {
-  try {
-    await axios.post(`${url_api_mongo}/comments`, {
-      postId: postID,
-      content: content,
-    });
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
 async function getEventCounterFollowers(id) {
   try {
     const response = await axios.get(
