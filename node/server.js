@@ -14,35 +14,35 @@ const db = mysql.createConnection({
 
 const mapboxToken = process.env.MAPBOX_TOKEN;
 
-async function getCoordinates(venue) {
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${venue}.json`;
+async function getCoordinates(venue, city) {
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+    venue
+  )},${encodeURIComponent(city)}.json`;
+
   try {
     const response = await axios.get(url, {
       params: {
         access_token: mapboxToken,
-        language: "es", // Para obtener los resultados en español
+        limit: 1,
+        language: "es",
       },
     });
-    const data = response.data;
-    // Extraer las coordenadas y el país del primer resultado
-    if (data.features && data.features.length > 0) {
-      const [longitud, latitud] = data.features[0].center;
-      let country = "";
+    if (response.data.features.length > 0) {
+      const lugar = response.data.features[0];
+      const coordenadas = lugar.geometry.coordinates;
+      const pais = lugar.context.find((ctx) => ctx.id.includes("country")).text;
 
-      // Iterar sobre las características para encontrar el país
-      data.features[0].context.forEach((contextItem) => {
-        if (contextItem.id.startsWith("country")) {
-          country = contextItem.text;
-        }
-      });
-
-      return { latitud, longitud, country };
+      return {
+        latitude: coordenadas[1],
+        longitude: coordenadas[0],
+        country: pais,
+      };
     } else {
-      return null;
+      throw new Error("No matches found for the venue and city provided");
     }
   } catch (error) {
-    console.error("Error al obtener las coordenadas:", error);
-    return null;
+    console.error("Error obtaining data:", error);
+    throw error;
   }
 }
 
@@ -130,11 +130,13 @@ async function storeEvents() {
 
       let latitude = null;
       let longitude = null;
+      let country = null;
 
       if (selectQuery.length > 0) {
-        const coordinates = await getCoordinates(venue);
-        latitude = coordinates ? coordinates.latitud : null;
-        longitude = coordinates ? coordinates.longitud : null;
+        const data = await getCoordinates(venue, city);
+        latitude = data.latitude;
+        longitude = data.longitude;
+        country = data.country;
       }
 
       const genre =
@@ -163,7 +165,8 @@ async function storeEvents() {
         console.log(`Event already exists, NOT INSERTED: ${name}`);
         return;
       } else {
-        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, latitude,longitude, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, country latitude,longitude, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
           id,
           name,
@@ -172,6 +175,7 @@ async function storeEvents() {
           time,
           venue,
           city,
+          country,
           latitude,
           longitude,
           genre,

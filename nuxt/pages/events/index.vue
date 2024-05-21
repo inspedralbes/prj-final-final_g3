@@ -39,7 +39,7 @@
     </UCard>
   </USlideover>
 
-  <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
+  <!-- <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <button @click="modals.filter = !modals.filter">Obrir filtres</button>
     <section class=" flex flex-col gap-3">
@@ -47,7 +47,7 @@
         <CardEvent :event="evento" />
       </div>
     </section>
-  </main>
+  </main> -->
   <Menu />
 </template>
 
@@ -98,7 +98,6 @@ export default {
   created() {
   },
   mounted() {
-    comManager.getEvents();
     eventManager.getLocations()
   },
   computed: {
@@ -115,6 +114,9 @@ export default {
       if (this.citySelected.length === 0) {
         this.venueSelected = []
       }
+    },
+    userLocation() {
+      eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, this.distance)
     }
   }
 };

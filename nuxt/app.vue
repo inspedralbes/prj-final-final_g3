@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import comManager from '@/managers/comManager.js';
+import userManager from '@/managers/userManager.js';
 
 export default {
   data() {
@@ -25,7 +25,7 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
-            comManager.convertGeolocation(this.userLocation.latitude, this.userLocation.longitude);
+            userManager.convertGeolocation(this.userLocation.latitude, this.userLocation.longitude);
           },
           error => {
             console.error("Error getting geolocation: ", error);

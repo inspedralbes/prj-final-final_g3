@@ -24,8 +24,26 @@ async function getLocations() {
   }
 }
 
+async function getEventsByDistance(lat, lon, distance) {
+  console.log(lat, lon, distance);
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/byDistance`, {
+      lat: lat,
+      lon: lon,
+      distance: distance,
+    });
+    console.log(response.data.events);
+    // return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
 const eventManager = {
   getLocations,
+  getEventsByDistance,
 };
 
 export default eventManager;

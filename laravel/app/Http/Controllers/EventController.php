@@ -98,6 +98,43 @@ class EventController extends Controller
     return response()->json(['events' => $events], 200);
 }
 
+    public function getEventsByDistance(Request $request){
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'distance' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        // Obtener los parámetros validados
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        $distance = $request->input('distance');
+
+        // Realizar la consulta
+        try {
+            $events = Event::selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$latitude, $longitude, $latitude])
+                           ->having('distance', '<', $distance)
+                           ->whereNotNull('artist')
+                           ->orderBy('date')
+                           ->orderBy('time')
+                           ->get();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error fetching events', 'error' => $e->getMessage()], 500);
+        }
+
+        // Verificar si hay eventos
+        if ($events->isEmpty()) {
+            return response()->json(['message' => 'No events found for the specified criteria'], 404);
+        }
+
+        return response()->json(['events' => $events], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -56,6 +56,7 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/all', [EventController::class, 'indexAll']);
     Route::get('/locations', [EventController::class, 'getLocations']);
     Route::post('/byLocation', [EventController::class, 'getEventsByLocation']);
+    Route::post('/byDistance', [EventController::class, 'getEventsByDistance']);
     Route::get('/{id}', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
