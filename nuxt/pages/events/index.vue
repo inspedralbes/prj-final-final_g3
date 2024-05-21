@@ -98,7 +98,7 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
-            comManager.convertGeolocation(this.location.latitude, this.location.longitude)
+            comManager.convertGeolocation(this.userLocation.latitude, this.userLocation.longitude)
               .then(response => {
                 const data = response.data.address;
                 this.userLocation.city = data.city;
@@ -114,8 +114,6 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
-
-
   },
   created() {
   },
