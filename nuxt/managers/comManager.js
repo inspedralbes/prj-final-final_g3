@@ -212,28 +212,6 @@ async function commentPost(postID, content) {
   }
 }
 
-async function getComments(postID) {
-  try {
-    const response = await axios.get(
-      `${url_api_mongo}/comments?postId=${postID}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
-async function getComments(postID) {
-  try {
-    const response = await axios.get(
-      `${url_api_mongo}/comments?postId=${postID}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
 async function getEventCounterFollowers(id) {
   try {
     const response = await axios.get(
@@ -278,15 +256,14 @@ const comManager = {
   post,
   deletePost,
   getPosts,
-  getPostById,
   getLikePosts,
   likePost,
   unlikePost,
-  commentPost,
-  getComments,
   getEventCounterFollowers,
   getEventFollowers,
   getUserById,
+  commentPost,
+  getPostById,
 };
 
 export default comManager;
