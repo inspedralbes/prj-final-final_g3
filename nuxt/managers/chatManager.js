@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useStores } from "@/stores/counter.js";
 
 let env = import.meta.env.VITE_APP_ENV;
 let url_api;
@@ -76,13 +77,32 @@ async function getChats(user_id) {
   }
 }
 
+async function getUserChats(user_id) {
+  const store = useStores();
+
+  try {
+    const response = await axios.get(`${url_api}/getUser?user_id=${user_id}`,{
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      }
+    });
+    const obj_response = {
+      nickname: response.data.nickname,
+      avatar: response.data.avatar,
+    }
+    return obj_response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
 
 const comChat = {
   checkChat,
   getAllMessages,
   getFirst10Messages,
   getMessages,
-  getChats
+  getChats,
+  getUserChats
 };
 
 export default comChat;

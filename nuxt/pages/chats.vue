@@ -38,7 +38,6 @@ import Search from '~/components/Icons/Search.vue'
 import { useStores } from '~/stores/counter'
 import comChat from '@/managers/chatManager.js';
 
-
     export default {
         data(){
             return {
@@ -49,6 +48,15 @@ import comChat from '@/managers/chatManager.js';
         methods: {
             async getChats(){
                 const chats = await comChat.getChats(this.store.getId());
+                chats.forEach(async chat => {
+                    var userId = 0;
+                    if (chat.user_id != this.store.getId()) {
+                        userId = chat.user_id;
+                    } else {
+                        userId = chat.contact_id;
+                    }
+                    chats.
+                });
                 this.chats = chats;
                 console.log(chats);
             }
