@@ -53,7 +53,9 @@ Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
     Route::get('/', [EventController::class, 'index']);
+    Route::get('/all', [EventController::class, 'indexAll']);
     Route::get('/locations', [EventController::class, 'getLocations']);
+    Route::post('/byLocation', [EventController::class, 'getEventsByLocation']);
     Route::get('/{id}', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);

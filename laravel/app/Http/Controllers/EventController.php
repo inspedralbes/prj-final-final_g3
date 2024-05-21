@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\event;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
@@ -18,6 +19,20 @@ class EventController extends Controller
         $events = Event::whereNotNull('artist')
                        ->orderBy('date')
                        ->orderBy('time')
+                       ->paginate(20);
+
+        if ($events->isEmpty()) {
+            return response()->json(['message' => 'No events found'], 404);
+        }
+
+        return response()->json(['events' => $events], 200);
+    }
+    
+    public function indexAll()
+    {
+        $events = Event::whereNotNull('artist')
+                       ->orderBy('date')
+                       ->orderBy('time')
                        ->get();
     
         if ($events->isEmpty()) {
@@ -26,7 +41,62 @@ class EventController extends Controller
     
         return response()->json(['events' => $events], 200);
     }
-    
+
+    public function getEventsByLocation(Request $request)
+{
+    // Validar los datos de entrada
+    $validator = Validator::make($request->all(), [
+        'cities' => 'required|array|min:1',
+        'cities.*.city' => 'required|string',
+        'cities.*.venues' => 'nullable|array|min:1',
+        'cities.*.venues.*' => 'required|string|distinct',
+        'venues' => 'nullable|array',
+        'venues.*' => 'nullable|string|distinct',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 400);
+    }
+
+    // Obtener los parámetros validados
+    $cities = $request->input('cities');
+    $requestVenues = $request->input('venues', []);
+
+    // Extraer las ciudades y los venues de las ciudades
+    $cityNames = [];
+    $venues = [];
+
+    foreach ($cities as $city) {
+        $cityNames[] = $city['city'];
+        if (empty($requestVenues) && isset($city['venues'])) {
+            $venues = array_merge($venues, $city['venues']);
+        }
+    }
+
+    // Si se especificaron venues en el request, usamos esos, si no, usamos los extraídos de las ciudades
+    if (!empty($requestVenues)) {
+        $venues = $requestVenues;
+    }
+
+    // Realizar la consulta
+    try {
+        $events = Event::whereIn('city', $cityNames)
+                       ->whereIn('venue', $venues)
+                       ->whereNotNull('artist')
+                       ->orderBy('date')
+                       ->orderBy('time')
+                       ->get();
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error fetching events', 'error' => $e->getMessage()], 500);
+    }
+
+    // Verificar si hay eventos
+    if ($events->isEmpty()) {
+        return response()->json(['message' => 'No events found for the specified criteria'], 404);
+    }
+
+    return response()->json(['events' => $events], 200);
+}
 
     /**
      * Show the form for creating a new resource.

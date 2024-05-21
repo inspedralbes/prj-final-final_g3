@@ -1,5 +1,5 @@
 <template>
-    <main class='relative flex flex-col w-screen h-screen gap-10 mx-auto bg-background text-white'>
+    <main class='relative flex flex-col w-screen h-screen gap-10 mx-auto bg-[#212121] text-white'>
         <header class='py-6 w-[90vw] mx-auto'>
             <NuxtLink to='/' class='flex items-center gap-2'>
                 <Logo class="text-white size-16" />

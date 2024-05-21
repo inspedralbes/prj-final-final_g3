@@ -16,7 +16,7 @@
             <p class='text-white text-center text-pretty'>Connecta la teva passió per la música amb noves amistats.
                 Descobreix concerts èpics i companys de concerts inoblidables amb la nostra aplicació.</p>
             <NuxtLink to="/events"
-                class='px-4 py-2 font-bold text-black bg-white rounded-full hover:bg-primary transition-all duration-300 hover:-translate-y-1'>
+                class='px-4 py-2 font-bold text-black bg-white rounded-full hover:bg-[#FF8A1E] transition-all duration-300 hover:-translate-y-1'>
                 Veure concerts
             </NuxtLink>
         </section>
@@ -29,8 +29,12 @@ import { useStores } from '~/stores/counter';
 export default {
     data() {
         return {
-            store: useStores(), 
+            store: useStores(),
         }
     },
+    created() {
+    },
+    mounted() {
+    }
 }
 </script>
