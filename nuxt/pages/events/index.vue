@@ -111,8 +111,11 @@ export default {
         venues: this.venueSelected,
         latitude: this.userLocation.latitude,
         longitude: this.userLocation.longitude,
-        distance: this.distance,
       }
+      if (data.cities.length === 0 && data.venues.length === 0) {
+        data.distance = this.distance
+      }
+
       eventManager.getFilteredEvents(data)
         .then((response) => {
           this.modals.filter = false
