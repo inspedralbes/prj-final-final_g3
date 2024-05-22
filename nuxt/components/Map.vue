@@ -1,22 +1,126 @@
 <template>
-    <div class="w-full h-[50vh]">
-        <LMap ref="map" :zoom="zoom" :max-zoom="18" :center="[47.21322, -1.559482]" @ready="mapInitialized">
+    <div>
+        <LMap ref="map" :zoom="zoom" :max-zoom="18" :center="[userLocation.latitude, userLocation.longitude]"
+            @ready="mapInitialized" @click="handleMapClick">
             <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
                 layer-type="base" name="OpenStreetMap" />
+            <LMarker
+                :lat-lng="[newLocation.latitude || userLocation.latitude, newLocation.longitude || userLocation.longitude]"
+                :icon="getMarkerIcon(0)">
+            </LMarker>
+            <LMarker v-for="(venue, index) in venues" :key="index" :lat-lng="[venue.latitude, venue.longitude]"
+                :icon="getMarkerIcon(1)">
+                <LPopup :content="getPopupContent(venue)">
+                </LPopup>
+            </LMarker>
+            <l-circle
+                :lat-lng="[newLocation.latitude || userLocation.latitude, newLocation.longitude || userLocation.longitude]"
+                :radius="(distance * 1000)" color="#3388ff" />
         </LMap>
     </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-const zoom = ref(6)
+<script>
+import { ref, computed } from 'vue';
+import { useStores } from '@/stores/counter.js';
 
-const map = ref(null)
+export default {
+    data() {
+        return {
+            store: useStores(),
+            zoom: 18,
+            map: ref(null),
+            userLocation: computed(() => this.store.userLocation),
+            newLocation: {},
+            locations: computed(() => this.store.locations),
+            venues: [],
+            distance: computed(() => this.store.distance),
+            circleRadius: 0,
+            circle: null,
+            greenIcon: new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            }),
+            orangeIcon: new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            }),
+            blueIcon: new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            }),
+        };
+    },
+    mounted() {
+        this.venues = this.getVenues();
+    },
+    methods: {
+        mapInitialized() {
 
-// When the map is ready
-const mapInitialized = () => {
-    console.log('Map is ready')
-    console.log(map.value.maxZoom)
+        },
+        handleMapClick(event) {
+            const latlng = event.latlng;
+            console.log('Map clicked at', latlng);
+            this.newLocation = {
+                latitude: latlng.lat,
+                longitude: latlng.lng
+            }
+        },
+        getVenues() {
+            const venueMap = {};
+
+            this.locations.forEach(location => {
+                location.cities.forEach(city => {
+                    city.venues.forEach(venue => {
+                        const key = `${venue.latitude},${venue.longitude}`;
+                        if (!venueMap[key]) {
+                            venueMap[key] = [];
+                        }
+                        venueMap[key].push(venue.venue);
+                    });
+                });
+            });
+
+            const venues = [];
+            for (const key in venueMap) {
+                if (venueMap.hasOwnProperty(key)) {
+                    const [latitude, longitude] = key.split(',');
+                    venues.push({
+                        latitude: parseFloat(latitude),
+                        longitude: parseFloat(longitude),
+                        names: venueMap[key]
+                    });
+                }
+            }
+            return venues;
+        },
+        getMarkerIcon(num) {
+            switch (num) {
+                case 0:
+                    return this.orangeIcon;
+                case 1:
+                    return this.blueIcon;
+            }
+        },
+        getPopupContent(venue) {
+            return venue.names.join('<br>');
+        }
+    },
+    watch: {
+
+    }
 }
 </script>

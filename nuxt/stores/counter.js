@@ -13,16 +13,17 @@ export const useStores = defineStore("counter", {
       token: "",
       nickname: "",
       birthdate: "",
-      followedUsers: []
+      followedUsers: [],
     },
     events: [],
     locations: [],
+    distance: 50,
     userLocation: {},
     individualPostInfo: {},
   }),
   persist: {
     storage: persistedState.localStorage,
-    paths: ["userInfo", "loggedIn", "events", "locations"],
+    paths: ["userInfo", "loggedIn", "events", "locations", "userLocation"],
   },
 
   actions: {

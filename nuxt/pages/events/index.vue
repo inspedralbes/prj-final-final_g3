@@ -1,8 +1,7 @@
 <template>
-  <USlideover v-model="modals.filter" side="left">
-    <button @click="modals.filter = !modals.filter" class="text-black">Tanca</button>
-    <button @click="modals.map = !modals.map" class="text-black">Mapa</button>
-    <UCard class="flex flex-col flex-1"
+  <USlideover v-model="modals.filter" side="left" class="scroll-auto">
+    <UTabs v-model="selectedFilter" :items="[{ label: ' Filtres' }, { label: 'Mapa' }]" class="m-2"></UTabs>
+    <UCard v-if="selectedFilter === 0" class="flex flex-col flex-1"
       :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
         <div class="flex items-center justify-between">
@@ -13,8 +12,6 @@
             @click="modals.filter = !modals.filter" />
         </div>
       </template>
-      <UDivider :label="`Distancia (${distance}km)`" class="mb-4" />
-      <URange color="orange" :max="1500" v-model="distance"></URange>
       <div>
         <UDivider label="Països" class="my-4" />
         <USelectMenu searchable searchable-placeholder="Busca el teu país..." option-attribute="country" color="gray"
@@ -51,23 +48,33 @@
         </div>
       </template>
     </UCard>
-  </USlideover>
-
-  <UModal v-model="modals.map" prevent-close fullscreen>
-    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+    <UCard v-if="selectedFilter === 1" class="flex flex-col flex-1"
+      :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
         <div class="flex items-center justify-between">
           <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
             Mapa
           </h3>
           <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-            @click="modals.map = false" />
+            @click="modals.filter = !modals.filter" />
         </div>
       </template>
-
-      <Map />
+      <UDivider :label="`Distancia (${distance}km)`" class="mb-4" />
+      <URange color="orange" min="1" max="1500" v-model="distance"></URange>
+      <UInput type="number" color="orange" size="md" icon="i-heroicons-globe-alt" v-model="distance" min="1" max="1500"
+        class="mt-2" />
+      <UDivider :label="`Mapa`" class="my-4" />
+      <Map class="h-3/4 w-full rounded-lg overflow-hidden" />
+      <template #footer>
+        <div class="flex justify-end">
+          <!-- <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton> -->
+          <UButton @click="filterEvents" label="Guardar filtres"></UButton>
+        </div>
+      </template>
     </UCard>
-  </UModal>
+  </USlideover>
+
+
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <button @click="modals.filter = !modals.filter">Obrir filtres</button>
@@ -102,6 +109,7 @@ export default {
       },
       distance: 50,
       userLocation: computed(() => this.store.userLocation),
+      selectedFilter: 0,
     };
   },
   async mounted() {
@@ -123,17 +131,27 @@ export default {
       this.venueSelected = this.venueSelected.filter(v => v !== venue)
     },
     filterEvents() {
-      const data = {
-        countries: this.countrySelected.map(c => c.country),
-        cities: this.citySelected.map(c => c.city),
-        venues: this.venueSelected,
-        latitude: this.userLocation.latitude,
-        longitude: this.userLocation.longitude,
+      let data = {
+        countries: null,
+        cities: null,
+        venues: null,
+        latitude: null,
+        longitude: null,
+        distance: null
       }
-      if (data.cities.length === 0 && data.venues.length === 0) {
-        data.distance = this.distance
+      if (this.selectedFilter === 0) {
+        data = {
+          countries: this.countrySelected.map(c => c.country),
+          cities: this.citySelected.map(c => c.city),
+          venues: this.venueSelected,
+        }
+      } else {
+        data = {
+          latitude: this.userLocation.latitude,
+          longitude: this.userLocation.longitude,
+          distance: this.distance
+        }
       }
-
       eventManager.getFilteredEvents(data)
         .then((response) => {
           this.modals.filter = false
@@ -159,7 +177,9 @@ export default {
     getVenues() {
       let venues = []
       this.citySelected.forEach(city => {
-        venues.push(...city.venues)
+        city.venues.forEach(venue => {
+          venues.push(venue.venue)
+        });
       });
       return venues
     }
@@ -170,6 +190,9 @@ export default {
         this.venueSelected = []
       }
     },
+    distance(newValue) {
+      this.store.distance = newValue;
+    }
   }
 };
 </script>

@@ -46,7 +46,7 @@ class EventController extends Controller
 {
     // Validar los datos de entrada
     $validator = Validator::make($request->all(), [
-        'countries' => 'required|array|min:1',
+        'countries' => 'nullable|array',
         'cities' => 'nullable|array',
         'cities.*.city' => 'nullable|string',
         'cities.*.venues' => 'nullable|array',
@@ -144,38 +144,37 @@ class EventController extends Controller
     }
 
     public function getLocations()
-{
-    $countries = Event::select('country')->distinct()->get();
-    $locations = [];
+    {
+        $countries = Event::select('country')->distinct()->get();
+        $locations = [];
 
-    foreach ($countries as $country) {
-        $cities = Event::where('country', $country->country)->select('city')->distinct()->get();
-        $countryCities = [];
+        foreach ($countries as $country) {
+            $cities = Event::where('country', $country->country)->select('city')->distinct()->get();
+            $countryCities = [];
 
-        foreach ($cities as $city) {
-            $venues = Event::where('country', $country->country)
-                           ->where('city', $city->city)
-                           ->select('venue')
-                           ->distinct()
-                           ->pluck('venue')
-                           ->toArray();
+            foreach ($cities as $city) {
+                $venues = Event::where('country', $country->country)
+                               ->where('city', $city->city)
+                               ->select('venue', 'latitude', 'longitude')
+                               ->distinct()
+                               ->get();
 
-            // Agregar las ciudades y sus venues
-            $countryCities[] = [
-                'city' => $city->city,
-                'venues' => $venues
+                // Agregar las ciudades y sus venues
+                $countryCities[] = [
+                    'city' => $city->city,
+                    'venues' => $venues
+                ];
+            }
+
+            // Agregar el país y sus ciudades al array de ubicaciones
+            $locations[] = [
+                'country' => $country->country,
+                'cities' => $countryCities
             ];
         }
 
-        // Agregar el país y sus ciudades al array de ubicaciones
-        $locations[] = [
-            'country' => $country->country,
-            'cities' => $countryCities
-        ];
+        return response()->json(['locations' => $locations], 200);
     }
-
-    return response()->json(['locations' => $locations], 200);
-}
 
     
 
