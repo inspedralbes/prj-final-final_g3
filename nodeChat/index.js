@@ -18,17 +18,21 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
+  console.log("Usuario conectado");
   socket.on("message", (message) => {
     manager
       .insertMessage(message)
       .then((response) => {
-        console.log(response);
-        socket.emit("message", response);
+        io.to(response.chat_id).emit("message", response);
       })
       .catch((error) => {
         console.error(error);
       });
   });
+
+  socket.on("joinChat" , (chatId) => {
+    socket.join(chatId);    
+  })
 });
 
 const PORT = process.env.PORT || 8080;

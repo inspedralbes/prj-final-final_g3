@@ -371,22 +371,18 @@ app.delete("/images", async (req, res) => {
 });
 
 app.post("/chat", async (req, res) => {
-    const chat = req.body;
-    console.log("Chat:", req.body);
     try {
         let chatExists = await models.chat.findOne({
             $or: [
-            { user_id: req.body.user_id, contact_id: req.body.contact_id },
-            { user_id: req.body.contact_id, contact_id: req.body.user_id }
+                { user_id: req.body.user_id, contact_id: req.body.contact_id },
+                { user_id: req.body.contact_id, contact_id: req.body.user_id }
             ]
         });
-
-        console.log("ChatExists:", chatExists);
 
         if (chatExists != null) {
             let messages;
             try {
-                messages = await models.message.find({ chat_id: chatExists._id });
+                messages = models.message.find({ chat_id: chatExists._id }).limit(45).sort({ sent_at: -1 });
                 return res.json({
                     chatExists: chatExists,
                     messages: messages
@@ -394,14 +390,6 @@ app.post("/chat", async (req, res) => {
             } catch (error) {
                 res.json({ chatExists: chatExists });
             }
-        } else {
-            var createdChat = {
-                name: `${chat.user_id}` + `-` + `${chat.contact_id}`,
-                user_id: chat.user_id,
-                contact_id: chat.contact_id,
-                accepted: false,
-            };
-            res.send(await models.chat.create(createdChat));
         }
  
     } catch (error) {
@@ -454,7 +442,7 @@ app.post("/message", async (req, res) => {
         }
         
         var createdMessage = {
-            chat_id: message.chat_id,
+            chat_id: chatId,
             user_id: message.user_id,
             content: message.content,
             sent_at: message.sent_at,
@@ -469,7 +457,7 @@ app.post("/message", async (req, res) => {
 
 app.get("/messages", async (req, res) => {
     try {
-        const messages = await models.message.find({ chat_id: req.query.chat_id }).limit(10).sort({ sent_at: -1 });
+        const messages = await models.message.find({ chat_id: req.query.chat_id }).limit(45).sort({ sent_at: -1 });
         console.log("Messages:", messages);
         res.send(messages);
     } catch (error) {

@@ -27,11 +27,11 @@
             </div>
         </header>
 
-        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
+        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto" @scroll="handleScroll">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
                 <div v-for="msg in messages" :key="msg.id"
-                    :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId() }">
+                    :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
                     <p>{{ msg.content }}</p>
                 </div>
             </div>
@@ -43,10 +43,10 @@
                     <Plus class="size-5 border-white border-2 rounded-full" />
                 </button>
                 <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
-                    placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage()" v-model="message">
+                    placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage" v-model="message">
             </div>
-            <button class="bg-primary rounded-full p-[6px]">
-                <Send class="size-5" @click="loadMore()" />
+            <button class="bg-primary rounded-full p-[6px]" @click="sendMessage">
+                <Send class="size-5" />
             </button>
         </footer>
     </section>
@@ -78,12 +78,12 @@ export default {
             pagination: {},
             contact: {},
             chat_id: 0,
-
+            loadingMore: false, // Nueva variable para evitar múltiples solicitudes simultáneas
         }
     },
     methods: {
         sendMessage() {
-            this.message = {
+            const newMessage = {
                 chat_id: this.chat_id,
                 nameChat: `${this.store.getId()}-${this.contact.id}`,
                 user_id: this.store.getId(),
@@ -91,36 +91,50 @@ export default {
                 content: this.message
             }
 
-            socket.emit('message', this.message);
+            socket.emit('message', newMessage);
             this.message = '';
+            this.scrollToBottom();
         },
         async fetchMessages() {
             const result = await comChat.getFirst10Messages(this.chat_id);
             this.messages = result.reverse();
-            console.log(result);
-            
+            this.scrollToBottom();
         },
+        async loadMore() {
+            if (this.loadingMore) return; // Evitar múltiples solicitudes simultáneas
+            this.loadingMore = true;
+            const container = this.$refs.messageContainer;
+            const currentScrollHeight = container.scrollHeight;
 
-        async loadMore(){
             const id = this.messages[0]._id;
             const result = await comChat.getMessages(this.chat_id, id);
             this.messages.unshift(...result.reverse());
-            console.log(result);
-        }
-
-    },
-    mounted() {
-        if (!this.store.getLoggedIn()) return this.$router.push('/join');
-
-        socket.on('message', (message) => {
-            console.log(this.messages);
-            this.messages.push(message);
-            this.chat_id = message.chat_id;
+            this.loadingMore = false;
+            this.$nextTick(() => {
+                const newScrollHeight = container.scrollHeight;
+                container.scrollTop += (newScrollHeight - currentScrollHeight);
+            });
+        },
+        scrollToBottom() {
             this.$nextTick(() => {
                 if (this.$refs.messageContainer) {
                     this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
                 }
             });
+        },
+        handleScroll() {
+            if (this.$refs.messageContainer.scrollTop === 0) {
+                this.loadMore();
+            }
+        }
+    },
+    mounted() {
+        if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
+        socket.on('message', (message) => {
+            this.messages.push(message);
+            this.chat_id = message.chat_id;
+            this.scrollToBottom();
         });
 
         this.contact = this.store.getChatUser();
@@ -129,9 +143,6 @@ export default {
             this.chat_id = res.chatExists._id;
             this.fetchMessages();
         });
-
     },
-
-
 }
 </script>

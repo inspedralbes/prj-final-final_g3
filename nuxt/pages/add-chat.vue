@@ -65,6 +65,7 @@ export default {
             }
         },
         goToChat(user) {
+            console.log(user);
             this.store.setChatUser(user);
             this.$router.push('/chat');
         },
