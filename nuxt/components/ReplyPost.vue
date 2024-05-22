@@ -6,9 +6,9 @@
                     <IconsCross class="size-6" />
                 </button>
                 <div class="flex items-center gap-3">
-                    <button class="rounded-full p-1 bg-[#818181]">
+                    <!-- <button class="rounded-full p-1 bg-[#818181]">
                         <IconsAddImage class="size-5" />
-                    </button>
+                    </button> -->
                     <button @click="sendReply"
                         class="bg-primary rounded-full px-4 py-1 font-semibold text-sm hover:bg-primaryDark transition duration-200">Reply</button>
                 </div>
