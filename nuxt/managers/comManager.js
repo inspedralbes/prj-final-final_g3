@@ -145,13 +145,14 @@ async function searchUsers(param) {
   }
 }
 
-async function post(content) {
+async function post(content, link) {
   const store = useStores();
   const userID = store.getId();
   try {
     await axios.post(`${url_api_mongo}/posts`, {
       content: content,
       userId: userID,
+      image: link,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -236,6 +237,15 @@ async function commentPost(postID, content) {
   }
 }
 
+async function getComments(postID){
+  try {
+    const response = await axios.get(`http://localhost:8086/comments?postId=${postID}`)
+    return response.data
+} catch (error) {
+    console.error(error)
+}
+}
+
 async function getEventCounterFollowers(id) {
   try {
     const response = await axios.get(
@@ -289,6 +299,7 @@ const comManager = {
   unfollow,
   getFollowers,
   commentPost,
+  getComments,
   getPostById,
 };
 
