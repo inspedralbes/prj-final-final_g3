@@ -64,10 +64,10 @@
       <UInput type="number" color="orange" size="md" icon="i-heroicons-globe-alt" v-model="distance" min="1" max="1500"
         class="mt-2" />
       <UDivider :label="`Mapa`" class="my-4" />
-      <Map class="h-3/4 w-full rounded-lg overflow-hidden" />
+      <Map class="h-3/4 w-full rounded-lg overflow-hidden" @location-selected="newLocation = $event" />
       <template #footer>
-        <div class="flex justify-end">
-          <!-- <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton> -->
+        <div class="flex justify-between">
+          <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton>
           <UButton @click="filterEvents" label="Guardar filtres"></UButton>
         </div>
       </template>
@@ -109,6 +109,7 @@ export default {
       },
       distance: 50,
       userLocation: computed(() => this.store.userLocation),
+      newLocation: {},
       selectedFilter: 0,
     };
   },
@@ -145,17 +146,23 @@ export default {
           cities: this.citySelected.map(c => c.city),
           venues: this.venueSelected,
         }
+
+        eventManager.getFilteredEvents(data)
+          .then((response) => {
+            this.modals.filter = false
+          })
       } else {
         data = {
-          latitude: this.userLocation.latitude,
-          longitude: this.userLocation.longitude,
+          latitude: this.newLocation.latitude || this.userLocation.latitude,
+          longitude: this.newLocation.longitude || this.userLocation.longitude,
           distance: this.distance
         }
+
+        eventManager.getEventsByDistance(data.latitude, data.longitude, data.distance)
+          .then((response) => {
+            this.modals.filter = false
+          })
       }
-      eventManager.getFilteredEvents(data)
-        .then((response) => {
-          this.modals.filter = false
-        })
     },
     resetFilters() {
       this.countrySelected = []
@@ -163,6 +170,8 @@ export default {
       this.venueSelected = []
       this.eventosFiltrados = []
       this.distance = 50;
+      this.newLocation = {}
+      eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, this.distance)
     },
 
   },
@@ -192,7 +201,7 @@ export default {
     },
     distance(newValue) {
       this.store.distance = newValue;
-    }
+    },
   }
 };
 </script>

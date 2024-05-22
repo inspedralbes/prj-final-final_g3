@@ -47,9 +47,6 @@ async function getFilteredEvents(data) {
       countries: data.countries,
       cities: data.cities,
       venues: data.venues,
-      latitude: data.latitude,
-      longitude: data.longitude,
-      distance: data.distance,
     });
     console.log(response.data.events);
     store.setEvents(response.data.events);

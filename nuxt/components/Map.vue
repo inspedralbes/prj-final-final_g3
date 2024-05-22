@@ -73,11 +73,12 @@ export default {
         },
         handleMapClick(event) {
             const latlng = event.latlng;
-            console.log('Map clicked at', latlng);
             this.newLocation = {
                 latitude: latlng.lat,
                 longitude: latlng.lng
             }
+
+            this.$emit('location-selected', this.newLocation)
         },
         getVenues() {
             const venueMap = {};

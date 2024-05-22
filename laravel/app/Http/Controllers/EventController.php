@@ -43,61 +43,43 @@ class EventController extends Controller
     }
 
     public function getEventsByLocation(Request $request)
-{
-    // Validar los datos de entrada
-    $validator = Validator::make($request->all(), [
-        'countries' => 'nullable|array',
-        'cities' => 'nullable|array',
-        'cities.*.city' => 'nullable|string',
-        'cities.*.venues' => 'nullable|array',
-        'cities.*.venues.*' => 'nullable|string|distinct',
-        'venues' => 'nullable|array',
-        'venues.*' => 'nullable|string|distinct',
-        'latitude' => 'nullable|numeric',
-        'longitude' => 'nullable|numeric',
-        'distance' => 'nullable|numeric',
-    ]);
+    {
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'countries' => 'required|array',
+            'cities' => 'required|array',
+            'venues' => 'required|array',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+        
+        // Obtener los parámetros validados
+        $countries = $request->input('countries');
+        $cities = $request->input('cities');
+        $venues = $request->input('venues');
 
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 400);
+        // Realizar la consulta
+        try {
+            $events = Event::whereIn('country', $countries)
+                           ->whereIn('city', $cities)
+                           ->whereIn('venue', $venues)
+                           ->whereNotNull('artist')
+                           ->orderBy('date')
+                           ->orderBy('time')
+                           ->get();
+
+            if ($events->isEmpty()) {
+                return response()->json(['message' => 'No events found for the specified criteria'], 404);
+            }
+
+            return response()->json(['events' => $events], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error fetching events', 'error' => $e->getMessage()], 500);
+        }
     }
-
-    // Obtener los parámetros validados
-    $countries = $request->input('countries');
-    $cities = $request->input('cities');
-    $venues = $request->input('venues');
-    $latitude = $request->input('latitude');
-    $longitude = $request->input('longitude');
-    $distance = $request->input('distance');
-
-    // Realizar la consulta
-    try {
-        $events = Event::whereNotNull('artist')
-                       ->whereIn('country', $countries)
-                       ->where(function ($query) use ($cities) {
-                           foreach ($cities as $city) {
-                               $query->orWhere(function ($query) use ($city) {
-                                   $query->where('city', $city['city'])
-                                         ->whereIn('venue', $city['venues']);
-                               });
-                           }
-                       })
-                       ->when($venues, function ($query, $venues) {
-                           $query->whereIn('venue', $venues);
-                       })
-                       ->when($latitude && $longitude && $distance, function ($query) use ($latitude, $longitude, $distance) {
-                           $query->selectRaw('*, ( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ) ) AS distance', [$latitude, $longitude, $latitude])
-                                 ->having('distance', '<', $distance);
-                       })
-                       ->orderBy('date')
-                       ->orderBy('time')
-                       ->get();
-
-        return response()->json(['events' => $events], 200);
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'Error fetching events', 'error' => $e->getMessage()], 500);
-    }
-}
+    
+    
     public function getEventsByDistance(Request $request){
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
