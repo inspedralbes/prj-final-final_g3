@@ -202,6 +202,15 @@ async function commentPost(postID, content) {
   }
 }
 
+async function getComments(postID){
+  try {
+    const response = await axios.get(`http://localhost:8086/comments?postId=${postID}`)
+    return response.data
+} catch (error) {
+    console.error(error)
+}
+}
+
 async function getEventCounterFollowers(id) {
   try {
     const response = await axios.get(
@@ -253,6 +262,7 @@ const comManager = {
   getEventFollowers,
   getUserById,
   commentPost,
+  getComments,
   getPostById,
 };
 

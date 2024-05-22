@@ -58,7 +58,7 @@
             <article v-for="(comment, index) in comments" :key="index" class="my-10">
                 <header class="flex gap-3 items-center mb-3">
                     <img class="size-12 rounded-full object-cover"
-                        src="https://prod.assets.earlygamecdn.com/images/MultiVersus-Finn.jpg?transform=banner2x_webp"
+                        src="https://image.europafm.com/clipping/cmsimages01/2022/08/15/4BFF7A00-9A76-4D79-8271-B056A41AA0BA/borja-escalona-video-grabado-vigo_104.jpg?crop=183,183,x45,y0&width=1200&height=1200&optimize=low&format=webply"
                         alt="">
                     <div>
                         <h2 class="font-bold">User name</h2>

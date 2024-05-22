@@ -1,5 +1,5 @@
 <template>
-    <section ref="mySection">
+    <section class="w-[90%] mx-auto overflow-hidden" ref="mySection">
         <transition-group name="fade" tag="div" class="relative">
             <article v-for="post in posts" :key="post._id" class="flex flex-col gap-2 bg-black rounded mb-4">
                 <header class=" flex justify-between items-center py-2 px-3">
