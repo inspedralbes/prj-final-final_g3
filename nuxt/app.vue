@@ -9,13 +9,13 @@ import eventManager from './managers/eventManager.js';
 export default {
   data() {
     return {
-
+      userLocation: {},
     }
   },
   created() {
   },
   mounted() {
-    this.fetchGeolocation()
+    this.fetchGeolocation();
     eventManager.getLocations()
   },
   methods: {
@@ -37,7 +37,15 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
-  }
+  },
+  watch: {
+    userLocation: {
+      handler: function (val) {
+        eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50)
+      },
+      deep: true,
+    },
+  },
 }
 </script>
 

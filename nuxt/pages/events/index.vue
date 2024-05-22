@@ -43,7 +43,7 @@
         </div>
       </div>
       <template #footer>
-        <div class="flex justify-between">
+        <div class="flex justify-end">
           <!-- <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton> -->
           <UButton @click="filterEvents" label="Guardar filtres"></UButton>
         </div>
@@ -55,7 +55,7 @@
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <button @click="modals.filter = !modals.filter">Obrir filtres</button>
     <section class=" flex flex-col gap-3">
-      <div v-for="evento in eventosFiltrados.length > 0 ? eventosFiltrados : eventos" :key="evento.id">
+      <div v-for="evento in eventosFiltrados" :key="evento.id">
         <CardEvent :event="evento" />
       </div>
     </section>
@@ -65,14 +65,15 @@
 
 <script>
 import { useStores } from '@/stores/counter.js'
+import comManager from '@/managers/comManager.js';
 import eventManager from '@/managers/eventManager.js';
 
 export default {
   data() {
     return {
       store: useStores(),
-      eventos: computed(() => this.store.events),
-      eventosFiltrados: [],
+      // eventos: computed(() => this.store.events),
+      eventosFiltrados: computed(() => this.store.events),
       eventosLike: [],
       locations: computed(() => this.store.locations),
       countrySelected: [],
@@ -84,6 +85,9 @@ export default {
       distance: 50,
       userLocation: computed(() => this.store.userLocation),
     };
+  },
+  async mounted() {
+
   },
   methods: {
     deleteCountry(country) {
@@ -111,7 +115,6 @@ export default {
       }
       eventManager.getFilteredEvents(data)
         .then((response) => {
-          this.eventosFiltrados = response;
           this.modals.filter = false
         })
     },
@@ -127,7 +130,9 @@ export default {
   created() {
   },
   mounted() {
-
+    if (!this.userLocation) {
+      comManager.getEvents()
+    }
   },
   computed: {
     getVenues() {
@@ -144,23 +149,6 @@ export default {
         this.venueSelected = []
       }
     },
-    async userLocation() {
-      let events;
-      events = await eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, this.distance)
-      this.eventosFiltrados = events;
-      // this.countrySelected[0] = this.userLocation.country;
-      // if (this.userLocation.city) {
-      //   const city = this.locations.find(location => location.city === this.userLocation.city);
-      //   if (city) {
-      //     this.citySelected = [city];
-      //   } else {
-      //     const province = this.locations.find(location => location.province === this.userLocation.city);
-      //     if (province) {
-      //       this.citySelected = [province];
-      //     }
-      //   }
-      // }
-    }
   }
 };
 </script>

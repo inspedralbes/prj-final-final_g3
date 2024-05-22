@@ -32,7 +32,8 @@ async function getEventsByDistance(lat, lon, distance) {
       longitude: lon,
       distance: distance,
     });
-    return response.data.events;
+    console.log(response.data.events);
+    store.setEvents(response.data.events);
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
@@ -50,8 +51,9 @@ async function getFilteredEvents(data) {
       longitude: data.longitude,
       distance: data.distance,
     });
-    // console.log(response.data.events);
-    return response.data.events;
+    console.log(response.data.events);
+    store.setEvents(response.data.events);
+    // return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
