@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   '@pinia/nuxt', 
   // '@nuxtjs/tailwindcss',
   '@pinia-plugin-persistedstate/nuxt', 
-  "@nuxt/ui"
+  "@nuxt/ui",
+  'nuxt3-leaflet'
   ],
   runtimeConfig:{
     public:{
@@ -26,5 +27,5 @@ export default defineNuxtConfig({
   },
   colorMode: {
     preference: 'light'
-  }
+  },
 })

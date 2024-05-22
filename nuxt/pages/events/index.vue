@@ -1,5 +1,7 @@
 <template>
   <USlideover v-model="modals.filter" side="left">
+    <button @click="modals.filter = !modals.filter" class="text-black">Tanca</button>
+    <button @click="modals.map = !modals.map" class="text-black">Mapa</button>
     <UCard class="flex flex-col flex-1"
       :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
       <template #header>
@@ -51,6 +53,21 @@
     </UCard>
   </USlideover>
 
+  <UModal v-model="modals.map" prevent-close fullscreen>
+    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+            Mapa
+          </h3>
+          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+            @click="modals.map = false" />
+        </div>
+      </template>
+
+      <Map />
+    </UCard>
+  </UModal>
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <button @click="modals.filter = !modals.filter">Obrir filtres</button>
@@ -81,6 +98,7 @@ export default {
       venueSelected: [],
       modals: {
         filter: false,
+        map: false,
       },
       distance: 50,
       userLocation: computed(() => this.store.userLocation),
