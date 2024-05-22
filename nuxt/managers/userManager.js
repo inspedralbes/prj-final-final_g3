@@ -76,7 +76,7 @@ async function convertGeolocation(lat, lng) {
     const response = await axios.get(url, {
       params: {
         access_token: mapboxToken,
-        language: "ca", // Para obtener los resultados en español
+        language: "es", // Para obtener los resultados en español
       },
     });
     const features = response.data.features;

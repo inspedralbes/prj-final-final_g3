@@ -4,7 +4,7 @@ import Backend from "i18next-fs-backend";
 i18next
   .use(Backend)
   .init({
-    lng: "ca", // Idioma por defecto
+    lng: "es", // Idioma por defecto
     fallbackLng: "en", // Idioma de respaldo
     backend: {
       loadPath: "./locales/{{lng}}/translation.json",
