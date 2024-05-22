@@ -1,5 +1,5 @@
 <template>
-    <section ref="mySection">
+    <section class="w-[90%] mx-auto overflow-hidden" ref="mySection">
         <transition-group name="fade" tag="div" class="relative">
             <article v-for="post in posts" :key="post._id" class="flex flex-col gap-2 bg-black rounded mb-4">
                 <header class=" flex justify-between items-center py-2 px-3">
@@ -22,13 +22,15 @@
 
                 <NuxtLink :to="`/post/${post._id}`">
                     <p class="px-3 text-sm">{{ post.content }}</p>
-                    <img class="px-3 rounded"
-                        src="https://h2.gifposter.com/bingImages/OceanDrive_EN-US3763740504_1920x1080.jpg" 
-                        alt="">
                 </NuxtLink>
+                    <button @click="mostrarImageModal(post.image)">
+                        <img class="px-3 rounded"
+                        :src="post.image"
+                        alt="">
+                    </button>
 
                 <footer class="flex items-center gap-6 px-3 py-2">
-                    <button @click="mostrarModal(post)" class="flex items-center gap-1 text-sm">
+                    <button @click="mostrarReplyModal(post)" class="flex items-center gap-1 text-sm">
                         <IconsMessage class="size-5" />
                         <p>{{ post.comments.length }}</p>
                     </button>
@@ -44,10 +46,14 @@
     </section>
 
     <transition name="fadeReply" tag="div">
-        <ReplyPost v-if="replyPostModal" @close="mostrarModal" @replyed="increaseComments($event)" :post="this.postReply"
+        <ReplyPost v-if="replyPostModal" @close="mostrarReplyModal" @replyed="increaseComments($event)" :post="this.postReply"
             :name="this.userInfo.name" :nickname="userInfo.nickname" />
     </transition>
 
+    <transition name="fadeReply" tag="div">
+        <OpenImage v-if="imageIsOpen" @close="mostrarImageModal" :image="postImage" />
+    </transition>
+    
 </template>
 
 <script>
@@ -62,10 +68,17 @@ export default {
             posts: [],
             replyPostModal: false,
             postReply: null,
+            imageIsOpen: false,
+            postImage: null,
         }
     },
 
     methods: {
+        mostrarImageModal(image){
+            this.imageIsOpen = !this.imageIsOpen
+            this.postImage = image
+        },
+
         async getPosts() {
             this.posts = await comManager.getPosts()
             if (this.posts.length != 0) {
@@ -123,7 +136,7 @@ export default {
 
         },
 
-        mostrarModal(post) {
+        mostrarReplyModal(post) {
             this.postReply = post
             this.replyPostModal = !this.replyPostModal
             this.$refs.mySection.classList.toggle('no-scroll');
