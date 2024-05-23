@@ -19,6 +19,7 @@ export const useStores = defineStore("counter", {
     locations: [],
     distance: 50,
     userLocation: {},
+    newLocation: {},
     individualPostInfo: {},
   }),
   persist: {

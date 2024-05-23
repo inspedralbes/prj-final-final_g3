@@ -1,6 +1,7 @@
 <template>
     <div>
-        <LMap ref="map" :zoom="zoom" :max-zoom="18" :center="[userLocation.latitude, userLocation.longitude]"
+        <LMap ref="map" :zoom="zoom" :max-zoom="18"
+            :center="[newLocation.latitude || userLocation.latitude, newLocation.longitude || userLocation.longitude]"
             @ready="mapInitialized" @click="handleMapClick">
             <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
@@ -29,7 +30,7 @@ export default {
     data() {
         return {
             store: useStores(),
-            zoom: 18,
+            zoom: 8,
             map: ref(null),
             userLocation: computed(() => this.store.userLocation),
             newLocation: {},
@@ -64,8 +65,12 @@ export default {
             }),
         };
     },
+    created() {
+        this.newLocation = this.store.newLocation;
+    },
     mounted() {
         this.venues = this.getVenues();
+        this.newLocation = this.store.newLocation;
     },
     methods: {
         mapInitialized() {
@@ -77,6 +82,8 @@ export default {
                 latitude: latlng.lat,
                 longitude: latlng.lng
             }
+
+            this.store.newLocation = this.newLocation;
 
             this.$emit('location-selected', this.newLocation)
         },
