@@ -501,6 +501,15 @@ class UserController extends Controller
         }
     }
 
+    public function getUser(Request $request){
+        try {
+            $user = User::where('id', $request->user_id)->firstOrFail();
+            return response()->json($user, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'No se pudo encontrar el usuario'], 404);
+        }
+    }  
+
     public function userById(Request $request){
         $user = User::select('id', 'nickname', 'avatar')->where('id', $request->id)->first();
 

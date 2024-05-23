@@ -14,22 +14,19 @@
             </div>
         </header>
 
-        <NuxtLink to="/chat">
+        <button v-for="chat in chats" :key="chat.id" @click="goToChat(chat)">
             <main class="flex justify-between items-center gap-2">
-                <img class="size-16 rounded-full object-cover"
-                    src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE="
-                    alt="">
+                <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
                 <div class="flex flex-col justify-center items-start gap-1 max-w-64">
-                    <h2 class="font-bold">User name</h2>
-                    <p class="text-sm">Ultimo mensaje o mensaje no leido que le ha enviado otro usuario a este.
-                    </p>
+                    <h2 class="font-bold">{{chat.nickname}}</h2>
+                    <p class="text-sm">Tienes mensajes sin leer</p>
                 </div>
                 <div class="flex flex-col justify-center items-center gap-2">
-                    <p class="text-xs text-[#ADADAD]">Hace 1h</p>
-                    <p class="text-sm rounded-full bg-[#FF8A1E] size-6 flex justify-center items-center">2</p>
+                    <p class="text-xs text-[#ADADAD]">hace 1h</p>
+                    <p class="text-sm rounded-full bg-primary size-6 flex justify-center items-center">1</p>
                 </div>
             </main>
-        </NuxtLink>
+        </button>
         <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
     </section>
     <Menu />
@@ -39,20 +36,61 @@
 import AddChat from '~/components/Icons/AddChat.vue'
 import Search from '~/components/Icons/Search.vue'
 import { useStores } from '~/stores/counter'
+import comChat from '@/managers/chatManager.js';
+import { socket } from '../socket';
 
-export default {
-    data() {
-        return {
-            store: useStores(),
+    export default {
+        data(){
+            return {
+                store: useStores(),
+                chats: []
+            }
+        },
+        methods: {
+            async getChats(){
+                const chats = await comChat.getChats(this.store.getId());
+                chats.forEach(async chat => {
+                    var userId = 0;
+                    chat.username = '';
+                    chat.avatar = '';
+                    if (chat.user_id != this.store.getId()) {
+                        userId = chat.user_id;
+                    } else {
+                        userId = chat.contact_id;
+                    }
+                    const userChat = await comChat.getUserChats(userId);
+                    chat.nickname = userChat.nickname;
+                    chat.avatar = userChat.avatar;
+                    this.chats.push(chat);
+                });
+            },
+            goToChat(chat){
+                const user = {
+                    id: 0,
+                    nickname: chat.nickname,
+                    avatar: chat.avatar
+                }
+
+                if (chat.user_id != this.store.getId()) {
+                    user.id = chat.user_id;
+                } else {
+                    user.id = chat.contact_id;
+                }
+                this.store.setChatUser(user);
+                socket.emit('joinChat', chat._id);
+                this.$router.push('/chat');
+
+            }
+        },
+        
+        components: {
+            AddChat,
+            Search,
+            
+        },
+        mounted() {
+            if(!this.store.getLoggedIn()) return this.$router.push('/join');
+            this.getChats();
         }
-    },
-    components: {
-        AddChat,
-        Search,
-
-    },
-    mounted() {
-        if (!this.store.getLoggedIn()) return this.$router.push('/join');
     }
-}
 </script>

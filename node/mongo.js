@@ -394,6 +394,116 @@ app.post("/uploadImage", upload.single("img"), async (req, res) => {
 
 });
 
+app.post("/chat", async (req, res) => {
+    try {
+        let chatExists = await models.chat.findOne({
+            $or: [
+                { user_id: req.body.user_id, contact_id: req.body.contact_id },
+                { user_id: req.body.contact_id, contact_id: req.body.user_id }
+            ]
+        });
+
+        if (chatExists != null) {
+            let messages;
+            try {
+                messages = models.message.find({ chat_id: chatExists._id }).limit(45).sort({ sent_at: -1 });
+                return res.json({
+                    chatExists: chatExists,
+                    messages: messages
+                });
+            } catch (error) {
+                res.json({ chatExists: chatExists });
+            }
+        }
+ 
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.get("/chats", async (req, res) => {
+    try {
+        const chats = await models.chat.find({
+            $or: [
+            { user_id: req.query.user_id },
+            { contact_id: req.query.user_id }
+            ]
+        });
+        console.log("Chats:", chats);
+        res.send(chats);
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
+});
+
+
+app.post("/message", async (req, res) => {
+    const message = req.body;
+    try {
+        let chatId = message.chat_id;
+
+        if (chatId != null) {
+            let chatExists = await models.chat.findOne({
+                $or: [
+                { user_id: req.body.user_id, contact_id: req.body.contact_id },
+                { user_id: req.body.contact_id, contact_id: req.body.user_id }
+                ]
+            });
+
+            if (chatExists == null) {
+                const newChat = await models.chat.create({
+                    name: message.nameChat || `${message.user_id}-${message.contact_id}`,
+                    user_id: message.user_id,
+                    contact_id: message.contact_id,
+                    accepted: false
+                });
+
+                chatId = newChat._id;
+            } else {
+                chatId = chatExists._id;
+            }
+        }
+        
+        var createdMessage = {
+            chat_id: chatId,
+            user_id: message.user_id,
+            content: message.content,
+            sent_at: message.sent_at,
+            read_at: message.read_at,
+            state: 'enviado'
+        };
+        res.send(await models.message.create(createdMessage));
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+app.get("/messages", async (req, res) => {
+    try {
+        const messages = await models.message.find({ chat_id: req.query.chat_id }).limit(45).sort({ sent_at: -1 });
+        console.log("Messages:", messages);
+        res.send(messages);
+    } catch (error) {
+        console.error("Error:", error);
+        res.send([]);
+    }
+});
+
+app.get("/get10messages", async (req, res) => {
+    try {
+        const messages = await models.message.find({ 
+            chat_id: req.query.chat_id,
+            _id: { $lt: req.query.message_id }
+        }).limit(45).sort({ sent_at: -1 });
+        console.log("Messages:", messages);
+        res.send(messages);
+    } catch (error) {
+        console.error("Error:", error);
+        res.send([]);
+    }
+});
+
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
 });

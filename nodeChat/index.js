@@ -1,9 +1,9 @@
-import http from 'http';
-import express from 'express';
-import { Server } from 'socket.io';
-import cors from 'cors';
+import http from "http";
+import express from "express";
+import { Server } from "socket.io";
+import cors from "cors";
 
-import manager from './comunicationManager.js';
+import manager from "./comunicationManager.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -17,20 +17,28 @@ const io = new Server(server, {
   },
 });
 
-
-io.on('connection', (socket) => {
-  socket.on('message', (message) => {
-    manager.insertMessage(message)
-      .then(response => {
-        console.log(response);
-        socket.emit('message', response);
+io.on("connection", (socket) => {
+  console.log("Usuario conectado");
+  socket.on("message", (message) => {
+    manager
+      .insertMessage(message)
+      .then((response) => {
+        io.to(response.chat_id).emit("message", response);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   });
-});
 
+  socket.on("joinChat" , (chatId) => {
+    socket.join(chatId);    
+  })
+
+  socket.on("leaveChat", (chatId) => {
+    socket.leave(chatId);
+  });
+
+});
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {

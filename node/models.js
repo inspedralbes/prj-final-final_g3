@@ -74,12 +74,37 @@ likeCommentSchema.pre("save", async function (next) {
   }
 });
 
+const imageSchema = new Schema({
+  url: String,
+  postId: Number,
+});
+
+const chatSchema = new Schema({
+  name: String,
+  user_id: Number,
+  contact_id: Number,
+  accepted: Boolean
+
+});
+
+const messageSchema = new Schema({
+  chat_id: { type: Schema.Types.ObjectId, ref: "chat" },
+  content: String,
+  user_id: Number,
+  sent_at: { type: Date, default: Date.now },
+  read_at: { type: Date, default: null },
+  state: { type: String, enum: ['enviado', 'recibido', 'leido'] }
+});
+
 const models = {
   post: mongoose.model("post", postSchema),
   commentPost: mongoose.model("commentPost", commentPostSchema),
   likePost: mongoose.model("likePost", likePostSchema),
   likeEvent: mongoose.model("likeEvent", likeEventSchema),
   likeComment: mongoose.model("likeComment", likeCommentSchema),
+  image: mongoose.model("image", imageSchema),
+  chat: mongoose.model("chat", chatSchema),
+  message: mongoose.model("message", messageSchema)
 };
 
 export default models;

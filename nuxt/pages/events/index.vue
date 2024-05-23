@@ -8,8 +8,7 @@
           <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
             Filtres
           </h3>
-          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-            @click="modals.filter = !modals.filter" />
+          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="modals.filter = !modals.filter" />
         </div>
       </template>
       <div>
@@ -172,7 +171,32 @@ export default {
       this.distance = 50;
       this.newLocation = {}
       eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, this.distance)
+    },   
+    fetchGeolocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            this.location = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+          comManager.convertGeolocation(this.location.latitude, this.location.longitude)
+            .then(response => {
+              const data = response.data.address;
+              this.location.city = data.city; 
+              this.location.country = data.country;
+              this.location.province = data.province;
+            })
+          },
+          error => {
+            console.error("Error getting geolocation: ", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
     },
+
 
   },
   created() {

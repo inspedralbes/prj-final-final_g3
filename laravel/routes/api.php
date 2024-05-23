@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowersController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
     Route::put('/updateInfo', [UserController::class, 'updateInfo']);
+    Route::get('/getUser', [UserController::class, 'getUser']);
     Route::group(['prefix' => 'users'], function () {
         Route::get('/followers', [FollowersController::class, 'getFollowers']);
         Route::post('/follow/{userId}', [FollowersController::class, 'followUser']);
@@ -67,4 +69,11 @@ Route::group(['prefix' => 'events'], function () {
 Route::group(['prefix' => 'messages'], function () {
     Route::post('/', [MessageController::class, 'saveMessage']);
     Route::get('/{chat_id}', [MessageController::class, 'getMessages']);
+});
+
+Route::group(['prefix' => 'chats'], function () {
+    Route::post('/search', [ChatController::class, 'search']);
+    // Route::post('/create', [ChatController::class, 'createChat']);
+    // Route::post('/send', [ChatController::class, 'sendMessage']);
+    // Route::get('/', [ChatController::class, 'getMessages']);
 });

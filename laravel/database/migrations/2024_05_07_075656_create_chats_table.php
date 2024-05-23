@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->foreignId('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
+            $table->foreignId('contact_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
+            $table->boolean('accepted')->default(false);
             $table->timestamps();
-            $table->unique(['name']);
         });
     }
 
