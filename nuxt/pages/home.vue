@@ -70,23 +70,21 @@ export default {
         async getFollowedUsers() {
             this.followedUsers = await userManager.getFollowed()
             this.followedUsers = this.followedUsers.followed
-            console.log(this.followedUsers)
 
             for (let i = 0; i < this.followedUsers.length; i++) {
                 this.followedIds.push(this.followedUsers[i].id)
             }
-            console.log("Ids: " + this.followedIds)
 
-            await this.getPosts();
-            this.addPostInfo();
+            
         },
 
         async getPosts() {
+            await this.getFollowedUsers()
             for (let i = 0; i < this.followedIds.length; i++) {
                 const posts = await comManager.getPosts(this.followedIds[i]);
                 this.posts.push(...posts);
             }
-            console.log(this.posts)
+            this.addPostInfo();
         },
 
         addPostInfo() {
@@ -123,7 +121,7 @@ export default {
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
-        this.getFollowedUsers()
+        this.getPosts()
     }
 }
 </script>
