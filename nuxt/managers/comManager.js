@@ -107,6 +107,8 @@ async function getFollowers() {
   }
 }
 
+async function getFolloweds() {}
+
 async function likeAnEvent(eventID) {
   const store = useStores();
   const User = store.getUserInfo();
@@ -237,13 +239,15 @@ async function commentPost(postID, content) {
   }
 }
 
-async function getComments(postID){
+async function getComments(postID) {
   try {
-    const response = await axios.get(`http://localhost:8086/comments?postId=${postID}`)
-    return response.data
-} catch (error) {
-    console.error(error)
-}
+    const response = await axios.get(
+      `http://localhost:8086/comments?postId=${postID}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function getEventCounterFollowers(id) {
@@ -298,6 +302,7 @@ const comManager = {
   follow,
   unfollow,
   getFollowers,
+  getFolloweds,
   commentPost,
   getComments,
   getPostById,
