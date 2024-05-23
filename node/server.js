@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
 import mysql from "mysql2";
 import axios, { all } from "axios";
+import { get } from "mongoose";
+import e from "cors";
+import i18next from "./i18n.js";
 
 dotenv.config();
 
@@ -38,8 +41,7 @@ async function getEvents() {
       currentPage++;
     } catch (error) {
       console.error(
-        "Could not retrieve data from the Ticketmaster API:",
-        error.response.status
+        `Could not retrieve data from the Ticketmaster API: ${error.response.status} - ${error.response.statusText}`
       );
       return [];
     }
@@ -64,6 +66,7 @@ async function storeEvents() {
 
     allEvents.forEach(async (event) => {
       const id = event.id || null;
+
       const name = event.name || null;
       const artist =
         event._embedded &&
@@ -89,6 +92,32 @@ async function storeEvents() {
         event._embedded.venues[0].city
           ? event._embedded.venues[0].city.name
           : null;
+
+      const latitude =
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues[0].location
+          ? event._embedded.venues[0].location.latitude
+          : null;
+
+      const longitude =
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues[0].location
+          ? event._embedded.venues[0].location.longitude
+          : null;
+
+      let country =
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues[0].country
+          ? event._embedded.venues[0].country.name
+          : null;
+
+      if (country) {
+        country = country ? i18next.t(country) : null;
+      }
+
       const genre =
         event.classifications && event.classifications[0].genre
           ? event.classifications[0].genre.name
@@ -106,6 +135,7 @@ async function storeEvents() {
           ? event.priceRanges[0].max
           : null;
       const promoter = event.promoter ? event.promoter.name : null;
+
       const images = event.images
         ? JSON.stringify(event.images.map((image) => image.url))
         : null;
@@ -117,7 +147,8 @@ async function storeEvents() {
         console.log(`Event already exists, NOT INSERTED: ${name}`);
         return;
       } else {
-        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        const query = `INSERT INTO events (event_id, event, artist, date, time, venue, city, country, latitude,longitude, genre, subgenre, minPrice, maxPrice, promoter, images) VALUES 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         const values = [
           id,
           name,
@@ -126,6 +157,9 @@ async function storeEvents() {
           time,
           venue,
           city,
+          country,
+          latitude,
+          longitude,
           genre,
           subgenre,
           minPrice,

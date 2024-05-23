@@ -24,8 +24,42 @@ async function getLocations() {
   }
 }
 
+async function getEventsByDistance(lat, lon, distance) {
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/byDistance`, {
+      latitude: lat,
+      longitude: lon,
+      distance: distance,
+    });
+    console.log(response.data.events);
+    store.setEvents(response.data.events);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+async function getFilteredEvents(data) {
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/byLocation`, {
+      countries: data.countries,
+      cities: data.cities,
+      venues: data.venues,
+    });
+    console.log(response.data.events);
+    store.setEvents(response.data.events);
+    // return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 const eventManager = {
   getLocations,
+  getEventsByDistance,
+  getFilteredEvents,
 };
 
 export default eventManager;

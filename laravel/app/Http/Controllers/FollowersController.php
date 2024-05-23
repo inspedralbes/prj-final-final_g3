@@ -10,7 +10,7 @@ class FollowersController extends Controller
 {
     public function followUser(Request $request, $userId)
     {
-        $followerId = $request->user()->id; 
+        $followerId = $request->user()->id;
         $followedUser = User::findOrFail($userId);
 
         if ($followedUser->followers()->where('follower_id', $followerId)->exists()) {
@@ -27,7 +27,7 @@ class FollowersController extends Controller
 
     public function unfollowUser(Request $request, $userId)
     {
-        $followerId = $request->user()->id; 
+        $followerId = $request->user()->id;
         $followedUser = User::findOrFail($userId);
 
         $followedUser->followers()->where('follower_id', $followerId)->delete();
@@ -39,18 +39,24 @@ class FollowersController extends Controller
     {
         $user = User::findOrFail($userId);
         $followers = $user->followers()->with('follower')->get();
-        $count=$followers->count();
+        $count = $followers->count();
 
-        return response()->json(['followers' => $followers,'count'=>$count], 200);
+        return response()->json(['followers' => $followers, 'count' => $count], 200);
     }
 
     public function getUserFollowed($userId)
     {
         $user = User::findOrFail($userId);
         $followed = $user->followed()->with('followed')->get();
-        $count= $followed->count();
+        $count = $followed->count();
 
         return response()->json(['followed' => $followed, 'count' => $count], 200);
     }
 
+    public function getFollowers(Request $request)
+    {
+        $userId = $request->user()->id;
+        $followers = Followers::where('follower_id', $userId)->pluck('followed_id');
+        return response()->json($followers);
+    }
 }

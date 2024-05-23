@@ -13,15 +13,18 @@ export const useStores = defineStore("counter", {
       token: "",
       nickname: "",
       birthdate: "",
+      followedUsers: [],
     },
     events: [],
     chatUser: {},
     locations: [],
+    distance: 50,
+    userLocation: {},
     individualPostInfo: {},
   }),
   persist: {
     storage: persistedState.localStorage,
-    paths: ["userInfo", "loggedIn", "events", "locations"],
+    paths: ["userInfo", "loggedIn", "events", "locations", "userLocation"],
   },
 
   actions: {
@@ -53,8 +56,16 @@ export const useStores = defineStore("counter", {
     },
     setChatUser(user) {
       this.chatUser = user;
-    },    setLocations(locations) {
+    },    
+    setFollowedUsers(followedUsers) {
+      this.followedUsers = followedUsers;
+    },
+    setLocations(locations) {
       this.locations = locations.locations;
+    },
+    setUserLocation(location) {
+      this.userLocation = location;
+      console.log(this.userLocation);
     },
 
     /* -------------------------------------------------------------------------- */
@@ -83,6 +94,9 @@ export const useStores = defineStore("counter", {
     },
     getLocations() {
       return this.locations;
+    },
+    getUserLocation() {
+      return this.userLocation;
     },
   },
 });

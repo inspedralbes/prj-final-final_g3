@@ -23,6 +23,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@pinia-plugin-persistedstate/nuxt": "^1.2.0"
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "nuxt3-leaflet": "^1.0.12"
   }
 }

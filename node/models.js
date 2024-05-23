@@ -7,7 +7,7 @@ const postSchema = new Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: "likePost" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "commentPost" }],
   userId: Number,
-  images: [{ type: Schema.Types.ObjectId, ref: "image" }],
+  image: String,
 });
 
 const commentPostSchema = new Schema({

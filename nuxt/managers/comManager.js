@@ -44,20 +44,6 @@ async function getEvents() {
   }
 }
 
-async function getFilteredEvents(cities, venues) {
-  const store = useStores();
-  try {
-    const response = await axios.post(`${url_api}/events/byLocation`, {
-      cities: cities,
-      venues: venues,
-    });
-    // console.log(response.data.events);
-    return response.data.events;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
 async function getLikeEvents() {
   const store = useStores();
   const User = store.getUserInfo();
@@ -69,6 +55,55 @@ async function getLikeEvents() {
     return response.data.map((like) => like.eventId);
   } catch (error) {
     console.error("Error fetching data:", error);
+  }
+}
+
+async function follow(userId) {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.post(
+      `${url_api}/users/follow/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error following user:", error);
+  }
+}
+
+async function unfollow(userId) {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.delete(`${url_api}/users/unfollow/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error unfollowing user:", error);
+  }
+}
+
+async function getFollowers() {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.get(`${url_api}/users/followers`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching followers:", error);
   }
 }
 
@@ -110,13 +145,14 @@ async function searchUsers(param) {
   }
 }
 
-async function post(content) {
+async function post(content, link) {
   const store = useStores();
   const userID = store.getId();
   try {
     await axios.post(`${url_api_mongo}/posts`, {
       content: content,
       userId: userID,
+      image: link,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -201,6 +237,15 @@ async function commentPost(postID, content) {
   }
 }
 
+async function getComments(postID){
+  try {
+    const response = await axios.get(`http://localhost:8086/comments?postId=${postID}`)
+    return response.data
+} catch (error) {
+    console.error(error)
+}
+}
+
 async function getEventCounterFollowers(id) {
   try {
     const response = await axios.get(
@@ -234,24 +279,10 @@ async function getUserById(id, token) {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-
 }
-
-async function convertGeolocation(lat,lng){
-  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
-  try {
-    const response = await axios.get(url);
-    return response;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-  
-}
-
 
 const comManager = {
   getEvents,
-  getFilteredEvents,
   likeAnEvent,
   unlikeAnEvent,
   searchUsers,
@@ -264,9 +295,12 @@ const comManager = {
   getEventCounterFollowers,
   getEventFollowers,
   getUserById,
+  follow,
+  unfollow,
+  getFollowers,
   commentPost,
+  getComments,
   getPostById,
-  convertGeolocation
 };
 
 export default comManager;
