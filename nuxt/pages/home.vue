@@ -1,7 +1,7 @@
 <template>
     <section class="min-h-screen w-[90%] mx-auto">
-        <header class="flex justify-between items-center">
-            <h1 class="text-2xl font-bold py-2">Para ti</h1>
+        <header class="flex justify-between items-center py-2 mb-8">
+            <h1 class="text-2xl font-bold ">Para ti</h1>
             <button @click="follow()">seguir</button>
         </header>
 
