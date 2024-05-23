@@ -80,7 +80,7 @@ export default {
         },
 
         async getPosts() {
-            this.posts = await comManager.getPosts()
+            this.posts = await comManager.getPosts(this.userInfo.id)
             if (this.posts.length != 0) {
                 this.posts.reverse()
                 console.log("POSTS: " + JSON.stringify(this.posts))

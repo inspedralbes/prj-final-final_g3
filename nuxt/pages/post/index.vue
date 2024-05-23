@@ -47,8 +47,10 @@ export default {
 
   methods: {
     async post() {
+      if (this.image) {
       this.loader = true;
-      await this.uploadImage()
+        await this.uploadImage()
+      }
       comManager.post(this.content, this.link)
       this.loader = false;
       console.log('Post created')

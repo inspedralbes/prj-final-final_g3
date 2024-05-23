@@ -167,9 +167,8 @@ async function deletePost(postID) {
   }
 }
 
-async function getPosts() {
+async function getPosts(userID) {
   const store = useStores();
-  const userID = store.getId();
 
   try {
     const response = await axios.get(`${url_api_mongo}/posts?userId=${userID}`);
