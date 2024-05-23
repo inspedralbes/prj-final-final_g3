@@ -68,7 +68,8 @@ export default {
                     email: user.email,
                     token: token,
                     birthdate: user.birthdate,
-                    nickname: user.nickname
+                    nickname: user.nickname,
+                    avatar: user.avatar,
                 });
                 this.store.setLoggedIn(true);
                 this.isLoading = false;

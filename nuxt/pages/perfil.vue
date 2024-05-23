@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import userManager from '~/managers/userManager';
 import { useStores } from '~/stores/counter';
 
@@ -72,6 +71,8 @@ export default {
         return {
             selectedSection: 'Posts',
             User: {
+                store: useStores(),
+                // avatar: useStores().userInfo.avatar,
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
                 followers: '',
@@ -98,7 +99,6 @@ export default {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
         this.getFollowers();
         this.getFollowed();
-
     }
 }
 </script>

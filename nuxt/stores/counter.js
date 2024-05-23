@@ -11,6 +11,7 @@ export const useStores = defineStore("counter", {
       nickname: "",
       email: "",
       token: "",
+      // avatar: "",
       nickname: "",
       birthdate: "",
       followedUsers: [],
@@ -38,6 +39,7 @@ export const useStores = defineStore("counter", {
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.email = userInfo.email;
       this.userInfo.token = userInfo.token;
+      // this.userInfo.avatar = userInfo.avatar;
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
     },
