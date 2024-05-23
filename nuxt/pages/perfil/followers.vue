@@ -1,16 +1,17 @@
 <template>
     <div>
         <h1>Followers</h1>
-        <div v-for="follower in followers">
-            <CardUser :user="follower.follower" />
+        <div v-for="follower in followers" class="w-full flex flex-col justify-center items-center">
+            <CardUser class="w-2/3" :user="follower.follower" />
+            <hr>
         </div>
-        {{ following }}
     </div>
 </template>
 
 <script>
 import { useStores } from '@/stores/counter.js';
 import userManager from '@/managers/userManager.js';
+
 
 export default {
     data() {

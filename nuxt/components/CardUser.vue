@@ -1,16 +1,21 @@
 <template>
     <div>
-        <div class="flex flex-row items-center">
-            <img class="size-24 rounded-full object-cover" :src="getImage" alt="Avatar" />
-            <p class="m-2">{{ user.nickname }}</p>
+        <div class="flex flex-row justify-between items-center">
+            <div class="flex flex-row items-center">
+                <img class="size-24 rounded-full object-cover" :src="getImage" alt="Avatar" />
+                <p class="m-2">{{ user.nickname }}</p>
+            </div>
+            <button class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8" @click="followOr">
+                {{ checkIfFollowing ? 'Siguiendo' : 'Seguir' }}
+            </button>
         </div>
-        <button class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm"></button>
     </div>
 </template>
 
 <script>
 import { useStores } from '~/stores/counter';
 import userManager from '~/managers/userManager';
+import comManager from '@/managers/comManager.js';
 
 export default {
     props: {
@@ -26,11 +31,22 @@ export default {
     },
     methods: {
         async followUser() {
-            await userManager.followUser(this.user.id);
+            await comManager.follow(this.user.id).then(() => {
+                this.store.userInfo.followingUsers.followed.push(this.user.id);
+            });
         },
         async unfollowUser() {
-            await userManager.unfollowUser(this.user.id);
+            await comManager.unfollow(this.user.id).then(() => {
+                this.store.userInfo.followingUsers.followed = this.store.userInfo.followingUsers.followed.filter(id => id !== this.user.id);
+            });
         },
+        async followOr() {
+            if (this.checkIfFollowing) {
+                await this.unfollowUser();
+            } else {
+                await this.followUser();
+            }
+        }
     },
     computed: {
         getImage() {
