@@ -4,7 +4,7 @@
 
         <section class='bg-[#212121] flex flex-col items-center gap-6'>
             <article class='w-full px-2 py-4 flex justify-around items-center'>
-                <img class='size-24 rounded-full object-cover' :src="User.avatar || '/img/standard_pfp.jpg'" alt="" />
+                <img class='size-24 rounded-full object-cover' :src="getImage" alt="" />
                 <div class='flex flex-col justify-center gap-4'>
                     <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
                     <div class='flex justify-center items-center gap-6'>
@@ -70,7 +70,7 @@ export default {
             selectedSection: 'Posts',
             User: {
                 store: useStores(),
-                avatar: `${this.$config.public.IMAGE_URI}/${useStores().userInfo.avatar}`,
+                avatar: useStores().userInfo.avatar,
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
                 followers: '',
@@ -97,6 +97,15 @@ export default {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
         this.getFollowers();
         this.getFollowed();
+    },
+    computed: {
+        getImage() {
+            if (!this.User.avatar) {
+                return `/img/standard_pfp.jpg`
+            } else {
+                return `${this.$config.public.IMAGE_URI}/${this.User.avatar}`;
+            }
+        }
     }
 }
 </script>
