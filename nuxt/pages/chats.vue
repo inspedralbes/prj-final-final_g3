@@ -29,7 +29,7 @@
         </button>
         <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
     </section>
-    <Menu/>
+    <Menu />
 </template>
 
 <script>

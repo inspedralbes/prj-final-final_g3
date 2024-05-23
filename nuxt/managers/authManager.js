@@ -146,6 +146,20 @@ async function login(userData) {
   }
 }
 
+async function logout() {
+  const store = useStores();
+  try {
+    await axios.post(`${url_api}/logout`, null, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`
+      }
+    });
+    store.setLogout();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
 async function completeProfile(userData) {
   try {
     const response = await axios.post(`${url_api}/register`, {
@@ -187,6 +201,7 @@ const authManager = {
   register,
   completeProfile,
   login,
+  logout,
   checkEmail,
 };
 
