@@ -1,4 +1,8 @@
 <template>
+  <div v-if="loader"
+    class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <Loader />
+  </div>
   <USlideover v-model="modals.filter" side="left" class="scroll-auto">
     <UTabs v-model="selectedFilter" :items="[{ label: ' Filtres' }, { label: 'Mapa' }]" class="m-2"></UTabs>
     <UCard v-if="selectedFilter === 0" class="flex flex-col flex-1"
@@ -8,7 +12,8 @@
           <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
             Filtres
           </h3>
-          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="modals.filter = !modals.filter" />
+          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+            @click="modals.filter = !modals.filter" />
         </div>
       </template>
       <div>
@@ -73,6 +78,10 @@
     </UCard>
   </USlideover>
 
+  <div v-if="loader"
+    class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <Loader />
+  </div>
 
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
@@ -110,6 +119,7 @@ export default {
       userLocation: computed(() => this.store.userLocation),
       newLocation: {},
       selectedFilter: 1,
+      loader: false,
     };
   },
   async mounted() {
@@ -145,10 +155,11 @@ export default {
           cities: this.citySelected.map(c => c.city),
           venues: this.venueSelected,
         }
-
+        this.loader = true;
         eventManager.getFilteredEvents(data)
           .then((response) => {
             this.modals.filter = false
+            this.loader = false;
           })
       } else {
         data = {
@@ -156,10 +167,11 @@ export default {
           longitude: this.newLocation.longitude || this.userLocation.longitude,
           distance: this.distance
         }
-
+        this.loader = true;
         eventManager.getEventsByDistance(data.latitude, data.longitude, data.distance)
           .then((response) => {
-            this.modals.filter = false
+            this.modals.filter = false;
+            this.loader = false;
           })
       }
     },
@@ -171,7 +183,7 @@ export default {
       this.distance = 50;
       this.newLocation = {}
       eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, this.distance)
-    },   
+    },
     fetchGeolocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -180,13 +192,13 @@ export default {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
-          comManager.convertGeolocation(this.location.latitude, this.location.longitude)
-            .then(response => {
-              const data = response.data.address;
-              this.location.city = data.city; 
-              this.location.country = data.country;
-              this.location.province = data.province;
-            })
+            comManager.convertGeolocation(this.location.latitude, this.location.longitude)
+              .then(response => {
+                const data = response.data.address;
+                this.location.city = data.city;
+                this.location.country = data.country;
+                this.location.province = data.province;
+              })
           },
           error => {
             console.error("Error getting geolocation: ", error);
@@ -203,7 +215,10 @@ export default {
   },
   mounted() {
     if (!this.userLocation) {
-      comManager.getEvents()
+      this.loader = true;
+      comManager.getEvents().then(() => {
+        this.loader = false;
+      });
     }
   },
   computed: {

@@ -26,7 +26,7 @@
                 <img class="w-12 h-12 rounded-full object-cover md-[80px]"
                     src="https://www.shutterstock.com/image-photo/shrub-plant-png-tree-bush-600nw-2363599771.jpg"
                     alt="">
-                <button @click="goToChat(user)">
+                <button @click="goToChat(user)" :disabled="store.getId() === user.id">
                     <h2 class="font-bold">{{ user.nickname }}</h2>
                 </button>
             </div>
@@ -35,11 +35,6 @@
             </div>
         </main>
 
-
-        <div v-if="loader"
-            class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <Loader />
-        </div>
 
 
     </div>
@@ -64,9 +59,7 @@ export default {
     },
     methods: {
         async searchUsers() {
-            this.loader = true;
             const response = await comManager.searchUsers(this.param);
-            this.loader = false;
             if (response.data.length > 0) {
                 this.empty = false;
                 this.users = response.data;
@@ -78,6 +71,10 @@ export default {
         },
         goToChat(user) {
             console.log(user);
+            if (user.id == this.store.getId()) {
+                this.empty = true;
+                return;
+            }
             this.store.setChatUser(user);
             this.$router.push('/chat');
         },

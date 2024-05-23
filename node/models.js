@@ -8,6 +8,7 @@ const postSchema = new Schema({
   comments: [{ type: Schema.Types.ObjectId, ref: "commentPost" }],
   userId: Number,
   image: String,
+  date: { type: Date, default: Date.now },
 });
 
 const commentPostSchema = new Schema({
