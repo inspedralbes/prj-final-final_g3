@@ -110,7 +110,7 @@ export default {
       distance: 50,
       userLocation: computed(() => this.store.userLocation),
       newLocation: {},
-      selectedFilter: 0,
+      selectedFilter: 1,
     };
   },
   async mounted() {
