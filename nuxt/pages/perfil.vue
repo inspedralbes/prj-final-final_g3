@@ -1,5 +1,9 @@
 <template>
-    <main class='bg-[#212121] flex flex-col gap-10 min-h-screen'>
+    <div v-if="loader"
+        class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <Loader />
+    </div>
+    <main v-if="!loader" class='bg-[#212121] flex flex-col gap-10 min-h-screen'>
         <Logout class="absolute top-3 right-5" />
 
         <section class='bg-[#212121] flex flex-col items-center gap-6'>
@@ -58,7 +62,7 @@
             <GustosProfile v-if="selectedSection === 'Gustos'" />
         </section>
     </main>
-    <Menu />
+    <Menu v-if="!loader" />
 </template>
 
 <script>
@@ -77,7 +81,9 @@ export default {
                 followers: '',
                 followed: ''
             },
-            store: useStores()
+            store: useStores(),
+            loader: false
+
         }
     },
 
@@ -96,8 +102,14 @@ export default {
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        this.getFollowers();
-        this.getFollowed();
+        this.loader = true;
+        this.getFollowers().then(() => {
+            this.getFollowed().then(() => {
+                this.loader = false;
+            });
+
+        });
+
 
     }
 }
