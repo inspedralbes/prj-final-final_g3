@@ -22,6 +22,10 @@ export default {
         user: {
             type: Object,
             required: true
+        },
+        type: {
+            type: String,
+            default: 'followers'
         }
     },
     data() {
@@ -31,14 +35,10 @@ export default {
     },
     methods: {
         async followUser() {
-            await comManager.follow(this.user.id).then(() => {
-                this.store.userInfo.followingUsers.followed.push(this.user.id);
-            });
+            await comManager.follow(this.user.id)
         },
         async unfollowUser() {
-            await comManager.unfollow(this.user.id).then(() => {
-                this.store.userInfo.followingUsers.followed = this.store.userInfo.followingUsers.followed.filter(id => id !== this.user.id);
-            });
+            await comManager.unfollow(this.user.id)
         },
         async followOr() {
             if (this.checkIfFollowing) {
@@ -57,7 +57,7 @@ export default {
             }
         },
         checkIfFollowing() {
-            return this.store.userInfo.followingUsers.followed.includes(this.user.id);
+            return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.user.id);
         }
     }
 }

@@ -71,6 +71,7 @@ async function follow(userId) {
         },
       }
     );
+    await getFolloweds();
     return response;
   } catch (error) {
     console.error("Error following user:", error);
@@ -86,6 +87,7 @@ async function unfollow(userId) {
         Authorization: `Bearer ${token}`,
       },
     });
+    await getFolloweds();
     return response;
   } catch (error) {
     console.error("Error unfollowing user:", error);
@@ -107,7 +109,22 @@ async function getFollowers() {
   }
 }
 
-async function getFolloweds() {}
+async function getFolloweds() {
+  const store = useStores();
+  try {
+    const response = await axios.get(
+      `${url_api}/users/followed/${store.getId()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${store.getToken()}`,
+        },
+      }
+    );
+    store.setFollowed(response.data);
+  } catch (error) {
+    console.error("Error fetching followers:", error);
+  }
+}
 
 async function likeAnEvent(eventID) {
   const store = useStores();
