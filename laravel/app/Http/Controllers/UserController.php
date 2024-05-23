@@ -433,6 +433,40 @@ class UserController extends Controller
             return response()->json(['errors' => ['El email ya está en uso.']], 400);
         }
         $user->birthdate = $request->birthdate;
+
+
+        if ($request->has('avatar')) {
+            // Obtener los datos de la imagen base64
+            $imageData = $request->avatar;
+    
+            // Comprobar si la cadena base64 tiene el prefijo esperado
+            if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
+                $imageData = substr($imageData, strpos($imageData, ',') + 1);
+                $type = strtolower($type[1]); // jpg, png, gif, etc.
+    
+                // Decodificar la imagen base64
+                $imageData = base64_decode($imageData);
+    
+                // Comprobar si la decodificación fue exitosa
+                if ($imageData === false) {
+                    return response()->json(['errors' => ['La imagen base64 no es válida.']], 400);
+                }
+    
+                // Crear un nombre único para la imagen
+                $imageName = uniqid() . '.' . $type;
+    
+                // Guardar la imagen en el sistema de archivos
+                $path = public_path('images') . '/' . $imageName;
+                file_put_contents($path, $imageData);
+    
+                // Guardar la ruta de la imagen en la base de datos
+                $user->avatar = 'images/' . $imageName;
+            } else {
+                return response()->json(['errors' => ['El formato de la imagen base64 no es válido.']], 400);
+            }
+        }
+    
+
         $user->save();
 
         return response()->json($user, 200);

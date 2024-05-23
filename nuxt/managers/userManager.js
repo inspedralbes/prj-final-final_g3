@@ -20,6 +20,7 @@ async function updateUser(user, token) {
         surnames: user.surnames,
         email: user.email,
         birthdate: user.birthdate,
+        avatar: user.avatar,
       },
       {
         headers: {

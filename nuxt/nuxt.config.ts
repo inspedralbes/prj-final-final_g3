@@ -23,6 +23,7 @@ export default defineNuxtConfig({
       GOOGLE_REDIRECT_URI: process.env.VITE_APP_GOOGLE_REDIRECT_URI,
       TICKETMASTER_API_KEY: process.env.VITE_APP_TICKETMASTER_API_KEY,
       MAPBOX_TOKEN: process.env.VITE_APP_MAPBOX_TOKEN,
+      IMAGE_URI: process.env.VITE_APP_IMAGE_URL,
     }
   },
   colorMode: {

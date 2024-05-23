@@ -94,7 +94,8 @@ export default {
                     surnames: response.data.user.surnames,
                     nickname: response.data.user.nickname,
                     email: response.data.user.email,
-                    token: response.data.token
+                    token: response.data.token,
+                    avatar: response.data.user.avatar,
                 }
                 this.store.setUserInfo(data);
                 this.store.setLoggedIn(true);

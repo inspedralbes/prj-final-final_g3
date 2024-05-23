@@ -5,7 +5,10 @@
       <button @click="post"
         class="bg-[#FF8A1E] rounded-full px-4 py-1 font-semibold text-sm hover:bg-[#FF8A1E]/80 transition duration-200">Post</button>
     </header>
-
+    <div v-if="loader"
+            class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Loader />
+        </div>
     <main class=" flex justify-between items-start px-[5%] pt-4">
       <div class="w-full flex justify-between items-start h-full">
         <img class="size-14 rounded-full object-cover" src="https://i.ytimg.com/vi/LuWV8Wh00Nk/maxresdefault.jpg"
@@ -36,18 +39,22 @@ export default {
       image: null,
       imageURL: null,
       link: null,
-      store: useStores()
+      store: useStores(),
+      loader: false
+
     }
   },
 
   methods: {
     async post() {
       if (this.image) {
+      this.loader = true;
         await this.uploadImage()
       }
       comManager.post(this.content, this.link)
+      this.loader = false;
       console.log('Post created')
-      this.$router.push('/events')
+      this.$router.push('/perfil')
     },
 
     autoGrow() {

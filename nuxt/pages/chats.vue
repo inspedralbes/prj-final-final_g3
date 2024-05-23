@@ -1,5 +1,9 @@
 <template>
-    <section class="w-[90vw] min-h-screen mx-auto text-white">
+     <div v-if="loader"
+        class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <Loader />
+    </div>
+    <section v-if="!loader" class="w-[90vw] min-h-screen mx-auto text-white">
         <header class="h-[10vh] flex justify-between items-center">
             <h1 class="text-4xl">Mensajes</h1>
             <div class="flex justify-center items-center gap-2">
@@ -29,7 +33,7 @@
         </button>
         <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
     </section>
-    <Menu />
+    <Menu v-if="!loader" />
 </template>
 
 <script>
@@ -43,11 +47,13 @@ import { socket } from '../socket';
         data(){
             return {
                 store: useStores(),
-                chats: []
+                chats: [],
+                loader: false
             }
         },
         methods: {
             async getChats(){
+                this.loader = true;
                 const chats = await comChat.getChats(this.store.getId());
                 chats.forEach(async chat => {
                     var userId = 0;
@@ -63,6 +69,7 @@ import { socket } from '../socket';
                     chat.avatar = userChat.avatar;
                     this.chats.push(chat);
                 });
+                this.loader = false;
             },
             goToChat(chat){
                 const user = {
