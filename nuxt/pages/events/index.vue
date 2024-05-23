@@ -7,8 +7,7 @@
           <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
             Filtres
           </h3>
-          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-            @click="modals.filter = !modals.filter" />
+          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="modals.filter = !modals.filter" />
         </div>
       </template>
       <UDivider label="Ciutats" class="mb-4" />
@@ -66,7 +65,7 @@ export default {
       venueSelected: [],
       modals: {
         filter: false,
-      }
+      },
       location: {},
     };
   },
@@ -89,7 +88,8 @@ export default {
       this.citySelected = []
       this.venueSelected = []
       this.eventosFiltrados = []
-    }    fetchGeolocation() {
+    },    
+    fetchGeolocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {

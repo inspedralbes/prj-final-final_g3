@@ -265,7 +265,7 @@ const comManager = {
   getEventFollowers,
   getUserById,
   commentPost,
-  getPostById,,
+  getPostById,
   convertGeolocation
 };
 
