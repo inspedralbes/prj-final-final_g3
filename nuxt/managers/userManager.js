@@ -44,7 +44,7 @@ async function getFollowers() {
         },
       }
     );
-    return response.data.count;
+    return response.data;
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
@@ -61,7 +61,7 @@ async function getFollowed() {
         },
       }
     );
-    return response.data.count;
+    return response.data;
   } catch (error) {
     console.error("Error fetching followers:", error);
   }

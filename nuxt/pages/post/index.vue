@@ -42,7 +42,9 @@ export default {
 
   methods: {
     async post() {
-      await this.uploadImage()
+      if (this.image) {
+        await this.uploadImage()
+      }
       comManager.post(this.content, this.link)
       console.log('Post created')
       this.$router.push('/events')

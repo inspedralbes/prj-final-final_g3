@@ -87,11 +87,11 @@ export default {
         },
         async getFollowers() {
             const followers = await userManager.getFollowers();
-            this.User.followers = followers;
+            this.User.followers = followers.count;
         },
         async getFollowed() {
             const followed = await userManager.getFollowed();
-            this.User.followed = followed;
+            this.User.followed = followed.count;
         }
     },
     mounted() {
