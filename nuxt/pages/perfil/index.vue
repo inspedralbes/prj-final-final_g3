@@ -13,12 +13,16 @@
                     <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
-                            <p class="text-white">{{ User.followers }}</p>
-                            <p class='text-xs text-white/60'>Seguidors</p>
+                            <NuxtLink to="/perfil/followers">
+                                <p class="text-white">{{ User.followers }}</p>
+                                <p class='text-xs text-white/60'>Seguidors</p>
+                            </NuxtLink>
                         </div>
                         <div>
-                            <p class="text-white">{{ User.followed }}</p>
-                            <p class='text-xs text-white/60'>Seguits</p>
+                            <NuxtLink to="/perfil/following">
+                                <p class="text-white">{{ User.following }}</p>
+                                <p class='text-xs text-white/60'>Seguits</p>
+                            </NuxtLink>
                         </div>
                         <div>
                             <p class="te+xt-white">5</p>
@@ -77,8 +81,8 @@ export default {
                 avatar: useStores().userInfo.avatar,
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
-                followers: '',
-                followed: ''
+                followers: useStores().userInfo.followersUsers.count,
+                following: useStores().userInfo.followingUsers.count
             },
             store: useStores(),
             loader: false
@@ -91,12 +95,10 @@ export default {
             this.selectedSection = section
         },
         async getFollowers() {
-            const followers = await userManager.getFollowers();
-            this.User.followers = followers;
+            await userManager.getFollowers();
         },
-        async getFollowed() {
-            const followed = await userManager.getFollowed();
-            this.User.followed = followed;
+        async getFollowing() {
+            await userManager.getFollowed();
         }
     },
     mounted() {
@@ -104,7 +106,7 @@ export default {
 
         this.loader = true;
         this.getFollowers().then(() => {
-            this.getFollowed().then(() => {
+            this.getFollowing().then(() => {
                 this.loader = false;
             });
 

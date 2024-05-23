@@ -14,8 +14,8 @@ export const useStores = defineStore("counter", {
       avatar: "",
       nickname: "",
       birthdate: "",
-      followedUsers: [],
       followingUsers: [],
+      followersUsers: [],
     },
     events: [],
     chatUser: {},
@@ -61,11 +61,11 @@ export const useStores = defineStore("counter", {
     setChatUser(user) {
       this.chatUser = user;
     },
-    setFollowingUsers(followingUsers) {
-      this.followingUsers = followingUsers;
+    setFollowers(users) {
+      this.userInfo.followersUsers = users;
     },
-    setFollowedUsers(followedUsers) {
-      this.followedUsers = followedUsers;
+    setFollowed(users) {
+      this.userInfo.followingUsers = users;
     },
     setLocations(locations) {
       this.locations = locations.locations;

@@ -1,28 +1,36 @@
 <template>
     <div>
         <h1>Followers</h1>
+        <div v-for="follower in followers">
+            <CardUser :user="follower.follower" />
+        </div>
+        {{ following }}
     </div>
 </template>
 
 <script>
 import { useStores } from '@/stores/counter.js';
-import comManager from '@/managers/comManager.js';
+import userManager from '@/managers/userManager.js';
 
 export default {
     data() {
         return {
             store: useStores(),
-            followers: [],
+            followers: computed(() => this.store.userInfo.followersUsers.followers),
+            following: computed(() => this.store.userInfo.followingUsers.followed),
         }
     },
     mounted() {
-        this.getFollowers();
+        if (!this.store.getLoggedIn()) return this.$router.push('/join');
+        if (!this.followers) this.getFollowers();
+        if (!this.following) this.getFollowing();
     },
     methods: {
         async getFollowers() {
-            comManager.getFollowers().then((followers) => {
-                this.followers = followers;
-            });
+            await userManager.getFollowers();
+        },
+        async getFollowing() {
+            await userManager.getFollowed();
         }
     }
 }
