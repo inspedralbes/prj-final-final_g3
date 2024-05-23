@@ -33,6 +33,11 @@ io.on("connection", (socket) => {
   socket.on("joinChat" , (chatId) => {
     socket.join(chatId);    
   })
+
+  socket.on("leaveChat", (chatId) => {
+    socket.leave(chatId);
+  });
+
 });
 
 const PORT = process.env.PORT || 8080;

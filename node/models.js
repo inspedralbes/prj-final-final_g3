@@ -92,7 +92,7 @@ const messageSchema = new Schema({
   user_id: Number,
   sent_at: { type: Date, default: Date.now },
   read_at: { type: Date, default: null },
-  state: { type: String, enum: ['enviado', 'recibido', 'leído'] }
+  state: { type: String, enum: ['enviado', 'recibido', 'leido'] }
 });
 
 const models = {

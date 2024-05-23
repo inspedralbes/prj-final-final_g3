@@ -1,9 +1,9 @@
 <template>
     <section class="w-[90vw] min-h-screen mx-auto text-white">
         <header class="h-[12vh] flex justify-between items-center bg-black">
-            <NuxtLink to="/chats">
+            <button @click="leaveChat()">
                 <Arrow class="size-6" />
-            </NuxtLink>
+            </button>
 
             <article class="flex justify-center items-center gap-2">
                 <div class="relative">
@@ -78,7 +78,7 @@ export default {
             pagination: {},
             contact: {},
             chat_id: 0,
-            loadingMore: false, // Nueva variable para evitar múltiples solicitudes simultáneas
+            loadingMore: false,
         }
     },
     methods: {
@@ -126,6 +126,10 @@ export default {
             if (this.$refs.messageContainer.scrollTop === 0) {
                 this.loadMore();
             }
+        },
+        leaveChat() {
+            socket.emit('leaveChat', this.chat_id);
+            this.$router.push('/chats');
         }
     },
     mounted() {
