@@ -2,7 +2,7 @@
   <main class="min-h-screen relative">
     <header class='w-[80%] flex justify-between absolute top-4 left-1/2 -translate-x-1/2 z-10'>
       <NuxtLink to='/events'>
-        <IconsLeftArrow class="size- bg-black rounded-full bg-opacity-60" />
+        <IconsLeftArrow class="size-6 bg-black rounded-full bg-opacity-60" />
       </NuxtLink>
 
       <button @click="toggleLike" :class="{
@@ -39,9 +39,20 @@
           </h2>
         </div>
       </div>
-      <h3 class='text[#CACACA] text-sm'>2.487 personas inscritas</h3>
+      <h3 class='text[#CACACA] text-sm'>{{ counterFollowers }} personas inscritas</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
-      <UserCardEvent/>
+      <div v-if="mostrarSeg" v-for="follower in followers" :key="follower.id">
+        <UserCardEvent :follower="follower" />
+      </div>
+      <div v-if="loadingFollowers" class="flex justify-center items-center">
+        <div class="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600"></div>
+      </div>
+      <div v-if="noFollowersComputed" class="flex justify-center items-center">
+        No hay ningun seguidor en este evento
+      </div>
+      <button type="button" v-if="loadMoreFollowers" @click="getFollowers()"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Ver
+        mas seguidores...</button>
     </article>
   </main>
 </template>
@@ -56,15 +67,22 @@ export default {
       store: useStores(),
       eventID: parseInt(this.$route.params.id),
       event: {},
-      eventImage: ''
+      eventImage: '',
+      counterFollowers: 0,
+      page: 0,
+      followers: [],
+      loadingFollowers: false,
+      loadMoreFollowers: false,
+      mostrarSeg: false
     }
   },
   created() {
     this.getEventById();
   },
   mounted() {
-    if(!this.store.getLoggedIn()) return this.$router.push('/join');
-
+    if (!this.store.getLoggedIn()) return this.$router.push('/join');
+    this.getEventCounterFollowers();
+    this.getFollowers();
   },
   methods: {
     getEventById() {
@@ -76,22 +94,69 @@ export default {
         response = await comManager.likeAnEvent(this.event.id)
         if (response.status === 200) {
           this.event.like = true
+          this.counterFollowers += 1;
+          this.followers.push(this.store.getUserInfo());
           this.store.events[this.findIndex(this.event.id)].like = true;
         }
       } else {
         response = await comManager.unlikeAnEvent(this.event.id)
         if (response.status === 200) {
           this.event.like = false
+          this.counterFollowers -= 1;
+          this.followers = this.followers.filter(follower => follower.id !== this.store.getUserInfo().id);
           this.store.events[this.findIndex(this.event.id)].like = false;
         }
       }
     },
     findIndex(eventId) {
       return this.store.getEvents().findIndex(event => event.id === eventId);
+    },
+    async getEventCounterFollowers() {
+      const response = await comManager.getEventCounterFollowers(this.event.id);
+      this.counterFollowers = response.data.eventFollowers;
+    },
+    async getFollowers() {
+      this.loadingFollowers = true;
+      this.mostrarSeg = false;
+
+      const response = await comManager.getEventFollowers(this.event.id, this.page);
+      const followersMongo = response.data;
+
+
+      if (followersMongo.length === 0) {
+        this.loadingFollowers = false;
+        this.loadMoreFollowers = false;
+      } else {
+        var confirmLoadMore = false;
+        if (followersMongo.length === 10) {
+          this.page++;
+          confirmLoadMore = true;
+        } else {
+          this.loadMoreFollowers = false;
+        }
+
+        for (const follower of followersMongo) {
+          const userResponse = await comManager.getUserById(follower.userId, this.store.getToken());
+          this.followers.push(userResponse.data);
+        }
+        this.loadingFollowers = false;
+        if (confirmLoadMore) {
+          this.loadMoreFollowers = true;
+        } else {
+          this.loadMoreFollowers = false;
+        }
+      }
+      this.mostrarSeg = true;
     }
   },
   computed: {
-
+    noFollowersComputed() {
+      if (this.followers.length === 0 && !this.loadingFollowers) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   watch: {
     event() {

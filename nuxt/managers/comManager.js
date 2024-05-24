@@ -16,7 +16,7 @@ if (env.toLowerCase() === "development") {
 async function getEvents() {
   const store = useStores();
   try {
-    const response = await axios.get(`${url_api}/events`);
+    const response = await axios.get(`${url_api}/events/all`);
     const eventos = response.data.events;
     const eventosAgrupados = {};
     eventos.forEach((evento) => {
@@ -58,6 +58,74 @@ async function getLikeEvents() {
   }
 }
 
+async function follow(userId) {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.post(
+      `${url_api}/users/follow/${userId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    await getFolloweds();
+    return response;
+  } catch (error) {
+    console.error("Error following user:", error);
+  }
+}
+
+async function unfollow(userId) {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.delete(`${url_api}/users/unfollow/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    await getFolloweds();
+    return response;
+  } catch (error) {
+    console.error("Error unfollowing user:", error);
+  }
+}
+
+async function getFollowers() {
+  const store = useStores();
+  try {
+    const token = store.getToken();
+    const response = await axios.get(`${url_api}/users/followers`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching followers:", error);
+  }
+}
+
+async function getFolloweds() {
+  const store = useStores();
+  try {
+    const response = await axios.get(
+      `${url_api}/users/followed/${store.getId()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${store.getToken()}`,
+        },
+      }
+    );
+    store.setFollowed(response.data);
+  } catch (error) {
+    console.error("Error fetching followers:", error);
+  }
+}
+
 async function likeAnEvent(eventID) {
   const store = useStores();
   const User = store.getUserInfo();
@@ -86,70 +154,149 @@ async function unlikeAnEvent(eventID) {
   }
 }
 
-async function post(content){
+async function searchUsers(param) {
+  try {
+    const response = await axios.post(`${url_api}/apps/searchUsers`, {
+      param: param,
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function post(content, link) {
   const store = useStores();
-  const userID = store.getId()
-  try{
+  const userID = store.getId();
+  try {
     await axios.post(`${url_api_mongo}/posts`, {
       content: content,
-      userId: userID
+      userId: userID,
+      image: link,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
 
-async function deletePost(postID){
-  try{
+async function deletePost(postID) {
+  try {
     await axios.delete(`${url_api_mongo}/posts?postId=${postID}`);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
 
-async function getPosts() {
-    const store = useStores();
-    const userID = store.getId()
-
-    try{
-      const response = await axios.get(`${url_api_mongo}/posts?userId=${userID}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
-  async function getLikePosts() {
-    const store = useStores();
-    const userID = store.getId()
-    try {
-      const response = await axios.get(
-        `${url_api_mongo}/likePosts?userId=${userID}`
-      );
-      return response.data.map((like) => like.postId);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
-async function likePost(postID){
+async function getPosts(userID) {
   const store = useStores();
-  const userID = store.getId()
-  try{
+
+  try {
+    const response = await axios.get(`${url_api_mongo}/posts?userId=${userID}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getPostById(postID) {
+  try {
+    const response = await axios.get(`${url_api_mongo}/posts/${postID}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getLikePosts() {
+  const store = useStores();
+  const userID = store.getId();
+  try {
+    const response = await axios.get(
+      `${url_api_mongo}/likePosts?userId=${userID}`
+    );
+    return response.data.map((like) => like.postId);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function likePost(postID) {
+  const store = useStores();
+  const userID = store.getId();
+  try {
     await axios.post(`${url_api_mongo}/likePost`, {
       postId: postID,
-      userId: userID
+      userId: userID,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
 
-async function unlikePost(postID){
+async function unlikePost(postID) {
   const store = useStores();
-  const userID = store.getId()
-  try{
-    await axios.delete(`${url_api_mongo}/likePost?postId=${postID}&userId=${userID}`);
+  const userID = store.getId();
+  try {
+    await axios.delete(
+      `${url_api_mongo}/likePost?postId=${postID}&userId=${userID}`
+    );
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function commentPost(postID, content) {
+  try {
+    await axios.post(`${url_api_mongo}/comments`, {
+      postId: postID,
+      content: content,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getComments(postID) {
+  try {
+    const response = await axios.get(
+      `http://localhost:8086/comments?postId=${postID}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getEventCounterFollowers(id) {
+  try {
+    const response = await axios.get(
+      `${url_api_mongo}/likeEvents/${id}?eventId=${id}`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getEventFollowers(id, page) {
+  try {
+    const response = await axios.get(
+      `${url_api_mongo}/likeEvents/${id}/followers?p=${page}`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getUserById(id, token) {
+  try {
+    const response = await axios.get(`${url_api}/users/${id}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return response;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -159,12 +306,23 @@ const comManager = {
   getEvents,
   likeAnEvent,
   unlikeAnEvent,
+  searchUsers,
   post,
   deletePost,
   getPosts,
   getLikePosts,
   likePost,
   unlikePost,
+  getEventCounterFollowers,
+  getEventFollowers,
+  getUserById,
+  follow,
+  unfollow,
+  getFollowers,
+  getFolloweds,
+  commentPost,
+  getComments,
+  getPostById,
 };
 
 export default comManager;

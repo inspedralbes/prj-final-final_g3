@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowersController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,23 +26,28 @@ Route::get('/', function () {
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/auth', [UserController::class, 'redirectToAuth']);
 Route::get('/auth/callback', [UserController::class, 'handleAuthCallback']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [UserController::class, 'logout']);
     Route::put('/completeInfo', [UserController::class, 'completeInfo']);
     Route::put('/updateInfo', [UserController::class, 'updateInfo']);
+    Route::get('/getUser', [UserController::class, 'getUser']);
     Route::group(['prefix' => 'users'], function () {
+        Route::get('/followers', [FollowersController::class, 'getFollowers']);
         Route::post('/follow/{userId}', [FollowersController::class, 'followUser']);
         Route::delete('/unfollow/{userId}', [FollowersController::class, 'unfollowUser']);
         Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
         Route::get('/followed/{userId}', [FollowersController::class, 'getUserFollowed']);
+        Route::get('/{id}', [UserController::class, 'userById']);
+
     });
 });
 
 Route::group(['prefix'=>'apps'],function(){
     Route::post('/register', [UserController::class, 'registerWithApps']);
+    Route::post('/searchUsers', [UserController::class, 'searchUsers']);
     Route::get('/checkEmail', [UserController::class, 'checkEmail']);
 });
 
@@ -50,6 +56,10 @@ Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
     Route::get('/', [EventController::class, 'index']);
+    Route::get('/all', [EventController::class, 'indexAll']);
+    Route::get('/locations', [EventController::class, 'getLocations']);
+    Route::post('/byLocation', [EventController::class, 'getEventsByLocation']);
+    Route::post('/byDistance', [EventController::class, 'getEventsByDistance']);
     Route::get('/{id}', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
@@ -59,4 +69,11 @@ Route::group(['prefix' => 'events'], function () {
 Route::group(['prefix' => 'messages'], function () {
     Route::post('/', [MessageController::class, 'saveMessage']);
     Route::get('/{chat_id}', [MessageController::class, 'getMessages']);
+});
+
+Route::group(['prefix' => 'chats'], function () {
+    Route::post('/search', [ChatController::class, 'search']);
+    // Route::post('/create', [ChatController::class, 'createChat']);
+    // Route::post('/send', [ChatController::class, 'sendMessage']);
+    // Route::get('/', [ChatController::class, 'getMessages']);
 });

@@ -1,9 +1,9 @@
 <template>
     <section class="w-[90vw] min-h-screen mx-auto text-white">
         <header class="h-[12vh] flex justify-between items-center bg-black">
-            <NuxtLink to="/chats">
+            <button @click="leaveChat()">
                 <Arrow class="size-6" />
-            </NuxtLink>
+            </button>
 
             <article class="flex justify-center items-center gap-2">
                 <div class="relative">
@@ -13,8 +13,8 @@
                     <div class="absolute bottom-1 right-1 size-3 rounded-full bg-green-400"></div>
                 </div>
                 <div class="flex flex-col gap-1 items-start">
-                    <h1 class="text-sm font-semibold">User name</h1>
-                    <p class="text-xs text-gray-300">Online</p>
+                    <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
+                    <!-- <p class="text-xs text-gray-300">Online</p> -->
                 </div>
             </article>
             <div class="flex items-center justify-center gap-2">
@@ -27,11 +27,11 @@
             </div>
         </header>
 
-        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto">
+        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto" @scroll="handleScroll">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
-                <p class="max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]">Heyy, vas al concierto de Quevedo ?</p>
-                <div v-for="msg in messages" :key="msg.id" :class="{'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.id !== store.getId()}">
+                <div v-for="msg in messages" :key="msg.id"
+                    :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
                     <p>{{ msg.content }}</p>
                 </div>
             </div>
@@ -43,9 +43,9 @@
                     <Plus class="size-5 border-white border-2 rounded-full" />
                 </button>
                 <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
-                    placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage()" v-model="message">
+                    placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage" v-model="message">
             </div>
-            <button class="bg-primary rounded-full p-[6px]">
+            <button class="bg-primary rounded-full p-[6px]" @click="sendMessage">
                 <Send class="size-5" />
             </button>
         </footer>
@@ -60,7 +60,7 @@ import Send from '~/components/Icons/Send.vue'
 import Plus from '~/components/Icons/Plus.vue'
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
-import comChat  from '@/managers/chatManager.js';
+import comChat from '@/managers/chatManager.js';
 
 export default {
     components: {
@@ -75,51 +75,78 @@ export default {
             store: useStores(),
             messages: [],
             message: '',
-            pagination:{}
-
+            pagination: {},
+            contact: {},
+            chat_id: 0,
+            loadingMore: false,
         }
     },
     methods: {
         sendMessage() {
-            this.message = {
-                chat_id: 1,
-                id: this.store.getId(),
+            const newMessage = {
+                chat_id: this.chat_id,
+                nameChat: `${this.store.getId()}-${this.contact.id}`,
+                user_id: this.store.getId(),
+                contact_id: this.contact.id,
                 content: this.message
             }
-            socket.emit('message', this.message);
+
+            socket.emit('message', newMessage);
             this.message = '';
-        },
-        genTimeStamp() {
-            const actualDate = new Date();
-            const year = actualDate.getFullYear().toString();
-            const month = (actualDate.getMonth() + 1).toString().padStart(2, '0');
-            const day = actualDate.getDate().toString().padStart(2, '0');
-            const hours = actualDate.getHours().toString().padStart(2, '0');
-            const minutes = actualDate.getMinutes().toString().padStart(2, '0');
-            const seconds = actualDate.getSeconds().toString().padStart(2, '0');
-            return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+            this.scrollToBottom();
         },
         async fetchMessages() {
-            const result = await comChat.getAllMessages(1);
-            this.messages = result.data.reverse();
-            delete result.data;
-            this.pagination = result;
+            const result = await comChat.getFirst10Messages(this.chat_id);
+            this.messages = result.reverse();
+            this.scrollToBottom();
         },
+        async loadMore() {
+            if (this.loadingMore) return; // Evitar múltiples solicitudes simultáneas
+            this.loadingMore = true;
+            const container = this.$refs.messageContainer;
+            const currentScrollHeight = container.scrollHeight;
+
+            const id = this.messages[0]._id;
+            const result = await comChat.getMessages(this.chat_id, id);
+            this.messages.unshift(...result.reverse());
+            this.loadingMore = false;
+            this.$nextTick(() => {
+                const newScrollHeight = container.scrollHeight;
+                container.scrollTop += (newScrollHeight - currentScrollHeight);
+            });
+        },
+        scrollToBottom() {
+            this.$nextTick(() => {
+                if (this.$refs.messageContainer) {
+                    this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
+                }
+            });
+        },
+        handleScroll() {
+            if (this.$refs.messageContainer.scrollTop === 0) {
+                this.loadMore();
+            }
+        },
+        leaveChat() {
+            socket.emit('leaveChat', this.chat_id);
+            this.$router.push('/chats');
+        }
     },
     mounted() {
-    if(!this.store.getLoggedIn()) return this.$router.push('/join');
-    socket.on('message', (message) => {
-        this.messages.push(message);
-        this.$nextTick(() => {
-            if (this.$refs.messageContainer) {
-                this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
-            }
+        if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
+        socket.on('message', (message) => {
+            this.messages.push(message);
+            this.chat_id = message.chat_id;
+            this.scrollToBottom();
         });
-    });
 
-    this.fetchMessages();
-},
-    
+        this.contact = this.store.getChatUser();
 
+        comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
+            this.chat_id = res.chatExists._id;
+            this.fetchMessages();
+        });
+    },
 }
 </script>
