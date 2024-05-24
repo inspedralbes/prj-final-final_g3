@@ -60,7 +60,8 @@ export default {
                         email: responseIfExists.data.data.user.email,
                         token: responseIfExists.data.data.token,
                         birthdate: responseIfExists.data.data.user.birthdate,
-                        nickname: responseIfExists.data.data.user.nickname
+                        nickname: responseIfExists.data.data.user.nickname,
+                        avatar: responseIfExists.data.data.user.avatar,
                     });
                     this.store.setLoggedIn(true);
 

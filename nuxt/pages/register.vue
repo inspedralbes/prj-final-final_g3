@@ -1,5 +1,5 @@
 <template>
-    <main class='w-screen h-screen bg-background'>
+    <main class='w-screen h-screen bg-[#212121]'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold text-white'>Registra't</h1>
             <form class="flex flex-col gap-6" @submit.prevent="register">
@@ -42,7 +42,7 @@
 <script>
 import { useStores } from '~/stores/counter';
 import authManager from '@/managers/authManager';
-
+import { socket } from '../socket';
 
 export default {
     data() {
@@ -85,10 +85,12 @@ export default {
                     email: user.email,
                     token: token,
                     birthdate: user.birthdate,
-                    nickname: user.nickname
+                    nickname: user.nickname,
+                    avatar: user.avatar,
                 });
                 this.store.setLoggedIn(true);
                 this.isLoading = false;
+                socket.emit('logged', this.store.getId());
                 this.$router.push('/events');
             } else {
 

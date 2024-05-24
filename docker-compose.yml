@@ -13,16 +13,16 @@ services:
 
   nodeChat:
     container_name: nodeChat
-    image: node:20.8.1-bullseye-slim
+    image: arm64v8/node
     volumes:
       - ./nodeChat:/usr/src/app
     working_dir: /usr/src/app
     ports:
       - 8085:8080
-    command: sh -c "npm install && npm run dev"
+    command: sh -c "npm install && node index.js"
+    restart: always
     depends_on:
       - laravel
-      - nodeMongo
 
   nodeMongo:
     container_name: nodeMongo
@@ -54,7 +54,7 @@ services:
       - 8000:80
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
-    command: /bin/sh -c "composer install --no-interaction && chown -R www-data:www-data * && php artisan migrate --force && apache2-foreground "
+    command: /bin/sh -c "composer install --no-interaction && chown -R www-data:www-data *&& chown -R www-data:www-data /var/www/html/public/images && php artisan migrate --force && apache2-foreground "
     restart: always
     depends_on:
       - db

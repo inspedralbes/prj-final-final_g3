@@ -1,5 +1,5 @@
 <template>
-    <main class='w-screen h-screen bg-background'>
+    <main class='w-screen h-screen bg-[#212121]'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold'>Completa el teu perfil</h1>
             <form class='flex flex-col gap-6' @submit.prevent>
@@ -54,6 +54,7 @@ export default {
 
     },
     mounted() {
+
         if (this.store.getInfoOnRegister()) {
             this.name = this.store.getInfoOnRegister().userInfo.display_name;
             this.email = this.store.getInfoOnRegister().userInfo.email;
@@ -93,7 +94,8 @@ export default {
                     surnames: response.data.user.surnames,
                     nickname: response.data.user.nickname,
                     email: response.data.user.email,
-                    token: response.data.token
+                    token: response.data.token,
+                    avatar: response.data.user.avatar,
                 }
                 this.store.setUserInfo(data);
                 this.store.setLoggedIn(true);

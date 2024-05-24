@@ -6,10 +6,18 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+import multer from "multer";
+import sharp from "sharp";
+import fs from "fs";
+
 const app = express();
+app.use(express.static("./imgs"));
 
 const argv = minimist(process.argv.slice(2));
 const host = argv.host || "mongodb";
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+const hostimgs = argv.host || "localhost";
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -25,6 +33,7 @@ const mongoUser = process.env.MONGO_USER;
 const mongoPassword = process.env.MONGO_PASSWORD;
 
 mongoose
+
   .connect(`mongodb://${mongoUser}:${mongoPassword}@${host}:27017/spottunes`, {
     authSource: "admin",
   })
@@ -39,9 +48,9 @@ app.post("/posts", async (req, res) => {
     var createdPost = {
       content: post.content,
       likes: [],
-      comments: 0,
+      comments: [],
       userId: post.userId,
-      images: [],
+      image: post.image,
     };
     res.send(await models.post.create(createdPost));
   } catch (error) {
@@ -55,6 +64,7 @@ app.delete("/posts", async (req, res) => {
     const post = await models.post.findOneAndDelete({ _id: req.query.postId });
 
     await models.likePost.deleteMany({ postId: post._id });
+    await models.commentPost.deleteMany({ postId: post._id });
 
     console.log("Post deleted:", post);
     res.send("Post deleted successfully");
@@ -72,6 +82,18 @@ app.get("/posts", async (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     return [];
+  }
+});
+
+/* Esta funcion es para recibir un post en concreto */
+app.get("/posts/:postId", async (req, res) => {
+  try {
+    const post = await models.post.findOne({ _id: req.params.postId });
+    console.log("Post:", post);
+    res.send(post);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(404).send({ error: error.message });
   }
 });
 
@@ -108,12 +130,6 @@ app.get("/likeEvents", async (req, res) => {
 /* Esta funcion es para recoger el numero de likes de un evento*/
 app.get("/likeEvents/:eventId", async (req, res) => {
   try {
-    const eventExists = await models.event.exists({
-      _id: req.params.eventId,
-    });
-    if (!eventExists) {
-      throw new Error("Event does not exist");
-    }
     const likeEventCount = await models.likeEvent.countDocuments({
       eventId: req.params.eventId,
     });
@@ -124,6 +140,26 @@ app.get("/likeEvents/:eventId", async (req, res) => {
     res.status(404).send({ error: error.message });
   }
 });
+
+app.get("/likeEvents/:eventId/followers", async (req, res) => {
+  const page = req.query.p || 0;
+  const followersperPage = 10;
+
+  try {
+    const likeEventFollowers = await models.likeEvent
+      .find({
+        eventId: req.params.eventId,
+      })
+      .skip(page * followersperPage)
+      .limit(followersperPage);
+    console.log("LikeEvent followers:", likeEventFollowers);
+    res.send(likeEventFollowers);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(404).send({ error: error.message });
+  }
+});
+
 /* Esta funcion es para quitar el like de un evento cuando el usuario lo quita manualmente*/
 app.delete("/likeEvent", async (req, res) => {
   try {
@@ -226,7 +262,7 @@ app.post("/comments", async (req, res) => {
 app.get("/comments", async (req, res) => {
   try {
     const comments = await models.commentPost.find({
-      postId: req.body.postId,
+      postId: req.query.postId,
     });
     console.log("Comments:", comments);
     res.send(comments);
@@ -260,6 +296,10 @@ app.delete("/comments", async (req, res) => {
     const comment = await models.commentPost.findOneAndDelete({
       _id: req.query.commentId,
     });
+
+    await models.likeComment.deleteMany({ commentId: comment._id });
+    await models.commentPost.deleteMany({ parentId: comment._id });
+
     console.log("Comment deleted:", comment);
     res.send("Comment deleted successfully");
   } catch (error) {
@@ -332,40 +372,132 @@ app.delete("/likeComment", async (req, res) => {
 });
 
 /* IMAGENES */
+app.post("/uploadImage", upload.single("img"), async (req, res) => {
+  fs.access("./imgs", (error) => {
+    if (error) {
+      fs.mkdirSync("./imgs");
+    }
+  });
+  const { buffer, originalname } = req.file;
+  const timestamp = new Date().toISOString();
+  const link = `${timestamp}.png`;
+  await sharp(buffer)
+    .png({ quality: 60 })
+    .toFile("./imgs/" + link);
+  return res.json({ link });
+});
 
-app.post("/images", async (req, res) => {
-  const image = req.body;
+app.post("/chat", async (req, res) => {
   try {
-    var createdImage = {
-      url: image.url,
-      postId: image.postId,
-    };
-    res.send(await models.image.create(createdImage));
+    let chatExists = await models.chat.findOne({
+      $or: [
+        { user_id: req.body.user_id, contact_id: req.body.contact_id },
+        { user_id: req.body.contact_id, contact_id: req.body.user_id },
+      ],
+    });
+
+    if (chatExists != null) {
+      let messages;
+      try {
+        messages = models.message
+          .find({ chat_id: chatExists._id })
+          .limit(45)
+          .sort({ sent_at: -1 });
+        return res.json({
+          chatExists: chatExists,
+          messages: messages,
+        });
+      } catch (error) {
+        res.json({ chatExists: chatExists });
+      }
+    }
   } catch (error) {
     console.error("Error:", error);
   }
 });
 
-app.get("/images", async (req, res) => {
+app.get("/chats", async (req, res) => {
   try {
-    const images = await models.image.find({ postId: req.query.postId });
-    console.log("Images:", images);
-    res.send(images);
+    const chats = await models.chat.find({
+      $or: [{ user_id: req.query.user_id }, { contact_id: req.query.user_id }],
+    });
+    console.log("Chats:", chats);
+    res.send(chats);
   } catch (error) {
     console.error("Error:", error);
     return [];
   }
 });
 
-app.delete("/images", async (req, res) => {
+app.post("/message", async (req, res) => {
+  const message = req.body;
   try {
-    const image = await models.image.findOneAndDelete({
-      _id: req.query.imageId,
-    });
-    console.log("Image deleted:", image);
-    res.send("Image deleted successfully");
+    let chatId = message.chat_id;
+
+    if (chatId != null) {
+      let chatExists = await models.chat.findOne({
+        $or: [
+          { user_id: req.body.user_id, contact_id: req.body.contact_id },
+          { user_id: req.body.contact_id, contact_id: req.body.user_id },
+        ],
+      });
+
+      if (chatExists == null) {
+        const newChat = await models.chat.create({
+          name: message.nameChat || `${message.user_id}-${message.contact_id}`,
+          user_id: message.user_id,
+          contact_id: message.contact_id,
+          accepted: false,
+        });
+
+        chatId = newChat._id;
+      } else {
+        chatId = chatExists._id;
+      }
+    }
+
+    var createdMessage = {
+      chat_id: chatId,
+      user_id: message.user_id,
+      content: message.content,
+      sent_at: message.sent_at,
+      read_at: message.read_at,
+      state: "enviado",
+    };
+    res.send(await models.message.create(createdMessage));
   } catch (error) {
     console.error("Error:", error);
+  }
+});
+
+app.get("/messages", async (req, res) => {
+  try {
+    const messages = await models.message
+      .find({ chat_id: req.query.chat_id })
+      .limit(45)
+      .sort({ sent_at: -1 });
+    console.log("Messages:", messages);
+    res.send(messages);
+  } catch (error) {
+    console.error("Error:", error);
+    res.send([]);
+  }
+});
+
+app.get("/get10messages", async (req, res) => {
+  try {
+    const messages = await models.message
+      .find({
+        chat_id: req.query.chat_id,
+        _id: { $lt: req.query.message_id },
+      })
+      .limit(45)
+      .sort({ sent_at: -1 });
+    console.log("Messages:", messages);
+    res.send(messages);
+  } catch (error) {
+    console.error("Error:", error);
+    res.send([]);
   }
 });
 

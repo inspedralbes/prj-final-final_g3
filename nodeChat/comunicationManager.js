@@ -1,5 +1,5 @@
 import axios from "axios";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -7,19 +7,24 @@ const url = process.env.API_URL;
 
 async function insertMessage(message) {
   try {
-    const response = await axios.post(url, {
-      chat_id : message.chat_id,
-      user_id : message.id,
-      content : message.content,
+    const response = await axios.post(`${url}message`, {
+      chat_id: message.chat_id,
+      nameChat: message.nameChat,
+      user_id: message.user_id,
+      contact_id: message.contact_id,
+      content: message.content,
+      state: 'leido'
     });
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 }
 
+
 const manager = {
-  insertMessage,
+  insertMessage
 };
 
 export default manager;

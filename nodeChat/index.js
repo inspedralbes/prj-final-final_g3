@@ -1,9 +1,9 @@
-import http from 'http';
-import express from 'express';
-import { Server } from 'socket.io';
-import cors from 'cors';
+import http from "http";
+import express from "express";
+import { Server } from "socket.io";
+import cors from "cors";
 
-import manager from './comunicationManager.js';
+import manager from "./comunicationManager.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -15,22 +15,48 @@ const io = new Server(server, {
     origin: "*",
     methods: ["GET", "POST"],
   },
+  path: "/socket",
 });
 
+const userSockets = new Map();
 
-io.on('connection', (socket) => {
-  socket.on('message', (message) => {
-    manager.insertMessage(message)
-      .then(response => {
-        console.log(response);
-        socket.emit('message', response);
+io.on("connection", (socket) => {
+  socket.on("logged", (userId) => {
+    console.log(`Usuario ${userId} se ha conectado`);
+    userSockets.set(userId, socket.id);
+    console.log(`Usuario ${userId} está asociado con el socket ${socket.id}`);
+  });
+
+  socket.on("message", (message, contact) => {
+    manager
+      .insertMessage(message)
+      .then((response) => {
+        io.to(response.chat_id).emit("message", response);
+        if (io.sockets.adapter.rooms.get(response.chat_id)?.size != 2) {
+          if (userSockets.has(contact)) {
+            io.to(userSockets.get(contact)).emit("notification", response);
+          } else {
+            console.log("El usuario no está conectado");
+          }
+        }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   });
-});
 
+  socket.on("joinChat", (chatId) => {
+    socket.join(chatId);
+  });
+
+  socket.on("leaveChat", (chatId) => {
+    socket.leave(chatId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Usuario desconectado");
+  });
+});
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {

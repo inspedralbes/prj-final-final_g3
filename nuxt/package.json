@@ -10,8 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/ui": "^2.16.0",
     "@pinia/nuxt": "^0.5.1",
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "nuxt": "^3.11.2",
@@ -22,7 +23,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.0",
-    "@pinia-plugin-persistedstate/nuxt": "^1.2.0"
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "nuxt3-leaflet": "^1.0.12"
   }
 }
