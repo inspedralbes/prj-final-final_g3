@@ -86,7 +86,7 @@ jobs:
           sed -i 's#MONGO_USER=#MONGO_USER=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' .env
           sed -i 's#MONGO_PASSWORD=#MONGO_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}#g' .env
           sed -i 's#TICKETMASTER_API_KEY=#TICKETMASTER_API_KEY=${{ secrets.TICKETMASTER_API_KEY }}#g' .env
-          sed -i 's#MAPBOX_TOKEN=#MAPBOX_TIKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
+          sed -i 's#MAPBOX_TOKEN=#MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
           cd ${{ github.workspace }}
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/* ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:node
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/.env ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:node
@@ -106,7 +106,7 @@ jobs:
           chmod 600 ~/prod_key.pem
           cd nodeChat
           cp .env.example .env
-          sed -i 's#API_URL=API_URL=${{secrets.MONGO_API_PREPROD_URL}}#g' .env
+          sed -i 's#API_URL=#API_URL=${{secrets.MONGO_API_PREPROD_URL}}#g' .env
           cd ${{ github.workspace }}
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "[ -d nodeChat ] && sudo rm -r nodeChat"
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "mkdir nodeChat"
@@ -140,8 +140,8 @@ jobs:
           sed -i 's#VITE_APP_GOOGLE_CLIENT_ID=#VITE_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}#g' .env
           sed -i 's#VITE_APP_GOOGLE_CLIENT_SECRET=#VITE_APP_GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}#g' .env
           sed -i 's#VITE_APP_GOOGLE_REDIRECT_URI=#VITE_APP_GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_PRE_URI }}#g' .env
-          sed -i 's#VITE_APP_IMAGE_URL=VITE_APP_IMAGE_URL=${{ secrets.PRE_PROD_IMAGE_URL }}#g' .env
-          sed -i 's#VITE_APP_MAPBOX_TOKEN=#VITE_APP_MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
+          sed -i 's#VITE_APP_MAPBOX_TOKEN=#VITE_APP_MAPBOX_TOKEN=${{ secrets.GOOGLE_REDIRECT_PRE_URI }}#g' .env
+          sed -i 's#VITE_APP_IMAGE_URL=#VITE_APP_IMAGE_URL=${{ secrets.GOOGLE_REDIRECT_PRE_URI }}#g' .env
           npm run build
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "[ -d nuxt ] && sudo rm -r nuxt"
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r .output ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:nuxt
