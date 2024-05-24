@@ -114,7 +114,7 @@ jobs:
 
       - name: Conexión al servidor y deploy de node
         run: |
-          echo "${{ secrets.PROD_SECRET_KEY }}" > ~/prod_key.pem
+          echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
           cd nodeChat
           cp .env.example .env
