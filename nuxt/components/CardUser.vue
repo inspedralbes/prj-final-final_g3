@@ -5,8 +5,10 @@
                 <img class="size-24 rounded-full object-cover" :src="getImage" alt="Avatar" />
                 <p class="m-2">{{ user.nickname }}</p>
             </div>
-            <button v-if="user.id !== store.getId()" class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black" @click="followOr">
-                {{ checkIfFollowing ? 'Siguiendo' : 'Seguir' }}
+            <button v-if="user.id !== store.getId()"
+                class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
+                @click="followOr">
+                {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
             </button>
         </div>
     </div>

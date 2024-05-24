@@ -1,8 +1,8 @@
 <template>
     <section class='flex justify-center text-white'>
-        <p v-if="!eventos">No tienes eventos disponibles.</p>
+        <p v-if="!eventos">No tens esdeveniments disponibles.</p>
         <article v-else>
-            
+
         </article>
     </section>
 </template>

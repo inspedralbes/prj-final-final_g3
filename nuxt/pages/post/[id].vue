@@ -11,14 +11,13 @@
                 <img class="size-12 rounded-full object-cover"
                     src="https://hips.hearstapps.com/hmg-prod/images/phineas-and-ferb-1590490321.jpg" alt="">
                 <div>
-                    <h2 class="font-bold">User name</h2>
+                    <h2 class="font-bold">Nom d'usuari</h2>
                     <p class="text-sm text-gray-400">@nickname</p>
                 </div>
             </header>
             <article>
                 <p>{{ post.content }}</p>
-                <img class="rounded" :src="post.image"
-                    alt="">
+                <img class="rounded" :src="post.image" alt="">
             </article>
             <footer class="flex justify-between items-center gap-6 px-1 py-2">
 
@@ -40,7 +39,7 @@
         </main>
 
         <article class="mt-6 border-t border-b py-2 border-gray-500">
-            <p class="mb-2 px-1 text-sm text-gray-500">Respondiendo a <span class="text-blue-400">@nickname</span></p>
+            <p class="mb-2 px-1 text-sm text-gray-500">Responent a <span class="text-blue-400">@nickname</span></p>
             <div class="flex items-start gap-3">
                 <img class="size-12 rounded-full object-cover"
                     src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4bfe3034-0815-4837-8428-e8e9d8cb3807/dg2octu-40764d88-39cd-48c2-8742-b8924ad68130.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzRiZmUzMDM0LTA4MTUtNDgzNy04NDI4LWU4ZTlkOGNiMzgwN1wvZGcyb2N0dS00MDc2NGQ4OC0zOWNkLTQ4YzItODc0Mi1iODkyNGFkNjgxMzAuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Rf4kIJqwoe-u2-qMRW1rCjCDwsnO8-79KTZLQE0Vcd0"
@@ -59,10 +58,9 @@
                 <header class="flex gap-3 items-center mb-3">
                     <img class="size-12 rounded-full object-cover"
                         src="https://image.europafm.com/clipping/cmsimages01/2022/08/15/4BFF7A00-9A76-4D79-8271-B056A41AA0BA/borja-escalona-video-grabado-vigo_104.jpg?crop=183,183,x45,y0&width=1200&height=1200&optimize=low&format=webply"
-
                         alt="">
                     <div>
-                        <h2 class="font-bold">User name</h2>
+                        <h2 class="font-bold">Nom d'usuari</h2>
                         <p class="text-sm text-gray-400">@nickname</p>
                     </div>
                 </header>

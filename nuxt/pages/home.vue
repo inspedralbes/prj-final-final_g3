@@ -1,7 +1,7 @@
 <template>
     <section class="min-h-screen w-[90%] mx-auto">
         <header class="flex justify-between items-center py-2 mb-8">
-            <h1 class="text-2xl font-bold ">Para ti</h1>
+            <h1 class="text-2xl font-bold ">Per a tu</h1>
             <div>
                 <!-- Barra de busqueda -->
                 <Icons-Search src="" @click="modal = true" />
@@ -9,13 +9,12 @@
                     <div class="flex justify-center mt-9">
                         <input v-model="param" @input="searchUsers" type="text" id="simple-search"
                             class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[90%] ps-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Busca usuaris..." required />
+                            placeholder="Cerca usuaris..." required />
                     </div>
 
                     <!-- Lista de usuarios que devuelve el buscador -->
                     <main class="flex flex-col justify-center items-center mt-8 space-y-4">
-                        <div v-if="!empty" v-for="user in filteredUsers" :key="user.id"
-                            class="w-[90%]">
+                        <div v-if="!empty" v-for="user in filteredUsers" :key="user.id" class="w-[90%]">
                             <CardUser class="text-black" :user="user" />
                         </div>
                         <div v-if="this.empty" class="flex justify-center items-center gap-1">
@@ -39,7 +38,7 @@
                         <div class="flex items-center gap-3">
                             <h3 class="font-bold">{{ post.name }}</h3>
 
-                            <p class="text-xs text-gray-300">Hace 22h</p>
+                            <p class="text-xs text-gray-300">Fa 22h</p>
 
                         </div>
                         <p class="text-sm">@{{ post.nickname }}</p>

@@ -18,7 +18,7 @@
       </template>
       <div>
         <UDivider label="Països" class="my-4" />
-        <USelectMenu searchable searchable-placeholder="Busca el teu país..." option-attribute="country" color="gray"
+        <USelectMenu searchable searchable-placeholder="Cerca el teu país..." option-attribute="country" color="gray"
           v-model="countrySelected" :options="locations" multiple placeholder="Selecciona els països">
         </USelectMenu>
         <div class="mt-2 flex flex-wrap">
@@ -38,7 +38,7 @@
       </div>
       <div v-if="citySelected.length > 0">
         <UDivider label="Espais" class="my-4" />
-        <USelectMenu searchable searchable-placeholder="Busca el teu espai..." color="gray" v-model="venueSelected"
+        <USelectMenu searchable searchable-placeholder="Cerca el teu espai..." color="gray" v-model="venueSelected"
           :options="getVenues" multiple placeholder="Selecciona els espais" />
         <div class="mt-2 flex flex-wrap">
           <UButton v-for="venue in venueSelected" color="gray" :label="venue" variant="outline"

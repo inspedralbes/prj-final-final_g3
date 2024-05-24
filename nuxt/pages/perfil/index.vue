@@ -26,7 +26,7 @@
                         </div>
                         <div>
                             <p class="te+xt-white">5</p>
-                            <p class='text-xs text-white/60'>Events</p>
+                            <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                     </div>
                 </div>
@@ -49,30 +49,13 @@
                 <button class="text-white"
                     :class="selectedSection === 'Eventos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Eventos')">
-                    Eventos
+                    Esdeveniments
                 </button>
                 <button class="text-white"
                     :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Gustos')">
                     Gustos
                 </button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
 
             <PostsProfile class="" v-if="selectedSection === 'Posts'" />
