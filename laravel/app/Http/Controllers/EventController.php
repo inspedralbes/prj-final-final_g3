@@ -22,7 +22,7 @@ class EventController extends Controller
                        ->paginate(20);
 
         if ($events->isEmpty()) {
-            return response()->json(['message' => 'No events found'], 404);
+            return response()->json(['message' => 'No s\' han trobat esdeveniments'], 404);
         }
 
         return response()->json(['events' => $events], 200);
@@ -36,7 +36,7 @@ class EventController extends Controller
                        ->get();
     
         if ($events->isEmpty()) {
-            return response()->json(['message' => 'No events found'], 404);
+            return response()->json(['message' => 'No s\' han trobat esdeveniments'], 404);
         }
     
         return response()->json(['events' => $events], 200);

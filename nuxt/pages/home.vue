@@ -2,7 +2,31 @@
     <section class="min-h-screen w-[90%] mx-auto">
         <header class="flex justify-between items-center py-2 mb-8">
             <h1 class="text-2xl font-bold ">Para ti</h1>
-            <button @click="follow()">seguir</button>
+            <div>
+                <!-- Barra de busqueda -->
+                <Icons-Search src="" @click="modal = true" />
+                <USlideover v-model="modal" class="scroll-auto">
+                    <div class="flex justify-center mt-9">
+                        <input v-model="param" @input="searchUsers" type="text" id="simple-search"
+                            class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[90%] ps-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Busca usuaris..." required />
+                    </div>
+
+                    <!-- Lista de usuarios que devuelve el buscador -->
+                    <main class="flex flex-col justify-center items-center mt-8 space-y-4">
+                        <div v-if="!empty" v-for="user in filteredUsers" :key="user.id"
+                            class="w-[90%]">
+                            <CardUser class="text-black" :user="user" />
+                        </div>
+                        <div v-if="this.empty" class="flex justify-center items-center gap-1">
+                            <h2 class="font-bold m-5">{{ message }}</h2>
+                        </div>
+                    </main>
+                </USlideover>
+
+
+
+            </div>
         </header>
 
         <article v-for="post in posts" :key="post._id" class="flex flex-col gap-2 bg-black rounded mb-4">
@@ -18,7 +42,7 @@
                             <p class="text-xs text-gray-300">Hace 22h</p>
 
                         </div>
-                        <p class="text-sm">@{{post.nickname}}</p>
+                        <p class="text-sm">@{{ post.nickname }}</p>
                     </div>
                 </div>
             </header>
@@ -61,7 +85,14 @@ export default {
             store: useStores(),
             followedUsers: [],
             posts: [],
-            followedIds: []
+            followedIds: [],
+            param: '',
+            users: [],
+            filteredUsers: [],
+            empty: false,
+            message: '',
+            loader: false,
+            modal: false,
 
         }
     },
@@ -75,7 +106,7 @@ export default {
                 this.followedIds.push(this.followedUsers[i].id)
             }
 
-            
+
         },
 
         async getPosts() {
@@ -95,7 +126,27 @@ export default {
                     this.posts[i].nickname = user.followed.nickname;
                 }
             }
-        }
+        },
+        async searchUsers() {
+            const response = await comManager.searchUsers(this.param);
+            if (response.data.length > 0) {
+                this.empty = false;
+                this.users = response.data;
+                this.filteredUsers = this.users.map(user => ({ id: user.id, nickname: user.nickname, avatar: user.avatar }));
+            } else {
+                this.empty = true;
+                this.message = response.data.message;
+            }
+        },
+        goToChat(user) {
+            console.log(user);
+            if (user.id == this.store.getId()) {
+                this.empty = true;
+                return;
+            }
+            this.store.setChatUser(user);
+            this.$router.push('/chat');
+        },
 
         // async follow() {
         //     try {
@@ -120,7 +171,6 @@ export default {
 
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-
         this.getPosts()
     }
 }
