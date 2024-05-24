@@ -53,6 +53,22 @@
                     Gustos
                 </button>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
 
             <PostsProfile class="" v-if="selectedSection === 'Posts'" />
