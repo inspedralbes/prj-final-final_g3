@@ -37,6 +37,7 @@
 import axios from 'axios';
 import { useStores } from '~/stores/counter';
 import authManager from '~/managers/authManager';
+import { socket } from '../socket';
 
 export default {
     data() {
@@ -73,6 +74,7 @@ export default {
                 });
                 this.store.setLoggedIn(true);
                 this.isLoading = false;
+                socket.emit('logged', this.store.getId());
                 this.$router.push('/events');
             } else {
 
