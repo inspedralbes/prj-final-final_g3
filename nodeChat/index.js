@@ -17,13 +17,29 @@ const io = new Server(server, {
   },
 });
 
+const userSockets = new Map();
+
 io.on("connection", (socket) => {
-  console.log("Usuario conectado");
-  socket.on("message", (message) => {
+  socket.on('logged', (userId) => { 
+    console.log(`Usuario ${userId} se ha conectado`);
+    userSockets.set(userId, socket.id);
+    console.log(`Usuario ${userId} está asociado con el socket ${socket.id}`);
+  });
+
+
+  socket.on("message", (message,contact) => {
     manager
       .insertMessage(message)
       .then((response) => {
         io.to(response.chat_id).emit("message", response);
+        if (io.sockets.adapter.rooms.get(response.chat_id)?.size != 2) {
+          if (userSockets.has(contact)) {
+            io.to(userSockets.get(contact)).emit("notification", response);
+          } else {
+            console.log("El usuario no está conectado");
+          }
+        }
+        
       })
       .catch((error) => {
         console.error(error);
@@ -36,6 +52,10 @@ io.on("connection", (socket) => {
 
   socket.on("leaveChat", (chatId) => {
     socket.leave(chatId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Usuario desconectado");
   });
 
 });

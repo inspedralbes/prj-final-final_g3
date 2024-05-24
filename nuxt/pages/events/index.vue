@@ -47,7 +47,7 @@
       </div>
       <template #footer>
         <div class="flex justify-end">
-          <!-- <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton> -->
+          <!-- <UButton @click="resetFilter" color="red" variant="ghost" label="Restaurar filtres"></UButton> -->
           <UButton @click="filterEvents" label="Guardar filtres"></UButton>
         </div>
       </template>
@@ -66,12 +66,16 @@
       <UDivider :label="`Distancia (${distance}km)`" class="mb-4" />
       <URange color="orange" min="1" max="1500" v-model="distance"></URange>
       <UInput type="number" color="orange" size="md" icon="i-heroicons-globe-alt" v-model="distance" min="1" max="1500"
-        class="mt-2" />
+        class="mt-2">
+        <template #trailing>
+          <span class="text-gray-500 dark:text-gray-400 text-md">Km</span>
+        </template>
+      </UInput>
       <UDivider :label="`Mapa`" class="my-4" />
       <Map class="h-3/4 w-full rounded-lg overflow-hidden" @location-selected="newLocation = $event" />
       <template #footer>
-        <div class="flex justify-between">
-          <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton>
+        <div class="flex justify-end">
+          <!-- <UButton @click="resetFilters" color="red" variant="ghost" label="Restaurar filtres"></UButton> -->
           <UButton @click="filterEvents" label="Guardar filtres"></UButton>
         </div>
       </template>
