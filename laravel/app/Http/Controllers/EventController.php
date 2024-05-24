@@ -117,43 +117,40 @@ class EventController extends Controller
         return response()->json(['events' => $events], 200);
     }
 
-    public function getEventsByName(Request $request){
+    public function getEventsByName(Request $request)
+    {
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'param' => 'required|string',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
-
+    
         // Obtener el parámetro validado
         $name = $request->input('param');
-
-        // Realizar la consulta
+    
         try {
-            $events = Event::where(function ($query) use ($name) {
-            $query->where('name', 'like', "%$name%")
-                  ->orWhere('artist', 'like', "%$name%")
-                  ->orWhere('city', 'like', "%$name%")
-                  ->orWhere('country', 'like', "%$name%")
-                  ->orWhere('venue', 'like', "%$name%");
-            })
-            ->whereNotNull('artist')
-            ->orderBy('date')
-            ->orderBy('time')
-            ->get();
+            // Realizar la consulta buscando coincidencias en las columnas especificadas
+            $events = Event::where('event', 'like', "%{$name}%")
+                ->orWhere('artist', 'like', "%{$name}%")
+                ->orWhere('venue', 'like', "%{$name}%")
+                ->orWhere('city', 'like', "%{$name}%")
+                ->orWhere('country', 'like', "%{$name}%")
+                ->get();
+    
+            // Verificar si hay eventos
+            if ($events->isEmpty()) {
+                return response()->json(['message' => 'No events found for the specified criteria'], 404);
+            }
+    
+            return response()->json(['events' => $events], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error fetching events', 'error' => $e->getMessage()], 500);
         }
-
-        // Verificar si hay eventos
-        if ($events->isEmpty()) {
-            return response()->json(['message' => 'No events found for the specified criteria'], 404);
-        }
-
-        return response()->json(['events' => $events], 200);
     }
+    
 
     public function getLocations()
     {

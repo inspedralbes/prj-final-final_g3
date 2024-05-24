@@ -91,9 +91,9 @@
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
     <div class="flex flex-row w-full justify-between">
-      <div class=" border-white border-b-2 w-[90%] flex flex-row justify-between">
-        <input type="text" class="bg-[#212121] p-2 " placeholder="Cerca un esdeveniment..." v-model="searchFilter"
-          @keyup.enter="busqueda" />
+      <div class=" border-white border-b-2 w-[80%] flex flex-row justify-between">
+        <input type="text" class="bg-[#212121] p-2 w-full outline-none" placeholder="Cerca un esdeveniment..."
+          v-model="searchFilter" @keyup.enter="busqueda" />
         <button v-if="searchFilter" @click="clearBusqueda">
           <IconsCross class="size-8" />
         </button>
@@ -159,12 +159,18 @@ export default {
       this.venueSelected = this.venueSelected.filter(v => v !== venue)
     },
     busqueda() {
-      console.log(this.searchFilter)
-      eventManager.getEventsByName(this.searchFilter)
+      if (this.searchFilter === '' || this.searchFilter.length === 0) return
+      this.loader = true;
+      eventManager.getEventsByName(this.searchFilter).then(() => {
+        this.loader = false;
+      })
     },
     clearBusqueda() {
+      this.loader = true;
       this.searchFilter = ''
-      eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50)
+      eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50).then(() => {
+        this.loader = false;
+      })
     },
     filterEvents() {
       let data = {
