@@ -1,10 +1,12 @@
 <template>
-    <button @click="logout">
-        <IconsLogout class="size-6" />
-    </button>
-    <div v-if="loader"
-        class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-        <Loader />
+    <div>
+        <button @click="logout">
+            <IconsLogout class="size-6" />
+        </button>
+        <div v-if="loader"
+            class="h-screen w-screen fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+            <Loader />
+        </div>
     </div>
 </template>
 

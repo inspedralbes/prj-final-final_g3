@@ -3,9 +3,8 @@
         class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
         <Loader />
     </div>
-    <main v-if="!loader" class='bg-[#212121] flex flex-col gap-10 min-h-screen'>
-        <Logout class="absolute top-3 right-5" />
-
+    <main v-if="!loader" class='bg-[#212121] flex flex-col gap-10 min-h-screen '>
+        <Header />
         <section class='bg-[#212121] flex flex-col items-center gap-6'>
             <article class='w-full px-2 py-4 flex justify-around items-center'>
                 <img class='size-24 rounded-full object-cover' :src="getImage" alt="" />
@@ -103,7 +102,7 @@ export default {
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
-        this.loader = true;
+        // this.loader = true;
         this.getFollowers().then(() => {
             this.getFollowing().then(() => {
                 this.loader = false;

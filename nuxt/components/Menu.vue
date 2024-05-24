@@ -10,7 +10,7 @@
         <NuxtLink to="/events" class="flex flex-col justify-center items-center"
             exact-active-class="text-orange-400 fill-orange-400">
             <Speaker class="size-7" />
-            <p class='font-bold text-xs'>Esdeveniments</p>
+            <p class='font-bold text-xs'>Concerts</p>
         </NuxtLink>
 
         <NuxtLink :to="store.getLoggedIn() ? '/post' : '/join'"
