@@ -1,22 +1,33 @@
 <template>
   <NuxtPage />
+  <UNotifications style="position: top-0; bottom: auto;" />
+
 </template>
 
 <script>
 import userManager from '@/managers/userManager.js';
 import eventManager from './managers/eventManager.js';
+import { socket } from '../socket';
+import { useStores } from '@/stores/counter';
 
 export default {
   data() {
     return {
       userLocation: {},
+      store: useStores(),
     }
   },
   created() {
   },
   mounted() {
     this.fetchGeolocation();
-    eventManager.getLocations()
+    eventManager.getLocations();
+    this.connectSocket();
+    socket.on("notification", (message) => {
+      console.log("Notificacion");
+      const toast = useToast();
+      toast.add({ title: 'Has rebut un nou missatge'});
+    });
   },
   methods: {
     fetchGeolocation() {
@@ -37,6 +48,11 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
+    connectSocket(){
+      if (this.store.getLoggedIn()) {
+        socket.emit('logged', this.store.getId());
+      }
+    }
   },
   watch: {
     userLocation: {
