@@ -373,7 +373,6 @@ app.delete("/likeComment", async (req, res) => {
 
 /* IMAGENES */
 app.post("/uploadImage", upload.single("img"), async (req, res) => {
-  console.log(req.file);
   fs.access("./imgs", (error) => {
     if (error) {
       fs.mkdirSync("./imgs");
@@ -381,11 +380,10 @@ app.post("/uploadImage", upload.single("img"), async (req, res) => {
   });
   const { buffer, originalname } = req.file;
   const timestamp = new Date().toISOString();
-  const ref = `${timestamp}.png`;
+  const link = `${timestamp}.png`;
   await sharp(buffer)
     .png({ quality: 60 })
-    .toFile("./imgs/" + ref);
-  const link = `http://${hostimgs}:8086/${ref}`;
+    .toFile("./imgs/" + link);
   return res.json({ link });
 });
 

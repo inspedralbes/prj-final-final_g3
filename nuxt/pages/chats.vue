@@ -5,7 +5,7 @@
     </div>
     <section v-if="!loader" class="w-[90vw] min-h-screen mx-auto text-white">
         <header class="h-[10vh] flex justify-between items-center">
-            <h1 class="text-4xl">Mensajes</h1>
+            <h1 class="text-4xl">Xats</h1>
             <div class="flex justify-center items-center gap-2">
                 <button>
                     <NuxtLink to="/add-chat">
