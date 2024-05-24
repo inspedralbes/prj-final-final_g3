@@ -90,8 +90,11 @@
 
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
-    <button @click="modals.filter = !modals.filter">Obrir filtres</button>
-    <section class=" flex flex-col gap-3">
+    <button @click="modals.filter = !modals.filter"
+      class="bg-white hover:bg-[#FF8A1E] text-black font-bold py-2 px-4 rounded-full w-fit">
+      Obrir filtres
+    </button>
+    <section class=" flex flex-col gap-3 mb-12">
       <div v-for="evento in eventosFiltrados" :key="evento.id">
         <CardEvent :event="evento" />
       </div>
