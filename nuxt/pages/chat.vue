@@ -91,7 +91,7 @@ export default {
                 content: this.message
             }
 
-            socket.emit('message', newMessage);
+            socket.emit('message', newMessage, this.contact.id );
             this.message = '';
             this.scrollToBottom();
         },
