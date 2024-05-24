@@ -101,7 +101,7 @@ export default {
             this.scrollToBottom();
         },
         async loadMore() {
-            if (this.loadingMore) return; // Evitar múltiples solicitudes simultáneas
+            if (this.loadingMore) return;
             this.loadingMore = true;
             const container = this.$refs.messageContainer;
             const currentScrollHeight = container.scrollHeight;

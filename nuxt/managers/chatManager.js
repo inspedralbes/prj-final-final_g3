@@ -9,7 +9,7 @@ if (env.toLowerCase() === "development") {
   url_api = import.meta.env.VITE_APP_API_DEV_URL;
   url_api_mongo = import.meta.env.VITE_APP_MONGO_API_DEV_URL;
 } else if (env.toLowerCase() === "production") {
-  url = import.meta.env.VITE_APP_API_PROD_URL;
+  url_api = import.meta.env.VITE_APP_API_PROD_URL;
   url_api_mongo = import.meta.env.VITE_APP_API_PROD_MONGO_URL;
 }
 
@@ -97,13 +97,28 @@ async function getUserChats(user_id) {
   }
 }
 
+async function getLastMessage(chat_id) {
+  try {
+    const response = await axios.get(`${url_api_mongo}/lastMessage`, {
+      params: {
+        chat_id: chat_id
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 const comChat = {
   checkChat,
   getAllMessages,
   getFirst10Messages,
   getMessages,
   getChats,
-  getUserChats
+  getUserChats,
+  getLastMessage
 };
 
 export default comChat;

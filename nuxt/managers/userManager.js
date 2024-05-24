@@ -7,7 +7,7 @@ let url_api;
 if (env.toLowerCase() === "development") {
   url_api = import.meta.env.VITE_APP_API_DEV_URL;
 } else if (env.toLowerCase() === "production") {
-  url = import.meta.env.VITE_APP_API_PROD_URL;
+  url_api = import.meta.env.VITE_APP_API_PROD_URL;
 }
 
 async function updateUser(user, token) {

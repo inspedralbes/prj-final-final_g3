@@ -421,19 +421,33 @@ app.post("/chat", async (req, res) => {
 });
 
 app.get("/chats", async (req, res) => {
-    try {
-        const chats = await models.chat.find({
-            $or: [
-            { user_id: req.query.user_id },
-            { contact_id: req.query.user_id }
-            ]
+  try {
+    const chats = await models.chat.find({
+      $or: [
+        { user_id: req.query.user_id },
+        { contact_id: req.query.user_id }
+      ]
+    }).lean();
+    if (chats.length !== 0) {
+      const chatsWithMessageCount = await Promise.all(chats.map(async chat => {
+        const messageCount = await models.message.countDocuments({
+          chat_id: chat._id,
+          state: { $in: ["enviado", "recibido"] },
+          user_id: { $ne: req.query.user_id }
         });
-        console.log("Chats:", chats);
-        res.send(chats);
-    } catch (error) {
-        console.error("Error:", error);
-        return [];
+        return {
+          ...chat,
+          messageCount
+        };
+      }));
+
+      console.log("Chats Mongo:", chatsWithMessageCount);
+      res.send(chatsWithMessageCount);
     }
+  } catch (error) {
+    console.error("Error:", error);
+    return [];
+  }
 });
 
 
@@ -500,6 +514,17 @@ app.get("/get10messages", async (req, res) => {
     } catch (error) {
         console.error("Error:", error);
         res.send([]);
+    }
+});
+
+app.get('/lastMessage', async (req, res) => {
+    try {
+        const message = await models.message.findOne({ chat_id: req.query.chat_id }).sort({ sent_at: -1 });
+        console.log("Messages:", message);
+        res.send(message);
+    } catch (error) {
+        console.error("Error:", error);
+        res.send("Error:", error);
     }
 });
 

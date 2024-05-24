@@ -14,19 +14,20 @@
             </div>
         </header>
 
-        <button v-for="chat in chats" :key="chat.id" @click="goToChat(chat)">
+        <div v-for="chat in chats" :key="chat.id" @click="goToChat(chat)">
             <main class="flex justify-between items-center gap-2">
                 <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
                 <div class="flex flex-col justify-center items-start gap-1 max-w-64">
                     <h2 class="font-bold">{{chat.nickname}}</h2>
-                    <p class="text-sm">Tienes mensajes sin leer</p>
+                    <p v-if="chat.messageCount !== 0" class="text-sm">Tens missatges sense llegir</p>
+                    <p v-else class="text-sm">{{chat.lastMessage.content}}</p>
                 </div>
                 <div class="flex flex-col justify-center items-center gap-2">
-                    <p class="text-xs text-[#ADADAD]">hace 1h</p>
-                    <p class="text-sm rounded-full bg-primary size-6 flex justify-center items-center">1</p>
+                    <p class="text-xs text-[#ADADAD]">{{ getTimeDifference(chat.lastMessage.sent_at) }}</p>
+                    <p class="text-sm rounded-full bg-primary size-6 flex justify-center items-center">{{chat.messageCount}}</p>
                 </div>
             </main>
-        </button>
+        </div>
         <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
     </section>
     <Menu />
@@ -61,6 +62,12 @@ import { socket } from '../socket';
                     const userChat = await comChat.getUserChats(userId);
                     chat.nickname = userChat.nickname;
                     chat.avatar = userChat.avatar;
+                    if (chat.messageCount == 0) {
+                        await comChat.getLastMessage(chat._id).then(message => {
+                            console.log(message);
+                            chat.lastMessage = message;
+                        });
+                    }
                     this.chats.push(chat);
                 });
             },
@@ -80,6 +87,34 @@ import { socket } from '../socket';
                 socket.emit('joinChat', chat._id);
                 this.$router.push('/chat');
 
+            },
+            getTimeDifference(sentAt) {
+                const now = new Date();
+                const sentDate = new Date(sentAt);
+                const diffInSeconds = (now - sentDate) / 1000;
+
+                const secondsInMinute = 60;
+                const secondsInHour = secondsInMinute * 60;
+                const secondsInDay = secondsInHour * 24;
+                const secondsInWeek = secondsInDay * 7;
+                const secondsInMonth = secondsInDay * 30;
+                const secondsInYear = secondsInDay * 365;
+
+                if (diffInSeconds < secondsInMinute) {
+                    return `Fa ${Math.floor(diffInSeconds)} segons`;
+                } else if (diffInSeconds < secondsInHour) {
+                    return `Fa ${Math.floor(diffInSeconds / secondsInMinute)} minuts`;
+                } else if (diffInSeconds < secondsInDay) {
+                    return `Fa ${Math.floor(diffInSeconds / secondsInHour)} hores`;
+                } else if (diffInSeconds < secondsInWeek) {
+                    return `Fa ${Math.floor(diffInSeconds / secondsInDay)} dies`;
+                } else if (diffInSeconds < secondsInMonth) {
+                    return `Fa ${Math.floor(diffInSeconds / secondsInWeek)} setmanes`;
+                } else if (diffInSeconds < secondsInYear) {
+                    return `Fa ${Math.floor(diffInSeconds / secondsInMonth)} mesos`;
+                } else {
+                    return `Fa ${Math.floor(diffInSeconds / secondsInYear)} anys`;
+                }
             }
         },
         
