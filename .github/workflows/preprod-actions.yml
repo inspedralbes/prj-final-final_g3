@@ -87,11 +87,31 @@ jobs:
           sed -i 's#TICKETMASTER_API_KEY=#TICKETMASTER_API_KEY=${{ secrets.TICKETMASTER_API_KEY }}#g' .env
           sed -i 's#MAPBOX_TOKEN=#MAPBOX_TIKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
           cd ${{ github.workspace }}
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "[ -d node ] && sudo rm -r node"
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "mkdir node"
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/* ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:node
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/.env ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:node
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "chmod -R 775 node/"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  deployment-nodeChat:
+    needs: [fill-docker-compose]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Conexión al servidor y deploy de node
+        run: |
+          echo "${{ secrets.PREPROD_SECRET_KEY }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          cd nodeChat
+          cp .env.example .env
+          sed -i 's#API_URL=API_URL=${{secrets.MONGO_API_PREPROD_URL}}#g' .env
+          cd ${{ github.workspace }}
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "[ -d nodeChat ] && sudo rm -r nodeChat"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "mkdir nodeChat"
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./nodeChat/* ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:nodeChat
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./nodeChat/.env ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:nodeChat
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "chmod -R 775 nodeChat/"
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   deployment-nuxt:
@@ -126,7 +146,13 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   start-docker:
-    needs: [deployment-laravel, deployment-node, deployment-nuxt]
+    needs:
+      [
+        deployment-laravel,
+        deployment-node,
+        deployment-nuxt,
+        deployment-nodeChat,
+      ]
     runs-on: ubuntu-latest
     steps:
       - name: Conexión al servidor y start de docker-compose

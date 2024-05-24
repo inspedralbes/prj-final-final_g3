@@ -15,19 +15,19 @@ const io = new Server(server, {
     origin: "*",
     methods: ["GET", "POST"],
   },
+  path: "/socket",
 });
 
 const userSockets = new Map();
 
 io.on("connection", (socket) => {
-  socket.on('logged', (userId) => { 
+  socket.on("logged", (userId) => {
     console.log(`Usuario ${userId} se ha conectado`);
     userSockets.set(userId, socket.id);
     console.log(`Usuario ${userId} está asociado con el socket ${socket.id}`);
   });
 
-
-  socket.on("message", (message,contact) => {
+  socket.on("message", (message, contact) => {
     manager
       .insertMessage(message)
       .then((response) => {
@@ -39,16 +39,15 @@ io.on("connection", (socket) => {
             console.log("El usuario no está conectado");
           }
         }
-        
       })
       .catch((error) => {
         console.error(error);
       });
   });
 
-  socket.on("joinChat" , (chatId) => {
-    socket.join(chatId);    
-  })
+  socket.on("joinChat", (chatId) => {
+    socket.join(chatId);
+  });
 
   socket.on("leaveChat", (chatId) => {
     socket.leave(chatId);
@@ -57,7 +56,6 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Usuario desconectado");
   });
-
 });
 
 const PORT = process.env.PORT || 8080;
