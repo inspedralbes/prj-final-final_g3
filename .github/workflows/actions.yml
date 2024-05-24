@@ -162,7 +162,7 @@ jobs:
       [
         deployment-laravel,
         deployment-node,
-        deployement-next,
+        deployment-nuxt,
         deployment-nodeChat,
       ]
     runs-on: ubuntu-latest
