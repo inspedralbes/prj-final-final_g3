@@ -102,7 +102,7 @@ export default {
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
-        // this.loader = true;
+        this.loader = true;
         this.getFollowers().then(() => {
             this.getFollowing().then(() => {
                 this.loader = false;

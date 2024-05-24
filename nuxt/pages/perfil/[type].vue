@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Header />
         <div class="flex flex-row w-fit-content justify-center items-center m-2">
             <NuxtLink to="/perfil">
                 <IconsLeftArrow class="h-full" />

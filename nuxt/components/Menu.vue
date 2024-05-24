@@ -1,6 +1,6 @@
 <template>
     <section
-        class=' w-full fixed bottom-0 py-1 text-white flex justify-around items-center bg-[#212121] backdrop-blur-lg'>
+        class='w-full fixed bottom-0 py-1 text-white flex justify-around items-center bg-[#212121] backdrop-blur-lg'>
         <NuxtLink to="/home" class="flex flex-col justify-center items-center"
             exact-active-class="text-orange-400 fill-orange-400">
             <Home class="size-7" />

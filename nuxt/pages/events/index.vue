@@ -3,6 +3,7 @@
     class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
     <Loader />
   </div>
+  <Header />
   <USlideover v-model="modals.filter" side="left" class="scroll-auto">
     <UTabs v-model="selectedFilter" :items="[{ label: ' Filtres' }, { label: 'Mapa' }]" class="m-2"></UTabs>
     <UCard v-if="selectedFilter === 0" class="flex flex-col flex-1"
