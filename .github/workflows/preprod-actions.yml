@@ -92,6 +92,8 @@ jobs:
           sed -i 's#TICKETMASTER_API_KEY=#TICKETMASTER_API_KEY=${{ secrets.TICKETMASTER_API_KEY }}#g' .env
           sed -i 's#MAPBOX_TOKEN=#MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
           cd ${{ github.workspace }}
+          # Eliminar node_modules
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo rm -rf node/node_modules"
           # Dar permisos a todo
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo chmod -R 777 node/"
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo chmod -R 777 node/*"
