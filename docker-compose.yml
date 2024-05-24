@@ -12,18 +12,18 @@ services:
     depends_on:
       - db
 
-  # nodeChat:
-  #   container_name: nodeChat
-  #   image: arm64v8/node
-  #   volumes:
-  #     - ./nodeChat:/usr/src/app
-  #   working_dir: /usr/src/app
-  #   ports:
-  #     - 8085:8080
-  #   command: sh -c "npm install && node index.js"
-  #   restart: always
-  #   depends_on:
-  #     - laravel
+  nodeChat:
+    container_name: nodeChat
+    image: arm64v8/node
+    volumes:
+      - ./nodeChat:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - 8085:8080
+    command: sh -c "npm install && node index.js"
+    restart: always
+    depends_on:
+      - laravel
 
   nodeMongo:
     container_name: nodeMongo
