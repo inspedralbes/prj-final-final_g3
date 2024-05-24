@@ -90,10 +90,19 @@
 
   <main class="w-[90vw] min-h-screen mx-auto py-4 flex flex-col gap-6 relative bg-[#212121]">
     <h1 class="text-center uppercase text-2xl font-bold text-balance text-white">Els propers esdeveniments més top</h1>
-    <button @click="modals.filter = !modals.filter"
-      class="bg-white hover:bg-[#FF8A1E] text-black font-bold py-2 px-4 rounded-full w-fit">
-      Obrir filtres
-    </button>
+    <div class="flex flex-row w-full justify-between">
+      <div class=" border-white border-b-2 w-[90%] flex flex-row justify-between">
+        <input type="text" class="bg-[#212121] p-2 " placeholder="Cerca un esdeveniment..." v-model="searchFilter"
+          @keyup.enter="busqueda" />
+        <button v-if="searchFilter" @click="clearBusqueda">
+          <IconsCross class="size-8" />
+        </button>
+      </div>
+      <button @click="modals.filter = !modals.filter"
+        class="bg-white hover:bg-[#FF8A1E] text-black font-bold py-2 px-4 rounded-full w-fit">
+        Obrir filtres
+      </button>
+    </div>
     <section class=" flex flex-col gap-3 mb-12">
       <div v-for="evento in eventosFiltrados" :key="evento.id">
         <CardEvent :event="evento" />
@@ -128,6 +137,7 @@ export default {
       newLocation: {},
       selectedFilter: 1,
       loader: false,
+      searchFilter: '',
     };
   },
   async mounted() {
@@ -147,6 +157,14 @@ export default {
     },
     deleteVenue(venue) {
       this.venueSelected = this.venueSelected.filter(v => v !== venue)
+    },
+    busqueda() {
+      console.log(this.searchFilter)
+      eventManager.getEventsByName(this.searchFilter)
+    },
+    clearBusqueda() {
+      this.searchFilter = ''
+      eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50)
     },
     filterEvents() {
       let data = {

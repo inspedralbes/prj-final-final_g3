@@ -55,7 +55,6 @@ async function getEventsByDistance(lat, lon, distance) {
     } else {
       store.setEvents(Object.values(eventosAgrupados));
     }
-    
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
@@ -94,7 +93,41 @@ async function getFilteredEvents(data) {
       store.setEvents(Object.values(eventosAgrupados));
     }
     // return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
 
+async function getEventsByName(data) {
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/search`, {
+      param: data,
+    });
+    // console.log(response.data.events);
+    const eventos = response.data.events;
+    const eventosAgrupados = {};
+    eventos.forEach((evento) => {
+      const key = `${evento.artist}-${evento.date}`;
+      if (
+        !eventosAgrupados[key] ||
+        evento.event.length < eventosAgrupados[key].event.length
+      ) {
+        eventosAgrupados[key] = evento;
+      }
+    });
+    if (store.getLoggedIn()) {
+      const likedEventIds = await getLikeEvents();
+
+      Object.values(eventosAgrupados).forEach((evento) => {
+        evento.like = likedEventIds.includes(evento.id);
+      });
+
+      store.setEvents(Object.values(eventosAgrupados));
+    } else {
+      store.setEvents(Object.values(eventosAgrupados));
+    }
+    // return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -118,6 +151,7 @@ const eventManager = {
   getLocations,
   getEventsByDistance,
   getFilteredEvents,
+  getEventsByName,
 };
 
 export default eventManager;
