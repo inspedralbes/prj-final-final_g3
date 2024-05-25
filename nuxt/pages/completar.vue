@@ -2,6 +2,7 @@
     <main class='w-screen h-screen bg-[#212121]'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold'>Completa el teu perfil</h1>
+            <h1 v-if="error" class="text-red-500">{{ message }}</h1>
             <form class='flex flex-col gap-6' @submit.prevent>
                 <input class='bg-transparent border-b border-gray-400 outline-none' type="password"
                     placeholder="Contrasenya" v-model="password" />
@@ -47,7 +48,9 @@ export default {
             email: "",
             surnames: "",
             loginWith: "",
-            googleId: ""
+            googleId: "",
+            error: false,
+            message: ""
         }
     },
     created() {
@@ -101,7 +104,7 @@ export default {
                 this.store.setLoggedIn(true);
                 this.$router.push('/events');
             } catch (error) {
-                console.error(error);
+                console.log('este es el error pedazo de buenisimo',error);
             } finally {
                 this.isLoading = false;
             }

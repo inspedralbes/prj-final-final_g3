@@ -123,12 +123,11 @@ async function register(userData) {
       nickname: userData.nickname,
       password: userData.password,
       birthdate: userData.birthdate,
-      passwordconfirmation: userData.passwordconfirmation,
+      password_confirmation: userData.password_confirmation,
     });
     return response;
   } catch (error) {
-    console.error("Error registering user:", error);
-    throw new Error("Failed to register user");
+    return error.response;
   }
 }
 
@@ -140,9 +139,7 @@ async function login(userData) {
     });
     return response;
   } catch (error) {
-    console.log(error);
-    console.error("Error logging in user:", error);
-    throw new Error("Failed to log in user");
+    return error.response;
   }
 }
 

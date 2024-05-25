@@ -9,7 +9,7 @@
           <img class="size-24 rounded-full object-cover " :src="avatar || '/img/standard_pfp.jpg'" alt="" />
           <p class="m-4">Canvia la imatge de perfil</p>
         </label>
-        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Nickname"
+        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Nom d'usuari"
           v-model="nickname" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" autofocus placeholder="Nom"
           v-model="name" />

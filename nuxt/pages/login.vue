@@ -2,7 +2,8 @@
     <main class='w-screen h-screen bg-[#212121]'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center '>
             <h1 class='text-4xl font-semibold text-white'>Inicia sessió</h1>
-
+            
+            <h1 v-if="error" class="text-red-500">{{ message }}</h1>
             <form class='flex flex-col gap-6' @submit.prevent="login">
                 <input class='bg-transparent border-b border-gray-400 outline-none text-white' type="email"
                     autoFocus="true" placeholder="E-mail" v-model="email" />
@@ -46,6 +47,8 @@ export default {
             email: '',
             password: '',
             isLoading: false,
+            error: false,
+            message: ''
         };
     },
 
@@ -77,7 +80,10 @@ export default {
                 socket.emit('logged', this.store.getId());
                 this.$router.push('/events');
             } else {
-
+                this.isLoading = false;
+                this.error = true;
+                this.message = response.data.message;
+                
             }
         }
     }

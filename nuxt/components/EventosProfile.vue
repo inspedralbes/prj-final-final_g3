@@ -11,6 +11,7 @@
             </div>
             <h1 class="absolute bottom-2 left-2 font-bold">{{ event.event }}</h1>
         </NuxtLink>
+
     </section>
 </template>
 

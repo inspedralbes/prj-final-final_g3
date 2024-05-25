@@ -3,9 +3,8 @@
         class="h-full w-full fixed inset-y-0 right-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
         <Loader />
     </div>
-    <main v-if="!loader" class='bg-[#212121] flex flex-col gap-10 min-h-screen'>
-        <Logout class="absolute top-3 right-5" />
-
+    <main v-if="!loader" class='bg-[#212121] flex flex-col gap-10 min-h-screen '>
+        <Header />
         <section class='bg-[#212121] flex flex-col items-center gap-6'>
             <article class='w-full px-2 py-4 flex justify-around items-center'>
                 <img class='size-24 rounded-full object-cover' :src="getImage" alt="" />
@@ -26,7 +25,7 @@
                         </div>
                         <div>
                             <p class="te+xt-white">5</p>
-                            <p class='text-xs text-white/60'>Events</p>
+                            <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                     </div>
                 </div>
@@ -49,30 +48,13 @@
                 <button class="text-white"
                     :class="selectedSection === 'Eventos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Eventos')">
-                    Eventos
+                    Esdeveniments
                 </button>
                 <button class="text-white"
                     :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Gustos')">
                     Gustos
                 </button>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
 
             <PostsProfile class="" v-if="selectedSection === 'Posts'" />

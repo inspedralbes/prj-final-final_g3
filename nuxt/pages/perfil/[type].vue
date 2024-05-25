@@ -1,10 +1,11 @@
 <template>
     <div>
+        <Header />
         <div class="flex flex-row w-fit-content justify-center items-center m-2">
             <NuxtLink to="/perfil">
                 <IconsLeftArrow class="h-full" />
             </NuxtLink>
-            <UTabs v-model="type" :items="[{ label: ' Seguidors' }, { label: 'Seguits' }]" class="mx-2 w-2/3"></UTabs>
+            <UTabs v-model="type" :items="[{ label: 'Seguidors' }, { label: 'Seguits' }]" class="mx-2 w-2/3"></UTabs>
         </div>
         <div v-if="type === 0 && followers.length != 0" v-for="follower in followers"
             class="w-full flex flex-col justify-center items-center">
