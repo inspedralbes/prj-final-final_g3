@@ -14,7 +14,7 @@
             </div>
         </header>
 
-        <div v-for="chat in chats" :key="chat.id" @click="goToChat(chat)">
+        <div v-for="chat in chats.sort((a, b) => new Date(b.lastMessage.sent_at) - new Date(a.lastMessage.sent_at))" :key="chat.id" @click="goToChat(chat)">
             <main class="flex justify-between items-center gap-2">
                 <img class="size-16 rounded-full object-cover" src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE=" alt="">
                 <div class="flex flex-col justify-center items-start gap-1 max-w-64">
@@ -62,12 +62,12 @@ import { socket } from '../socket';
                     const userChat = await comChat.getUserChats(userId);
                     chat.nickname = userChat.nickname;
                     chat.avatar = userChat.avatar;
-                    if (chat.messageCount == 0) {
-                        await comChat.getLastMessage(chat._id).then(message => {
-                            console.log(message);
-                            chat.lastMessage = message;
-                        });
-                    }
+                    await comChat.getLastMessage(chat._id).then(message => {
+                        console.log(message);
+                        chat.lastMessage = message;
+                    });
+                    
+                    console.log(chat);
                     this.chats.push(chat);
                 });
             },
@@ -120,12 +120,15 @@ import { socket } from '../socket';
         
         components: {
             AddChat,
-            Search,
-            
+            Search
         },
         mounted() {
             if(!this.store.getLoggedIn()) return this.$router.push('/join');
             this.getChats();
+            socket.on('notification', (notification) => {
+                console.log(notification);
+            });
+
         }
     }
 </script>

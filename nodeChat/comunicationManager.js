@@ -22,6 +22,15 @@ async function insertMessage(message) {
   }
 }
 
+async function getChats(userId) {
+  try {
+    const response = await axios.get(`${url}chat`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 const manager = {
   insertMessage

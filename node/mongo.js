@@ -440,8 +440,7 @@ app.get("/chats", async (req, res) => {
           messageCount
         };
       }));
-
-      console.log("Chats Mongo:", chatsWithMessageCount);
+      
       res.send(chatsWithMessageCount);
     }
   } catch (error) {
