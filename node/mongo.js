@@ -483,7 +483,7 @@ app.post("/message", async (req, res) => {
             content: message.content,
             sent_at: message.sent_at,
             read_at: message.read_at,
-            state: 'enviado'
+            state: message.state || 'enviado'
         };
         res.send(await models.message.create(createdMessage));
     } catch (error) {
@@ -503,17 +503,48 @@ app.get("/messages", async (req, res) => {
 });
 
 app.get("/get10messages", async (req, res) => {
-    try {
-        const messages = await models.message.find({ 
-            chat_id: req.query.chat_id,
-            _id: { $lt: req.query.message_id }
-        }).limit(45).sort({ sent_at: -1 });
-        console.log("Messages:", messages);
-        res.send(messages);
-    } catch (error) {
-        console.error("Error:", error);
-        res.send([]);
-    }
+  try {
+      const chatId = req.query.chat_id;
+      const messageId = req.query.message_id;
+
+      // Primero obtenemos todos los mensajes con estado 'recibido' o 'enviado'
+      const prioritizedMessages = await models.message.find({
+          chat_id: chatId,
+          $or: [
+              { state: 'recibido' },
+              { state: 'enviado' }
+          ],
+          _id: { $lt: messageId }
+      }).sort({ sent_at: -1 });
+
+      // Si no hay mensajes priorizados, la segunda consulta será a partir de message_id
+      const lastMessageId = prioritizedMessages.length > 0 
+          ? prioritizedMessages[prioritizedMessages.length - 1]._id 
+          : messageId;
+
+      // Luego obtenemos 45 mensajes adicionales a partir del último mensaje priorizado
+      const additionalMessages = await models.message.find({
+          chat_id: chatId,
+          _id: { $lt: lastMessageId }
+      }).limit(45).sort({ sent_at: -1 });
+
+      // Combinamos los resultados, evitando duplicados
+      const messageIds = new Set(prioritizedMessages.map(msg => msg._id.toString()));
+      const combinedMessages = [...prioritizedMessages];
+
+      additionalMessages.forEach(msg => {
+          if (!messageIds.has(msg._id.toString())) {
+              combinedMessages.push(msg);
+              messageIds.add(msg._id.toString());
+          }
+      });
+
+      console.log("Messages:", finalMessages);
+      res.send(finalMessages);
+  } catch (error) {
+      console.error("Error:", error);
+      res.send([]);
+  }
 });
 
 app.get('/lastMessage', async (req, res) => {

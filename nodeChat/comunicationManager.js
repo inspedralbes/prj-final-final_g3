@@ -13,7 +13,7 @@ async function insertMessage(message) {
       user_id: message.user_id,
       contact_id: message.contact_id,
       content: message.content,
-      state: 'leido'
+      state: message.status,
     });
     console.log(response);
     return response.data;

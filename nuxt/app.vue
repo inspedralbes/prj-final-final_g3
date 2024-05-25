@@ -7,6 +7,7 @@
 <script>
 import userManager from '@/managers/userManager.js';
 import eventManager from './managers/eventManager.js';
+
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
 
@@ -23,10 +24,12 @@ export default {
     this.fetchGeolocation();
     eventManager.getLocations();
     this.connectSocket();
-    socket.on("notification", (message) => {
-      console.log("Notificacion");
-      const toast = useToast();
-      toast.add({ title: 'Has rebut un nou missatge'});
+    socket.on("notification", async () => {
+      if (this.$route.path !== '/chats') {
+        const toast = useToast();
+        toast.add({ title: 'Has rebut un nou missatge'});
+      }
+      
     });
   },
   methods: {

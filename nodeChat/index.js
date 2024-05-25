@@ -28,9 +28,14 @@ io.on("connection", (socket) => {
 
 
   socket.on("message", (message,contact) => {
-    manager
-      .insertMessage(message)
-      .then((response) => {
+    if (io.sockets.adapter.rooms.get(message.chat_id)?.size == 2) {
+      message.status = "leido";
+    } else if (userSockets.has(contact)) {
+      message.status = "recibido";
+    }else{
+      message.status = "enviado";
+    }
+      manager.insertMessage(message).then((response) => {
         io.to(response.chat_id).emit("message", response);
         if (io.sockets.adapter.rooms.get(response.chat_id)?.size != 2) {
           if (userSockets.has(contact)) {
