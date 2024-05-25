@@ -558,6 +558,20 @@ app.get('/lastMessage', async (req, res) => {
     }
 });
 
+app.put("/markMessagesAsReceived", async (req, res) => {
+  const { chatId, userId } = req.body;
+  try {
+    await models.message.updateMany(
+      { chat_id: chatId, user_id: { $ne: userId }, state: "enviado" },
+      { $set: { state: "recibido" } }
+    );
+    res.send("Messages marked as received");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error marking messages as received");
+  }
+});
+
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
 });
