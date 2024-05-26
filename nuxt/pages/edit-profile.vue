@@ -19,7 +19,11 @@
           v-model="email" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="date" placeholder="Data de naixement"
           v-model="birthdate" />
-
+        <div class="flex flex-row gap-x-2">
+          <label for="private" class='text-white'>Vols que el teu perfil sigui privat?</label>
+          <UToggle v-model="private" color="orange" on-icon="i-heroicons-check-20-solid"
+            off-icon="i-heroicons-x-mark-20-solid" />
+        </div>
         <button class="flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600"
           type="submit">
           <Loader v-if="isLoading" />
@@ -55,7 +59,8 @@ export default {
       birthdate: '',
       avatar: '',
       Token: '',
-      isLoading: false
+      isLoading: false,
+      private: false
     };
   },
   mounted() {
@@ -68,6 +73,7 @@ export default {
     this.avatar = userInfo.avatar;
     this.email = userInfo.email;
     this.birthdate = userInfo.birthdate;
+    this.private = userInfo.private;
   },
   methods: {
     async update() {
@@ -79,7 +85,8 @@ export default {
         surnames: this.surnames,
         email: this.email,
         avatar: this.avatar,
-        birthdate: this.birthdate
+        birthdate: this.birthdate,
+        private: this.private
       }
 
       const response = await userManager.updateUser(user, this.Token);

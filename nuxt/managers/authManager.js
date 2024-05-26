@@ -124,6 +124,7 @@ async function register(userData) {
       password: userData.password,
       birthdate: userData.birthdate,
       password_confirmation: userData.password_confirmation,
+      private: userData.private,
     });
     return response;
   } catch (error) {
@@ -169,6 +170,7 @@ async function completeProfile(userData) {
       birthdate: userData.birthdate,
       passwordconfirmation: userData.passwordconfirmation,
       loginWith: userData.loginWith,
+      private: userData.private,
     });
 
     return response.data;

@@ -16,6 +16,7 @@ export const useStores = defineStore("counter", {
       followingUsers: [],
       followersUsers: [],
       events: [],
+      private: false,
     },
     otherUserInfo: {
       id: null,
@@ -24,6 +25,7 @@ export const useStores = defineStore("counter", {
       followingUsers: [],
       followersUsers: [],
       events: [],
+      private: false,
     },
     events: [],
     chatUser: {},

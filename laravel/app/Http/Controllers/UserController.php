@@ -229,6 +229,7 @@ class UserController extends Controller
             'birthdate' => $request->birthdate,
             'password' => bcrypt($request->password),
             'loginWith' => 'email',
+            'private' => $request->private,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
@@ -401,6 +402,8 @@ class UserController extends Controller
         }
         $user->birthdate = $request->birthdate;
         $user->nickname = $request->nickname;
+        $user->password = bcrypt($request->password);
+        $user->private = $request->private;
 
         return response()->json($user->save());
     }
@@ -470,6 +473,7 @@ class UserController extends Controller
             }
         }
 
+        $user->private = $request->private;
 
         $user->save();
 
