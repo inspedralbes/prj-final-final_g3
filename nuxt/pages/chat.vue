@@ -27,7 +27,8 @@
             </div>
         </header>
 
-        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto" @scroll="handleScroll">
+        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto"
+            @scroll="handleScroll">
             <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
             <div class="w-full flex flex-col items-center gap-2">
                 <div v-for="msg in messages" :key="msg.id"
@@ -43,7 +44,7 @@
                     <Plus class="size-5 border-white border-2 rounded-full" />
                 </button>
                 <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
-                    placeholder="Escribe tu mensaje..." @keyup.enter="sendMessage" v-model="message">
+                    placeholder="Escriu el teu missatge..." @keyup.enter="sendMessage" v-model="message">
             </div>
             <button class="bg-primary rounded-full p-[6px]" @click="sendMessage">
                 <Send class="size-5" />
@@ -91,7 +92,7 @@ export default {
                 content: this.message
             }
 
-            socket.emit('message', newMessage, this.contact.id );
+            socket.emit('message', newMessage, this.contact.id);
             this.message = '';
             this.scrollToBottom();
         },

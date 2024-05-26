@@ -71,6 +71,7 @@ async function follow(userId) {
         },
       }
     );
+    await getFolloweds();
     return response;
   } catch (error) {
     console.error("Error following user:", error);
@@ -86,6 +87,7 @@ async function unfollow(userId) {
         Authorization: `Bearer ${token}`,
       },
     });
+    await getFolloweds();
     return response;
   } catch (error) {
     console.error("Error unfollowing user:", error);
@@ -102,6 +104,23 @@ async function getFollowers() {
       },
     });
     return response.data;
+  } catch (error) {
+    console.error("Error fetching followers:", error);
+  }
+}
+
+async function getFolloweds() {
+  const store = useStores();
+  try {
+    const response = await axios.get(
+      `${url_api}/users/followed/${store.getId()}`,
+      {
+        headers: {
+          Authorization: `Bearer ${store.getToken()}`,
+        },
+      }
+    );
+    store.setFollowed(response.data);
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
@@ -167,9 +186,8 @@ async function deletePost(postID) {
   }
 }
 
-async function getPosts() {
+async function getPosts(userID) {
   const store = useStores();
-  const userID = store.getId();
 
   try {
     const response = await axios.get(`${url_api_mongo}/posts?userId=${userID}`);
@@ -237,13 +255,15 @@ async function commentPost(postID, content) {
   }
 }
 
-async function getComments(postID){
+async function getComments(postID) {
   try {
-    const response = await axios.get(`http://localhost:8086/comments?postId=${postID}`)
-    return response.data
-} catch (error) {
-    console.error(error)
-}
+    const response = await axios.get(
+      `http://localhost:8086/comments?postId=${postID}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function getEventCounterFollowers(id) {
@@ -298,6 +318,7 @@ const comManager = {
   follow,
   unfollow,
   getFollowers,
+  getFolloweds,
   commentPost,
   getComments,
   getPostById,

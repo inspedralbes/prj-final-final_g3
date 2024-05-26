@@ -1,5 +1,6 @@
 <template>
-    <section @click="closeModal" class="w-full h-screen bg-white/20 fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm">
+    <section @click="closeModal"
+        class="w-full h-screen bg-white/20 fixed top-0 left-0 flex justify-center items-center backdrop-blur-sm">
         <article class="bg-black w-[90%] px-4 rounded-md py-1">
             <header class="w-full flex justify-between items-center py-2">
                 <button @click="closeModal" class="hover:bg-gray-700/40 transition duration-300 rounded-full p-1">
@@ -23,7 +24,7 @@
                             <div class="flex items-center gap-3">
                                 <h3 class="font-bold">{{ this.name }}</h3>
 
-                                <p class="text-xs text-gray-300">Hace 22h</p>
+                                <p class="text-xs text-gray-300">Fa 22h</p>
 
                             </div>
                             <p class="text-sm">@{{ this.nickname }}</p>
@@ -34,8 +35,8 @@
                 <p class="px-3 text-sm">{{ post.content }}</p>
             </main>
 
-            <p class="mt-12 mb-2 px-3 text-sm text-gray-500">Respondiendo a <span class="text-blue-400">@{{
-                    this.nickname }}</span></p>
+            <p class="mt-12 mb-2 px-3 text-sm text-gray-500">Responent a<span class="text-blue-400">@{{
+                this.nickname }}</span></p>
             <div class="flex items-start gap-3">
                 <img class="size-12 rounded-full object-cover"
                     src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4bfe3034-0815-4837-8428-e8e9d8cb3807/dg2octu-40764d88-39cd-48c2-8742-b8924ad68130.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzRiZmUzMDM0LTA4MTUtNDgzNy04NDI4LWU4ZTlkOGNiMzgwN1wvZGcyb2N0dS00MDc2NGQ4OC0zOWNkLTQ4YzItODc0Mi1iODkyNGFkNjgxMzAuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Rf4kIJqwoe-u2-qMRW1rCjCDwsnO8-79KTZLQE0Vcd0"

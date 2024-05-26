@@ -20,6 +20,7 @@ async function updateUser(user, token) {
         surnames: user.surnames,
         email: user.email,
         birthdate: user.birthdate,
+        avatar: user.avatar,
       },
       {
         headers: {
@@ -44,7 +45,7 @@ async function getFollowers() {
         },
       }
     );
-    return response.data.count;
+    store.setFollowers(response.data);
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
@@ -61,7 +62,7 @@ async function getFollowed() {
         },
       }
     );
-    return response.data.count;
+    store.setFollowed(response.data);
   } catch (error) {
     console.error("Error fetching followers:", error);
   }

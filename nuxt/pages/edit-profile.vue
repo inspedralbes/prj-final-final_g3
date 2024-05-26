@@ -3,16 +3,21 @@
     <section class="w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center">
       <h1 class="text-4xl font-semibold">Edita el teu perfil</h1>
 
-      <form class="flex flex-col gap-6" @submit.prevent="update">
-        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" autofocus placeholder="Name"
-          v-model="name" />
-        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Nickname"
+      <form class="flex flex-col gap-6 " @submit.prevent="update">
+        <label for="avatarInput" class="relative flex flex-row items-center hover:cursor-pointer">
+          <input id="avatarInput" type="file" class="hidden" @change="handleAvatarChange" accept="image/*" />
+          <img class="size-24 rounded-full object-cover " :src="avatar || '/img/standard_pfp.jpg'" alt="" />
+          <p class="m-4">Canvia la imatge de perfil</p>
+        </label>
+        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Nom d'usuari"
           v-model="nickname" />
-        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Surnames"
+        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" autofocus placeholder="Nom"
+          v-model="name" />
+        <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Cognoms"
           v-model="surnames" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Email"
           v-model="email" />
-        <input class="bg-transparent border-b border-gray-400 outline-none" type="date" placeholder="Birthdate"
+        <input class="bg-transparent border-b border-gray-400 outline-none" type="date" placeholder="Data de naixement"
           v-model="birthdate" />
 
         <button class="flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600"
@@ -48,6 +53,7 @@ export default {
       surnames: '',
       email: '',
       birthdate: '',
+      avatar: '',
       Token: '',
       isLoading: false
     };
@@ -59,6 +65,7 @@ export default {
     this.name = userInfo.name;
     this.nickname = userInfo.nickname;
     this.surnames = userInfo.surnames;
+    this.avatar = userInfo.avatar;
     this.email = userInfo.email;
     this.birthdate = userInfo.birthdate;
   },
@@ -71,6 +78,7 @@ export default {
         nickname: this.nickname,
         surnames: this.surnames,
         email: this.email,
+        avatar: this.avatar,
         birthdate: this.birthdate
       }
 
@@ -81,6 +89,14 @@ export default {
         this.$router.push('/perfil');
         this.isLoading = false;
       }
+    },
+    handleAvatarChange(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.avatar = e.target.result;
+      }
+      reader.readAsDataURL(file);
     }
   }
 }

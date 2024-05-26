@@ -11,15 +11,18 @@ export const useStores = defineStore("counter", {
       nickname: "",
       email: "",
       token: "",
+      avatar: "",
       nickname: "",
       birthdate: "",
-      followedUsers: [],
+      followingUsers: [],
+      followersUsers: [],
     },
     events: [],
     chatUser: {},
     locations: [],
     distance: 50,
     userLocation: {},
+    newLocation: {},
     individualPostInfo: {},
   }),
   persist: {
@@ -38,6 +41,7 @@ export const useStores = defineStore("counter", {
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.email = userInfo.email;
       this.userInfo.token = userInfo.token;
+      this.userInfo.avatar = userInfo.avatar;
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
     },
@@ -56,9 +60,12 @@ export const useStores = defineStore("counter", {
     },
     setChatUser(user) {
       this.chatUser = user;
-    },    
-    setFollowedUsers(followedUsers) {
-      this.followedUsers = followedUsers;
+    },
+    setFollowers(users) {
+      this.userInfo.followersUsers = users;
+    },
+    setFollowed(users) {
+      this.userInfo.followingUsers = users;
     },
     setLocations(locations) {
       this.locations = locations.locations;

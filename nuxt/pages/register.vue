@@ -2,6 +2,7 @@
     <main class='w-screen h-screen bg-[#212121]'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold text-white'>Registra't</h1>
+            <h1 v-if="error" class="text-red-500">{{ message }}</h1>
             <form class="flex flex-col gap-6" @submit.prevent="register">
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="email"
                     placeholder="Email" v-model="email" />
@@ -16,7 +17,7 @@
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="password"
                     placeholder="Contrasenya" v-model="password" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="password"
-                    placeholder="Repeteix la contrasenya" v-model="passwordconfirmation" />
+                    placeholder="Repeteix la contrasenya" v-model="password_confirmation" />
                 <button
                     class="flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600">
                     <span v-if="!isLoading" class="text-white">Registra'm</span>
@@ -58,14 +59,17 @@ export default {
             nickname: '',
             birthdate: '',
             password: '',
-            passwordconfirmation: '',
+            password_confirmation: '',
             isLoading: false,
+            error: false,
+            message: ''
         };
     },
 
     methods: {
         async register() {
-            this.isLoading = true;
+            this.isLoading = true; 
+
             let userData = {
                 email: this.email,
                 name: this.name,
@@ -73,9 +77,8 @@ export default {
                 nickname: this.nickname,
                 birthdate: this.birthdate,
                 password: this.password,
-                passwordconfirmation: this.passwordconfirmation
+                password_confirmation: this.password_confirmation,
             };
-
 
             const response = await authManager.register(userData);
 
@@ -89,14 +92,18 @@ export default {
                     email: user.email,
                     token: token,
                     birthdate: user.birthdate,
-                    nickname: user.nickname
+                    nickname: user.nickname,
+                    avatar: user.avatar,
                 });
                 this.store.setLoggedIn(true);
                 this.isLoading = false;
                 socket.emit('logged', this.store.getId());
                 this.$router.push('/events');
             } else {
-
+                this.isLoading = false;
+                this.error = true;
+                this.message = response.data.message.join(', ');
+                console.log(response);
             }
 
 

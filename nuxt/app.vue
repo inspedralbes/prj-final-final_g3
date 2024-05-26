@@ -50,7 +50,7 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
-    connectSocket(){
+    connectSocket() {
       if (this.store.getLoggedIn()) {
         socket.emit('logged', this.store.getId());
         this.getChats();

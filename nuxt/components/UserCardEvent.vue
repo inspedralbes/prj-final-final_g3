@@ -9,14 +9,14 @@
                 <p class="text-sm text-gray-300">@{{ follower.nickname }}</p>
             </div>
         </article>
-        
+
         <div class="flex items-center gap-3">
             <div v-if="loader" class="flex justify-center items-center">
-        <div class="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600"></div>
-      </div>
+                <div class="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600"></div>
+            </div>
             <button class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm"
                 v-if="store.getId() != follower.id && !loader" @click="followOr(follower.follow)">
-                {{ follower.follow ? 'Siguiendo' : 'Seguir' }}
+                {{ follower.follow ? 'Seguint' : 'Seguir' }}
             </button>
             <button class="p-1 rounded-full bg-gradient-to-r from-primary to-yellow-500" style="opacity: 0.5;">
                 <IconsChat class="size-5" />
@@ -50,7 +50,7 @@ export default {
                 try {
                     this.follower.follow = true;
                     response = await comManager.follow(this.follower.id);
-                    this.store.followers += 1;
+                    // this.store.followers += 1;
                 } catch (error) {
                     this.follower.follow = false;
 
@@ -60,7 +60,7 @@ export default {
                 try {
                     this.follower.follow = false;
                     response = await comManager.unfollow(this.follower.id);
-                    this.store.followers -= 1;
+                    // this.store.followers -= 1;
 
                 } catch (error) {
                     this.follower.follow = true;
