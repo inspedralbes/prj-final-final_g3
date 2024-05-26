@@ -168,7 +168,7 @@ async function completeProfile(userData) {
       nickname: userData.nickname,
       password: userData.password,
       birthdate: userData.birthdate,
-      passwordconfirmation: userData.passwordconfirmation,
+      password_confirmation: userData.confirmPassword,
       loginWith: userData.loginWith,
       private: userData.private,
     });

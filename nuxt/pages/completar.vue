@@ -56,7 +56,7 @@ export default {
             googleId: "",
             error: false,
             message: "",
-            private: "",
+            private: false,
         }
     },
     created() {
