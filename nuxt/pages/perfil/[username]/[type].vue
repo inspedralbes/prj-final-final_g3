@@ -9,19 +9,22 @@
         </div>
         <div v-if="type === 0 && followers.length != 0" v-for="follower in followers"
             class="w-full flex flex-col justify-center items-center">
-            <CardUser class="w-2/3" :user="follower.follower" />
+            <CardUser class="w-full" :user="follower.follower" />
             <hr>
         </div>
         <div v-else-if="type === 0 && followers.length === 0" class="flex justify-center items-center">
-            <h2 class="font-bold">No tens seguidors</h2>
+            <h2 v-if="checkUser" class="font-bold">No tens seguidors</h2>
+            <h2 v-else class="font-bold">Aquest usuari no té seguidors</h2>
+
         </div>
         <div v-else-if="type === 1 && following.length != 0" v-for="followed in following"
             class="w-full flex flex-col justify-center items-center">
-            <CardUser class="w-2/3" :user="followed.followed" />
+            <CardUser class="w-full" :user="followed.followed" />
             <hr>
         </div>
         <div v-else-if="type === 1 && following.length === 0" class="flex justify-center items-center">
-            <h2 class="font-bold">No segueixes a ningú</h2>
+            <h2 v-if="checkUser" class="font-bold">No segueixes a ningú</h2>
+            <h2 v-else class="font-bold">Aquest usuari no segueix a ningú</h2>
         </div>
     </div>
     <Menu />
@@ -36,8 +39,10 @@ export default {
     data() {
         return {
             store: useStores(),
-            followers: computed(() => this.checkUser ? this.store.userInfo.followersUsers.followers : this.store.otherUserInfo.followersUsers.followers),
-            following: computed(() => this.checkUser ? this.store.userInfo.followingUsers.followed : this.store.otherUserInfo.followingUsers.followed),
+            followers: computed(() => this.store.userInfo.followersUsers.followers),
+            following: computed(() => this.store.userInfo.followingUsers.followed),
+            oFollowing: computed(() => this.store.otherUserInfo.followingUsers.followed) || [],
+            oFollowers: computed(() => this.store.otherUserInfo.followersUsers.followers) || [],
             type: this.$route.params.type === 'followers' ? 0 : 1,
             user: this.$route.params.username
         }
@@ -48,8 +53,8 @@ export default {
             if (!this.followers) this.getFollowers();
             if (!this.following) this.getFollowing();
         } else {
-            if (!this.followers) this.getFollowers();
-            if (!this.following) this.getFollowing();
+            if (!this.oFollowers) this.getFollowers();
+            if (!this.oFollowing) this.getFollowing();
         }
     },
     methods: {
@@ -63,7 +68,7 @@ export default {
     computed: {
         checkUser() {
             return this.store.userInfo.username === this.user
-        }
+        },
     }
 }
 </script>

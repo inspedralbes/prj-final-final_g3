@@ -43,7 +43,11 @@ async function getFollowers(id) {
         Authorization: `Bearer ${store.getToken()}`,
       },
     });
-    store.setFollowers(response.data);
+    if (id === store.getId()) {
+      store.setFollowers(response.data);
+    } else {
+      store.setOtherFollowers(response.data);
+    }
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
@@ -58,7 +62,11 @@ async function getFollowed(id) {
         Authorization: `Bearer ${store.getToken()}`,
       },
     });
-    store.setFollowed(response.data);
+    if (id === store.getId()) {
+      store.setFollowed(response.data);
+    } else {
+      store.setOtherFollowed(response.data);
+    }
   } catch (error) {
     console.error("Error fetching followers:", error);
   }

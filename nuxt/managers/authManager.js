@@ -137,6 +137,7 @@ async function login(userData) {
       email: userData.email,
       password: userData.password,
     });
+
     return response;
   } catch (error) {
     return error.response;
@@ -148,8 +149,8 @@ async function logout() {
   try {
     await axios.post(`${url_api}/logout`, null, {
       headers: {
-        Authorization: `Bearer ${store.getToken()}`
-      }
+        Authorization: `Bearer ${store.getToken()}`,
+      },
     });
     store.setLogout();
   } catch (error) {

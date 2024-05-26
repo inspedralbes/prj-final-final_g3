@@ -12,16 +12,16 @@
                     <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
-                            <!-- <NuxtLink to="/perfil/followers"> -->
-                            <p class="text-white">{{ User.followers }}</p>
-                            <p class='text-xs text-white/60'>Seguidors</p>
-                            <!-- </NuxtLink> -->
+                            <NuxtLink :to="`/perfil/${User.nickname}/followers`">
+                                <p class="text-white">{{ User.followers }}</p>
+                                <p class='text-xs text-white/60'>Seguidors</p>
+                            </NuxtLink>
                         </div>
                         <div>
-                            <!-- <NuxtLink to="/perfil/following"> -->
-                            <p class="text-white">{{ User.following }}</p>
-                            <p class='text-xs text-white/60'>Seguits</p>
-                            <!-- </NuxtLink> -->
+                            <NuxtLink :to="`/perfil/${User.nickname}/following`">
+                                <p class="text-white">{{ User.following }}</p>
+                                <p class='text-xs text-white/60'>Seguits</p>
+                            </NuxtLink>
                         </div>
                         <div>
                             <p class="te+xt-white">5</p>
