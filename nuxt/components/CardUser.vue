@@ -53,7 +53,7 @@ export default {
         },
         goToProfile() {
             this.store.setOtherUserInfo(this.user)
-            // this.$router.push(`/perfil/${this.user.nickname}`);
+            this.$router.push(`/perfil/${this.user.nickname}`);
         }
     },
     computed: {

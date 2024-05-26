@@ -133,15 +133,39 @@ async function getEventsByName(data) {
   }
 }
 
-async function getLikeEvents() {
+async function getEventsByIds(ids) {
+  try {
+    const idsString = ids.join(",");
+    // Realiza la solicitud GET a la API con la cadena de IDs
+    const response = await axios.get(`${url_api}/events/${idsString}`);
+    return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+async function getLikeEvents(id) {
   const store = useStores();
-  const User = store.getUserInfo();
+  let user = store.getUserInfo().id;
+
+  if (id) {
+    user = id;
+  }
+
   try {
     const response = await axios.get(
-      `${url_api_mongo}/likeEvents?userId=${User.id}`
+      `${url_api_mongo}/likeEvents?userId=${user}`
     );
-    // console.log(response.data);
-    return response.data.map((like) => like.eventId);
+
+    if (id) {
+      const events = await getEventsByIds(
+        response.data.map((like) => like.eventId)
+      );
+      return events;
+    } else {
+      return response.data.map((like) => like.eventId);
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -152,6 +176,7 @@ const eventManager = {
   getEventsByDistance,
   getFilteredEvents,
   getEventsByName,
+  getLikeEvents,
 };
 
 export default eventManager;

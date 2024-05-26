@@ -15,6 +15,7 @@ export const useStores = defineStore("counter", {
       birthdate: "",
       followingUsers: [],
       followersUsers: [],
+      events: [],
     },
     otherUserInfo: {
       id: null,
@@ -22,6 +23,7 @@ export const useStores = defineStore("counter", {
       nickname: "",
       followingUsers: [],
       followersUsers: [],
+      events: [],
     },
     events: [],
     chatUser: {},
@@ -33,7 +35,14 @@ export const useStores = defineStore("counter", {
   }),
   persist: {
     storage: persistedState.localStorage,
-    paths: ["userInfo", "loggedIn", "events", "locations", "userLocation"],
+    paths: [
+      "userInfo",
+      "otherUserInfo",
+      "loggedIn",
+      "events",
+      "locations",
+      "userLocation",
+    ],
   },
 
   actions: {
@@ -50,6 +59,9 @@ export const useStores = defineStore("counter", {
       this.userInfo.avatar = userInfo.avatar;
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
+    },
+    setUserInfoEvents(events) {
+      this.userInfo.events = events;
     },
     setLoggedIn(value) {
       this.loggedIn = value;
@@ -78,15 +90,16 @@ export const useStores = defineStore("counter", {
     },
     setUserLocation(location) {
       this.userLocation = location;
-      console.log(this.userLocation);
     },
     setOtherUserInfo(userInfo) {
-      console.log(userInfo);
-      // this.otherUserInfo.id = userInfo.id;
-      // this.otherUserInfo.avatar = userInfo.avatar;
-      // this.otherUserInfo.nickname = userInfo.nickname;
-      // this.otherUserInfo.followingUsers = userInfo.followingUsers;
-      // this.otherUserInfo.followersUsers = userInfo.followersUsers;
+      this.otherUserInfo.id = userInfo.id;
+      this.otherUserInfo.avatar = userInfo.avatar;
+      this.otherUserInfo.nickname = userInfo.nickname;
+      this.otherUserInfo.followingUsers = 0;
+      this.otherUserInfo.followersUsers = 0;
+    },
+    setOtherUserInfoEvents(events) {
+      this.otherUserInfo.events = events;
     },
 
     /* -------------------------------------------------------------------------- */

@@ -12,13 +12,13 @@
                     <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
-                            <NuxtLink to="/perfil/followers">
+                            <NuxtLink to="/perfil/follows/followers">
                                 <p class="text-white">{{ User.followers }}</p>
                                 <p class='text-xs text-white/60'>Seguidors</p>
                             </NuxtLink>
                         </div>
                         <div>
-                            <NuxtLink to="/perfil/following">
+                            <NuxtLink to="/perfil/follows/following">
                                 <p class="text-white">{{ User.following }}</p>
                                 <p class='text-xs text-white/60'>Seguits</p>
                             </NuxtLink>
@@ -67,6 +67,7 @@
 
 <script>
 import userManager from '~/managers/userManager';
+import eventManager from '~/managers/eventManager';
 import { useStores } from '~/stores/counter';
 
 export default {
@@ -76,6 +77,7 @@ export default {
             selectedSection: 'Posts',
             User: {
                 store: useStores(),
+                id: useStores().userInfo.id,
                 avatar: useStores().userInfo.avatar,
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
@@ -97,18 +99,25 @@ export default {
         },
         async getFollowing() {
             await userManager.getFollowed();
+        },
+        async getEvents() {
+            const eventos = await eventManager.getLikeEvents(this.User.id);
+            this.store.setUserInfoEvents(eventos)
         }
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
         this.loader = true;
-        this.getFollowers().then(() => {
-            this.getFollowing().then(() => {
-                this.loader = false;
-            });
-
-        });
+        try {
+            this.getFollowers();
+            this.getFollowing();
+            this.getEvents();
+        } catch (error) {
+            console.error("Error while fetching data:", error);
+        } finally {
+            this.loader = false;
+        }
     },
     computed: {
         getImage() {

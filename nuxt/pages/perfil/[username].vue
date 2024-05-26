@@ -12,16 +12,16 @@
                     <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
-                            <NuxtLink to="/perfil/followers">
-                                <p class="text-white">{{ User.followers }}</p>
-                                <p class='text-xs text-white/60'>Seguidors</p>
-                            </NuxtLink>
+                            <!-- <NuxtLink to="/perfil/followers"> -->
+                            <p class="text-white">{{ User.followers }}</p>
+                            <p class='text-xs text-white/60'>Seguidors</p>
+                            <!-- </NuxtLink> -->
                         </div>
                         <div>
-                            <NuxtLink to="/perfil/following">
-                                <p class="text-white">{{ User.following }}</p>
-                                <p class='text-xs text-white/60'>Seguits</p>
-                            </NuxtLink>
+                            <!-- <NuxtLink to="/perfil/following"> -->
+                            <p class="text-white">{{ User.following }}</p>
+                            <p class='text-xs text-white/60'>Seguits</p>
+                            <!-- </NuxtLink> -->
                         </div>
                         <div>
                             <p class="te+xt-white">5</p>
@@ -53,7 +53,7 @@
             </div>
 
             <PostsProfile class="" v-if="selectedSection === 'Posts'" />
-            <EventosProfile v-if="selectedSection === 'Eventos'" />
+            <EventosProfile profile="otro" v-if="selectedSection === 'Eventos'" />
             <GustosProfile v-if="selectedSection === 'Gustos'" />
         </section>
     </main>
@@ -62,6 +62,7 @@
 
 <script>
 import userManager from '~/managers/userManager';
+import eventManager from '~/managers/eventManager';
 import { useStores } from '~/stores/counter';
 
 export default {
@@ -71,11 +72,12 @@ export default {
             selectedSection: 'Posts',
             User: {
                 store: useStores(),
+                id: useStores().otherUserInfo.id,
                 avatar: useStores().otherUserInfo.avatar,
                 nickname: useStores().otherUserInfo.nickname,
                 name: useStores().otherUserInfo.name,
                 followers: useStores().otherUserInfo.followersUsers.count,
-                following: useStores().otherUserInfo.followingUsers.count
+                following: useStores().otherUserInfo.followingUsers.count,
             },
             store: useStores(),
             loader: false
@@ -87,17 +89,14 @@ export default {
         setSelectedSection(section) {
             this.selectedSection = section
         },
-        getUserInfo() {
-            // userManager.searchUsers(this.$route.params.username).then((res) => {
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
+        async getEvents() {
+            const eventos = await eventManager.getLikeEvents(this.User.id);
+            this.store.setOtherUserInfoEvents(eventos)
         }
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-
-        // this.loader = true;
+        this.getEvents()
     },
     computed: {
         getImage() {

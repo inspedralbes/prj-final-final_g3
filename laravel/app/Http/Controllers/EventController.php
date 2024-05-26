@@ -198,16 +198,28 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($ids)
     {
-        $event = Event::find($id);
+        // Convierte la cadena de IDs a un array
+        $idsArray = explode(',', $ids);
     
-        if (!$event) {
-            return response()->json(['message' => 'Event not found'], 404);
+        // Validar que todos los elementos en $idsArray sean números
+        if (array_filter($idsArray, 'is_numeric') !== $idsArray) {
+            return response()->json(['message' => 'Invalid IDs provided'], 400);
         }
     
-        return response()->json(['event' => $event], 200);
+        // Realiza la consulta en la base de datos
+        $events = Event::whereIn('id', $idsArray)->get();
+    
+        // Verifica si se encontraron eventos
+        if ($events->isEmpty()) {
+            return response()->json(['message' => 'Events not found'], 404);
+        }
+    
+        // Retorna los eventos encontrados
+        return response()->json(['events' => $events], 200);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
