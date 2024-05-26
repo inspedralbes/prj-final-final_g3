@@ -52,9 +52,9 @@
                 </button>
             </div>
 
-            <PostsProfile class="" v-if="selectedSection === 'Posts'" />
+            <PostsProfile profile="otro" class="" v-if="selectedSection === 'Posts'" />
             <EventosProfile profile="otro" v-if="selectedSection === 'Eventos'" />
-            <GustosProfile v-if="selectedSection === 'Gustos'" />
+            <GustosProfile profile="otro" v-if="selectedSection === 'Gustos'" />
         </section>
     </main>
     <Menu v-if="!loader" />
