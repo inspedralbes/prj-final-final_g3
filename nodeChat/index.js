@@ -60,6 +60,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    userSockets.forEach((value, key) => {
+      if (value === socket.id) {
+      userSockets.delete(key);
+      }
+    });
     console.log("Usuario desconectado");
   });
 

@@ -7,7 +7,7 @@
 <script>
 import userManager from '@/managers/userManager.js';
 import eventManager from './managers/eventManager.js';
-
+import chatManager from './managers/chatManager.js';
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
 
@@ -29,7 +29,6 @@ export default {
         const toast = useToast();
         toast.add({ title: 'Has rebut un nou missatge'});
       }
-      
     });
   },
   methods: {
@@ -54,7 +53,27 @@ export default {
     connectSocket(){
       if (this.store.getLoggedIn()) {
         socket.emit('logged', this.store.getId());
+        this.getChats();
       }
+    },
+    async getChats(){
+      const chats = await chatManager.getChats(this.store.getId());
+      if (chats.length != 0){
+        for (const chat of chats) {
+          const messages = await chatManager.getMessagesNotReceived(chat._id, this.store.getId());
+          if (messages.count > 0) {
+            const toast = useToast();
+            toast.add({ title: 'Tienes mensajes nuevos desde la ultima conexion'});
+            break;
+          }
+        }
+        for (const chat of chats) {
+          const messages = await chatManager.getMessagesNotReceived(chat._id, this.store.getId());
+          if (messages.count > 0) {
+            console.log(await chatManager.markMessagesAsReceived(chat._id, this.store.getId()));
+          }
+        }
+      } 
     }
   },
   watch: {

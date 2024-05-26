@@ -507,7 +507,6 @@ app.get("/get10messages", async (req, res) => {
       const chatId = req.query.chat_id;
       const messageId = req.query.message_id;
 
-      // Primero obtenemos todos los mensajes con estado 'recibido' o 'enviado'
       const prioritizedMessages = await models.message.find({
           chat_id: chatId,
           $or: [
@@ -517,18 +516,15 @@ app.get("/get10messages", async (req, res) => {
           _id: { $lt: messageId }
       }).sort({ sent_at: -1 });
 
-      // Si no hay mensajes priorizados, la segunda consulta será a partir de message_id
       const lastMessageId = prioritizedMessages.length > 0 
           ? prioritizedMessages[prioritizedMessages.length - 1]._id 
           : messageId;
 
-      // Luego obtenemos 45 mensajes adicionales a partir del último mensaje priorizado
       const additionalMessages = await models.message.find({
           chat_id: chatId,
           _id: { $lt: lastMessageId }
       }).limit(45).sort({ sent_at: -1 });
 
-      // Combinamos los resultados, evitando duplicados
       const messageIds = new Set(prioritizedMessages.map(msg => msg._id.toString()));
       const combinedMessages = [...prioritizedMessages];
 
@@ -558,17 +554,56 @@ app.get('/lastMessage', async (req, res) => {
     }
 });
 
-app.put("/markMessagesAsReceived", async (req, res) => {
-  const { chatId, userId } = req.body;
+app.get("/getMessagesNotReceived", async (req, res) => {
   try {
-    await models.message.updateMany(
-      { chat_id: chatId, user_id: { $ne: userId }, state: "enviado" },
-      { $set: { state: "recibido" } }
+    const messageCount = await models.message.countDocuments({
+      chat_id: req.query.chat_id,
+      state: "enviado",
+      user_id: { $ne: req.query.user_id },
+    });
+    res.send({ count: messageCount });
+  } catch (error) {
+    console.error("Error:", error);
+    res.send([]);
+  }
+});
+
+app.put("/markMessagesAsReceived", async (req, res) => {
+  try {
+    const chatId = req.body.chat_id;
+    const userId = req.body.user_id; 
+
+    console.log(`chat_id: ${chatId}`);
+
+    const result = await models.message.updateMany(
+      { chat_id: chatId, state: 'enviado', user_id: { $ne: userId } },
+      { $set: { state: 'recibido' } }
     );
+
     res.send("Messages marked as received");
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error marking messages as received");
+  }
+});
+
+
+app.put("/markMessagesAsRead", async (req, res) => {
+  try {
+    const chatId = req.body.chat_id;
+    const userId = req.body.user_id; 
+
+    console.log(`chat_id: ${chatId}`);
+
+    const result = await models.message.updateMany(
+      { chat_id: chatId, state: 'recibido', user_id: { $ne: userId } }, 
+      { $set: { state: 'leido' } }
+    );
+
+    res.send("Messages marked as read");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error marking messages as read");
   }
 });
 

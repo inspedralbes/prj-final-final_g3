@@ -130,7 +130,11 @@ export default {
         leaveChat() {
             socket.emit('leaveChat', this.chat_id);
             this.$router.push('/chats');
+        },
+        markReadMessages() {
+            comChat.markMessagesAsRead(this.chat_id, this.store.getId());
         }
+
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
@@ -146,6 +150,7 @@ export default {
         comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
             this.chat_id = res.chatExists._id;
             this.fetchMessages();
+            this.markReadMessages();
         });
     },
 }

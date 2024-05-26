@@ -111,6 +111,45 @@ async function getLastMessage(chat_id) {
 
 }
 
+async function getMessagesNotReceived(chat_id, user_id) {
+  try {
+    const response = await axios.get(`${url_api_mongo}/getMessagesNotReceived`, {
+      params: {
+        chat_id: chat_id,
+        user_id: user_id
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function markMessagesAsReceived(chat_id, user_id) {
+  try {
+    const response = await axios.put(`${url_api_mongo}/markMessagesAsReceived`, {
+        chat_id: chat_id,
+        user_id: user_id
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function markMessagesAsRead(chat_id, user_id) {
+  try {
+    const response = await axios.put(`${url_api_mongo}/markMessagesAsRead`, {
+        chat_id: chat_id,
+        user_id: user_id
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 const comChat = {
   checkChat,
   getAllMessages,
@@ -118,7 +157,10 @@ const comChat = {
   getMessages,
   getChats,
   getUserChats,
-  getLastMessage
+  getLastMessage,
+  getMessagesNotReceived,
+  markMessagesAsReceived,
+  markMessagesAsRead
 };
 
 export default comChat;
