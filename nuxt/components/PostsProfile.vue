@@ -9,15 +9,17 @@
                             alt="">
                         <div class="flex flex-col">
                             <div class="flex items-center gap-3">
-                                <h3 class="font-bold">{{ userInfo.name }}</h3>
+                                <h3 v-if="profile" class="font-bold">{{ otherUserInfo.name }}</h3>
+                                <h3 v-else class="font-bold">{{ userInfo.name }}</h3>
 
                                 <p class="text-xs text-gray-300">Fa 22h</p>
 
                             </div>
-                            <p class="text-sm">@{{ userInfo.nickname }}</p>
+                            <p v-if="profile" class="text-sm">@{{ otherUserInfo.nickname }}</p>
+                            <p v-else class="text-sm">@{{ userInfo.nickname }}</p>
                         </div>
                     </div>
-                    <PostDropDown @postDeleted="deletePostAnim($event)" :postId="post._id" />
+                    <PostDropDown :profile="profile" @postDeleted="deletePostAnim($event)" :postId="post._id" />
                 </header>
 
                 <NuxtLink :to="`/post/${post._id}`">
@@ -60,9 +62,15 @@ import comManager from '@/managers/comManager.js';
 
 export default {
 
+    props: {
+        profile: {
+            type: String,
+        }
+    },
     data() {
         return {
             userInfo: useStores().userInfo,
+            otherUserInfo: useStores().otherUserInfo,
             posts: [],
             replyPostModal: false,
             postReply: null,
@@ -78,7 +86,11 @@ export default {
         },
 
         async getPosts() {
-            this.posts = await comManager.getPosts(this.userInfo.id)
+            if (this.profile) {
+                this.posts = await comManager.getPosts(this.otherUserInfo.id)
+            } else {
+                this.posts = await comManager.getPosts(this.userInfo.id)
+            }
             if (this.posts.length != 0) {
                 this.posts.reverse()
                 console.log("POSTS: " + JSON.stringify(this.posts))
@@ -92,7 +104,13 @@ export default {
         },
 
         async getLikesPosts() {
-            this.likedPosts = await comManager.getLikePosts()
+            if (this.profile) {
+                this.likedPosts = await comManager.getLikePosts(this.otherUserInfo.id)
+
+            }
+            else {
+                this.likedPosts = await comManager.getLikePosts()
+            }
 
             for (let i = 0; i < this.posts.length; i++) {
                 for (let j = 0; j < this.likedPosts.length; j++) {
