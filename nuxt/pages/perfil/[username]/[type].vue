@@ -2,29 +2,48 @@
     <div>
         <Header />
         <div class="flex flex-row w-fit-content justify-center items-center m-2">
-            <NuxtLink to="/perfil">
+            <NuxtLink :to="checkUser ? '/perfil' : `/perfil/${user}`">
                 <IconsLeftArrow class="h-full" />
             </NuxtLink>
             <UTabs v-model="type" :items="[{ label: 'Seguidors' }, { label: 'Seguits' }]" class="mx-2 w-2/3"></UTabs>
         </div>
-        <div v-if="type === 0 && followers.length != 0" v-for="follower in followers"
-            class="w-full flex flex-col justify-center items-center">
-            <CardUser class="w-full" :user="follower.follower" />
-            <hr>
-        </div>
-        <div v-else-if="type === 0 && followers.length === 0" class="flex justify-center items-center">
-            <h2 v-if="checkUser" class="font-bold">No tens seguidors</h2>
-            <h2 v-else class="font-bold">Aquest usuari no té seguidors</h2>
+        <div v-if="checkUser">
 
+            <div v-if="type === 0 && followers.length != 0" v-for="follower in followers"
+                class="w-full flex flex-col justify-center items-center">
+                <CardUser class="w-2/3" :user="follower.follower" />
+                <hr>
+            </div>
+            <div v-else-if="type === 0 && followers.length === 0" class="flex justify-center items-center">
+                <h2 class="font-bold">No tens seguidors</h2>
+
+            </div>
+            <div v-else-if="type === 1 && following.length != 0" v-for="followed in following"
+                class="w-full flex flex-col justify-center items-center">
+                <CardUser class="w-2/3" :user="followed.followed" />
+                <hr>
+            </div>
+            <div v-else-if="type === 1 && following.length === 0" class="flex justify-center items-center">
+                <h2 class="font-bold">No segueixes a ningú</h2>
+            </div>
         </div>
-        <div v-else-if="type === 1 && following.length != 0" v-for="followed in following"
-            class="w-full flex flex-col justify-center items-center">
-            <CardUser class="w-full" :user="followed.followed" />
-            <hr>
-        </div>
-        <div v-else-if="type === 1 && following.length === 0" class="flex justify-center items-center">
-            <h2 v-if="checkUser" class="font-bold">No segueixes a ningú</h2>
-            <h2 v-else class="font-bold">Aquest usuari no segueix a ningú</h2>
+        <div v-else>
+            <div v-if="type === 0 && oFollowers.length != 0" v-for="follower in oFollowers"
+                class="w-full flex flex-col justify-center items-center">
+                <CardUser class="w-2/3" :user="follower.follower" />
+                <hr>
+            </div>
+            <div v-else-if="type === 0 && oFollowers.length === 0" class="flex justify-center items-center">
+                <h2 class="font-bold">No té seguidors</h2>
+            </div>
+            <div v-else-if="type === 1 && oFollowing.length != 0" v-for="followed in oFollowing"
+                class="w-full flex flex-col justify-center items-center">
+                <CardUser class="w-2/3" :user="followed.followed" />
+                <hr>
+            </div>
+            <div v-else-if="type === 1 && oFollowing.length === 0" class="flex justify-center items-center">
+                <h2 class="font-bold">No segueix a ningú</h2>
+            </div>
         </div>
     </div>
     <Menu />

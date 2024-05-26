@@ -94,16 +94,16 @@ export default {
             this.store.setOtherUserInfoEvents(eventos)
         },
         async getFollowers() {
-            await userManager.getFollowers(this.id);
+            await userManager.getFollowers(this.User.id);
         },
         async getFollowing() {
-            await userManager.getFollowed(this.id);
+            await userManager.getFollowed(this.User.id);
         },
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
+        if (this.$route.params.username === this.store.userInfo.nickname) return this.$router.push('/perfil')
         this.loader = true
-        this.loader = true;
         try {
             await this.getFollowers();
             await this.getFollowing();
@@ -111,7 +111,6 @@ export default {
         } catch (error) {
             console.error("Error while fetching data:", error);
         } finally {
-            console.log("Data fetched successfully");
             this.loader = false;
         }
     },

@@ -121,7 +121,6 @@ export default {
         } catch (error) {
             console.error("Error while fetching data:", error);
         } finally {
-            console.log("Data fetched successfully");
             this.loader = false;
         }
     },

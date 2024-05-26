@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="goToProfile">
+        <button @click="goToProfile" class="w-full">
             <div class="flex flex-row justify-between items-center">
                 <div class="flex flex-row items-center">
                     <img class="size-24 rounded-full object-cover" :src="getImage" alt="Avatar" />
@@ -45,6 +45,8 @@ export default {
             await comManager.unfollow(this.user.id)
         },
         async followOr() {
+            if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
             if (this.checkIfFollowing) {
                 await this.unfollowUser();
             } else {
