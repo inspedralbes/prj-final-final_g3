@@ -36,22 +36,33 @@ export default {
     data() {
         return {
             store: useStores(),
-            followers: computed(() => this.store.userInfo.followersUsers.followers),
-            following: computed(() => this.store.userInfo.followingUsers.followed),
+            followers: computed(() => this.checkUser ? this.store.userInfo.followersUsers.followers : this.store.otherUserInfo.followersUsers.followers),
+            following: computed(() => this.checkUser ? this.store.userInfo.followingUsers.followed : this.store.otherUserInfo.followingUsers.followed),
             type: this.$route.params.type === 'followers' ? 0 : 1,
+            user: this.$route.params.username
         }
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        if (!this.followers) this.getFollowers();
-        if (!this.following) this.getFollowing();
+        if (this.checkUser) {
+            if (!this.followers) this.getFollowers();
+            if (!this.following) this.getFollowing();
+        } else {
+            if (!this.followers) this.getFollowers();
+            if (!this.following) this.getFollowing();
+        }
     },
     methods: {
         async getFollowers() {
-            await userManager.getFollowers();
+            await userManager.getFollowers(this.store.otherUserInfo.id);
         },
         async getFollowing() {
-            await userManager.getFollowed();
+            await userManager.getFollowed(this.store.otherUserInfo.id);
+        }
+    },
+    computed: {
+        checkUser() {
+            return this.store.userInfo.username === this.user
         }
     }
 }

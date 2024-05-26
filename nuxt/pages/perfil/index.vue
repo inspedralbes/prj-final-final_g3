@@ -12,13 +12,13 @@
                     <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
-                            <NuxtLink to="/perfil/follows/followers">
+                            <NuxtLink :to="`/perfil/${User.nickname}/followers`">
                                 <p class="text-white">{{ User.followers }}</p>
                                 <p class='text-xs text-white/60'>Seguidors</p>
                             </NuxtLink>
                         </div>
                         <div>
-                            <NuxtLink to="/perfil/follows/following">
+                            <NuxtLink :to="`/perfil/${User.nickname}/following`">
                                 <p class="text-white">{{ User.following }}</p>
                                 <p class='text-xs text-white/60'>Seguits</p>
                             </NuxtLink>
@@ -105,17 +105,18 @@ export default {
             this.store.setUserInfoEvents(eventos)
         }
     },
-    mounted() {
+    async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
         this.loader = true;
         try {
-            this.getFollowers();
-            this.getFollowing();
-            this.getEvents();
+            await this.getFollowers();
+            await this.getFollowing();
+            await this.getEvents();
         } catch (error) {
             console.error("Error while fetching data:", error);
         } finally {
+            console.log("Data fetched successfully");
             this.loader = false;
         }
     },

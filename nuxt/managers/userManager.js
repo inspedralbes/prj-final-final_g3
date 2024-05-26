@@ -34,34 +34,30 @@ async function updateUser(user, token) {
   }
 }
 
-async function getFollowers() {
+async function getFollowers(id) {
   const store = useStores();
+  let userID = id ? id : store.getId();
   try {
-    const response = await axios.get(
-      `${url_api}/users/followers/${store.getId()}`,
-      {
-        headers: {
-          Authorization: `Bearer ${store.getToken()}`,
-        },
-      }
-    );
+    const response = await axios.get(`${url_api}/users/followers/${userID}`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      },
+    });
     store.setFollowers(response.data);
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
 }
 
-async function getFollowed() {
+async function getFollowed(id) {
   const store = useStores();
+  let userID = id ? id : store.getId();
   try {
-    const response = await axios.get(
-      `${url_api}/users/followed/${store.getId()}`,
-      {
-        headers: {
-          Authorization: `Bearer ${store.getToken()}`,
-        },
-      }
-    );
+    const response = await axios.get(`${url_api}/users/followed/${userID}`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      },
+    });
     store.setFollowed(response.data);
   } catch (error) {
     console.error("Error fetching followers:", error);

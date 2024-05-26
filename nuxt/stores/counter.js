@@ -85,6 +85,12 @@ export const useStores = defineStore("counter", {
     setFollowed(users) {
       this.userInfo.followingUsers = users;
     },
+    setOtherFollowers(users) {
+      this.otherUserInfo.followersUsers = users;
+    },
+    setOtherFollowed(users) {
+      this.otherUserInfo.followingUsers = users;
+    },
     setLocations(locations) {
       this.locations = locations.locations;
     },
@@ -95,8 +101,6 @@ export const useStores = defineStore("counter", {
       this.otherUserInfo.id = userInfo.id;
       this.otherUserInfo.avatar = userInfo.avatar;
       this.otherUserInfo.nickname = userInfo.nickname;
-      this.otherUserInfo.followingUsers = 0;
-      this.otherUserInfo.followersUsers = 0;
     },
     setOtherUserInfoEvents(events) {
       this.otherUserInfo.events = events;

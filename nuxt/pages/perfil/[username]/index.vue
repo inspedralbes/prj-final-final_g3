@@ -92,11 +92,28 @@ export default {
         async getEvents() {
             const eventos = await eventManager.getLikeEvents(this.User.id);
             this.store.setOtherUserInfoEvents(eventos)
-        }
+        },
+        async getFollowers() {
+            await userManager.getFollowers(this.id);
+        },
+        async getFollowing() {
+            await userManager.getFollowed(this.id);
+        },
     },
-    mounted() {
+    async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        this.getEvents()
+        this.loader = true
+        this.loader = true;
+        try {
+            await this.getFollowers();
+            await this.getFollowing();
+            await this.getEvents();
+        } catch (error) {
+            console.error("Error while fetching data:", error);
+        } finally {
+            console.log("Data fetched successfully");
+            this.loader = false;
+        }
     },
     computed: {
         getImage() {
