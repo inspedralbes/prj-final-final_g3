@@ -11,7 +11,7 @@
     </div>
     <main class=" flex justify-between items-start px-[5%] pt-4">
       <div class="w-full flex justify-between items-start h-full">
-        <img class="size-14 rounded-full object-cover" src="https://i.ytimg.com/vi/LuWV8Wh00Nk/maxresdefault.jpg"
+        <img class="size-14 rounded-full object-cover" :src="store.getAvatar()"
           alt="">
         <textarea ref="textarea" v-model="content" @input="autoGrow"
           class="w-full h-full bg-transparent outline-none px-2 flex-grow resize-none" autofocus
