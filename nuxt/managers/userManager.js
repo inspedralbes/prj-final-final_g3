@@ -68,6 +68,19 @@ async function getFollowed() {
   }
 }
 
+async function searchUsers(user) {
+  try {
+    const response = await axios.get(`${url_api}/users/search/${user}`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      },
+    });
+    store.setOtherUserInfo(response.data);
+  } catch (error) {
+    console.error("Error searching users:", error);
+  }
+}
+
 async function convertGeolocation(lat, lng) {
   const store = useStores();
   const mapboxToken = import.meta.env.VITE_APP_MAPBOX_TOKEN;
@@ -121,6 +134,7 @@ const userManager = {
   getFollowers,
   getFollowed,
   convertGeolocation,
+  searchUsers,
 };
 
 export default userManager;

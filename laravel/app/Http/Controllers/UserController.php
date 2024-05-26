@@ -484,7 +484,7 @@ class UserController extends Controller
         if (empty($param)) {
             return response()->json(['message' => 'No hay resultados en tu búsqueda'], 201);
         }
-        $users = User::where('nickname', 'like', $param . '%')->get();
+        $users = User::where('nickname', 'like', "%{$param}%")->get();
         if ($users->isEmpty()) {
             return response()->json(['message' => 'No hay resultados en tu búsqueda'], 202);
         }
@@ -527,4 +527,16 @@ class UserController extends Controller
             return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
         }
     }
+
+    public function getUserByNickname(Request $request)
+    {
+        $user = User::select('id', 'nickname', 'avatar')->where('nickname', $request->nickname)->first();
+
+        if ($user) {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
+        }
+    }
+    
 }

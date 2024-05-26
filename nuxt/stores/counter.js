@@ -8,12 +8,18 @@ export const useStores = defineStore("counter", {
       id: null,
       name: "",
       surnames: "",
-      nickname: "",
       email: "",
       token: "",
       avatar: "",
       nickname: "",
       birthdate: "",
+      followingUsers: [],
+      followersUsers: [],
+    },
+    otherUserInfo: {
+      id: null,
+      avatar: "",
+      nickname: "",
       followingUsers: [],
       followersUsers: [],
     },
@@ -73,6 +79,14 @@ export const useStores = defineStore("counter", {
     setUserLocation(location) {
       this.userLocation = location;
       console.log(this.userLocation);
+    },
+    setOtherUserInfo(userInfo) {
+      console.log(userInfo);
+      // this.otherUserInfo.id = userInfo.id;
+      // this.otherUserInfo.avatar = userInfo.avatar;
+      // this.otherUserInfo.nickname = userInfo.nickname;
+      // this.otherUserInfo.followingUsers = userInfo.followingUsers;
+      // this.otherUserInfo.followersUsers = userInfo.followersUsers;
     },
 
     /* -------------------------------------------------------------------------- */

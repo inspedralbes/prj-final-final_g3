@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
         Route::get('/followed/{userId}', [FollowersController::class, 'getUserFollowed']);
         Route::get('/{id}', [UserController::class, 'userById']);
+        Route::get('/search/{username}', [UserController::class, 'getUserByNickname']);
 
     });
 });
