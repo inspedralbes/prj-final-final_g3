@@ -48,7 +48,7 @@ async function getFollowers(id) {
     console.log("Store ID:", store.getId());
     console.log("ID:", id);
     console.log(id === store.getId());
-    if (id === store.getId()) {
+    if (userID === store.getId()) {
       console.log("Setting followers");
       store.setFollowers(response.data);
     } else {
@@ -68,7 +68,7 @@ async function getFollowed(id) {
         Authorization: `Bearer ${store.getToken()}`,
       },
     });
-    if (id === store.getId()) {
+    if (userID === store.getId()) {
       store.setFollowed(response.data);
     } else {
       store.setOtherFollowed(response.data);
