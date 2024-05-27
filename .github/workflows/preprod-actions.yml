@@ -61,6 +61,7 @@ jobs:
           cd ${{ github.workspace }}
           # Cambiar permisos
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo chmod -R 777 laravel/"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo chmod -R 777 laravel/*"
 
           #Update laravel
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./laravel/* ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:laravel
@@ -96,7 +97,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo rm -rf node/node_modules"
           # Dar permisos a todo
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo chmod -R 777 node/"
-
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }} "sudo chmod -R 777 node/*"
           # Update node
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/* ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:node
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/.env ${{ secrets.PROD_USER }}@${{ secrets.PRE_PROD_HOST }}:node

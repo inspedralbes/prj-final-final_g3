@@ -162,8 +162,13 @@ async function getLikeEvents(id) {
       const events = await getEventsByIds(
         response.data.map((like) => like.eventId)
       );
+      console.log("Events por ids:", events);
       return events;
     } else {
+      console.log(
+        "Eventos por ids (sin id enviado):",
+        response.data.map((like) => like.eventId)
+      );
       return response.data.map((like) => like.eventId);
     }
   } catch (error) {
