@@ -386,6 +386,7 @@ app.post("/uploadImage", upload.single("img"), async (req, res) => {
 });
 
 app.post("/chat", async (req, res) => {
+  console.log("Chat request:", req.body);
   try {
     let chatExists = await models.chat.findOne({
       $or: [
@@ -411,7 +412,6 @@ app.post("/chat", async (req, res) => {
       } catch (error) {
         res.json({ chatExists: chatExists });
       }
-      console.log("Messages:", messages);
     } else {
       res.json([]);
     }
