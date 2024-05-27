@@ -414,6 +414,8 @@ app.post("/chat", async (req, res) => {
             } catch (error) {
                 res.json({ chatExists: chatExists });
             }
+        }else{
+          res.json([]);
         }
  
     } catch (error) {

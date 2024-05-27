@@ -144,6 +144,7 @@ export default {
         this.contact = this.store.getChatUser();
 
         socket.on('message', (message) => {
+            
             this.messages.push(message);
             this.chat_id = message.chat_id;
             this.scrollToBottom();
@@ -151,9 +152,12 @@ export default {
 
 
         comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
-            this.chat_id = res.chatExists._id;
-            this.fetchMessages();
-            this.markReadMessages();
+            if (res.chatExists._id !== undefined) {
+                this.chat_id = res.chatExists._id;
+                this.fetchMessages();
+                this.markReadMessages();
+            }
+            
         });
     },
 }

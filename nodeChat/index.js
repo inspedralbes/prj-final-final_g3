@@ -36,6 +36,8 @@ io.on("connection", (socket) => {
       message.status = "enviado";
     }
       manager.insertMessage(message).then((response) => {
+        socket.join(response.chat_id);
+
         io.to(response.chat_id).emit("message", response);
         if (io.sockets.adapter.rooms.get(response.chat_id)?.size != 2) {
           if (userSockets.has(contact)) {
