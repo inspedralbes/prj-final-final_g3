@@ -24,7 +24,7 @@
                             </NuxtLink>
                         </div>
                         <div>
-                            <p class="te+xt-white">5</p>
+                            <p class="te+xt-white">{{ User.events.length }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                     </div>
@@ -78,6 +78,7 @@ export default {
                 name: useStores().otherUserInfo.name,
                 followers: useStores().otherUserInfo.followersUsers.count,
                 following: useStores().otherUserInfo.followingUsers.count,
+                events: useStores().otherUserInfo.events
             },
             store: useStores(),
             loader: false
