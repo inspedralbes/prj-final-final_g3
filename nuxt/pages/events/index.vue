@@ -100,7 +100,7 @@
       </div>
       <button @click="modals.filter = !modals.filter"
         class="bg-white hover:bg-[#FF8A1E] text-black font-bold py-2 px-4 rounded-full w-fit">
-        Obrir filtres
+        filtres
       </button>
     </div>
     <section class=" flex flex-col gap-3 mb-12">

@@ -13,9 +13,18 @@ async function insertMessage(message) {
       user_id: message.user_id,
       contact_id: message.contact_id,
       content: message.content,
-      state: 'leido'
+      state: message.status,
     });
     console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getChats(userId) {
+  try {
+    const response = await axios.get(`${url}chat`);
     return response.data;
   } catch (error) {
     console.log(error);
