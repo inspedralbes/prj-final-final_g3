@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('google_id')->nullable();
             $table->string('avatar')->nullable();
-            $table->boolean('private')->default(false);
+            // $table->boolean('private')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
