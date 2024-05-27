@@ -125,7 +125,6 @@ export default {
                 await this.getFollowing();
             }
             await this.getEvents();
-            console.log(this.User.events)
         } catch (error) {
             console.error("Error while fetching data:", error);
         } finally {

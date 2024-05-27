@@ -420,7 +420,6 @@ app.post("/chat", async (req, res) => {
 });
 
 app.get("/chats", async (req, res) => {
-  console.log("req.query.user_id:", req.query.user_id);
   try {
     const chats = await models.chat
       .find({
@@ -430,7 +429,6 @@ app.get("/chats", async (req, res) => {
         ],
       })
       .lean();
-    console.log("Chats:", chats);
     if (chats.length !== 0) {
       const chatsWithMessageCount = await Promise.all(
         chats.map(async (chat) => {

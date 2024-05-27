@@ -67,7 +67,6 @@ export default {
             }
         },
         goToChat(user) {
-            console.log(user);
             if (user.id == this.store.getId()) {
                 this.empty = true;
                 return;

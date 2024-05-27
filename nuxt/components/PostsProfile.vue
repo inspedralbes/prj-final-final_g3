@@ -42,7 +42,8 @@
 
     <transition name="fadeReply" tag="div">
         <ReplyPost v-if="replyPostModal" @close="mostrarReplyModal" @replyed="increaseComments($event)"
-            :post="this.postReply" :name="this.userInfo.name" :nickname="userInfo.nickname" :avatar="this.userInfo.avatar"/>
+            :post="this.postReply" :name="this.userInfo.name" :nickname="userInfo.nickname"
+            :avatar="this.userInfo.avatar" />
     </transition>
 
     <transition name="fadeReply" tag="div">
@@ -90,7 +91,6 @@ export default {
             }
             if (this.posts.length != 0) {
                 this.posts.reverse()
-                console.log("POSTS: " + JSON.stringify(this.posts))
             }
 
             this.posts = this.posts.map(post => ({
@@ -117,7 +117,7 @@ export default {
                 }
             }
         },
-        
+
         formatDay(dateString) {
             const date = new Date(dateString);
             const day = String(date.getDate()).padStart(2, '0');
@@ -162,7 +162,6 @@ export default {
         },
 
         increaseComments(id) {
-            console.log(id)
             for (let i = 0; i < this.posts.length; i++) {
                 if (this.posts[i]._id === id) {
                     this.posts[i].comments.length++;
@@ -179,7 +178,6 @@ export default {
     },
 
     created() {
-        console.log(this.userInfo);
         this.getPosts()
     }
 }

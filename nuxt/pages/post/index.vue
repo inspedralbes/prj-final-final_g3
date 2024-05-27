@@ -30,7 +30,7 @@ import { useStores } from '~/stores/counter';
 import comManager from '@/managers/comManager.js';
 
 export default {
-  
+
 
   data() {
     return {
@@ -52,7 +52,6 @@ export default {
       }
       comManager.post(this.content, this.link)
       this.loader = false;
-      console.log('Post created')
       this.$router.push('/perfil')
     },
 

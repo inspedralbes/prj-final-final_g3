@@ -17,7 +17,7 @@
             <main>
                 <article class=" flex justify-between items-center py-2">
                     <div class="flex justify-center items-center gap-3">
-                        <img class="size-12 rounded-full object-cover":src="this.getImage(this.avatar)">
+                        <img class="size-12 rounded-full object-cover" :src="this.getImage(this.avatar)">
                         <div class="flex flex-col">
                             <div class="flex items-center gap-3">
                                 <h3 class="font-bold">{{ name }}</h3>
@@ -108,8 +108,6 @@ export default {
     },
     mounted() {
         this.$refs.textarea.focus();
-        console.log("ReplyPost: " + this.post.content)
-        console.log("ReplyPost: " + this.name)
     }
 
 }

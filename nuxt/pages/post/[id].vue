@@ -8,8 +8,7 @@
         </header>
         <main class="py-2">
             <header class="flex gap-3 items-center mb-3">
-                <img class="size-12 rounded-full object-cover"
-                    :src="getImage(this.userPost.avatar)" alt="">
+                <img class="size-12 rounded-full object-cover" :src="getImage(this.userPost.avatar)" alt="">
                 <div>
                     <h2 class="font-bold">{{ this.userPost.nickname }}</h2>
                     <p class="text-sm text-gray-400">@{{ this.userPost.nickname }}</p>
@@ -17,7 +16,7 @@
             </header>
             <article>
                 <p>{{ post.content }}</p>
-                <img class="rounded" :src=" url_mongo + '/' + post.image" alt="">
+                <img class="rounded" :src="url_mongo + '/' + post.image" alt="">
             </article>
             <footer class="flex justify-between items-center gap-6 px-1 py-2">
 
@@ -39,7 +38,8 @@
         </main>
 
         <article class="mt-6 border-t border-b py-2 border-gray-500">
-            <p class="mb-2 px-1 text-sm text-gray-500">Responent a <span class="text-blue-400">@{{ this.userPost.nickname }}</span></p>
+            <p class="mb-2 px-1 text-sm text-gray-500">Responent a <span class="text-blue-400">@{{
+                this.userPost.nickname }}</span></p>
             <div class="flex items-start gap-3">
                 <img class="size-12 rounded-full object-cover" :src="getImage(store.getUserInfo().avatar)">
                 <textarea ref="textarea" v-model="comment" @input="autoGrow"
@@ -74,7 +74,7 @@ import comManager from '@/managers/comManager.js';
 export default {
     data() {
         return {
-            store: useStores(),            
+            store: useStores(),
             postId: this.$route.params.id,
             post: {},
             comments: [],
@@ -94,7 +94,7 @@ export default {
                 this.getUser(this.post.userId);
                 this.getLikesPost();
                 this.getComments();
-                
+
 
 
             } catch (error) {
@@ -130,7 +130,7 @@ export default {
             this.getComments();
         },
 
-        async getUser(id){
+        async getUser(id) {
             try {
                 const response = await comManager.getUserById(id, this.store.getToken());
                 this.userPost = response.data;
@@ -151,7 +151,6 @@ export default {
         async getUserInfo(userId) {
             this.infoUser = await comManager.getUserById(userId, this.store.getToken())
             this.infoUser = this.infoUser.data
-            console.log("Info User: " + JSON.stringify(this.infoUser))
         },
 
         async getLikesPost() {
@@ -193,21 +192,21 @@ export default {
 
         formatDay(dateString) {
             const date = new Date(dateString);
-  
+
             // Obtener la hora y los minutos
             const hours = date.getHours();
             const minutes = date.getMinutes();
-            
+
             // Formatear la hora en formato 12 horas con AM/PM
             const ampm = hours >= 12 ? 'PM' : 'AM';
             const formattedHours = hours % 12 || 12; // Convertir 0 a 12 para la medianoche
             const formattedMinutes = String(minutes).padStart(2, '0');
-            
+
             // Obtener el día, mes y año
             const day = date.getDate();
             const month = date.toLocaleString('ca-ES', { month: 'long' });
             const year = date.getFullYear();
-            
+
             // Construir la cadena de fecha formateada
             return `${formattedHours}:${formattedMinutes} ${ampm} - ${day} ${month.charAt(0).toUpperCase() + month.slice(1)}, ${year}`;
         },
@@ -219,7 +218,7 @@ export default {
         });
         this.getPost()
     }
-    
+
 }
 </script>
 

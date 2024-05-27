@@ -45,7 +45,7 @@ async function getFirst10Messages(chat_id) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -59,20 +59,17 @@ async function getMessages(chat_id, message_id) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
 async function getChats(user_id) {
-  console.log("getChats en chatManager, toma el id:", user_id);
-  console.log("url_api_mongo:", url_api_mongo);
   try {
     const response = await axios.get(`${url_api_mongo}/chats`, {
       params: {
         user_id: user_id,
       },
     });
-    console.log("get Chats en chatManager:", response.data);
     return response.data;
   } catch (error) {
     // console.error("Error fetching data:", error);
@@ -107,7 +104,7 @@ async function getLastMessage(chat_id) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -124,7 +121,7 @@ async function getMessagesNotReceived(chat_id, user_id) {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -139,7 +136,7 @@ async function markMessagesAsReceived(chat_id, user_id) {
     );
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -151,7 +148,7 @@ async function markMessagesAsRead(chat_id, user_id) {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
