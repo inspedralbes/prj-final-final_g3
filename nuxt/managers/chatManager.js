@@ -92,7 +92,6 @@ async function getUserChats(user_id) {
       nickname: response.data.nickname,
       avatar: response.data.avatar,
     };
-
     return obj_response;
   } catch (error) {
     console.error("Error fetching data:", error);

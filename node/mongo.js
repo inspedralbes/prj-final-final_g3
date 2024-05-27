@@ -251,6 +251,7 @@ app.post("/comments", async (req, res) => {
       content: comment.content,
       likes: [],
       parentId: comment.parentId,
+      userId: comment.userId,
     };
     res.send(await models.commentPost.create(createdComment));
   } catch (error) {
@@ -446,6 +447,8 @@ app.get("/chats", async (req, res) => {
       console.log("Chats with message count:", chatsWithMessageCount);
 
       res.send(chatsWithMessageCount);
+    }else{
+      res.send([]);
     }
   } catch (error) {
     console.error("Error:", error);

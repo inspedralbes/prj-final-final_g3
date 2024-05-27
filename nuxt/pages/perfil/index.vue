@@ -24,7 +24,7 @@
                             </NuxtLink>
                         </div>
                         <div>
-                            <p class="te+xt-white">5</p>
+                            <p class="te+xt-white">{{ User.events.length }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                     </div>
@@ -82,7 +82,8 @@ export default {
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
                 followers: useStores().userInfo.followersUsers.count,
-                following: useStores().userInfo.followingUsers.count
+                following: useStores().userInfo.followingUsers.count,
+                events: useStores().userInfo.events
             },
             store: useStores(),
             loader: false
@@ -103,6 +104,13 @@ export default {
         async getEvents() {
             const eventos = await eventManager.getLikeEvents(this.User.id);
             this.store.setUserInfoEvents(eventos)
+        },
+        getUserEvents() {
+            if (this.profile) {
+                this.User.events = this.store.otherUserInfo.events
+            } else {
+                this.User.events = this.store.userInfo.events
+            }
         }
     },
     async mounted() {
@@ -117,6 +125,7 @@ export default {
                 await this.getFollowing();
             }
             await this.getEvents();
+            console.log(this.User.events)
         } catch (error) {
             console.error("Error while fetching data:", error);
         } finally {
