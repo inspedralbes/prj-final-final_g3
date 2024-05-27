@@ -119,7 +119,6 @@ app.get("/likeEvents", async (req, res) => {
     const likeEvents = await models.likeEvent.find({
       userId: req.query.userId,
     });
-    console.log("LikeEvents:", likeEvents);
     res.send(likeEvents);
   } catch (error) {
     console.error("Error:", error);
@@ -133,7 +132,6 @@ app.get("/likeEvents/:eventId", async (req, res) => {
     const likeEventCount = await models.likeEvent.countDocuments({
       eventId: req.params.eventId,
     });
-    console.log("LikeEvent count:", likeEventCount);
     res.send({ eventFollowers: likeEventCount });
   } catch (error) {
     console.error("Error:", error);
@@ -195,7 +193,6 @@ app.get("/likePosts", async (req, res) => {
     const likePosts = await models.likePost.find({
       userId: req.query.userId,
     });
-    console.log("LikePosts:", likePosts);
     res.send(likePosts);
   } catch (error) {
     console.error("Error:", error);
@@ -397,6 +394,8 @@ app.post("/chat", async (req, res) => {
       ],
     });
 
+    console.log("Chat exists:", chatExists);
+
     if (chatExists != null) {
       let messages;
       try {
@@ -404,6 +403,7 @@ app.post("/chat", async (req, res) => {
           .find({ chat_id: chatExists._id })
           .limit(45)
           .sort({ sent_at: -1 });
+        console.log(res.json({ chatExists: chatExists, messages: messages }));
         return res.json({
           chatExists: chatExists,
           messages: messages,
@@ -411,6 +411,7 @@ app.post("/chat", async (req, res) => {
       } catch (error) {
         res.json({ chatExists: chatExists });
       }
+      console.log("Messages:", messages);
     } else {
       res.json([]);
     }
