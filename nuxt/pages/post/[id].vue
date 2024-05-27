@@ -27,7 +27,7 @@
                         <p>{{ post.comments ? post.comments.length : 0 }}</p>
                     </button>
 
-                    <button @click="clickLike(post._id)" class="flex items-center gap-1 text-sm">
+                    <button @click="clickLike()" class="flex items-center gap-1 text-sm">
                         <IconsHeartFill v-if="post.liked" class="size-5 text-red-500" />
                         <IconsHeart v-else class="size-5" />
                         <p>{{ post.likes ? post.likes.length : 0 }}</p>
@@ -81,7 +81,8 @@ export default {
             postId: this.$route.params.id,
             post: {},
             comments: [],
-            comment: ''
+            comment: '',
+            likedPosts: [],
         }
     },
 
@@ -89,8 +90,11 @@ export default {
         async getPost() {
             try {
                 this.post = await comManager.getPostById(this.postId)
+                this.post.liked = false;
                 console.log(this.post)
+                this.getLikesPost()
                 this.getComments()
+
             } catch (error) {
                 console.error(error)
             }
@@ -111,6 +115,36 @@ export default {
             this.comment = '';
             this.getComments();
             console.log("Comentario enviado")
+        },
+
+        async getLikesPost() {
+            if (this.profile) {
+                this.likedPosts = await comManager.getLikePosts(this.otherUserInfo.id)
+
+            }
+            else {
+                this.likedPosts = await comManager.getLikePosts()
+            }
+
+            for (let j = 0; j < this.likedPosts.length; j++) {
+                if (this.postId === this.likedPosts[j]) {
+                    this.post.liked = true;
+                }
+            }
+        },
+
+        clickLike() {
+            if (this.post.liked) {
+                comManager.unlikePost(this.postId)
+
+                this.post.likes.length--;
+                this.post.liked = false;
+            } else {
+                comManager.likePost(this.postId)
+
+                this.post.likes.length++;
+                this.post.liked = true;
+            }
         },
 
         autoGrow() {
