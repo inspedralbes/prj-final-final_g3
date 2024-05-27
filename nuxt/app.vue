@@ -27,7 +27,7 @@ export default {
     socket.on("notification", async () => {
       if (this.$route.path !== '/chats') {
         const toast = useToast();
-        toast.add({ title: 'Has rebut un nou missatge'});
+        toast.add({ title: 'Has rebut un nou missatge' });
       }
     });
   },
@@ -52,18 +52,19 @@ export default {
     },
     connectSocket() {
       if (this.store.getLoggedIn()) {
+        console.log('logged', this.store.getId());
         socket.emit('logged', this.store.getId());
         this.getChats();
       }
     },
-    async getChats(){
+    async getChats() {
       const chats = await chatManager.getChats(this.store.getId());
-      if (chats.length != 0){
+      if (chats.length != 0) {
         for (const chat of chats) {
           const messages = await chatManager.getMessagesNotReceived(chat._id, this.store.getId());
           if (messages.count > 0) {
             const toast = useToast();
-            toast.add({ title: 'Tienes mensajes nuevos desde la ultima conexion'});
+            toast.add({ title: 'Tienes mensajes nuevos desde la ultima conexion' });
             break;
           }
         }
@@ -73,7 +74,7 @@ export default {
             console.log(await chatManager.markMessagesAsReceived(chat._id, this.store.getId()));
           }
         }
-      } 
+      }
     }
   },
   watch: {

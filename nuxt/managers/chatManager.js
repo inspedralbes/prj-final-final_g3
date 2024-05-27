@@ -64,6 +64,7 @@ async function getMessages(chat_id, message_id) {
 }
 
 async function getChats(user_id) {
+  console.log("getChats en chatManager, toma el id:", user_id);
   try {
     const response = await axios.get(`${url_api_mongo}/chats`, {
       params: {
