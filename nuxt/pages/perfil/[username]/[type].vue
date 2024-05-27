@@ -8,7 +8,6 @@
             <UTabs v-model="type" :items="[{ label: 'Seguidors' }, { label: 'Seguits' }]" class="mx-2 w-2/3"></UTabs>
         </div>
         <div v-if="checkUser">
-
             <div v-if="type === 0 && followers.length != 0" v-for="follower in followers"
                 class="w-full flex flex-col justify-center items-center">
                 <CardUser class="w-2/3" :user="follower.follower" />
@@ -60,8 +59,8 @@ export default {
             store: useStores(),
             followers: computed(() => this.store.userInfo.followersUsers.followers),
             following: computed(() => this.store.userInfo.followingUsers.followed),
-            oFollowing: computed(() => this.store.otherUserInfo.followingUsers.followed) || [],
-            oFollowers: computed(() => this.store.otherUserInfo.followersUsers.followers) || [],
+            oFollowing: computed(() => this.store.otherUserInfo.followingUsers.followed),
+            oFollowers: computed(() => this.store.otherUserInfo.followersUsers.followers),
             type: this.$route.params.type === 'followers' ? 0 : 1,
             user: this.$route.params.username
         }
