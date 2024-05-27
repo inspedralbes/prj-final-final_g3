@@ -411,6 +411,8 @@ app.post("/chat", async (req, res) => {
       } catch (error) {
         res.json({ chatExists: chatExists });
       }
+    } else {
+      res.json([]);
     }
   } catch (error) {
     console.error("Error:", error);
@@ -447,7 +449,7 @@ app.get("/chats", async (req, res) => {
       console.log("Chats with message count:", chatsWithMessageCount);
 
       res.send(chatsWithMessageCount);
-    }else{
+    } else {
       res.send([]);
     }
   } catch (error) {
