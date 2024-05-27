@@ -220,7 +220,6 @@ class UserController extends Controller
             return response()->json(['message' => $validator->errors()->all()], 400);
         }
 
-
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
@@ -229,7 +228,7 @@ class UserController extends Controller
             'birthdate' => $request->birthdate,
             'password' => bcrypt($request->password),
             'loginWith' => 'email',
-            'private' => $request->private,
+            'private' => $request->private ? true : false,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
@@ -403,7 +402,7 @@ class UserController extends Controller
         $user->birthdate = $request->birthdate;
         $user->nickname = $request->nickname;
         $user->password = bcrypt($request->password);
-        $user->private = $request->private;
+        $user->private = $request->private ? true : false;
 
         return response()->json($user->save());
     }
@@ -473,7 +472,7 @@ class UserController extends Controller
             }
         }
 
-        $user->private = $request->private;
+        $user->private = $request->private ? true : false;
 
         $user->save();
 

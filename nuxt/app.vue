@@ -20,7 +20,9 @@ export default {
   created() {
   },
   mounted() {
-    this.fetchGeolocation();
+    this.fetchGeolocation().then(() => {
+      eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50);
+    });
     eventManager.getLocations();
     this.connectSocket();
     socket.on("notification", (message) => {
@@ -30,7 +32,7 @@ export default {
     });
   },
   methods: {
-    fetchGeolocation() {
+    async fetchGeolocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
@@ -55,12 +57,7 @@ export default {
     }
   },
   watch: {
-    userLocation: {
-      handler: function (val) {
-        eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50)
-      },
-      deep: true,
-    },
+
   },
 }
 </script>
