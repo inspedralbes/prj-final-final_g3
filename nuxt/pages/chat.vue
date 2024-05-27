@@ -7,14 +7,10 @@
 
             <article class="flex justify-center items-center gap-2">
                 <div class="relative">
-                    <img class="size-16 rounded-full object-cover"
-                        src="https://thumbs.web.sapo.io/?W=800&H=0&delay_optim=1&epic=NDFjSdwqImaET1gQCMUsNp5Qavn4PlLFQyCWKmycNTnIrB2+LwIWzyTNyDw1vKtb1IpZFcVQrYXXHk79sdT61tq23+ULbUSFnEiSEsC5SgPiLHE="
-                        alt="">
-                    <div class="absolute bottom-1 right-1 size-3 rounded-full bg-green-400"></div>
+                    <img class="size-16 rounded-full object-cover" :src="getImage()" >
                 </div>
                 <div class="flex flex-col gap-1 items-start">
                     <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
-                    <!-- <p class="text-xs text-gray-300">Online</p> -->
                 </div>
             </article>
             <div class="flex items-center justify-center gap-2">
@@ -27,9 +23,7 @@
             </div>
         </header>
 
-        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto"
-            @scroll="handleScroll">
-            <p class="rounded px-6 py-1 bg-black/30 text-sm mb-4">Ayer</p>
+        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto" @scroll="handleScroll">
             <div class="w-full flex flex-col items-center gap-2">
                 <div v-for="msg in messages" :key="msg.id"
                     :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
@@ -102,7 +96,7 @@ export default {
             this.scrollToBottom();
         },
         async loadMore() {
-            if (this.loadingMore) return; // Evitar múltiples solicitudes simultáneas
+            if (this.loadingMore) return;
             this.loadingMore = true;
             const container = this.$refs.messageContainer;
             const currentScrollHeight = container.scrollHeight;
@@ -131,10 +125,23 @@ export default {
         leaveChat() {
             socket.emit('leaveChat', this.chat_id);
             this.$router.push('/chats');
+        },
+        markReadMessages() {
+            comChat.markMessagesAsRead(this.chat_id, this.store.getId());
+        },
+        getImage() {
+            if (!this.contact.avatar) {
+                return `/img/standard_pfp.jpg`
+            } else {
+                return `${this.$config.public.IMAGE_URI}/${this.contact.avatar}`;
+            }
         }
+
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
+        this.contact = this.store.getChatUser();
 
         socket.on('message', (message) => {
             this.messages.push(message);
@@ -142,11 +149,11 @@ export default {
             this.scrollToBottom();
         });
 
-        this.contact = this.store.getChatUser();
 
         comChat.checkChat(this.store.getId(), this.contact.id).then((res) => {
             this.chat_id = res.chatExists._id;
             this.fetchMessages();
+            this.markReadMessages();
         });
     },
 }
