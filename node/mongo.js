@@ -443,6 +443,8 @@ app.get("/chats", async (req, res) => {
       }));
       
       res.send(chatsWithMessageCount);
+    }else{
+      res.send([]);
     }
   } catch (error) {
     console.error("Error:", error);
