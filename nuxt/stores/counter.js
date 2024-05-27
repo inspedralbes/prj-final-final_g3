@@ -8,7 +8,6 @@ export const useStores = defineStore("counter", {
       id: null,
       name: "",
       surnames: "",
-      nickname: "",
       email: "",
       token: "",
       avatar: "",
@@ -16,6 +15,17 @@ export const useStores = defineStore("counter", {
       birthdate: "",
       followingUsers: [],
       followersUsers: [],
+      events: [],
+      private: false,
+    },
+    otherUserInfo: {
+      id: null,
+      avatar: "",
+      nickname: "",
+      followingUsers: [],
+      followersUsers: [],
+      events: [],
+      private: false,
     },
     events: [],
     chatUser: {},
@@ -27,7 +37,14 @@ export const useStores = defineStore("counter", {
   }),
   persist: {
     storage: persistedState.localStorage,
-    paths: ["userInfo", "loggedIn", "events", "locations", "userLocation"],
+    paths: [
+      "userInfo",
+      "otherUserInfo",
+      "loggedIn",
+      "events",
+      "locations",
+      "userLocation",
+    ],
   },
 
   actions: {
@@ -45,6 +62,9 @@ export const useStores = defineStore("counter", {
       this.userInfo.nickname = userInfo.nickname;
       this.userInfo.birthdate = userInfo.birthdate;
     },
+    setUserInfoEvents(events) {
+      this.userInfo.events = events;
+    },
     setLoggedIn(value) {
       this.loggedIn = value;
     },
@@ -57,6 +77,8 @@ export const useStores = defineStore("counter", {
     setLogout() {
       this.userInfo = {};
       this.loggedIn = false;
+      this.events = [];
+      location.reload();
     },
     setChatUser(user) {
       this.chatUser = user;
@@ -67,12 +89,25 @@ export const useStores = defineStore("counter", {
     setFollowed(users) {
       this.userInfo.followingUsers = users;
     },
+    setOtherFollowers(users) {
+      this.otherUserInfo.followersUsers = users;
+    },
+    setOtherFollowed(users) {
+      this.otherUserInfo.followingUsers = users;
+    },
     setLocations(locations) {
       this.locations = locations.locations;
     },
     setUserLocation(location) {
       this.userLocation = location;
-      console.log(this.userLocation);
+    },
+    setOtherUserInfo(userInfo) {
+      this.otherUserInfo.id = userInfo.id;
+      this.otherUserInfo.avatar = userInfo.avatar;
+      this.otherUserInfo.nickname = userInfo.nickname;
+    },
+    setOtherUserInfoEvents(events) {
+      this.otherUserInfo.events = events;
     },
 
     /* -------------------------------------------------------------------------- */
@@ -83,6 +118,14 @@ export const useStores = defineStore("counter", {
     },
     getUserInfo() {
       return this.userInfo;
+    },
+    getAvatar() {
+      if (!this.userInfo.avatar) {
+        return `/img/standard_pfp.jpg`;
+      } else {
+        console.log(`http://localhost:8000/public/${this.userInfo.avatar}`);
+        return `http://localhost:8000/public/${this.userInfo.avatar}`;
+      }
     },
     getLoggedIn() {
       return this.loggedIn;

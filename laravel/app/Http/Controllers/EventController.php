@@ -22,7 +22,7 @@ class EventController extends Controller
                        ->paginate(20);
 
         if ($events->isEmpty()) {
-            return response()->json(['message' => 'No events found'], 404);
+            return response()->json(['message' => 'No s\' han trobat esdeveniments'], 404);
         }
 
         return response()->json(['events' => $events], 200);
@@ -36,7 +36,7 @@ class EventController extends Controller
                        ->get();
     
         if ($events->isEmpty()) {
-            return response()->json(['message' => 'No events found'], 404);
+            return response()->json(['message' => 'No s\' han trobat esdeveniments'], 404);
         }
     
         return response()->json(['events' => $events], 200);
@@ -117,13 +117,40 @@ class EventController extends Controller
         return response()->json(['events' => $events], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getEventsByName(Request $request)
     {
-        //
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'param' => 'required|string',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+    
+        // Obtener el parámetro validado
+        $name = $request->input('param');
+    
+        try {
+            // Realizar la consulta buscando coincidencias en las columnas especificadas
+            $events = Event::where('event', 'like', "%{$name}%")
+                ->orWhere('artist', 'like', "%{$name}%")
+                ->orWhere('venue', 'like', "%{$name}%")
+                ->orWhere('city', 'like', "%{$name}%")
+                ->orWhere('country', 'like', "%{$name}%")
+                ->get();
+    
+            // Verificar si hay eventos
+            if ($events->isEmpty()) {
+                return response()->json(['message' => 'No events found for the specified criteria'], 404);
+            }
+    
+            return response()->json(['events' => $events], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error fetching events', 'error' => $e->getMessage()], 500);
+        }
     }
+    
 
     public function getLocations()
     {
@@ -171,16 +198,28 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($ids)
     {
-        $event = Event::find($id);
+        // Convierte la cadena de IDs a un array
+        $idsArray = explode(',', $ids);
     
-        if (!$event) {
-            return response()->json(['message' => 'Event not found'], 404);
+        // Validar que todos los elementos en $idsArray sean números
+        if (array_filter($idsArray, 'is_numeric') !== $idsArray) {
+            return response()->json(['message' => 'Invalid IDs provided'], 400);
         }
     
-        return response()->json(['event' => $event], 200);
+        // Realiza la consulta en la base de datos
+        $events = Event::whereIn('id', $idsArray)->get();
+    
+        // Verifica si se encontraron eventos
+        if ($events->isEmpty()) {
+            return response()->json(['message' => 'Events not found'], 404);
+        }
+    
+        // Retorna los eventos encontrados
+        return response()->json(['events' => $events], 200);
     }
+    
 
     /**
      * Show the form for editing the specified resource.

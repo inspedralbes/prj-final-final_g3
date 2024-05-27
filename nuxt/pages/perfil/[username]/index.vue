@@ -27,14 +27,14 @@
                             <p class="te+xt-white">{{ User.events.length }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
+                        <button
+                            class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
+                            @click="followOr">
+                            {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
+                        </button>
                     </div>
                 </div>
             </article>
-
-            <NuxtLink to='/edit-profile'
-                class='px-4 py-2 font-bold text-black text-sm bg-white rounded-full hover:bg-[#FF8A1E] transition-all duration-300 hover:-translate-y-1'>
-                Edita el perfil
-            </NuxtLink>
         </section>
 
         <section class='flex flex-col gap-4'>
@@ -50,16 +50,11 @@
                     @click="setSelectedSection('Eventos')">
                     Esdeveniments
                 </button>
-                <!-- <button class="text-white"
-                    :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
-                    @click="setSelectedSection('Gustos')">
-                    Gustos
-                </button> -->
             </div>
 
-            <PostsProfile class="" v-if="selectedSection === 'Posts'" />
-            <EventosProfile v-if="selectedSection === 'Eventos'" />
-            <!-- <GustosProfile v-if="selectedSection === 'Gustos'" /> -->
+            <PostsProfile profile="otro" class="" v-if="selectedSection === 'Posts'" />
+            <EventosProfile profile="otro" v-if="selectedSection === 'Eventos'" />
+            <!-- <GustosProfile profile="otro" v-if="selectedSection === 'Gustos'" /> -->
         </section>
     </main>
     <Menu v-if="!loader" />
@@ -68,6 +63,7 @@
 <script>
 import userManager from '~/managers/userManager';
 import eventManager from '~/managers/eventManager';
+import comManager from '~/managers/comManager';
 import { useStores } from '~/stores/counter';
 
 export default {
@@ -76,14 +72,13 @@ export default {
         return {
             selectedSection: 'Posts',
             User: {
-                store: useStores(),
-                id: useStores().userInfo.id,
-                avatar: useStores().userInfo.avatar,
-                nickname: useStores().userInfo.nickname,
-                name: useStores().userInfo.name,
-                followers: useStores().userInfo.followersUsers.count,
-                following: useStores().userInfo.followingUsers.count,
-                events: useStores().userInfo.events
+                id: useStores().otherUserInfo.id,
+                avatar: useStores().otherUserInfo.avatar,
+                nickname: this.$route.params.username,
+                name: useStores().otherUserInfo.name,
+                followers: useStores().otherUserInfo.followersUsers.count,
+                following: useStores().otherUserInfo.followingUsers.count,
+                events: useStores().otherUserInfo.events
             },
             store: useStores(),
             loader: false
@@ -95,27 +90,36 @@ export default {
         setSelectedSection(section) {
             this.selectedSection = section
         },
-        async getFollowers() {
-            await userManager.getFollowers();
-        },
-        async getFollowing() {
-            await userManager.getFollowed();
-        },
         async getEvents() {
             const eventos = await eventManager.getLikeEvents(this.User.id);
-            this.store.setUserInfoEvents(eventos)
+            this.store.setOtherUserInfoEvents(eventos)
         },
-        getUserEvents() {
-            if (this.profile) {
-                this.User.events = this.store.otherUserInfo.events
+        async getFollowers() {
+            await userManager.getFollowers(this.User.id);
+        },
+        async getFollowing() {
+            await userManager.getFollowed(this.User.id);
+        },
+        async followUser() {
+            await comManager.follow(this.User.id)
+        },
+        async unfollowUser() {
+            await comManager.unfollow(this.User.id)
+        },
+        async followOr() {
+            if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
+            if (this.checkIfFollowing) {
+                await this.unfollowUser();
             } else {
-                this.User.events = this.store.userInfo.events
+                await this.followUser();
             }
-        }
+        },
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        this.loader = true;
+        if (this.$route.params.username === this.store.userInfo.nickname) return this.$router.push('/perfil')
+        this.loader = true
         try {
             await this.getFollowers();
             await this.getFollowing();
@@ -132,6 +136,13 @@ export default {
                 return `/img/standard_pfp.jpg`
             } else {
                 return `${this.$config.public.IMAGE_URI}/${this.User.avatar}`;
+            }
+        },
+        checkIfFollowing() {
+            if (!this.store.userInfo.followingUsers.followed) {
+                return false
+            } else {
+                return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.User.id);
             }
         }
     }

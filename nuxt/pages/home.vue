@@ -1,9 +1,6 @@
 <template>
+    <Header />
     <section class="min-h-screen w-[90%] mx-auto">
-        <header class="flex justify-between items-center py-2 mb-8">
-            <h1 class="text-2xl font-bold ">Para ti</h1>
-            <button @click="follow()">seguir</button>
-        </header>
 
         <article v-for="post in posts" :key="post._id" class="flex flex-col gap-2 bg-black rounded mb-4">
             <header class=" flex justify-between items-center py-2 px-3">
@@ -15,10 +12,10 @@
                         <div class="flex items-center gap-3">
                             <h3 class="font-bold">{{ post.name }}</h3>
 
-                            <p class="text-xs text-gray-300">Hace 22h</p>
+                            <p class="text-xs text-gray-300">Fa 22h</p>
 
                         </div>
-                        <p class="text-sm">@{{post.nickname}}</p>
+                        <p class="text-sm">@{{ post.nickname }}</p>
                     </div>
                 </div>
             </header>
@@ -61,7 +58,14 @@ export default {
             store: useStores(),
             followedUsers: [],
             posts: [],
-            followedIds: []
+            followedIds: [],
+            param: '',
+            users: [],
+            filteredUsers: [],
+            empty: false,
+            message: '',
+            loader: false,
+            modal: false,
 
         }
     },
@@ -75,7 +79,7 @@ export default {
                 this.followedIds.push(this.followedUsers[i].id)
             }
 
-            
+
         },
 
         async getPosts() {
@@ -95,7 +99,26 @@ export default {
                     this.posts[i].nickname = user.followed.nickname;
                 }
             }
-        }
+        },
+        async searchUsers() {
+            const response = await comManager.searchUsers(this.param);
+            if (response.data.length > 0) {
+                this.empty = false;
+                this.users = response.data;
+                this.filteredUsers = this.users.map(user => ({ id: user.id, nickname: user.nickname, avatar: user.avatar }));
+            } else {
+                this.empty = true;
+                this.message = response.data.message;
+            }
+        },
+        goToChat(user) {
+            if (user.id == this.store.getId()) {
+                this.empty = true;
+                return;
+            }
+            this.store.setChatUser(user);
+            this.$router.push('/chat');
+        },
 
         // async follow() {
         //     try {
@@ -120,7 +143,6 @@ export default {
 
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-
         this.getPosts()
     }
 }

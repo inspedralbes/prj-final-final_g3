@@ -25,6 +25,8 @@ async function getAllMessages(idChat) {
 }
 
 async function checkChat(user_id, contact_id) {
+  console.log("user_id", user_id);
+  console.log("contact_id", contact_id);
   try {
     const response = await axios.post(`${url_api_mongo}/chat`, {
       user_id: user_id,
@@ -45,7 +47,7 @@ async function getFirst10Messages(chat_id) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -59,7 +61,7 @@ async function getMessages(chat_id, message_id) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -72,7 +74,7 @@ async function getChats(user_id) {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
   }
 }
 
@@ -89,10 +91,66 @@ async function getUserChats(user_id) {
       nickname: response.data.nickname,
       avatar: response.data.avatar,
     };
-
     return obj_response;
   } catch (error) {
     console.error("Error fetching data:", error);
+  }
+}
+
+async function getLastMessage(chat_id) {
+  try {
+    const response = await axios.get(`${url_api_mongo}/lastMessage`, {
+      params: {
+        chat_id: chat_id,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getMessagesNotReceived(chat_id, user_id) {
+  try {
+    const response = await axios.get(
+      `${url_api_mongo}/getMessagesNotReceived`,
+      {
+        params: {
+          chat_id: chat_id,
+          user_id: user_id,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function markMessagesAsReceived(chat_id, user_id) {
+  try {
+    const response = await axios.put(
+      `${url_api_mongo}/markMessagesAsReceived`,
+      {
+        chat_id: chat_id,
+        user_id: user_id,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function markMessagesAsRead(chat_id, user_id) {
+  try {
+    const response = await axios.put(`${url_api_mongo}/markMessagesAsRead`, {
+      chat_id: chat_id,
+      user_id: user_id,
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
   }
 }
 
@@ -103,6 +161,10 @@ const comChat = {
   getMessages,
   getChats,
   getUserChats,
+  getLastMessage,
+  getMessagesNotReceived,
+  markMessagesAsReceived,
+  markMessagesAsRead,
 };
 
 export default comChat;

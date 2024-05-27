@@ -7,6 +7,7 @@
 <script>
 import userManager from '@/managers/userManager.js';
 import eventManager from './managers/eventManager.js';
+import comChat from './managers/chatManager.js';
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
 
@@ -23,10 +24,11 @@ export default {
     this.fetchGeolocation();
     eventManager.getLocations();
     this.connectSocket();
-    socket.on("notification", (message) => {
-      console.log("Notificacion");
-      const toast = useToast();
-      toast.add({ title: 'Has rebut un nou missatge'});
+    socket.on("notification", async () => {
+      if (this.$route.path !== '/chats') {
+        const toast = useToast();
+        toast.add({ title: 'Has rebut un nou missatge' });
+      }
     });
   },
   methods: {
@@ -48,9 +50,30 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
-    connectSocket(){
+    connectSocket() {
       if (this.store.getLoggedIn()) {
+        console.log('logged', this.store.getId());
         socket.emit('logged', this.store.getId());
+        this.getChats();
+      }
+    },
+    async getChats() {
+      const chats = await comChat.getChats(this.store.getId());
+      if (chats.length != 0) {
+        for (const chat of chats) {
+          const messages = await comChat.getMessagesNotReceived(chat._id, this.store.getId());
+          if (messages.count > 0) {
+            const toast = useToast();
+            toast.add({ title: 'Tienes mensajes nuevos desde la ultima conexion' });
+            break;
+          }
+        }
+        for (const chat of chats) {
+          const messages = await comChat.getMessagesNotReceived(chat._id, this.store.getId());
+          if (messages.count > 0) {
+            console.log(await comChat.markMessagesAsReceived(chat._id, this.store.getId()));
+          }
+        }
       }
     }
   },

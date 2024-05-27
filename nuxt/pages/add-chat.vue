@@ -15,7 +15,7 @@
                 </router-link>
                 <input v-model="param" @input="searchUsers" type="text" id="simple-search"
                     class="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[400px] ps-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Busca a usuarios para iniciar un chat..." required />
+                    placeholder="Cerca a usuaris per a iniciar un xat..." required />
             </div>
         </div>
 
@@ -34,9 +34,6 @@
                 <h2 class="font-bold m-5">{{ message }}</h2>
             </div>
         </main>
-
-
-
     </div>
     <!-- <Menu /> -->
 </template>
@@ -70,7 +67,6 @@ export default {
             }
         },
         goToChat(user) {
-            console.log(user);
             if (user.id == this.store.getId()) {
                 this.empty = true;
                 return;

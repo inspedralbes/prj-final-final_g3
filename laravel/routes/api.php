@@ -20,9 +20,9 @@ use App\Http\Controllers\ChatController;
 |
 */
 
-Route::get('/', function () {
-    return response()->json(['message' => 'Hello World!']);
-});
+// Route::get('/', function () {
+//     return response()->json(['message' => 'Hello World!']);
+// });
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
         Route::get('/followed/{userId}', [FollowersController::class, 'getUserFollowed']);
         Route::get('/{id}', [UserController::class, 'userById']);
+        Route::get('/search/{username}', [UserController::class, 'getUserByNickname']);
 
     });
 });
@@ -60,7 +61,8 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/locations', [EventController::class, 'getLocations']);
     Route::post('/byLocation', [EventController::class, 'getEventsByLocation']);
     Route::post('/byDistance', [EventController::class, 'getEventsByDistance']);
-    Route::get('/{id}', [EventController::class, 'show']);
+    Route::post('/search', [EventController::class, 'getEventsByName']);
+    Route::get('/{ids}', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
     // Route::delete('/{id}', [EventController::class, 'destroy']);

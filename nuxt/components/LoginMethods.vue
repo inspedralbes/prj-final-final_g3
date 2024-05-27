@@ -6,9 +6,10 @@
                     alt="Logo de Google" /></button>
             <button class='size-7' @click="redirectToSpotify"><img src="/public/img/spotify_logo.webp"
                     alt="Logo de Spotify" /></button>
+            <button class='size-7' @click="redirectToLogin"><img src="/public/img/Spottunes_logo.svg" alt=""></button>
             <!-- <button class='size-7'><img src="/img/appleMusic_logo.png" alt="Logo de Apple Music" /></button> -->
-        </div>
-    </section>
+            </div>
+            </section>
 </template>
 
 <script>
@@ -27,6 +28,11 @@ export default {
     created() {
     },
     methods: {
+        redirectToLogin() {
+            const currentPath = window.location.pathname;
+            const newPath = currentPath === '/login' ? '/register' : '/login';
+            window.location.href = newPath;
+        },
         redirectToGoogle() {
             const clientId = this.$config.public.GOOGLE_CLIENT_ID;
             const redirectUri = this.$config.public.GOOGLE_REDIRECT_URI;

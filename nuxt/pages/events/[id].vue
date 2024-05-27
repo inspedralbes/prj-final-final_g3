@@ -39,7 +39,7 @@
           </h2>
         </div>
       </div>
-      <h3 class='text[#CACACA] text-sm'>{{ counterFollowers }} personas inscritas</h3>
+      <h3 class='text[#CACACA] text-sm'>{{ counterFollowers }} persones inscrites</h3>
       <div class='w-full h-[2px] bg-[#888888]'></div>
       <div v-if="mostrarSeg" v-for="follower in followers" :key="follower.id">
         <UserCardEvent :follower="follower" />
@@ -48,11 +48,11 @@
         <div class="border-gray-300 h-5 w-5 animate-spin rounded-full border-2 border-t-blue-600"></div>
       </div>
       <div v-if="noFollowersComputed" class="flex justify-center items-center">
-        No hay ningun seguidor en este evento
+        No hi ha cap seguidor en aquest esdeveniment
       </div>
       <button type="button" v-if="loadMoreFollowers" @click="getFollowers()"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Ver
-        mas seguidores...</button>
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Veure
+        mes seguidors...</button>
     </article>
   </main>
 </template>
