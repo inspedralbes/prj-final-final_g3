@@ -75,8 +75,7 @@ async function getChats(user_id) {
     console.log("get Chats en chatManager:", response.data);
     return response.data;
   } catch (error) {
-    console.log("Error fetching data:", error);
-    console.error("Error fetching data:", error);
+    // console.error("Error fetching data:", error);
   }
 }
 
