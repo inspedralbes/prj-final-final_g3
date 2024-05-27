@@ -1,29 +1,32 @@
 <template>
-    <section class="w-[90vw] min-h-screen mx-auto text-white">
+    <section class="fixed top-0 w-full min-h-screen mx-auto text-white">
         <header class="h-[12vh] flex justify-between items-center bg-black">
             <button @click="leaveChat()">
                 <Arrow class="size-6" />
             </button>
 
             <article class="flex justify-center items-center gap-2">
-                <div class="relative">
-                    <img class="size-16 rounded-full object-cover" :src="getImage()" >
-                </div>
-                <div class="flex flex-col gap-1 items-start">
-                    <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
-                </div>
+                <NuxtLink :to="`/perfil/${contact.nickname}`">
+                    <div class="relative">
+                        <img class="size-16 rounded-full object-cover" :src="getImage()">
+                    </div>
+                    <div class="flex flex-col gap-1 items-start">
+                        <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
+                    </div>
+                </NuxtLink>
             </article>
-            <div class="flex items-center justify-center gap-2">
+            <!-- <div class="flex items-center justify-center gap-2">
                 <button>
                     <Flag class="size-6" />
                 </button>
                 <button>
                     <CircleDots class="size-6" />
                 </button>
-            </div>
+            </div> -->
         </header>
 
-        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto" @scroll="handleScroll">
+        <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto"
+            @scroll="handleScroll">
             <div class="w-full flex flex-col items-center gap-2">
                 <div v-for="msg in messages" :key="msg.id"
                     :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
@@ -32,18 +35,20 @@
             </div>
         </article>
 
-        <footer class="h-[10vh] bg-[#4B4B4B] flex justify-center items-center gap-2 px-8">
-            <div class="w-full h-8 bg-[#646464] rounded-full flex items-center">
-                <button class="rounded-full bg-[#7C7C7C] p-[6px]">
-                    <Plus class="size-5 border-white border-2 rounded-full" />
+        <div class="fixed bottom-0">
+            <footer class="h-[10vh] bg-[#4B4B4B] flex justify-center items-center gap-2 px-8 w-full">
+                <div class="w-full h-8 bg-[#646464] rounded-full flex items-center">
+                    <button class="rounded-full bg-[#7C7C7C] p-[6px]">
+                        <Plus class="size-5 border-white border-2 rounded-full" />
+                    </button>
+                    <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
+                        placeholder="Escriu el teu missatge..." @keyup.enter="sendMessage" v-model="message">
+                </div>
+                <button class="bg-primary rounded-full p-[6px]" @click="sendMessage">
+                    <Send class="size-5" />
                 </button>
-                <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
-                    placeholder="Escriu el teu missatge..." @keyup.enter="sendMessage" v-model="message">
-            </div>
-            <button class="bg-primary rounded-full p-[6px]" @click="sendMessage">
-                <Send class="size-5" />
-            </button>
-        </footer>
+            </footer>
+        </div>
     </section>
 </template>
 
@@ -144,7 +149,7 @@ export default {
         this.contact = this.store.getChatUser();
 
         socket.on('message', (message) => {
-            
+
             this.messages.push(message);
             this.chat_id = message.chat_id;
             this.scrollToBottom();
@@ -157,7 +162,7 @@ export default {
                 this.fetchMessages();
                 this.markReadMessages();
             }
-            
+
         });
     },
 }
