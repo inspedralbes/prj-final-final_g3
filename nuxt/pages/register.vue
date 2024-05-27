@@ -18,6 +18,11 @@
                     placeholder="Contrasenya" v-model="password" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="password"
                     placeholder="Repeteix la contrasenya" v-model="password_confirmation" />
+                <div class="flex flex-row gap-x-2">
+                    <label for="private" class='text-white'>Vols que el teu perfil sigui privat?</label>
+                    <UToggle v-model="private" color="orange" on-icon="i-heroicons-check-20-solid"
+                        off-icon="i-heroicons-x-mark-20-solid" />
+                </div>
                 <button
                     class="flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600">
                     <span v-if="!isLoading" class="text-white">Registra'm</span>
@@ -37,9 +42,6 @@
                 </svg>
             </NuxtLink>
         </section>
-
-
-
     </main>
 </template>
 
@@ -62,13 +64,14 @@ export default {
             password_confirmation: '',
             isLoading: false,
             error: false,
-            message: ''
+            message: '',
+            private: false,
         };
     },
 
     methods: {
         async register() {
-            this.isLoading = true; 
+            this.isLoading = true;
 
             let userData = {
                 email: this.email,
@@ -78,6 +81,7 @@ export default {
                 birthdate: this.birthdate,
                 password: this.password,
                 password_confirmation: this.password_confirmation,
+                private: this.private,
             };
 
             const response = await authManager.register(userData);
@@ -94,6 +98,7 @@ export default {
                     birthdate: user.birthdate,
                     nickname: user.nickname,
                     avatar: user.avatar,
+                    private: user.private,
                 });
                 this.store.setLoggedIn(true);
                 this.isLoading = false;
@@ -103,7 +108,6 @@ export default {
                 this.isLoading = false;
                 this.error = true;
                 this.message = response.data.message.join(', ');
-                console.log(response);
             }
 
 

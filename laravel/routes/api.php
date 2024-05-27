@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/followers/{userId}', [FollowersController::class, 'getUserFollowers']);
         Route::get('/followed/{userId}', [FollowersController::class, 'getUserFollowed']);
         Route::get('/{id}', [UserController::class, 'userById']);
+        Route::get('/search/{username}', [UserController::class, 'getUserByNickname']);
 
     });
 });
@@ -61,7 +62,7 @@ Route::group(['prefix' => 'events'], function () {
     Route::post('/byLocation', [EventController::class, 'getEventsByLocation']);
     Route::post('/byDistance', [EventController::class, 'getEventsByDistance']);
     Route::post('/search', [EventController::class, 'getEventsByName']);
-    Route::get('/{id}', [EventController::class, 'show']);
+    Route::get('/{ids}', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
     // Route::delete('/{id}', [EventController::class, 'destroy']);

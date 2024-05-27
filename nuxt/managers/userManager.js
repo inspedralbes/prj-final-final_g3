@@ -21,6 +21,7 @@ async function updateUser(user, token) {
         email: user.email,
         birthdate: user.birthdate,
         avatar: user.avatar,
+        private: user.private,
       },
       {
         headers: {
@@ -34,37 +35,54 @@ async function updateUser(user, token) {
   }
 }
 
-async function getFollowers() {
+async function getFollowers(id) {
   const store = useStores();
+  let userID = id ? id : store.getId();
   try {
-    const response = await axios.get(
-      `${url_api}/users/followers/${store.getId()}`,
-      {
-        headers: {
-          Authorization: `Bearer ${store.getToken()}`,
-        },
-      }
-    );
-    store.setFollowers(response.data);
+    const response = await axios.get(`${url_api}/users/followers/${userID}`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      },
+    });
+    if (id === store.getId()) {
+      store.setFollowers(response.data);
+    } else {
+      store.setOtherFollowers(response.data);
+    }
   } catch (error) {
     console.error("Error fetching followers:", error);
   }
 }
 
-async function getFollowed() {
+async function getFollowed(id) {
   const store = useStores();
+  let userID = id ? id : store.getId();
   try {
-    const response = await axios.get(
-      `${url_api}/users/followed/${store.getId()}`,
-      {
-        headers: {
-          Authorization: `Bearer ${store.getToken()}`,
-        },
-      }
-    );
-    store.setFollowed(response.data);
+    const response = await axios.get(`${url_api}/users/followed/${userID}`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      },
+    });
+    if (id === store.getId()) {
+      store.setFollowed(response.data);
+    } else {
+      store.setOtherFollowed(response.data);
+    }
   } catch (error) {
     console.error("Error fetching followers:", error);
+  }
+}
+
+async function searchUsers(user) {
+  try {
+    const response = await axios.get(`${url_api}/users/search/${user}`, {
+      headers: {
+        Authorization: `Bearer ${store.getToken()}`,
+      },
+    });
+    store.setOtherUserInfo(response.data);
+  } catch (error) {
+    console.error("Error searching users:", error);
   }
 }
 
@@ -121,6 +139,7 @@ const userManager = {
   getFollowers,
   getFollowed,
   convertGeolocation,
+  searchUsers,
 };
 
 export default userManager;

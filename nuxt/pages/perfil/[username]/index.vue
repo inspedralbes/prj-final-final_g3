@@ -30,11 +30,6 @@
                     </div>
                 </div>
             </article>
-
-            <NuxtLink to='/edit-profile'
-                class='px-4 py-2 font-bold text-black text-sm bg-white rounded-full hover:bg-[#FF8A1E] transition-all duration-300 hover:-translate-y-1'>
-                Edita el perfil
-            </NuxtLink>
         </section>
 
         <section class='flex flex-col gap-4'>
@@ -57,9 +52,9 @@
                 </button>
             </div>
 
-            <PostsProfile class="" v-if="selectedSection === 'Posts'" />
-            <EventosProfile v-if="selectedSection === 'Eventos'" />
-            <GustosProfile v-if="selectedSection === 'Gustos'" />
+            <PostsProfile profile="otro" class="" v-if="selectedSection === 'Posts'" />
+            <EventosProfile profile="otro" v-if="selectedSection === 'Eventos'" />
+            <GustosProfile profile="otro" v-if="selectedSection === 'Gustos'" />
         </section>
     </main>
     <Menu v-if="!loader" />
@@ -77,12 +72,12 @@ export default {
             selectedSection: 'Posts',
             User: {
                 store: useStores(),
-                id: useStores().userInfo.id,
-                avatar: useStores().userInfo.avatar,
-                nickname: useStores().userInfo.nickname,
-                name: useStores().userInfo.name,
-                followers: useStores().userInfo.followersUsers.count,
-                following: useStores().userInfo.followingUsers.count
+                id: useStores().otherUserInfo.id,
+                avatar: useStores().otherUserInfo.avatar,
+                nickname: useStores().otherUserInfo.nickname,
+                name: useStores().otherUserInfo.name,
+                followers: useStores().otherUserInfo.followersUsers.count,
+                following: useStores().otherUserInfo.followingUsers.count,
             },
             store: useStores(),
             loader: false
@@ -94,29 +89,24 @@ export default {
         setSelectedSection(section) {
             this.selectedSection = section
         },
-        async getFollowers() {
-            await userManager.getFollowers();
-        },
-        async getFollowing() {
-            await userManager.getFollowed();
-        },
         async getEvents() {
             const eventos = await eventManager.getLikeEvents(this.User.id);
-            this.store.setUserInfoEvents(eventos)
-        }
+            this.store.setOtherUserInfoEvents(eventos)
+        },
+        async getFollowers() {
+            await userManager.getFollowers(this.User.id);
+        },
+        async getFollowing() {
+            await userManager.getFollowed(this.User.id);
+        },
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-
-        this.loader = true;
+        if (this.$route.params.username === this.store.userInfo.nickname) return this.$router.push('/perfil')
+        this.loader = true
         try {
-            if (!this.followers) {
-                await this.getFollowers();
-            }
-
-            if (!this.following) {
-                await this.getFollowing();
-            }
+            await this.getFollowers();
+            await this.getFollowing();
             await this.getEvents();
         } catch (error) {
             console.error("Error while fetching data:", error);

@@ -220,7 +220,6 @@ class UserController extends Controller
             return response()->json(['message' => $validator->errors()->all()], 400);
         }
 
-
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
@@ -229,6 +228,7 @@ class UserController extends Controller
             'birthdate' => $request->birthdate,
             'password' => bcrypt($request->password),
             'loginWith' => 'email',
+            'private' => $request->private ? true : false,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
@@ -401,6 +401,8 @@ class UserController extends Controller
         }
         $user->birthdate = $request->birthdate;
         $user->nickname = $request->nickname;
+        $user->password = bcrypt($request->password);
+        $user->private = $request->private ? true : false;
 
         return response()->json($user->save());
     }
@@ -470,6 +472,7 @@ class UserController extends Controller
             }
         }
 
+        $user->private = $request->private ? true : false;
 
         $user->save();
 
@@ -484,7 +487,7 @@ class UserController extends Controller
         if (empty($param)) {
             return response()->json(['message' => 'No hay resultados en tu búsqueda'], 201);
         }
-        $users = User::where('nickname', 'like', $param . '%')->get();
+        $users = User::where('nickname', 'like', "%{$param}%")->get();
         if ($users->isEmpty()) {
             return response()->json(['message' => 'No hay resultados en tu búsqueda'], 202);
         }
@@ -527,4 +530,16 @@ class UserController extends Controller
             return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
         }
     }
+
+    public function getUserByNickname(Request $request)
+    {
+        $user = User::select('id', 'nickname', 'avatar')->where('nickname', $request->nickname)->first();
+
+        if ($user) {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
+        }
+    }
+    
 }

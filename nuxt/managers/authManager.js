@@ -124,6 +124,7 @@ async function register(userData) {
       password: userData.password,
       birthdate: userData.birthdate,
       password_confirmation: userData.password_confirmation,
+      private: userData.private,
     });
     return response;
   } catch (error) {
@@ -137,6 +138,7 @@ async function login(userData) {
       email: userData.email,
       password: userData.password,
     });
+
     return response;
   } catch (error) {
     return error.response;
@@ -148,8 +150,8 @@ async function logout() {
   try {
     await axios.post(`${url_api}/logout`, null, {
       headers: {
-        Authorization: `Bearer ${store.getToken()}`
-      }
+        Authorization: `Bearer ${store.getToken()}`,
+      },
     });
     store.setLogout();
   } catch (error) {
@@ -166,8 +168,9 @@ async function completeProfile(userData) {
       nickname: userData.nickname,
       password: userData.password,
       birthdate: userData.birthdate,
-      passwordconfirmation: userData.passwordconfirmation,
+      password_confirmation: userData.confirmPassword,
       loginWith: userData.loginWith,
+      private: userData.private,
     });
 
     return response.data;

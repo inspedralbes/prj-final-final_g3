@@ -1,7 +1,9 @@
 <template>
-    <p class="text-center" v-if="!events">No tienes eventos disponibles.</p>
+    <p class="text-center" v-if="!events && !profile">No tens esdeveniments disponibles.</p>
+    <p class="text-center" v-if="!events && profile">No té esdeveniments disponibles.</p>
     <section v-else class='w-[90%] mx-auto flex flex-col gap-3'>
-        <NuxtLink :to="`/events/${event.id}`" class="relative w-full h-48 rounded-md overflow-hidden" v-for="event in events" :key="event.id">
+        <NuxtLink :to="`/events/${event.id}`" class="relative w-full h-48 rounded-md overflow-hidden"
+            v-for="event in events" :key="event.id">
             <div class='relative'>
                 <img :src="JSON.parse(event.images)[2]" class='w-full h-full object-cover'
                     :alt="`Foto de ${event.event}`" />
@@ -19,6 +21,11 @@
 import { useStores } from '~/stores/counter';
 
 export default {
+    props: {
+        profile: {
+            type: String,
+        }
+    },
     data() {
         return {
             store: useStores(),
@@ -26,15 +33,14 @@ export default {
         }
     },
     methods: {
-        async getEventos() {
-            const allEvents = this.store.getEvents()
-            this.events = allEvents.filter(event => event.like === true);
-            console.log(this.events)
-        }
-    },
 
+    },
     mounted() {
-        this.getEventos();
+        if (this.profile) {
+            this.events = this.store.otherUserInfo.events
+        } else {
+            this.events = this.store.userInfo.events
+        }
     }
 }
 </script>
