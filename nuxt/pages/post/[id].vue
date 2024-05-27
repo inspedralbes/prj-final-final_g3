@@ -17,7 +17,7 @@
             </header>
             <article>
                 <p>{{ post.content }}</p>
-                <img class="rounded" :src="post.image" alt="">
+                <img class="rounded" :src=" url_mongo + '/' + post.image" alt="">
             </article>
             <footer class="flex justify-between items-center gap-6 px-1 py-2">
 
@@ -79,7 +79,9 @@ export default {
             post: {},
             comments: [],
             comment: '',
-            userPost: {}
+            userPost: {},
+            url_mongo: this.$config.public.ENV === 'development' ? this.$config.public.MONGO_API_PROD_URI : this.$config.public.MONGO_API_DEV_URI,
+
         }
     },
 
