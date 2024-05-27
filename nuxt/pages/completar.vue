@@ -2,6 +2,7 @@
     <main class='w-screen h-screen bg-[#212121]'>
         <section class='w-[80vw] h-screen mx-auto flex flex-col gap-10 justify-center'>
             <h1 class='text-4xl font-semibold'>Completa el teu perfil</h1>
+            <h1 v-if="error" class="text-red-500">{{ message }}</h1>
             <form class='flex flex-col gap-6' @submit.prevent>
                 <input class='bg-transparent border-b border-gray-400 outline-none' type="password"
                     placeholder="Contrasenya" v-model="password" />
@@ -11,6 +12,11 @@
                     v-model="nickname" />
                 <input class='bg-transparent border-b border-gray-400 outline-none' type="date" placeholder="Aniversari"
                     v-model="birthdate" />
+                <!-- <div class="flex flex-row gap-x-2">
+                    <label for="private" class='text-white'>Vols que el teu perfil sigui privat?</label>
+                    <UToggle v-model="private" color="orange" on-icon="i-heroicons-check-20-solid"
+                        off-icon="i-heroicons-x-mark-20-solid" />
+                </div> -->
                 <button @click="completeProfile" :disabled="isLoading"
                     class='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>
                     <Loader v-if="isLoading" />
@@ -47,7 +53,10 @@ export default {
             email: "",
             surnames: "",
             loginWith: "",
-            googleId: ""
+            googleId: "",
+            error: false,
+            message: "",
+            private: false,
         }
     },
     created() {
@@ -83,7 +92,8 @@ export default {
                 birthdate: this.birthdate,
                 surnames: this.surnames,
                 loginWith: this.loginWith,
-                googleId: this.googleId
+                googleId: this.googleId,
+                // private: this.private,
             }
 
             try {
@@ -96,12 +106,13 @@ export default {
                     email: response.data.user.email,
                     token: response.data.token,
                     avatar: response.data.user.avatar,
+                    // private: response.data.user.private,
                 }
                 this.store.setUserInfo(data);
                 this.store.setLoggedIn(true);
                 this.$router.push('/events');
             } catch (error) {
-                console.error(error);
+                console.log('este es el error pedazo de buenisimo', error);
             } finally {
                 this.isLoading = false;
             }

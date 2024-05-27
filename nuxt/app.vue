@@ -26,7 +26,7 @@ export default {
     socket.on("notification", (message) => {
       console.log("Notificacion");
       const toast = useToast();
-      toast.add({ title: 'Has rebut un nou missatge'});
+      toast.add({ title: 'Has rebut un nou missatge' });
     });
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
         console.error("Geolocation is not supported by this browser.");
       }
     },
-    connectSocket(){
+    connectSocket() {
       if (this.store.getLoggedIn()) {
         socket.emit('logged', this.store.getId());
       }

@@ -200,24 +200,25 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             // 'surnames' => 'required|string',
             'nickname' => 'required|string|unique:users',
             'email' => 'required|email|unique:users',
             'birthdate' => 'required|date',
-            'password' => 'required|string',
+            'password' => 'required|string|confirmed',
         ], [
-            'required' => 'El :attribute es obligatorio.',
-            'email' => 'El :attribute debe ser una dirección de correo válida.',
-            'unique' => 'El :attribute ya está en uso.',
-            'date' => 'El :attribute debe ser una fecha válida.',
+            'required' => 'El :attribute és obligatori',
+            'email' => 'El :attribute ha de ser una adreça de correu vàlida',
+            'unique' => 'El :attribute ja està en ús',
+            'date' => 'El :attribute ha de ser una data vàlida',
+            'confirmed' => 'Les contrasenyes no coincideixen',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 400);
+            return response()->json(['message' => $validator->errors()->all()], 400);
         }
-
 
         $user = User::create([
             'name' => $request->name,
@@ -227,6 +228,7 @@ class UserController extends Controller
             'birthdate' => $request->birthdate,
             'password' => bcrypt($request->password),
             'loginWith' => 'email',
+            // 'private' => $request->private ? true : false,
         ]);
 
         $user->makeHidden(['created_at', 'updated_at']);
@@ -300,10 +302,10 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'birthdate' => 'required|date',
         ], [
-            'required' => 'El :attribute es obligatorio.',
-            'email' => 'El :attribute debe ser una dirección de correo válida.',
-            'unique' => 'El :attribute ya está en uso.',
-            'date' => 'El :attribute debe ser una fecha válida.',
+            'required' => 'El :attribute es obligatori.',
+            'email' => 'El :attribute ha de ser una adreça de correu vàlida.',
+            'unique' => 'El :attribute ja està en ús.',
+            'date' => 'El :attribute ha de ser una data vàlida.',
         ]);
 
         if ($validator->fails()) {
@@ -387,16 +389,20 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'birthdate' => 'required|date',
             'nickname' => 'required|string',
+            'password' => 'required|string|confirmed',
         ], [
             'required' => 'El :attribute es obligatorio.',
             'date' => 'El :attribute debe ser una fecha válida.',
+            'confirmed' => 'Les contrasenyes no coincideixen.',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 400);
+            return response()->json(['message' => $validator->errors()->all()], 400);
         }
         $user->birthdate = $request->birthdate;
         $user->nickname = $request->nickname;
+        $user->password = bcrypt($request->password);
+        // $user->private = $request->private ? true : false;
 
         return response()->json($user->save());
     }
@@ -438,34 +444,35 @@ class UserController extends Controller
         if ($request->has('avatar')) {
             // Obtener los datos de la imagen base64
             $imageData = $request->avatar;
-    
+
             // Comprobar si la cadena base64 tiene el prefijo esperado
             if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
                 $imageData = substr($imageData, strpos($imageData, ',') + 1);
                 $type = strtolower($type[1]); // jpg, png, gif, etc.
-    
+
                 // Decodificar la imagen base64
                 $imageData = base64_decode($imageData);
-    
+
                 // Comprobar si la decodificación fue exitosa
                 if ($imageData === false) {
                     return response()->json(['errors' => ['La imagen base64 no es válida.']], 400);
                 }
-    
+
                 // Crear un nombre único para la imagen
                 $imageName = uniqid() . '.' . $type;
-    
+
                 // Guardar la imagen en el sistema de archivos
                 $path = public_path('images') . '/' . $imageName;
                 file_put_contents($path, $imageData);
-    
+
                 // Guardar la ruta de la imagen en la base de datos
                 $user->avatar = 'images/' . $imageName;
             } else {
                 return response()->json(['errors' => ['El formato de la imagen base64 no es válido.']], 400);
             }
         }
-    
+
+        // $user->private = $request->private ? true : false;
 
         $user->save();
 
@@ -474,19 +481,21 @@ class UserController extends Controller
     /**
      * Funcion para el buscador recibe parametros y tiene que devolver todos los usuarios que coincidan con lo que comienzen por esos parametros
      */
-    public function searchUsers(Request $request){
+    public function searchUsers(Request $request)
+    {
         $param = $request->input('param');
         if (empty($param)) {
-            return response()->json(['message' => 'No hay resultados en tu búsqueda'],201);
+            return response()->json(['message' => 'No hay resultados en tu búsqueda'], 201);
         }
-        $users = User::where('nickname', 'like', $param.'%')->get();
+        $users = User::where('nickname', 'like', "%{$param}%")->get();
         if ($users->isEmpty()) {
-            return response()->json(['message' => 'No hay resultados en tu búsqueda'],202);
+            return response()->json(['message' => 'No hay resultados en tu búsqueda'], 202);
         }
         return response()->json($users, 200);
     }
-    
-    public function checkEmail(Request $request){
+
+    public function checkEmail(Request $request)
+    {
         $user = User::where('email', $request->email)->first();
         if ($user) {
             $user = User::where('email', $request['email'])->first();
@@ -501,16 +510,18 @@ class UserController extends Controller
         }
     }
 
-    public function getUser(Request $request){
+    public function getUser(Request $request)
+    {
         try {
             $user = User::where('id', $request->user_id)->firstOrFail();
             return response()->json($user, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'No se pudo encontrar el usuario'], 404);
         }
-    }  
+    }
 
-    public function userById(Request $request){
+    public function userById(Request $request)
+    {
         $user = User::select('id', 'nickname', 'avatar')->where('id', $request->id)->first();
 
         if ($user) {
@@ -520,4 +531,15 @@ class UserController extends Controller
         }
     }
 
+    public function getUserByNickname(Request $request)
+    {
+        $user = User::select('id', 'nickname', 'avatar')->where('nickname', $request->nickname)->first();
+
+        if ($user) {
+            return response()->json($user, 200);
+        } else {
+            return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
+        }
+    }
+    
 }

@@ -16,7 +16,7 @@
             </div>
             <button class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm"
                 v-if="store.getId() != follower.id && !loader" @click="followOr(follower.follow)">
-                {{ follower.follow ? 'Siguiendo' : 'Seguir' }}
+                {{ follower.follow ? 'Seguint' : 'Seguir' }}
             </button>
             <button class="p-1 rounded-full bg-gradient-to-r from-primary to-yellow-500" style="opacity: 0.5;">
                 <IconsChat class="size-5" />

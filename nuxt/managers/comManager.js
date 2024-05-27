@@ -207,9 +207,14 @@ async function getPostById(postID) {
   }
 }
 
-async function getLikePosts() {
+async function getLikePosts(id) {
   const store = useStores();
-  const userID = store.getId();
+  let userID = store.getId();
+
+  if (id) {
+    userID = id;
+  }
+
   try {
     const response = await axios.get(
       `${url_api_mongo}/likePosts?userId=${userID}`

@@ -32,8 +32,29 @@ async function getEventsByDistance(lat, lon, distance) {
       longitude: lon,
       distance: distance,
     });
-    console.log(response.data.events);
-    store.setEvents(response.data.events);
+    // console.log(response.data.events);
+    const eventos = response.data.events;
+    const eventosAgrupados = {};
+    eventos.forEach((evento) => {
+      const key = `${evento.artist}-${evento.date}`;
+      if (
+        !eventosAgrupados[key] ||
+        evento.event.length < eventosAgrupados[key].event.length
+      ) {
+        eventosAgrupados[key] = evento;
+      }
+    });
+    if (store.getLoggedIn()) {
+      const likedEventIds = await getLikeEvents();
+
+      Object.values(eventosAgrupados).forEach((evento) => {
+        evento.like = likedEventIds.includes(evento.id);
+      });
+
+      store.setEvents(Object.values(eventosAgrupados));
+    } else {
+      store.setEvents(Object.values(eventosAgrupados));
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
@@ -48,9 +69,103 @@ async function getFilteredEvents(data) {
       cities: data.cities,
       venues: data.venues,
     });
-    console.log(response.data.events);
-    store.setEvents(response.data.events);
+    // console.log(response.data.events);
+    const eventos = response.data.events;
+    const eventosAgrupados = {};
+    eventos.forEach((evento) => {
+      const key = `${evento.artist}-${evento.date}`;
+      if (
+        !eventosAgrupados[key] ||
+        evento.event.length < eventosAgrupados[key].event.length
+      ) {
+        eventosAgrupados[key] = evento;
+      }
+    });
+    if (store.getLoggedIn()) {
+      const likedEventIds = await getLikeEvents();
+
+      Object.values(eventosAgrupados).forEach((evento) => {
+        evento.like = likedEventIds.includes(evento.id);
+      });
+
+      store.setEvents(Object.values(eventosAgrupados));
+    } else {
+      store.setEvents(Object.values(eventosAgrupados));
+    }
     // return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getEventsByName(data) {
+  const store = useStores();
+  try {
+    const response = await axios.post(`${url_api}/events/search`, {
+      param: data,
+    });
+    // console.log(response.data.events);
+    const eventos = response.data.events;
+    const eventosAgrupados = {};
+    eventos.forEach((evento) => {
+      const key = `${evento.artist}-${evento.date}`;
+      if (
+        !eventosAgrupados[key] ||
+        evento.event.length < eventosAgrupados[key].event.length
+      ) {
+        eventosAgrupados[key] = evento;
+      }
+    });
+    if (store.getLoggedIn()) {
+      const likedEventIds = await getLikeEvents();
+
+      Object.values(eventosAgrupados).forEach((evento) => {
+        evento.like = likedEventIds.includes(evento.id);
+      });
+
+      store.setEvents(Object.values(eventosAgrupados));
+    } else {
+      store.setEvents(Object.values(eventosAgrupados));
+    }
+    // return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+async function getEventsByIds(ids) {
+  try {
+    const idsString = ids.join(",");
+    // Realiza la solicitud GET a la API con la cadena de IDs
+    const response = await axios.get(`${url_api}/events/${idsString}`);
+    return response.data.events;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+async function getLikeEvents(id) {
+  const store = useStores();
+  let user = store.getUserInfo().id;
+
+  if (id) {
+    user = id;
+  }
+
+  try {
+    const response = await axios.get(
+      `${url_api_mongo}/likeEvents?userId=${user}`
+    );
+
+    if (id) {
+      const events = await getEventsByIds(
+        response.data.map((like) => like.eventId)
+      );
+      return events;
+    } else {
+      return response.data.map((like) => like.eventId);
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -60,6 +175,8 @@ const eventManager = {
   getLocations,
   getEventsByDistance,
   getFilteredEvents,
+  getEventsByName,
+  getLikeEvents,
 };
 
 export default eventManager;

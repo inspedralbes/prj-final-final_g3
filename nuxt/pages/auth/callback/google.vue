@@ -62,6 +62,7 @@ export default {
                         birthdate: responseIfExists.data.data.user.birthdate,
                         nickname: responseIfExists.data.data.user.nickname,
                         avatar: responseIfExists.data.data.user.avatar,
+                        private: responseIfExists.data.data.user.private,
                     });
                     this.store.setLoggedIn(true);
 
