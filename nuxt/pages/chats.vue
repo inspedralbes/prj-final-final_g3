@@ -144,10 +144,10 @@ export default {
     },
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        // this.getChats();
+        this.getChats();
 
         socket.on('notification', () => {
-            // this.getChats();
+            this.getChats();
         });
     }
 }
