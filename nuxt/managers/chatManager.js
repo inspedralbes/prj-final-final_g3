@@ -65,6 +65,7 @@ async function getMessages(chat_id, message_id) {
 
 async function getChats(user_id) {
   console.log("getChats en chatManager, toma el id:", user_id);
+  console.log("url_api_mongo:", url_api_mongo);
   try {
     const response = await axios.get(`${url_api_mongo}/chats`, {
       params: {
@@ -74,6 +75,7 @@ async function getChats(user_id) {
     console.log("get Chats en chatManager:", response.data);
     return response.data;
   } catch (error) {
+    console.log("Error fetching data:", error);
     console.error("Error fetching data:", error);
   }
 }
