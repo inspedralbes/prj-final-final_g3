@@ -118,15 +118,9 @@ export default {
 
         this.loader = true;
         try {
-            if (!this.followers) {
-                await this.getFollowers();
-            }
-
-            if (!this.following) {
-                await this.getFollowing();
-            }
+            await this.getFollowers();
+            await this.getFollowing();
             await this.getEvents();
-            console.log(this.User.events)
         } catch (error) {
             console.error("Error while fetching data:", error);
         } finally {

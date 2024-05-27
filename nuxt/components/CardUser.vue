@@ -67,7 +67,11 @@ export default {
             }
         },
         checkIfFollowing() {
-            return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.user.id);
+            if (!this.store.userInfo.followingUsers.followed) {
+                return false;
+            } else {
+                return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.user.id);
+            }
         }
     }
 }
