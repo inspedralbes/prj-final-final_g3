@@ -50,11 +50,11 @@
                     @click="setSelectedSection('Eventos')">
                     Esdeveniments
                 </button>
-                <button class="text-white"
+                <!-- <button class="text-white"
                     :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Gustos')">
                     Gustos
-                </button>
+                </button> -->
             </div>
 
             <PostsProfile class="" v-if="selectedSection === 'Posts'" />
