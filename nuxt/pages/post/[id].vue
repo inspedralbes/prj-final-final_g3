@@ -34,7 +34,7 @@
                     </button>
                 </div>
 
-                <p class="text-sm text-gray-400">5:27 PM - 31 Abril, 2024</p>
+                <p class="text-sm text-gray-400">{{ this.formatDay(post.date) }}</p>
             </footer>
         </main>
 
@@ -44,7 +44,7 @@
                 <img class="size-12 rounded-full object-cover" :src="getImage(store.getUserInfo().avatar)">
                 <textarea ref="textarea" v-model="comment" @input="autoGrow"
                     class="w-full bg-transparent outline-none flex-grow resize-none" autofocus
-                    placeholder="Publica tu respuesta..."></textarea>
+                    placeholder="Publica la teva resposta..."></textarea>
 
                 <button @click="sendReply"
                     class="bg-primary rounded-full px-4 py-1 font-semibold text-sm hover:bg-primaryDark transition duration-200">Respondre</button>
@@ -155,7 +155,28 @@ export default {
                 this.$refs.textarea.style.height = 'auto';
                 this.$refs.textarea.style.height = (this.$refs.textarea.scrollHeight) + 'px';
             });
-        }
+        },
+
+        formatDay(dateString) {
+            const date = new Date(dateString);
+  
+            // Obtener la hora y los minutos
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
+            
+            // Formatear la hora en formato 12 horas con AM/PM
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; // Convertir 0 a 12 para la medianoche
+            const formattedMinutes = String(minutes).padStart(2, '0');
+            
+            // Obtener el día, mes y año
+            const day = date.getDate();
+            const month = date.toLocaleString('ca-ES', { month: 'long' });
+            const year = date.getFullYear();
+            
+            // Construir la cadena de fecha formateada
+            return `${formattedHours}:${formattedMinutes} ${ampm} - ${day} ${month.charAt(0).toUpperCase() + month.slice(1)}, ${year}`;
+        },
     },
 
     mounted() {

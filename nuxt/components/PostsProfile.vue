@@ -8,7 +8,7 @@
                         <div class="flex flex-col">
                             <div class="flex items-center gap-3">
                                 <h3 class="font-bold">{{ userInfo.name }}</h3>
-                                <p class="text-xs text-gray-300">Fa 22h</p>
+                                <p class="text-xs text-gray-300">{{ this.formatDay(post.date) }}</p>
                             </div>
                             <p class="text-sm">@{{ userInfo.nickname }}</p>
                         </div>
@@ -99,6 +99,14 @@ export default {
                     }
                 }
             }
+        },
+        
+        formatDay(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
         },
 
         clickLike(id) {
