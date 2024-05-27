@@ -48,7 +48,6 @@
 <script>
 import { useStores } from '~/stores/counter';
 import comManager from '@/managers/comManager.js';
-import { useStores } from '~/stores/counter';
 
 export default {
 

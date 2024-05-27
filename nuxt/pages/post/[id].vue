@@ -161,16 +161,6 @@ export default {
             this.$refs.textarea.focus();
         });
         this.getPost()
-    },
-
-    computed: {
-        getImage() {
-            if (!this.infoUser.avatar) {
-                return `/img/standard_pfp.jpg`
-            } else {
-                return `${this.$config.public.IMAGE_URI}/${this.infoUser.avatar}`;
-            }
-        }
     }
     
 }
