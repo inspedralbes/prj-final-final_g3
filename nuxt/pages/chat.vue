@@ -1,5 +1,5 @@
 <template>
-    <section class="fixed top-0 w-full min-h-screen mx-auto text-white">
+    <section class="w-[90wv] min-h-screen mx-auto text-white">
         <header class="h-[12vh] flex justify-between items-center bg-black">
             <button @click="leaveChat()">
                 <Arrow class="size-6" />
@@ -35,7 +35,7 @@
             </div>
         </article>
 
-        <div class="fixed bottom-0">
+        <div class="fixed bottom-0 w-full">
             <footer class="h-[10vh] bg-[#4B4B4B] flex justify-center items-center gap-2 px-8 w-full">
                 <div class="w-full h-8 bg-[#646464] rounded-full flex items-center">
                     <button class="rounded-full bg-[#7C7C7C] p-[6px]">
