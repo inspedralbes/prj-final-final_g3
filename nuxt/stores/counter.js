@@ -119,6 +119,14 @@ export const useStores = defineStore("counter", {
     getUserInfo() {
       return this.userInfo;
     },
+    getAvatar() {
+      if (!this.userInfo.avatar) {
+        return `/img/standard_pfp.jpg`;
+      } else {
+        console.log(`http://localhost:8000/public/${this.userInfo.avatar}`);
+        return `http://localhost:8000/public/${this.userInfo.avatar}`;
+      }
+    },
     getLoggedIn() {
       return this.loggedIn;
     },

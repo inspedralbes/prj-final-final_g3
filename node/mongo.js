@@ -255,6 +255,7 @@ app.post("/comments", async (req, res) => {
       content: comment.content,
       likes: [],
       parentId: comment.parentId,
+      userId: comment.userId,
     };
     res.send(await models.commentPost.create(createdComment));
   } catch (error) {
