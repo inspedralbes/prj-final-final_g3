@@ -519,7 +519,7 @@ class UserController extends Controller
 
     public function userById(Request $request)
     {
-        $user = User::select('id', 'nickname', 'avatar')->where('id', $request->id)->first();
+        $user = User::select('id', 'name', 'nickname', 'avatar')->where('id', $request->id)->first();
 
         if ($user) {
             return response()->json($user, 200);

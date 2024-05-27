@@ -20,12 +20,12 @@
                         <img class="size-12 rounded-full object-cover":src="this.getImage(this.avatar)">
                         <div class="flex flex-col">
                             <div class="flex items-center gap-3">
-                                <h3 class="font-bold">{{ this.name }}</h3>
+                                <h3 class="font-bold">{{ name }}</h3>
 
                                 <p class="text-xs text-gray-300">Fa 22h</p>
 
                             </div>
-                            <p class="text-sm">@{{ this.nickname }}</p>
+                            <p class="text-sm">@{{ nickname }}</p>
                         </div>
                     </div>
                 </article>
@@ -33,7 +33,7 @@
                 <p class="px-3 text-sm">{{ post.content }}</p>
             </main>
 
-            <p class="mt-12 mb-2 px-3 text-sm text-gray-500">Responent a<span class="text-blue-400">@{{
+            <p class="mt-12 mb-2 px-3 text-sm text-gray-500">Responent a <span class="text-blue-400">@{{
                 this.nickname }}</span></p>
             <div class="flex items-start gap-3">
                 <img class="size-12 rounded-full object-cover" :src="getImage(store.getUserInfo().avatar)">
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { useStores } from '~/stores/counter';
 import comManager from '@/managers/comManager.js';
 import { useStores } from '~/stores/counter';
 
@@ -61,6 +62,10 @@ export default {
             required: true
         },
         nickname: {
+            type: String,
+            required: true
+        },
+        avatar: {
             type: String,
             required: true
         },

@@ -142,6 +142,12 @@ export default {
             }
         },
 
+        async getUserInfo(userId) {
+            this.infoUser = await comManager.getUserById(userId, this.store.getToken())
+            this.infoUser = this.infoUser.data
+            console.log("Info User: " + JSON.stringify(this.infoUser))
+        },
+
         autoGrow() {
             this.$nextTick(() => {
                 this.$refs.textarea.style.height = 'auto';
@@ -155,7 +161,18 @@ export default {
             this.$refs.textarea.focus();
         });
         this.getPost()
+    },
+
+    computed: {
+        getImage() {
+            if (!this.infoUser.avatar) {
+                return `/img/standard_pfp.jpg`
+            } else {
+                return `${this.$config.public.IMAGE_URI}/${this.infoUser.avatar}`;
+            }
+        }
     }
+    
 }
 </script>
 

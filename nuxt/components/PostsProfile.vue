@@ -58,6 +58,7 @@ export default {
 
     data() {
         return {
+            store: useStores(),
             userInfo: useStores().userInfo,
             posts: [],
             replyPostModal: false,
