@@ -7,7 +7,7 @@
 <script>
 import userManager from '@/managers/userManager.js';
 import eventManager from './managers/eventManager.js';
-import chatManager from './managers/chatManager.js';
+import comChat from './managers/chatManager.js';
 import { socket } from '../socket';
 import { useStores } from '@/stores/counter';
 
@@ -58,10 +58,10 @@ export default {
       }
     },
     async getChats() {
-      const chats = await chatManager.getChats(this.store.getId());
+      const chats = await comChat.getChats(this.store.getId());
       if (chats.length != 0) {
         for (const chat of chats) {
-          const messages = await chatManager.getMessagesNotReceived(chat._id, this.store.getId());
+          const messages = await comChat.getMessagesNotReceived(chat._id, this.store.getId());
           if (messages.count > 0) {
             const toast = useToast();
             toast.add({ title: 'Tienes mensajes nuevos desde la ultima conexion' });
@@ -69,9 +69,9 @@ export default {
           }
         }
         for (const chat of chats) {
-          const messages = await chatManager.getMessagesNotReceived(chat._id, this.store.getId());
+          const messages = await comChat.getMessagesNotReceived(chat._id, this.store.getId());
           if (messages.count > 0) {
-            console.log(await chatManager.markMessagesAsReceived(chat._id, this.store.getId()));
+            console.log(await comChat.markMessagesAsReceived(chat._id, this.store.getId()));
           }
         }
       }
