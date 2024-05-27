@@ -117,13 +117,8 @@ export default {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
         this.loader = true;
         try {
-            if (!this.User.followers) {
-                await this.getFollowers();
-            }
-
-            if (!this.User.following) {
-                await this.getFollowing();
-            }
+            await this.getFollowers();
+            await this.getFollowing();
             await this.getEvents();
         } catch (error) {
             console.error("Error while fetching data:", error);

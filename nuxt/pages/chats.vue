@@ -12,9 +12,9 @@
                         <AddChat class="size-6" />
                     </NuxtLink>
                 </button>
-                <button>
+                <!-- <button>
                     <Search class="size-6" />
-                </button>
+                </button> -->
             </div>
         </header>
 
@@ -70,6 +70,7 @@ export default {
                 chat.nickname = userChat.nickname;
                 chat.avatar = userChat.avatar;
                 await comChat.getLastMessage(chat._id).then(message => {
+                    console.log(message);
                     chat.lastMessage = message;
                 });
                 if (this.chats.some(c => c._id === chat._id)) {

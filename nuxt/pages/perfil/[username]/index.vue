@@ -27,6 +27,11 @@
                             <p class="te+xt-white">{{ User.events.length }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
+                        <button
+                            class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
+                            @click="followOr">
+                            {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
+                        </button>
                     </div>
                 </div>
             </article>
@@ -45,11 +50,6 @@
                     @click="setSelectedSection('Eventos')">
                     Esdeveniments
                 </button>
-                <!-- <button class="text-white"
-                    :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
-                    @click="setSelectedSection('Gustos')">
-                    Gustos
-                </button> -->
             </div>
 
             <PostsProfile profile="otro" class="" v-if="selectedSection === 'Posts'" />
@@ -63,6 +63,7 @@
 <script>
 import userManager from '~/managers/userManager';
 import eventManager from '~/managers/eventManager';
+import comManager from '~/managers/comManager';
 import { useStores } from '~/stores/counter';
 
 export default {
@@ -71,10 +72,9 @@ export default {
         return {
             selectedSection: 'Posts',
             User: {
-                store: useStores(),
                 id: useStores().otherUserInfo.id,
                 avatar: useStores().otherUserInfo.avatar,
-                nickname: useStores().otherUserInfo.nickname,
+                nickname: this.$route.params.username,
                 name: useStores().otherUserInfo.name,
                 followers: useStores().otherUserInfo.followersUsers.count,
                 following: useStores().otherUserInfo.followingUsers.count,
@@ -100,6 +100,21 @@ export default {
         async getFollowing() {
             await userManager.getFollowed(this.User.id);
         },
+        async followUser() {
+            await comManager.follow(this.User.id)
+        },
+        async unfollowUser() {
+            await comManager.unfollow(this.User.id)
+        },
+        async followOr() {
+            if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
+            if (this.checkIfFollowing) {
+                await this.unfollowUser();
+            } else {
+                await this.followUser();
+            }
+        },
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
@@ -121,6 +136,13 @@ export default {
                 return `/img/standard_pfp.jpg`
             } else {
                 return `${this.$config.public.IMAGE_URI}/${this.User.avatar}`;
+            }
+        },
+        checkIfFollowing() {
+            if (!this.store.userInfo.followingUsers.followed) {
+                return false
+            } else {
+                return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.User.id);
             }
         }
     }
