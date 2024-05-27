@@ -107,8 +107,6 @@ export default {
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        console.log("Followers:", this.User.followers);
-        console.log("Following:", this.User.following);
         this.loader = true;
         try {
             if (!this.User.followers) {
