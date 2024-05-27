@@ -81,7 +81,7 @@ export default {
             comment: '',
             likedPosts: [],
             userPost: {},
-            url_mongo: this.$config.public.ENV === 'development' ? this.$config.public.MONGO_API_IMG_URI : this.$config.public.MONGO_IMG_DEV_URI,
+            url_mongo: this.$config.public.ENV === 'development' ? this.$config.public.MONGO_IMG_PROD_URI : this.$config.public.MONGO_IMG_DEV_URI,
 
         }
     },

@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             isOpen: false,
-            url_mongo: this.$config.public.ENV === 'development' ? this.$config.public.MONGO_API_PROD_URI : this.$config.public.MONGO_API_DEV_URI
+            url_mongo: this.$config.public.ENV === 'development' ? this.$config.public.MONGO_IMG_PROD_URI : this.$config.public.MONGO_IMG_DEV_URI
         }
     },
     methods: {
