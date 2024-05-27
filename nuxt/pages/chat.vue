@@ -1,33 +1,23 @@
 <template>
-    <section class="w-[90wv] min-h-screen mx-auto text-white">
-        <header class="h-[12vh] flex justify-between items-center bg-black">
-            <button @click="leaveChat()">
+    <section class="w-full min-h-screen mx-auto text-white">
+        <header class="w-full fixed top-0 bg-black">
+            <button @click="leaveChat()" class="absolute left-8 top-8">
                 <Arrow class="size-6" />
             </button>
+            <div class="h-[12vh] flex justify-center items-center">
 
-            <article class="flex justify-center items-center gap-2">
                 <NuxtLink :to="`/perfil/${contact.nickname}`">
-                    <div class="relative">
+                    <article class="flex flex-col justify-center items-center gap-2">
                         <img class="size-16 rounded-full object-cover" :src="getImage()">
-                    </div>
-                    <div class="flex flex-col gap-1 items-start">
                         <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
-                    </div>
+                    </article>
                 </NuxtLink>
-            </article>
-            <!-- <div class="flex items-center justify-center gap-2">
-                <button>
-                    <Flag class="size-6" />
-                </button>
-                <button>
-                    <CircleDots class="size-6" />
-                </button>
-            </div> -->
+            </div>
         </header>
 
         <article ref="messageContainer" class="h-[78vh] flex flex-col items-center pt-10 overflow-y-auto"
             @scroll="handleScroll">
-            <div class="w-full flex flex-col items-center gap-2">
+            <div class="w-1/2 flex flex-col items-center gap-2">
                 <div v-for="msg in messages" :key="msg.id"
                     :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
                     <p>{{ msg.content }}</p>
