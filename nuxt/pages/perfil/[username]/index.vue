@@ -54,7 +54,7 @@
 
             <PostsProfile profile="otro" class="" v-if="selectedSection === 'Posts'" />
             <EventosProfile profile="otro" v-if="selectedSection === 'Eventos'" />
-            <GustosProfile profile="otro" v-if="selectedSection === 'Gustos'" />
+            <!-- <GustosProfile profile="otro" v-if="selectedSection === 'Gustos'" /> -->
         </section>
     </main>
     <Menu v-if="!loader" />

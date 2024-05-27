@@ -12,11 +12,11 @@
                     v-model="nickname" />
                 <input class='bg-transparent border-b border-gray-400 outline-none' type="date" placeholder="Aniversari"
                     v-model="birthdate" />
-                <div class="flex flex-row gap-x-2">
+                <!-- <div class="flex flex-row gap-x-2">
                     <label for="private" class='text-white'>Vols que el teu perfil sigui privat?</label>
                     <UToggle v-model="private" color="orange" on-icon="i-heroicons-check-20-solid"
                         off-icon="i-heroicons-x-mark-20-solid" />
-                </div>
+                </div> -->
                 <button @click="completeProfile" :disabled="isLoading"
                     class='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600'>
                     <Loader v-if="isLoading" />
@@ -93,7 +93,7 @@ export default {
                 surnames: this.surnames,
                 loginWith: this.loginWith,
                 googleId: this.googleId,
-                private: this.private,
+                // private: this.private,
             }
 
             try {
@@ -106,7 +106,7 @@ export default {
                     email: response.data.user.email,
                     token: response.data.token,
                     avatar: response.data.user.avatar,
-                    private: response.data.user.private,
+                    // private: response.data.user.private,
                 }
                 this.store.setUserInfo(data);
                 this.store.setLoggedIn(true);
