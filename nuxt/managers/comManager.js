@@ -28,15 +28,17 @@ async function getEvents() {
         eventosAgrupados[key] = evento;
       }
     });
+    console.log("cerdo");
     if (store.getLoggedIn()) {
       const likedEventIds = await getLikeEvents();
-
+      console.log("cerdo");
       Object.values(eventosAgrupados).forEach((evento) => {
         evento.like = likedEventIds.includes(evento.id);
       });
 
       store.setEvents(Object.values(eventosAgrupados));
     } else {
+      console.log("subnormal");
       store.setEvents(Object.values(eventosAgrupados));
     }
   } catch (error) {

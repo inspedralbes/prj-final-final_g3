@@ -23,7 +23,7 @@ export default {
             await authManager.logout()
                 .then(() => {
                     this.loader = false;
-                    this.$router.push('/events');
+                    this.$router.push('/');
                 })
         }
     }

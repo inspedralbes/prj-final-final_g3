@@ -77,6 +77,7 @@ export const useStores = defineStore("counter", {
     setLogout() {
       this.userInfo = {};
       this.loggedIn = false;
+      
     },
     setChatUser(user) {
       this.chatUser = user;
