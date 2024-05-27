@@ -13,18 +13,18 @@
                     <div class='flex justify-center items-center gap-6'>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/followers`">
-                                <p class="text-white">{{ User.followers }}</p>
+                                <p class="text-white">{{ User.followers || 0 }}</p>
                                 <p class='text-xs text-white/60'>Seguidors</p>
                             </NuxtLink>
                         </div>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/following`">
-                                <p class="text-white">{{ User.following }}</p>
+                                <p class="text-white">{{ User.following || 0 }}</p>
                                 <p class='text-xs text-white/60'>Seguits</p>
                             </NuxtLink>
                         </div>
                         <div>
-                            <p class="te+xt-white">{{ User.events.length }}</p>
+                            <p class="te+xt-white">{{ User.events.length || 0 }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                         <button
