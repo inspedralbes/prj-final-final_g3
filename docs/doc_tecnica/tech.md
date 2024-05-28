@@ -10,6 +10,8 @@ Aquest document té com a objectiu proporcionar una guia tècnica detallada sobr
 
 L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, distribuint les responsabilitats entre diversos components especialitzats. A continuació es presenta un esquema gràfic i una descripció de cada component, incloent les connexions i la informació que es transmet entre ells.
 
+<img src="../images/arquitectura.png" alt="">
+
 ## Rutes de l'aplicació
 
 ## Esquema d'esdeveniments (sockets)
