@@ -6,6 +6,19 @@ title: Documentació tècnica
 
 Aquest document té com a objectiu proporcionar una guia tècnica detallada sobre els diferents aspectes de Spottunes. És una referència dissenyada per ajudar els desenvolupadors a comprendre i gestionar eficientment el projecte.
 
+# Índex
+
+1. [Arquitectura de l'aplicació](#arquitectura-de-laplicació)
+2. [Rutes de l'aplicació](#rutes-de-laplicació)
+3. [Esquema d'esdeveniments (sockets)](#esquema-desdeveniments-sockets)
+4. [Esquema de la base de dades](#esquema-de-la-base-de-dades)
+5. [Esquema de components](#esquema-de-components)
+6. [Documentació de frontend](#documentació-de-frontend)
+7. [Documentació de backend](#documentació-de-backend)
+8. [Proxy invers](#proxy-invers)
+9. [Disseny](#disseny)
+10. [Desplegament](#desplegament)
+
 ## Arquitectura de l'aplicació
 
 L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, distribuint les responsabilitats entre diversos components especialitzats. A continuació es presenta un esquema gràfic i una descripció de cada component, incloent les connexions i la informació que es transmet entre ells.
