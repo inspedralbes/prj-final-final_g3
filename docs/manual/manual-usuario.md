@@ -19,7 +19,7 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 1. Entra en [Spottunes](https://spottunes.daw.inspedralbes.cat).
 2. Haz clic en "Iniciar Sessión".
 3. Si ya te hicistes una cuenta introduce tu contraseña y tu correo, independientemente de con que hicistes el Registro. 
-4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:<br><img src="../images/registre.png" alt="" width="390" height="420">
+4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:<br><img src="../images/registre.png" alt="" width="390" height="540">
 
 
 
@@ -27,15 +27,16 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 
 ### Pantalla de Inicio
 
-La pantalla de inicio te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
+La pantalla de inicio <img src="../images/inicio.png" alt="" width="20" height="17"> te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
 
-![Pantalla de Inicio](images/pantalla-inicio.png)
+<img src="../images/pantalla-inicio.png" alt="" width="420" height="640">
 
 ### Menús y Navegación
 
 Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
-<img src="../images/menu.png" alt="" width="430" height="120">
+<img src="../images/menu.png" alt="" width="420" height="120">
+
 
 ## Funciones Principales
 
