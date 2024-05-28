@@ -40,17 +40,17 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 <img src="../images/menu.png" alt="" width="420" height="120">
 
 
-## Funciones Principales
+## Funciones Principales 
 
-### Perfil del Usuario
+### Perfil del Usuario <img src="../images/perfil.png" alt="" width="20" height="20">
 
 #### Creación y Edición de Perfil
 
-1. Abre tu perfil desde el menú inferior.
+1. Abre tu perfil desde el menú inferior. <img src="../images/perfil.png" alt="" width="20" height="20">
 2. Haz clic en "Editar Perfil".
 3. Añade o cambia tu foto, descripción y preferencias musicales.
 
-![Editar Perfil](images/editar-perfil.png)
+<img src="../images/actualizar.png" alt="" width="1000" height="340">
 
 #### Configuración de Preferencias
 
