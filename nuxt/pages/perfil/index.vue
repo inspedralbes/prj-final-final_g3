@@ -50,14 +50,14 @@
                     @click="setSelectedSection('Eventos')">
                     Esdeveniments
                 </button>
-                <button class="text-white"
+                <!-- <button class="text-white"
                     :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Gustos')">
                     Gustos
-                </button>
+                </button> -->
             </div>
 
-            <PostsProfile class="" v-if="selectedSection === 'Posts'" />
+            <PostsProfile v-if="selectedSection === 'Posts'" />
             <EventosProfile v-if="selectedSection === 'Eventos'" />
             <!-- <GustosProfile v-if="selectedSection === 'Gustos'" /> -->
         </section>
@@ -83,7 +83,7 @@ export default {
                 name: useStores().userInfo.name,
                 followers: useStores().userInfo.followersUsers.count,
                 following: useStores().userInfo.followingUsers.count,
-                events: useStores().userInfo.events
+                events: useStores().userInfo.events || []
             },
             store: useStores(),
             loader: false
@@ -105,13 +105,6 @@ export default {
             const eventos = await eventManager.getLikeEvents(this.User.id);
             this.store.setUserInfoEvents(eventos)
         },
-        getUserEvents() {
-            if (this.profile) {
-                this.User.events = this.store.otherUserInfo.events
-            } else {
-                this.User.events = this.store.userInfo.events
-            }
-        }
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');

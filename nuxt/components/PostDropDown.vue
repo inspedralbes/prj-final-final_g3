@@ -9,9 +9,6 @@
       'absolute flex flex-col justify-center items-start gap-2 right-0 mt-2 w-max rounded-lg shadow-lg bg-[#9c5413] overflow-hidden modal': true,
       'isOpen': isOpen
     }">
-      <button v-if="!profile" class="flex items-center justify-start gap-2 w-full px-3 py-2 text-sm hover:bg-[#FF8A1E]">
-        <IconsPencil class="size-4" /> Editar
-      </button>
       <button v-if="!profile" @click="deletePost"
         class="flex items-center justify-start gap-2 w-full px-3 py-2 text-sm hover:bg-[#FF8A1E]">
         <IconsTrash class="size-4" /> Eliminar
@@ -43,7 +40,6 @@ export default {
   methods: {
 
     async deletePost() {
-      console.log('Deleting post', this.postId)
       await comManager.deletePost(this.postId)
       this.$emit('postDeleted', this.postId)
     },

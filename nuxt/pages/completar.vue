@@ -113,7 +113,7 @@ export default {
                 this.store.setLoggedIn(true);
                 this.$router.push('/events');
             } catch (error) {
-                console.log('este es el error pedazo de buenisimo', error);
+                console.error(error);
             } finally {
                 this.isLoading = false;
             }
