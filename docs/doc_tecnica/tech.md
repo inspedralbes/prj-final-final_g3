@@ -129,8 +129,6 @@ server {
 
 ### Rutes del proxy invers
 
-### Localitzacions (`location`):
-
 - `/`: Redirigeix al port 3000. Es tracta del frontend de Nuxt montat sobre un servidor de node.
 - `/pma`: Redirigeix al port 9091 al phpmyadmin.
 - `/portainer/`: Redirigeix al port 9443 al portainer.
