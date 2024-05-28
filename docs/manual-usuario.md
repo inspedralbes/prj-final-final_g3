@@ -10,25 +10,15 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 
 ## Instalación y Registro
 
-### Requisitos del Sistema
+### URL de Spottunes
 
-- iOS 12.0 o superior
-- Android 8.0 o superior
-
-### Descarga e Instalación
-
-1. Abre la tienda de aplicaciones en tu dispositivo (App Store para iOS, Google Play para Android).
-2. Busca "Nombre de tu aplicación".
-3. Haz clic en "Descargar" o "Instalar".
-4. Una vez instalada, abre la aplicación desde tu pantalla de inicio.
-
-![Instalación](images/instalacion.png)
+- https://spottunes.daw.inspedralbes.cat
 
 ### Proceso de Registro
 
-1. Abre la aplicación.
-2. Haz clic en "Registrarse".
-3. Introduce tu correo electrónico, crea una contraseña y llena los campos requeridos.
+1. Entra en [Spottunes](https://spottunes.daw.inspedralbes.cat).
+2. Haz clic en "Iniciar Sessión".
+3. .
 4. Verifica tu correo electrónico siguiendo el enlace que te hemos enviado.
 5. Completa tu perfil añadiendo una foto y una breve descripción sobre ti.
 
