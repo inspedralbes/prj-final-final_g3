@@ -27,27 +27,27 @@ Aquí tenim la icona i les funcions per fer logout a l'aplicació. L'utilitzem a
 <img src="../images/Logout.PNG" alt="" >
 
 #### CardUser:
-Mostrem l'avatar i el nom d'un usuari i l'opció de poder seguir-lo. Aquest component el fem servir al cercador d'usuaris de Header.vue ia la pantalla de perfil.
+Mostrem l'avatar i el nom d'un usuari i l'opció de poder seguir-lo. Aquest component el fem servir al cercador d'usuaris de Header.vue i a la pantalla de perfil.
 
 <img src="../images/CardUser.PNG" alt="" >
 
 #### CardEvent: 
-Aquest component és cada carta d'un esdeveniment i el fem servir a la pantalla d'esdeveniments.
+Aquest component és cada carta d'un esdeveniment i el fem servir a la pantalla d'esdeveniments. 
 
 <img src="../images/CardEvent.png" alt="" >
 
 #### UserCardEvent:
-Mostra l'avatar, nom i opció de seguir a la pantalla d'un esdeveniment individual. El fem servir en mostrar els usuaris que segueixen un esdeveniment.
+Mostra a la pantalla d'un esdeveniment individual, l'avatar, nom i opció de seguir al usuari. El fem servir al mostrar els usuaris que segueixen un esdeveniment.
 
 <img src="../images/UserCardEvent.PNG" alt="" >
 
 #### PostsProfile:
-Mostra tots els posts creats per l'usuari a la pantalla de perfil.
+Mostra el post creat pero un usuari a la pantalla de perfil. L'utilitzem per mostrar tots els posts que ha creat un usuari.
 
 <img src="../images/PostsProfile.PNG" alt="" >
 
 #### OpenImage:
-Aquest és un component que utilitzem com a modal per poder ampliar i veure millor les imatges dels post. L'utilitzem a PostsProfile en fer clic a la imatge del post.
+Aquest és un component que utilitzem com a modal per poder ampliar i veure millor les imatges dels post. L'utilitzem a PostsProfile al fer clic a la imatge del post.
 
 <img src="../images/OpenImage.PNG" alt="" >
 
@@ -77,7 +77,7 @@ Aquest component és el del loader que hem utilitzat en tota l'aplicació. El fe
 <img src="../images/Loader.PNG" alt="" >
 
 #### LoginMethods:
-Aquí tenim els diferents mètodes per fer login a la nostra aplicació, com google, spotify o spottunes. L'utilitzem a Login i Register.
+Aquí tenim els diferents mètodes per fer login a la nostra aplicació, com google, spotify o spottunes. Utilitzem el component a Login i Register.
 
 <img src="../images/LoginMethods.PNG" alt="" >
 
