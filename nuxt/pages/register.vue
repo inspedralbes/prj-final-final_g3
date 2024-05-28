@@ -114,9 +114,12 @@ export default {
 
         },
         removeSpaces(event) {
-            this.nickname = event.target.value.replace(/\s/g, '');
+            const inputText = event.target.value;
+            const hasSpace = /\s/.test(inputText);
 
-            if (!this.toastVisible) {
+            this.nickname = inputText.replace(/\s/g, '');
+
+            if (hasSpace && !this.toastVisible) {
                 this.toastVisible = true;
 
                 const toast = useToast();
