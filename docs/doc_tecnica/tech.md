@@ -10,7 +10,39 @@ Aquest document té com a objectiu proporcionar una guia tècnica detallada sobr
 
 L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, distribuint les responsabilitats entre diversos components especialitzats. A continuació es presenta un esquema gràfic i una descripció de cada component, incloent les connexions i la informació que es transmet entre ells.
 
-<img src="../images/arquitectura.png" alt="">
+![Arquitectura de l'aplicació](ruta_a_la_teva_imatge)
+
+### Components de l'Arquitectura
+
+1. **Node.js**:
+
+   - **Funció**: Serveix com a servidor principal de l'aplicació, gestionant la lògica del backend, les connexions amb la base de dades i la comunicació en temps real i servint el frontend de la nostra aplicació web.
+   - **Connexions**:
+     - **SQL**: Per gestionar les dades relacionades i persistents. En aquest cas s'utilitza directament desde el Node per gestionar la introducció i el·liminació dels esdeveniments agafats de l'API de Ticketmaster.
+     - **MongoDB**: Per gestionar les dades no relacionades. L'utilitzem per emmagatzemar els "m'agrada" a esdeveniments, als "posts" dels usuaris, els comentaris, etc... i tota la gestió dels xats entre usuaris.
+     - **Socket.io**: Per a la comunicació en temps real entre el servidor i els clients per tal de tenir un sistema de xat en temps real.
+     - **Laravel**: Comunicació amb l'API de Laravel.
+     - **Nuxt.js (Client)**: Per servir la part del frontend desenvolupada amb Nuxt.js, gestionant la renderització del costat del servidor (SSR).
+
+2. **Laravel**:
+
+   - **Funció**: Serveix les rutes d'API que gestiona els esdeveniments i els usuaris.
+   - **Connexions**:
+     - **SQL**: Per gestionar la base de dades relacional.
+     - **Nuxt.js (Client)**
+
+3. **Nuxt.js (Client)**:
+
+   - **Funció**: Framework per al desenvolupament del frontend, basat en Vue.js, amb suport per a renderització del costat del servidor (SSR).
+   - **Connexions**:
+     - **Node.js**: Per realitzar sol·licituds API i obtenir dades del servidor.
+     - **Laravel**: Per obtenir dades o funcionalitats específiques de l'API Laravel.
+
+4. **Socket.io**:
+   - **Funció**: Creació i servei que gestiona els xats entre usuaris en temps real.
+   - **Connexions**:
+     - **Node.js**: Per gestionar les connexions WebSocket i proporcionar actualitzacions en temps real als clients.
+     - **Nuxt.js (Client)**: Porta el front de la pàgina i actualitza la visualització dels missatges i els xats.
 
 ## Rutes de l'aplicació
 
@@ -26,91 +58,100 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 
 ### Que tenim a la carpeta de components ?
 
-*   Components
-    
-*   Icones
-    
-
+- Components
+- Icones
 
 ### Que components hi ha?
 
 #### Menu:
+
 Aquest és el menú de navegació de la nostra aplicació, l'utilitzem en gairebé totes les pàgines perquè l'usuari pugui moure's lliurement entre pàgina i pàgina.
 
 <img src="../images/Menu.PNG" alt="" >
 
 #### Header:
+
 Seccion on mostrem el Logo i el nom de Spottunes, una lupa per buscar usuaris i un botó per fer logout en cas que l'usuari estigui logejat. El fem servir a la pantalla d'Esdeveniments i Perfil.
 
 <img src="../images/Header.PNG" alt="" >
 
 #### Logout:
+
 Aquí tenim la icona i les funcions per fer logout a l'aplicació. L'utilitzem al component Header.
 
 <img src="../images/Logout.PNG" alt="" >
 
 #### CardUser:
+
 Mostrem l'avatar i el nom d'un usuari i l'opció de poder seguir-lo. Aquest component el fem servir al cercador d'usuaris de Header.vue i a la pantalla de perfil.
 
 <img src="../images/CardUser.PNG" alt="" >
 
-#### CardEvent: 
-Aquest component és cada carta d'un esdeveniment i el fem servir a la pantalla d'esdeveniments. 
+#### CardEvent:
+
+Aquest component és cada carta d'un esdeveniment i el fem servir a la pantalla d'esdeveniments.
 
 <img src="../images/CardEvent.png" alt="" >
 
 #### UserCardEvent:
+
 Mostra a la pantalla d'un esdeveniment individual, l'avatar, nom i opció de seguir al usuari. El fem servir al mostrar els usuaris que segueixen un esdeveniment.
 
 <img src="../images/UserCardEvent.PNG" alt="" >
 
 #### PostsProfile:
+
 Mostra el post creat pero un usuari a la pantalla de perfil. L'utilitzem per mostrar tots els posts que ha creat un usuari.
 
 <img src="../images/PostsProfile.PNG" alt="" >
 
 #### OpenImage:
+
 Aquest és un component que utilitzem com a modal per poder ampliar i veure millor les imatges dels post. L'utilitzem a PostsProfile al fer clic a la imatge del post.
 
 <img src="../images/OpenImage.PNG" alt="" >
 
 #### ReplyPost:
+
 És un modal que utilitzem per deixar comentaris en un post de forma ràpida. L'utilitzem a PostsProfile.
 
 <img src="../images/ReplyPost.PNG" alt="" >
 
 #### PostDropDown:
+
 Desplegable per manejar l'eliminació d'un post creat per l'usuari. L'utilitzem a PostsProfile.
 
 <img src="../images/PostDropDown.PNG" alt="" >
 
 #### EventosProfile:
+
 Si l'usuari no segueix cap esdeveniment apareix una frase conforme aquest usuari no segueix esdeveniments, i si no mostra una petita preview de cada esdeveniment al que segueix. Això es mostra a la pantalla de perfil.
 
 <img src="../images/EventosProfile.PNG" alt="" >
 
 #### Logo:
+
 Aquest és el svg del nostre logo. L'utilitzem a Header i Join.
 
 <img src="../images/Logo.PNG" alt="" >
 
 #### Loader:
+
 Aquest component és el del loader que hem utilitzat en tota l'aplicació. El fem servir a UserCardEvent, add-chat, xats, completar, edit-profile, login, register, google, spotify, events, perfil i post.
 
 <img src="../images/Loader.PNG" alt="" >
 
 #### LoginMethods:
+
 Aquí tenim els diferents mètodes per fer login a la nostra aplicació, com google, spotify o spottunes. Utilitzem el component a Login i Register.
 
 <img src="../images/LoginMethods.PNG" alt="" >
 
-
 #### Map:
+
 Aquest component conté un mapa per poder filtrar els concerts per distància de la teva ubicació.
 
 <img src="../images/Map.PNG" alt="" >
-
-
 
 ## Documentació de frontend
 
