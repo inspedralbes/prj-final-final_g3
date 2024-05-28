@@ -40,19 +40,19 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 
 - El icono **+** en el menú inferior te permite crear un nuevo post. Desde aquí, puedes compartir tus pensamientos, fotos, y experiencias sobre conciertos y eventos musicales con otros usuarios.
 
-![Crear Post](images/crear-post.png) <!-- Asegúrate de tener la imagen correcta en tu repositorio -->
+![Crear Post](images/crear-post.png) 
 
 ### Apartado Xat
 
 - En el apartado **Xat**, puedes buscar a un usuario específico para iniciar un chat. Utiliza el buscador de usuarios para encontrar a la persona con la que deseas comunicarte y comienza la conversación.
 
-![Buscar en Xat](images/buscar-xat.png) <!-- Asegúrate de tener la imagen correcta en tu repositorio -->
+![Buscar en Xat](images/buscar-xat.png) 
 
 ### Apartado Perfil
 
 - En el apartado **Perfil**, puedes ver y editar tu perfil. Aquí puedes actualizar tu información personal, cambiar tu foto de perfil y gestionar tus preferencias.
 
-![Perfil](images/perfil.png) <!-- Asegúrate de tener la imagen correcta en tu repositorio -->
+![Perfil](images/perfil.png)
 
 ### Pantalla de Inicio
 
