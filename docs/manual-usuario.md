@@ -12,13 +12,14 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 
 ### URL de Spottunes
 
-- https://spottunes.daw.inspedralbes.cat
+- [Spottunes](https://spottunes.daw.inspedralbes.cat)
 
 ### Proceso de Registro
 
 1. Entra en [Spottunes](https://spottunes.daw.inspedralbes.cat).
 2. Haz clic en "Iniciar Sessión".
-3. .
+3. Si ya te hicistes una cuenta introduce tu contraseña y tu correo, independientemente de con que hicistes el Registro. Sino haz clic en Registra't
+![Registre](images/registre.jpg)
 4. Verifica tu correo electrónico siguiendo el enlace que te hemos enviado.
 5. Completa tu perfil añadiendo una foto y una breve descripción sobre ti.
 
