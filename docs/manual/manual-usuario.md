@@ -8,7 +8,7 @@ title: Manual de Usuario
 
 Bienvenido al manual de usuario de nuestra aplicación de red social para conciertos. Aquí aprenderás a utilizar todas las funciones de nuestra aplicación para que puedas disfrutar al máximo de tu experiencia.
 
-## Instalación y Registro
+## Registro de Usuario
 
 ### URL de Spottunes
 
@@ -27,17 +27,40 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 
 ## Navegación por la Interfaz
 
-### Pantalla de Inicio
-
-La pantalla de inicio <img src="../images/inicio.png" alt="" width="20" height="17"> te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
-
-<img src="../images/pantalla-inicio.png" alt="" width="420" height="640">
+### Funcionalidades para Usuarios No Registrados
+Si no estás registrado, la única funcionalidad disponible en toda la aplicación es la búsqueda de eventos. No podrás acceder a otras secciones como la creación de posts, el chat con otros usuarios o la edición de tu perfil.
+Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
 ### Menús y Navegación
 
-Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
-<img src="../images/menu.png" alt="" width="420" height="120">
+<img src="../images/menu.png" alt="Menú" width="420" height="120">
+
+### Icono +
+
+- El icono **+** en el menú inferior te permite crear un nuevo post. Desde aquí, puedes compartir tus pensamientos, fotos, y experiencias sobre conciertos y eventos musicales con otros usuarios.
+
+![Crear Post](images/crear-post.png) <!-- Asegúrate de tener la imagen correcta en tu repositorio -->
+
+### Apartado Xat
+
+- En el apartado **Xat**, puedes buscar a un usuario específico para iniciar un chat. Utiliza el buscador de usuarios para encontrar a la persona con la que deseas comunicarte y comienza la conversación.
+
+![Buscar en Xat](images/buscar-xat.png) <!-- Asegúrate de tener la imagen correcta en tu repositorio -->
+
+### Apartado Perfil
+
+- En el apartado **Perfil**, puedes ver y editar tu perfil. Aquí puedes actualizar tu información personal, cambiar tu foto de perfil y gestionar tus preferencias.
+
+![Perfil](images/perfil.png) <!-- Asegúrate de tener la imagen correcta en tu repositorio -->
+
+### Pantalla de Inicio
+
+La pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17"> te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
+
+<img src="../images/pantalla-inicio.png" alt="Pantalla de Inicio" width="420" height="640">
+
+
 
 
 ## Funciones Principales 
@@ -52,7 +75,7 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 
 <img src="../images/actualizar.png" alt="" width="1000" height="340">
 
-### Buscar y Conectar con Usuarios
+## Buscar y Conectar con Usuarios
 
 #### Buscar Usuarios
 
@@ -76,7 +99,7 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 
 ![Perfil de Usuario](images/perfil-usuario.png)
 
-### Eventos y Conciertos
+## Eventos y Conciertos
 
 #### Buscar Eventos
 
