@@ -21,11 +21,8 @@
 
         <!-- Lista de usuarios que devuelve el buscador -->
         <main class="flex flex-col justify-center items-center mt-8 space-y-4">
-            <div v-if="!empty" v-for="user in filteredUsers" :key="user.id"
-                class="flex items-center gap-4 w-full max-w-xs">
-                <img class="w-12 h-12 rounded-full object-cover md-[80px]"
-                    src="https://www.shutterstock.com/image-photo/shrub-plant-png-tree-bush-600nw-2363599771.jpg"
-                    alt="">
+            <div v-if="!empty" v-for="user in filteredUsers" :key="user.id" class="flex items-center gap-4 w-full max-w-xs">
+                <img class="w-12 h-12 rounded-full object-cover md-[80px]" :src="getImage(user.avatar)" alt="">
                 <button @click="goToChat(user)" :disabled="store.getId() === user.id">
                     <h2 class="font-bold">{{ user.nickname }}</h2>
                 </button>
@@ -75,6 +72,14 @@ export default {
             this.store.setChatUser(user);
             this.$router.push('/chat');
         },
+        getImage(avatar) {
+            if (!avatar) {
+                return `/img/standard_pfp.jpg`
+            } else {
+                return `${this.$config.public.IMAGE_URI}/${avatar}`;
+            }
+        },
+
     },
 }
 </script>
