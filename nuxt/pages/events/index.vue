@@ -100,7 +100,7 @@
       </div>
       <button @click="modals.filter = !modals.filter"
         class="bg-white hover:bg-[#FF8A1E] text-black font-bold py-2 px-4 rounded-full w-fit">
-        Obrir filtres
+        Filtres
       </button>
     </div>
     <section class=" flex flex-col gap-3 mb-12">
@@ -139,9 +139,6 @@ export default {
       loader: false,
       searchFilter: '',
     };
-  },
-  async mounted() {
-
   },
   methods: {
     deleteCountry(country) {
@@ -245,10 +242,15 @@ export default {
   },
   created() {
   },
-  mounted() {
+  async mounted() {
     if (!this.userLocation) {
       this.loader = true;
-      comManager.getEvents().then(() => {
+      await comManager.getEvents().then(() => {
+        this.loader = false;
+      });
+    } else {
+      this.loader = true;
+      await eventManager.getEventsByDistance(this.userLocation.latitude, this.userLocation.longitude, 50).then(() => {
         this.loader = false;
       });
     }

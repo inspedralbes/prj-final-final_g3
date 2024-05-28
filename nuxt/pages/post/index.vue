@@ -11,8 +11,6 @@
     </div>
     <main class=" flex justify-between items-start px-[5%] pt-4">
       <div class="w-full flex justify-between items-start h-full">
-        <img class="size-14 rounded-full object-cover" src="https://i.ytimg.com/vi/LuWV8Wh00Nk/maxresdefault.jpg"
-          alt="">
         <textarea ref="textarea" v-model="content" @input="autoGrow"
           class="w-full h-full bg-transparent outline-none px-2 flex-grow resize-none" autofocus
           placeholder="Escriu aquí..."></textarea>
@@ -28,11 +26,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { useStores } from '~/stores/counter';
 import comManager from '@/managers/comManager.js';
 
 export default {
+
 
   data() {
     return {
@@ -54,7 +52,6 @@ export default {
       }
       comManager.post(this.content, this.link)
       this.loader = false;
-      console.log('Post created')
       this.$router.push('/perfil')
     },
 
@@ -78,14 +75,8 @@ export default {
       let formData = new FormData();
       formData.append('img', this.image);
 
-      const response = await axios.post('http://localhost:8086/uploadImage', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      const link = response.data.link;
-      this.link = link;
+      const response = await comManager.uploadImage(formData);
+      this.link = response.link;
     }
   },
   mounted() {

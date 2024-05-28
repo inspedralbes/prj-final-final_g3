@@ -13,18 +13,18 @@
                     <div class='flex justify-center items-center gap-6'>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/followers`">
-                                <p class="text-white">{{ User.followers }}</p>
+                                <p class="text-white">{{ User.followers || 0 }}</p>
                                 <p class='text-xs text-white/60'>Seguidors</p>
                             </NuxtLink>
                         </div>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/following`">
-                                <p class="text-white">{{ User.following }}</p>
+                                <p class="text-white">{{ User.following || 0 }}</p>
                                 <p class='text-xs text-white/60'>Seguits</p>
                             </NuxtLink>
                         </div>
                         <div>
-                            <p class="te+xt-white">5</p>
+                            <p class="te+xt-white">{{ User.events.length || 0 }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                     </div>
@@ -50,14 +50,14 @@
                     @click="setSelectedSection('Eventos')">
                     Esdeveniments
                 </button>
-                <button class="text-white"
+                <!-- <button class="text-white"
                     :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
                     @click="setSelectedSection('Gustos')">
                     Gustos
-                </button>
+                </button> -->
             </div>
 
-            <PostsProfile class="" v-if="selectedSection === 'Posts'" />
+            <PostsProfile v-if="selectedSection === 'Posts'" />
             <EventosProfile v-if="selectedSection === 'Eventos'" />
             <!-- <GustosProfile v-if="selectedSection === 'Gustos'" /> -->
         </section>
@@ -82,7 +82,8 @@ export default {
                 nickname: useStores().userInfo.nickname,
                 name: useStores().userInfo.name,
                 followers: useStores().userInfo.followersUsers.count,
-                following: useStores().userInfo.followingUsers.count
+                following: useStores().userInfo.followingUsers.count,
+                events: useStores().userInfo.events || []
             },
             store: useStores(),
             loader: false
@@ -103,20 +104,15 @@ export default {
         async getEvents() {
             const eventos = await eventManager.getLikeEvents(this.User.id);
             this.store.setUserInfoEvents(eventos)
-        }
+        },
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
 
         this.loader = true;
         try {
-            if (!this.followers) {
-                await this.getFollowers();
-            }
-
-            if (!this.following) {
-                await this.getFollowing();
-            }
+            await this.getFollowers();
+            await this.getFollowing();
             await this.getEvents();
         } catch (error) {
             console.error("Error while fetching data:", error);

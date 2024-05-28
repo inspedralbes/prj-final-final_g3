@@ -30,7 +30,6 @@ async function getEvents() {
     });
     if (store.getLoggedIn()) {
       const likedEventIds = await getLikeEvents();
-
       Object.values(eventosAgrupados).forEach((evento) => {
         evento.like = likedEventIds.includes(evento.id);
       });
@@ -249,11 +248,12 @@ async function unlikePost(postID) {
   }
 }
 
-async function commentPost(postID, content) {
+async function commentPost(postID, content, userID) {
   try {
     await axios.post(`${url_api_mongo}/comments`, {
       postId: postID,
       content: content,
+      userId: userID,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -263,7 +263,7 @@ async function commentPost(postID, content) {
 async function getComments(postID) {
   try {
     const response = await axios.get(
-      `http://localhost:8086/comments?postId=${postID}`
+      `${url_api_mongo}/comments?postId=${postID}`
     );
     return response.data;
   } catch (error) {
@@ -306,6 +306,15 @@ async function getUserById(id, token) {
   }
 }
 
+async function uploadImage(image) {
+  const reponse = await axios.post(`${url_api_mongo}/uploadImage`, image, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return reponse.data;
+}
+
 const comManager = {
   getEvents,
   likeAnEvent,
@@ -327,6 +336,7 @@ const comManager = {
   commentPost,
   getComments,
   getPostById,
+  uploadImage,
 };
 
 export default comManager;

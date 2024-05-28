@@ -1,18 +1,18 @@
 <template>
     <div>
-        <button @click="goToProfile" class="w-full">
-            <div class="flex flex-row justify-between items-center">
+        <div class="flex flex-row justify-between items-center">
+            <button @click="goToProfile" class="w-full">
                 <div class="flex flex-row items-center">
                     <img class="size-24 rounded-full object-cover" :src="getImage" alt="Avatar" />
                     <p class="m-2">{{ user.nickname }}</p>
                 </div>
-                <button v-if="user.id !== store.getId()"
-                    class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
-                    @click="followOr">
-                    {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
-                </button>
-            </div>
-        </button>
+            </button>
+            <button v-if="user.id !== store.getId()"
+                class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
+                @click="followOr">
+                {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
+            </button>
+        </div>
     </div>
 </template>
 
@@ -67,7 +67,11 @@ export default {
             }
         },
         checkIfFollowing() {
-            return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.user.id);
+            if (!this.store.userInfo.followingUsers.followed) {
+                return false;
+            } else {
+                return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.user.id);
+            }
         }
     }
 }
