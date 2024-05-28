@@ -8,7 +8,7 @@ title: Manual de Usuario
 
 Bienvenido al manual de usuario de nuestra aplicación de red social para conciertos. Aquí aprenderás a utilizar todas las funciones de nuestra aplicación para que puedas disfrutar al máximo de tu experiencia.
 
-## Instalación y Registro
+## Registro de Usuario
 
 ### URL de Spottunes
 
@@ -19,91 +19,157 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 1. Entra en [Spottunes](https://spottunes.daw.inspedralbes.cat).
 2. Haz clic en "Iniciar Sessión".
 3. Si ya te hicistes una cuenta introduce tu contraseña y tu correo, independientemente de con que hicistes el Registro. 
-4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:<br><img src="../images/registre.png" alt="" width="390" height="420">
+4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:
+
+<img src="../images/registre.png" alt="" width="420" height="580">
 
 
 
 ## Navegación por la Interfaz
 
-### Pantalla de Inicio
-
-La pantalla de inicio te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
-
-![Pantalla de Inicio](images/pantalla-inicio.png)
+### Funcionalidades para Usuarios No Registrados
+Si no estás registrado, la única funcionalidad disponible en toda la aplicación es la búsqueda de eventos. No podrás acceder a otras secciones como la creación de posts, el chat con otros usuarios o la edición de tu perfil.
+Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
 ### Menús y Navegación
 
-Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
-![Menú de Navegación](images/menu-navegacion.png)
+<img src="../images/menu.png" alt="Menú" width="420" height="120">
 
-## Funciones Principales
+### Icono +
 
-### Perfil del Usuario
+- El icono **+** en el menú inferior te permite crear un nuevo post. Desde aquí, puedes compartir tus pensamientos, fotos, y experiencias sobre conciertos y eventos musicales con otros usuarios.
+
+![Crear Post](images/crear-post.png) 
+
+### Apartado Xat
+
+- En el apartado **Xat**, puedes buscar a un usuario específico para iniciar un chat. Utiliza el buscador de usuarios para encontrar a la persona con la que deseas comunicarte y comienza la conversación.
+
+![Buscar en Xat](images/buscar-xat.png) 
+
+### Apartado Perfil
+
+- En el apartado **Perfil**, puedes ver y editar tu perfil. Aquí puedes actualizar tu información personal, cambiar tu foto de perfil y gestionar tus preferencias.
+
+![Perfil](images/perfil.png)
+
+### Pantalla de Inicio
+
+La pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17"> te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
+
+<img src="../images/pantalla-inicio.png" alt="Pantalla de Inicio" width="420" height="640">
+
+
+
+
+## Funciones Principales 
+
+### Perfil del Usuario <img src="../images/perfil.png" alt="" width="18" height="20">
 
 #### Creación y Edición de Perfil
 
-1. Abre tu perfil desde el menú inferior.
-2. Haz clic en "Editar Perfil".
-3. Añade o cambia tu foto, descripción y preferencias musicales.
+1. Abre tu perfil desde el menú inferior. <img src="../images/perfil.png" alt="" width="18" height="20">
+2. Haz clic en "Editar el perfil".
+3. Añade o cambia tu foto, nombre de usuario, nombre y apellidos...
 
-![Editar Perfil](images/editar-perfil.png)
+<img src="../images/actualizar.png" alt="" width="1000" height="340">
 
-#### Configuración de Preferencias
-
-Ajusta tus preferencias de privacidad, notificaciones y otras configuraciones personales desde la sección de ajustes.
-
-![Configuración de Preferencias](images/configuracion-preferencias.png)
-
-### Buscar y Conectar con Usuarios
+## Buscar y Conectar con Usuarios
 
 #### Buscar Usuarios
 
-Utiliza la barra de búsqueda para encontrar otros usuarios con intereses similares.
+1. Utiliza la lupa de búsqueda situada en la parte superior derecha de la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17"> para encontrar otros usuarios con intereses similares o cualquier usuario registrado en Spottunes. 
+2. Desde aquí, puedes ver:
+   - Los eventos a los que han dado like.
+   - Sus posts.
+   - Toda la información de su perfil, como el avatar, número de seguidores y seguidos.
 
 ![Buscar Usuarios](images/buscar-usuarios.png)
 
-#### Enviar y Recibir Solicitudes de Amistad
+#### Seguir a Usuarios
 
-Envía solicitudes de amistad y acepta o rechaza solicitudes recibidas desde la sección de notificaciones.
+1. Para seguir a usuarios, usa la lupa de búsqueda en la parte superior derecha de la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17">.
+2. Cuando realices la búsqueda, aparecerá el perfil del usuario junto a un botón de "Seguir".
 
-![Solicitudes de Amistad](images/solicitudes-amistad.png)
+![Buscador de Usuarios](images/buscador-usuarios.png)
 
-### Eventos y Conciertos
+3. Si deseas ver el perfil antes de seguir a alguien, haz clic en el perfil del usuario.
+4. En la parte superior derecha del perfil, también encontrarás el botón de "Seguir".
+
+![Perfil de Usuario](images/perfil-usuario.png)
+
+## Eventos y Conciertos
 
 #### Buscar Eventos
 
-Busca conciertos y eventos musicales según tus intereses.
+1. Busca conciertos y eventos musicales según tus intereses utilizando la barra de búsqueda en la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17">.
 
 ![Buscar Eventos](images/buscar-eventos.png)
 
-#### Unirse a Eventos
+#### Filtrar Eventos
 
-Únete a un evento, confirma tu asistencia y ve quién más va a asistir.
+1. En el apartado de buscar eventos, puedes utilizar filtros por geolocalización.
+2. Marca una zona en el mapa y siempre te aparecerán los eventos dentro del radio que especifiques.
+3. Por ejemplo, si estableces un radio de 50 km, el sistema tomará el centro donde has clicado y te mostrará todos los eventos alrededor hasta 50 km.
 
-![Unirse a Eventos](images/unirse-eventos.png)
+![Filtrar Eventos](images/filtrar-eventos.png)
+
+#### Unirse/Seguir a Eventos
+
+1. Únete o sigue a un evento.
+2. Confirma tu asistencia y ve quién más va a asistir.
+3. Conoce a gente a través de la lista de personas que están siguiendo el evento al que vas a asistir.
+
+![Lista de Personas Inscritas](images/lista-personas-evento.png)
+
+
+## Chats
+
+El chat en nuestra aplicación se encuentra en el apartado **Xat**. Aquí, puedes comunicarte fácilmente con otros usuarios y organizar tus planes para asistir a conciertos. A continuación, se detallan las características principales del chat:
+
+1. **Buscador de Usuarios**:
+   - En la parte superior del apartado **Xat**, encontrarás un buscador de usuarios. Puedes utilizar este buscador para encontrar a cualquier usuario registrado en Spottunes.
+   - Simplemente introduce el nombre del usuario en la barra de búsqueda y selecciona el perfil adecuado de los resultados que aparecen.
+
+2. **Iniciar un Chat**:
+   - Una vez que hayas encontrado al usuario con el que deseas comunicarte, haz clic en su nombre o foto de perfil para iniciar un chat.
+   - Esto abrirá una ventana de chat donde podrás enviar mensajes instantáneos.
+
+3. **Funciones del Chat**:
+   - **Enviar Mensajes**: Escribe tu mensaje en el cuadro de texto y presiona "Enter" o haz clic en el icono de enviar para enviar tu mensaje.
+
+4. **Historial del Chat**:
+   - Todos los mensajes enviados y recibidos se almacenan en el historial del chat. Puedes revisar tus conversaciones anteriores en cualquier momento navegando hacia arriba en la ventana del chat.
+
+5. **Notificaciones de Mensajes**:
+   - Recibirás notificaciones en tiempo real cuando recibas un nuevo mensaje.
+
+## Posts
+### Crear un Post
+
+Para compartir tus experiencias y opiniones sobre conciertos, puedes crear posts. Aquí te mostramos cómo hacerlo:
+
+1. Ve a la sección de + desde el menú inferior.
+2. Escribe experiencias o próximos eventos a los que asistirás.
+3. Si deseas adjuntar una imagen, haz clic en el icono de la galeria y selecciona una imagen de tu dispositivo.
+4. Haz clic en "Post" para publicar tu post con la comunidad en tu perfil.
+
+### Interactuar con Posts
+
+Puedes interactuar con los posts de otros usuarios de las siguientes maneras:
+
+- **Dar Like**: Haz clic en el icono de corazón para dar like a un post.
+- **Comentar**: Haz clic en el icono de comentario para añadir una respuesta o comentario al post.
+
+### Ver Posts de Usuarios
+
+En la sección de posts dentro de cada usuario, puedes ver las publicaciones que ha hecho el usuario. Esta es una excelente manera de mantenerte al tanto de lo que otros amantes de la música están diciendo y haciendo.
 
 ## Solución de Problemas Comunes
 
 ### Preguntas Frecuentes
 
-#### ¿Cómo recupero mi contraseña?
-
-1. En la pantalla de inicio de sesión, haz clic en "¿Olvidaste tu contraseña?".
-2. Introduce tu correo electrónico y sigue las instrucciones enviadas a tu correo.
-
-![Recuperar Contraseña](images/recuperar-contrasena.png)
-
 #### ¿Por qué no puedo ver ciertos eventos?
 
 Asegúrate de que tu configuración de filtros en la búsqueda de eventos esté correctamente configurada y que no hayas excluido ciertos tipos de eventos sin querer.
-
-![Configuración de Filtros](images/configuracion-filtros.png)
-
-### Errores Comunes
-
-#### Error de Conexión
-
-Verifica tu conexión a internet y asegúrate de que estás utilizando la última versión de la aplicación.
-
-![Error de Conexión](images/error-conexion.png)
