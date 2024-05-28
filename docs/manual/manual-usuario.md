@@ -19,7 +19,9 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 1. Entra en [Spottunes](https://spottunes.daw.inspedralbes.cat).
 2. Haz clic en "Iniciar Sessión".
 3. Si ya te hicistes una cuenta introduce tu contraseña y tu correo, independientemente de con que hicistes el Registro. 
-4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:<br><img src="../images/registre.png" alt="" width="420" height="640">
+4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:
+
+<img src="../images/registre.png" alt="" width="420" height="580">
 
 
 
