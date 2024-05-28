@@ -17,7 +17,7 @@
 
         <article ref="messageContainer" class="h-screen flex flex-col items-center pt-10 overflow-y"
             @scroll="handleScroll">
-            <div class="w-2/3 h-full my-8 flex flex-col items-center gap-2">
+            <div class="w-2/3 h-full my-16 flex flex-col items-center gap-2">
                 <div v-for="msg in messages" :key="msg.id"
                     :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
                     <p>{{ msg.content }}</p>

@@ -83,7 +83,7 @@ export default {
                 name: useStores().userInfo.name,
                 followers: useStores().userInfo.followersUsers.count,
                 following: useStores().userInfo.followingUsers.count,
-                events: useStores().userInfo.events
+                events: useStores().userInfo.events || []
             },
             store: useStores(),
             loader: false
