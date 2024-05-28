@@ -30,11 +30,10 @@ Mostrem l'avatar i el nom d'un usuari i l'opció de poder seguir-lo. Aquest comp
 #### CardEvent: 
 Aquest component és cada carta d'un esdeveniment i el fem servir a la pantalla d'esdeveniments.
 
+<img src="../images/CardEvent.png" alt="" >
 
 #### UserCardEvent:
 Mostra l'avatar, nom i opció de seguir a la pantalla d'un esdeveniment individual. El fem servir en mostrar els usuaris que segueixen un esdeveniment.
-
-<img src="../images/CardEvent.png" alt="" >
 
 
 #### PostsProfile:
