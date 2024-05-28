@@ -35,7 +35,7 @@ La pantalla de inicio te muestra una lista de conciertos populares y eventos rec
 
 Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
-![Menú de Navegación](images/menu-navegacion.png)
+<img src="../images/menu.png" alt="" width="430" height="120">
 
 ## Funciones Principales
 
