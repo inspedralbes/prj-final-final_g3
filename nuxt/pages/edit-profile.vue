@@ -10,7 +10,7 @@
           <p class="m-4">Canvia la imatge de perfil</p>
         </label>
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Nom d'usuari"
-          v-model="nickname" />
+          v-model="nickname" @input="removeSpaces" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" autofocus placeholder="Nom"
           v-model="name" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Cognoms"
@@ -60,7 +60,8 @@ export default {
       avatar: '',
       Token: '',
       isLoading: false,
-      private: false
+      private: false,
+      toastVisible: false
     };
   },
   mounted() {
@@ -87,6 +88,7 @@ export default {
         avatar: this.avatar,
         birthdate: this.birthdate,
         // private: this.private
+
       }
 
       const response = await userManager.updateUser(user, this.Token);
@@ -95,6 +97,22 @@ export default {
         this.store.setUserInfo(response.data);
         this.$router.push('/perfil');
         this.isLoading = false;
+      }
+    },
+    removeSpaces(event) {
+      const inputText = event.target.value;
+      const hasSpace = /\s/.test(inputText);
+
+      this.nickname = inputText.replace(/\s/g, '');
+
+      if (hasSpace && !this.toastVisible) {
+        this.toastVisible = true;
+
+        const toast = useToast();
+        toast.add({ title: 'No es poden escriure espais', color: 'red', icon: 'i-heroicons-information-circle-20-solid' });
+        setTimeout(() => {
+          this.toastVisible = false;
+        }, 3000);
       }
     },
     handleAvatarChange(e) {

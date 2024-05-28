@@ -135,9 +135,10 @@ async function getEventsByName(data) {
 
 async function getEventsByIds(ids) {
   try {
-    const idsString = ids.join(",");
     // Realiza la solicitud GET a la API con la cadena de IDs
-    const response = await axios.get(`${url_api}/events/${idsString}`);
+    const response = await axios.post(`${url_api}/events/byId`, {
+      ids: ids,
+    });
     return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -10,8 +10,8 @@
                     placeholder="Nom" v-model="name" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="text"
                     placeholder="Cognoms" v-model="surnames" />
-                <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="text"
-                    placeholder="Usuari" v-model="nickname" />
+                <input class="bg-transparent border-b border-gray-400 outline-none" type="text"
+                    placeholder="Nom d'usuari" v-model="nickname" @input="removeSpaces" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="date"
                     placeholder="Data de naixement" v-model="birthdate" />
                 <input class="bg-transparent border-b border-gray-400 outline-none text-white" type="password"
@@ -66,6 +66,7 @@ export default {
             error: false,
             message: '',
             private: false,
+            toastVisible: false
         };
     },
 
@@ -111,7 +112,23 @@ export default {
             }
 
 
-        }
+        },
+        removeSpaces(event) {
+            const inputText = event.target.value;
+            const hasSpace = /\s/.test(inputText);
+
+            this.nickname = inputText.replace(/\s/g, '');
+
+            if (hasSpace && !this.toastVisible) {
+                this.toastVisible = true;
+
+                const toast = useToast();
+                toast.add({ title: 'No es poden escriure espais', color: 'red', icon: 'i-heroicons-information-circle-20-solid' });
+                setTimeout(() => {
+                    this.toastVisible = false;
+                }, 3000);
+            }
+        },
     }
 }
 </script>

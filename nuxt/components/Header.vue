@@ -8,7 +8,7 @@
                 </NuxtLink>
                 <h1 class='text-4xl font-bold text-white uppercase'>Spottunes</h1>
                 <div class="flex flex-row gap-x-4">
-                    <Icons-Search class="size-8 cursor-pointer" @click="sliderUsers = true" />
+                    <Icons-Search class="size-8 cursor-pointer" @click="openSlider" />
                     <Logout v-if="store.getLoggedIn()" class="size-8" />
                 </div>
             </div>
@@ -76,6 +76,13 @@ export default {
                 this.message = response.data.message;
             }
         },
+        openSlider() {
+            if(this.store.getLoggedIn()){
+                this.sliderUsers = !this.sliderUsers;
+            } else {
+                this.$router.push('/join');
+            }
+        }
     }
 }
 </script>

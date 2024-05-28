@@ -1,14 +1,14 @@
 <template>
     <section class="flex justify-between items-center">
-        <article class="flex gap-2">
-            <img class="rounded-full size-14"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgdc6SZchtoFmlBvsl_M76bNVhsN3gBmVKTm-JxtVQ&s"
-                alt="">
-            <div class="flex flex-col justify-center items-start">
-                <p class="font-semibold">{{ follower.nickname }}</p>
-                <p class="text-sm text-gray-300">@{{ follower.nickname }}</p>
-            </div>
-        </article>
+        <NuxtLink :to="`/perfil/${follower.nickname}`">
+            <article class="flex gap-2">
+                <img class="rounded-full size-14" :src="getImage" alt="">
+                <div class="flex flex-col justify-center items-start">
+                    <p class="font-semibold">{{ follower.nickname }}</p>
+                    <p class="text-sm text-gray-300">@{{ follower.nickname }}</p>
+                </div>
+            </article>
+        </NuxtLink>
 
         <div class="flex items-center gap-3">
             <div v-if="loader" class="flex justify-center items-center">
@@ -18,9 +18,9 @@
                 v-if="store.getId() != follower.id && !loader" @click="followOr(follower.follow)">
                 {{ follower.follow ? 'Seguint' : 'Seguir' }}
             </button>
-            <button class="p-1 rounded-full bg-gradient-to-r from-primary to-yellow-500" style="opacity: 0.5;">
+            <!-- <button class="p-1 rounded-full bg-gradient-to-r from-primary to-yellow-500" style="opacity: 0.5;">
                 <IconsChat class="size-5" />
-            </button>
+            </button> -->
         </div>
     </section>
 </template>
@@ -82,5 +82,14 @@ export default {
         await this.getFollow();
         this.loader = false;
     },
+    computed: {
+        getImage() {
+            if (!this.follower.avatar) {
+                return `/img/standard_pfp.jpg`
+            } else {
+                return `${this.$config.public.IMAGE_URI}/${this.follower.avatar}`;
+            }
+        }
+    }
 }
 </script>

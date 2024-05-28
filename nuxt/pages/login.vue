@@ -9,7 +9,9 @@
                     autoFocus="true" placeholder="E-mail" v-model="email" />
                 <input class='bg-transparent border-b border-gray-400 outline-none text-white' type="password"
                     placeholder="Contrasenya" v-model="password" />
-
+                <NuxtLink to='/register' class='text-white'>No tens compte? <span
+                        class="bg-gradient-to-r from-orange-600 to-yellow-600 text-transparent bg-clip-text">Registra't</span>
+                </NuxtLink>
                 <button
                     class='flex justify-center py-3 font-bold rounded-full bg-gradient-to-r from-orange-600 to-yellow-600 text-white'
                     type="submit">
@@ -40,6 +42,7 @@ import { useStores } from '~/stores/counter';
 import authManager from '~/managers/authManager';
 import userManager from '~/managers/userManager';
 import { socket } from '../socket';
+import comManager from '~/managers/comManager';
 
 export default {
     data() {
@@ -82,6 +85,7 @@ export default {
                 this.isLoading = false;
                 socket.emit('logged', this.store.getId());
                 this.$router.push('/events');
+
             } else {
                 this.isLoading = false;
                 this.error = true;

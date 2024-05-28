@@ -9,22 +9,29 @@
             <article class='w-full px-2 py-4 flex justify-around items-center'>
                 <img class='size-24 rounded-full object-cover' :src="getImage" alt="" />
                 <div class='flex flex-col justify-center gap-4'>
-                    <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
+                    <div class="flex flex-row gap-x-6">
+                        <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
+                        <button
+                            class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
+                            @click="followOr">
+                            {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
+                        </button>
+                    </div>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/followers`">
-                                <p class="text-white">{{ User.followers }}</p>
+                                <p class="text-white">{{ User.followers || 0 }}</p>
                                 <p class='text-xs text-white/60'>Seguidors</p>
                             </NuxtLink>
                         </div>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/following`">
-                                <p class="text-white">{{ User.following }}</p>
+                                <p class="text-white">{{ User.following || 0 }}</p>
                                 <p class='text-xs text-white/60'>Seguits</p>
                             </NuxtLink>
                         </div>
                         <div>
-                            <p class="te+xt-white">5</p>
+                            <p class="te+xt-white">{{ User.events.length || 0 }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
                     </div>
@@ -45,11 +52,6 @@
                     @click="setSelectedSection('Eventos')">
                     Esdeveniments
                 </button>
-                <button class="text-white"
-                    :class="selectedSection === 'Gustos' ? 'border-b-2 border-b-white' : 'opacity-60'"
-                    @click="setSelectedSection('Gustos')">
-                    Gustos
-                </button>
             </div>
 
             <PostsProfile profile="otro" class="" v-if="selectedSection === 'Posts'" />
@@ -63,6 +65,7 @@
 <script>
 import userManager from '~/managers/userManager';
 import eventManager from '~/managers/eventManager';
+import comManager from '~/managers/comManager';
 import { useStores } from '~/stores/counter';
 
 export default {
@@ -71,13 +74,13 @@ export default {
         return {
             selectedSection: 'Posts',
             User: {
-                store: useStores(),
                 id: useStores().otherUserInfo.id,
                 avatar: useStores().otherUserInfo.avatar,
-                nickname: useStores().otherUserInfo.nickname,
+                nickname: this.$route.params.username,
                 name: useStores().otherUserInfo.name,
                 followers: useStores().otherUserInfo.followersUsers.count,
                 following: useStores().otherUserInfo.followingUsers.count,
+                events: useStores().otherUserInfo.events || []
             },
             store: useStores(),
             loader: false
@@ -98,6 +101,21 @@ export default {
         },
         async getFollowing() {
             await userManager.getFollowed(this.User.id);
+        },
+        async followUser() {
+            await comManager.follow(this.User.id)
+        },
+        async unfollowUser() {
+            await comManager.unfollow(this.User.id)
+        },
+        async followOr() {
+            if (!this.store.getLoggedIn()) return this.$router.push('/join');
+
+            if (this.checkIfFollowing) {
+                await this.unfollowUser();
+            } else {
+                await this.followUser();
+            }
         },
     },
     async mounted() {
@@ -120,6 +138,13 @@ export default {
                 return `/img/standard_pfp.jpg`
             } else {
                 return `${this.$config.public.IMAGE_URI}/${this.User.avatar}`;
+            }
+        },
+        checkIfFollowing() {
+            if (!this.store.userInfo.followingUsers.followed) {
+                return false
+            } else {
+                return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.User.id);
             }
         }
     }
