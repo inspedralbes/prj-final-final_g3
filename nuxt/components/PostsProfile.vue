@@ -172,10 +172,18 @@ export default {
             }
         },
         getImage() {
-            if (!this.userInfo.avatar) {
-                return `/img/standard_pfp.jpg`
+            if (this.profile) {
+                if (!this.otherUserInfo.avatar) {
+                    return `/img/standard_pfp.jpg`
+                } else {
+                    return `${this.$config.public.IMAGE_URI}/${this.otherUserInfo.avatar}`;
+                }
             } else {
-                return `${this.$config.public.IMAGE_URI}/${this.userInfo.avatar}`;
+                if (!this.userInfo.avatar) {
+                    return `/img/standard_pfp.jpg`
+                } else {
+                    return `${this.$config.public.IMAGE_URI}/${this.userInfo.avatar}`;
+                }
             }
         },
     },
