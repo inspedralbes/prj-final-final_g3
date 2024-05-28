@@ -56,37 +56,92 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 
 #### Buscar Usuarios
 
-Utiliza la lupa de búsqueda situada en la parte superior derecha que hay en inicio <img src="../images/inicio.png" alt="" width="20" height="17"> para encontrar otros usuarios con intereses similares o cualquier usuario que quieras buscar registrado en Spottunes. Donde puedes ver los eventos que ha dado like, posts, y toda la información de perfil como avatar, numero de seguidores y seguidos...
+1. Utiliza la lupa de búsqueda situada en la parte superior derecha de la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17"> para encontrar otros usuarios con intereses similares o cualquier usuario registrado en Spottunes. 
+2. Desde aquí, puedes ver:
+   - Los eventos a los que han dado like.
+   - Sus posts.
+   - Toda la información de su perfil, como el avatar, número de seguidores y seguidos.
 
-#########FOTO INICIO PARA QUE SE VEA LA LUPA
+![Buscar Usuarios](images/buscar-usuarios.png)
 
-#### Seguir a usuarios
+#### Seguir a Usuarios
 
-Para seguir a usuarios puedes usar la lupa de busqueda en la parte superior derecha que hay en inicio <img src="../images/inicio.png" alt="" width="20" height="17">. Y cuando realices la busqueda aparecerá el perfil y al lado un boton de seguir. 
+1. Para seguir a usuarios, usa la lupa de búsqueda en la parte superior derecha de la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17">.
+2. Cuando realices la búsqueda, aparecerá el perfil del usuario junto a un botón de "Seguir".
 
-#########FOTO DEL BUSCADOR DE USUARIOS
+![Buscador de Usuarios](images/buscador-usuarios.png)
 
-Si quieres ver el perfil antes de seguir clica en el perfil y en la parte superior derecha esta también el botón de seguir
+3. Si deseas ver el perfil antes de seguir a alguien, haz clic en el perfil del usuario.
+4. En la parte superior derecha del perfil, también encontrarás el botón de "Seguir".
 
-#########Foto de dentro de un perfil
+![Perfil de Usuario](images/perfil-usuario.png)
 
 ### Eventos y Conciertos
 
 #### Buscar Eventos
 
-Busca conciertos y eventos musicales según tus intereses, puedes buscarlo en inicio <img src="../images/inicio.png" alt="" width="20" height="17">, en la barra de buscador.
+1. Busca conciertos y eventos musicales según tus intereses utilizando la barra de búsqueda en la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17">.
 
 ![Buscar Eventos](images/buscar-eventos.png)
+
 #### Filtrar Eventos
 
-En el apartado de buscar eventos cabe decir que tenemos filtros por geolocalización. Puedes marcar una zona en el mapa y siempre te aparecerán los eventos en el radio que pongas. Por ejemplo, si pones un radio de 50 km, el sistema tomará el centro donde has clicado y te mostrará todos los eventos alrededor hasta 50 km, que es lo que has limitado.
+1. En el apartado de buscar eventos, puedes utilizar filtros por geolocalización.
+2. Marca una zona en el mapa y siempre te aparecerán los eventos dentro del radio que especifiques.
+3. Por ejemplo, si estableces un radio de 50 km, el sistema tomará el centro donde has clicado y te mostrará todos los eventos alrededor hasta 50 km.
 
+![Filtrar Eventos](images/filtrar-eventos.png)
 
 #### Unirse/Seguir a Eventos
 
-Únete a un evento, confirma tu asistencia y ve quién más va a asistir.
+1. Únete o sigue a un evento.
+2. Confirma tu asistencia y ve quién más va a asistir.
+3. Conoce a gente a través de la lista de personas que están siguiendo el evento al que vas a asistir.
 
-![Unirse a Eventos](images/unirse-eventos.png)
+![Lista de Personas Inscritas](images/lista-personas-evento.png)
+
+
+## Chats
+
+El chat en nuestra aplicación se encuentra en el apartado **Xat**. Aquí, puedes comunicarte fácilmente con otros usuarios y organizar tus planes para asistir a conciertos. A continuación, se detallan las características principales del chat:
+
+1. **Buscador de Usuarios**:
+   - En la parte superior del apartado **Xat**, encontrarás un buscador de usuarios. Puedes utilizar este buscador para encontrar a cualquier usuario registrado en Spottunes.
+   - Simplemente introduce el nombre del usuario en la barra de búsqueda y selecciona el perfil adecuado de los resultados que aparecen.
+
+2. **Iniciar un Chat**:
+   - Una vez que hayas encontrado al usuario con el que deseas comunicarte, haz clic en su nombre o foto de perfil para iniciar un chat.
+   - Esto abrirá una ventana de chat donde podrás enviar mensajes instantáneos.
+
+3. **Funciones del Chat**:
+   - **Enviar Mensajes**: Escribe tu mensaje en el cuadro de texto y presiona "Enter" o haz clic en el icono de enviar para enviar tu mensaje.
+
+4. **Historial del Chat**:
+   - Todos los mensajes enviados y recibidos se almacenan en el historial del chat. Puedes revisar tus conversaciones anteriores en cualquier momento navegando hacia arriba en la ventana del chat.
+
+5. **Notificaciones de Mensajes**:
+   - Recibirás notificaciones en tiempo real cuando recibas un nuevo mensaje.
+
+## Posts
+### Crear un Post
+
+Para compartir tus experiencias y opiniones sobre conciertos, puedes crear posts. Aquí te mostramos cómo hacerlo:
+
+1. Ve a la sección de + desde el menú inferior.
+2. Escribe experiencias o próximos eventos a los que asistirás.
+3. Si deseas adjuntar una imagen, haz clic en el icono de la galeria y selecciona una imagen de tu dispositivo.
+4. Haz clic en "Post" para publicar tu post con la comunidad en tu perfil.
+
+### Interactuar con Posts
+
+Puedes interactuar con los posts de otros usuarios de las siguientes maneras:
+
+- **Dar Like**: Haz clic en el icono de corazón para dar like a un post.
+- **Comentar**: Haz clic en el icono de comentario para añadir una respuesta o comentario al post.
+
+### Ver Posts de Usuarios
+
+En la sección de posts dentro de cada usuario, puedes ver las publicaciones que ha hecho el usuario. Esta es una excelente manera de mantenerte al tanto de lo que otros amantes de la música están diciendo y haciendo.
 
 ## Solución de Problemas Comunes
 
@@ -95,13 +150,3 @@ En el apartado de buscar eventos cabe decir que tenemos filtros por geolocalizac
 #### ¿Por qué no puedo ver ciertos eventos?
 
 Asegúrate de que tu configuración de filtros en la búsqueda de eventos esté correctamente configurada y que no hayas excluido ciertos tipos de eventos sin querer.
-
-![Configuración de Filtros](images/configuracion-filtros.png)
-
-### Errores Comunes
-
-#### Error de Conexión
-
-Verifica tu conexión a internet y asegúrate de que estás utilizando la última versión de la aplicación.
-
-![Error de Conexión](images/error-conexion.png)
