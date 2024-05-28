@@ -14,7 +14,8 @@
                 <hr>
             </div>
             <div v-else-if="type === 0 && followers.length === 0" class="flex justify-center items-center">
-                <h2 class="font-bold">No tens seguidors</h2>
+                <h2 v-if="checkUser" class="font-bold">No tens seguidors</h2>
+                <h2 v-else class="font-bold">Aquest usuari no té seguidors</h2>
             </div>
             <div v-else-if="type === 1 && following.length != 0" v-for="followed in following"
                 class="w-full flex flex-col justify-center items-center">
@@ -22,7 +23,8 @@
                 <hr>
             </div>
             <div v-else-if="type === 1 && following.length === 0" class="flex justify-center items-center">
-                <h2 class="font-bold">No segueixes a ningú</h2>
+                <h2 v-if="checkUser" class="font-bold">No segueixes a ningú</h2>
+                <h2 v-else class="font-bold">Aquest usuari no segueix a ningú</h2>
             </div>
         </div>
         <!-- <div v-else>
@@ -70,8 +72,8 @@ export default {
             if (!this.followers) this.getFollowers();
             if (!this.following) this.getFollowing();
         } else {
-            if (!this.Followers) this.getOtherFollowers();
-            if (!this.Following) this.getOtherFollowing();
+            if (!this.followers) this.getOtherFollowers();
+            if (!this.following) this.getOtherFollowing();
         }
     },
     methods: {
