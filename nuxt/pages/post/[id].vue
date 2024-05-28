@@ -194,21 +194,17 @@ export default {
         formatDay(dateString) {
             const date = new Date(dateString);
   
-            // Obtener la hora y los minutos
             const hours = date.getHours();
             const minutes = date.getMinutes();
             
-            // Formatear la hora en formato 12 horas con AM/PM
             const ampm = hours >= 12 ? 'PM' : 'AM';
             const formattedHours = hours % 12 || 12; // Convertir 0 a 12 para la medianoche
             const formattedMinutes = String(minutes).padStart(2, '0');
             
-            // Obtener el día, mes y año
             const day = date.getDate();
             const month = date.toLocaleString('ca-ES', { month: 'long' });
             const year = date.getFullYear();
             
-            // Construir la cadena de fecha formateada
             return `${formattedHours}:${formattedMinutes} ${ampm} - ${day} ${month.charAt(0).toUpperCase() + month.slice(1)}, ${year}`;
         },
     },
