@@ -10,7 +10,7 @@ Aquest document té com a objectiu proporcionar una guia tècnica detallada sobr
 
 L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, distribuint les responsabilitats entre diversos components especialitzats. A continuació es presenta un esquema gràfic i una descripció de cada component, incloent les connexions i la informació que es transmet entre ells.
 
-![Arquitectura de l'aplicació](ruta_a_la_teva_imatge)
+<img src="../images/arquitectura.png" alt="Arquitectura de la aplicació" />
 
 ### Components de l'Arquitectura
 
