@@ -64,7 +64,7 @@ export default {
           const messages = await comChat.getMessagesNotReceived(chat._id, this.store.getId());
           if (messages.count > 0) {
             const toast = useToast();
-            toast.add({ title: 'Tienes mensajes nuevos desde la ultima conexion' });
+            toast.add({ title: `Tens missatges nous des de l'última connexió` });
             break;
           }
         }
