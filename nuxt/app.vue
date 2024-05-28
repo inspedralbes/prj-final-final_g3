@@ -52,7 +52,6 @@ export default {
     },
     connectSocket() {
       if (this.store.getLoggedIn()) {
-        console.log('logged', this.store.getId());
         socket.emit('logged', this.store.getId());
         this.getChats();
       }
