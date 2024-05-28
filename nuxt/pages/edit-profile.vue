@@ -10,7 +10,7 @@
           <p class="m-4">Canvia la imatge de perfil</p>
         </label>
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Nom d'usuari"
-       v-model="nickname" @input="removeSpaces" />
+          v-model="nickname" @input="removeSpaces" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" autofocus placeholder="Nom"
           v-model="name" />
         <input class="bg-transparent border-b border-gray-400 outline-none" type="text" placeholder="Cognoms"
@@ -100,16 +100,19 @@ export default {
       }
     },
     removeSpaces(event) {
-      this.nickname = event.target.value.replace(/\s/g, '');
-      
-      if (!this.toastVisible) {
-        this.toastVisible = true; 
+      const inputText = event.target.value;
+      const hasSpace = /\s/.test(inputText);
+
+      this.nickname = inputText.replace(/\s/g, '');
+
+      if (hasSpace && !this.toastVisible) {
+        this.toastVisible = true;
 
         const toast = useToast();
-        toast.add({ title: 'No es poden escriure espais', color: 'red', icon: 'i-heroicons-information-circle-20-solid'});
+        toast.add({ title: 'No es poden escriure espais', color: 'red', icon: 'i-heroicons-information-circle-20-solid' });
         setTimeout(() => {
           this.toastVisible = false;
-        }, 3000); 
+        }, 3000);
       }
     },
     handleAvatarChange(e) {
