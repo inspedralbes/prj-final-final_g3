@@ -7,7 +7,8 @@
                         <img class="size-12 rounded-full object-cover" :src="this.getImage()">
                         <div class="flex flex-col">
                             <div class="flex items-center gap-3">
-                                <h3 class="font-bold">{{ userInfo.name }}</h3>
+                                <h3 v-if="profile" class="font-bold">{{ otherUserInfo.name }}</h3>
+                                <h3 v-else class="font-bold">{{ userInfo.name }}</h3>
                                 <p class="text-xs text-gray-300">{{ this.formatDay(post.date) }}</p>
                             </div>
                             <p v-if="profile" class="text-sm">@{{ otherUserInfo.nickname }}</p>
@@ -42,7 +43,8 @@
 
     <transition name="fadeReply" tag="div">
         <ReplyPost v-if="replyPostModal" @close="mostrarReplyModal" @replyed="increaseComments($event)"
-            :post="this.postReply" :name="this.userInfo.name" :nickname="userInfo.nickname" :avatar="this.userInfo.avatar"/>
+            :post="this.postReply" :name="this.userInfo.name" :nickname="userInfo.nickname"
+            :avatar="this.userInfo.avatar" />
     </transition>
 
     <transition name="fadeReply" tag="div">
@@ -117,7 +119,7 @@ export default {
                 }
             }
         },
-        
+
         formatDay(dateString) {
             const date = new Date(dateString);
             const day = String(date.getDate()).padStart(2, '0');
