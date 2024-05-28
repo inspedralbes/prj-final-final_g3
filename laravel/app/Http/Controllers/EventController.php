@@ -198,11 +198,17 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($ids)
+    public function show(Request $request)
     {
-        // Convierte la cadena de IDs a un array
-        $idsArray = explode(',', $ids);
-    
+
+        // Validar que el array no esté vacío
+        if (empty($idsArray)) {
+            return response()->json(['message' => 'No IDs provided'], 400);
+        }
+
+        // Validar que todos los elementos en $idsArray sean números
+        $idsArray = $request->input('ids');
+
         // Validar que todos los elementos en $idsArray sean números
         if (array_filter($idsArray, 'is_numeric') !== $idsArray) {
             return response()->json(['message' => 'Invalid IDs provided'], 400);

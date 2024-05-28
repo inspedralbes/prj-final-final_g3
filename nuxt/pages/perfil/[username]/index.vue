@@ -9,7 +9,14 @@
             <article class='w-full px-2 py-4 flex justify-around items-center'>
                 <img class='size-24 rounded-full object-cover' :src="getImage" alt="" />
                 <div class='flex flex-col justify-center gap-4'>
-                    <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
+                    <div class="flex flex-row gap-x-6">
+                        <h1 class='text-xl font-semibold text-white'>{{ User.nickname }}</h1>
+                        <button
+                            class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
+                            @click="followOr">
+                            {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
+                        </button>
+                    </div>
                     <div class='flex justify-center items-center gap-6'>
                         <div>
                             <NuxtLink :to="`/perfil/${User.nickname}/followers`">
@@ -27,11 +34,6 @@
                             <p class="te+xt-white">{{ User.events.length || 0 }}</p>
                             <p class='text-xs text-white/60'>Esdeveniments</p>
                         </div>
-                        <button
-                            class="font-bold px-4 py-1 bg-white text-black rounded-full text-sm h-8 border border-black"
-                            @click="followOr">
-                            {{ checkIfFollowing ? 'Seguint' : 'Seguir' }}
-                        </button>
                     </div>
                 </div>
             </article>
@@ -78,7 +80,7 @@ export default {
                 name: useStores().otherUserInfo.name,
                 followers: useStores().otherUserInfo.followersUsers.count,
                 following: useStores().otherUserInfo.followingUsers.count,
-                events: useStores().otherUserInfo.events
+                events: useStores().otherUserInfo.events || []
             },
             store: useStores(),
             loader: false
