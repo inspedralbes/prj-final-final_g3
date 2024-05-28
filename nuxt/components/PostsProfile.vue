@@ -1,5 +1,7 @@
 <template>
-    <section class="w-[90%] mx-auto overflow-hidden" ref="mySection">
+    <p class="text-center" v-if="posts.length === 0 && profile">No tens posts publicats.</p>
+    <p class="text-center" v-if="posts.length === 0 && !profile">No té posts publicats.</p>
+    <section v-else class="w-[90%] mx-auto overflow-hidden" ref="mySection">
         <transition-group name="fade" tag="div" class="relative">
             <article v-for="post in posts" :key="post._id" class="flex flex-col gap-2 bg-black rounded mb-4">
                 <header class=" flex justify-between items-center py-2 px-3">
@@ -92,7 +94,6 @@ export default {
             }
             if (this.posts.length != 0) {
                 this.posts.reverse()
-                console.log("POSTS: " + JSON.stringify(this.posts))
             }
 
             this.posts = this.posts.map(post => ({
@@ -164,7 +165,6 @@ export default {
         },
 
         increaseComments(id) {
-            console.log(id)
             for (let i = 0; i < this.posts.length; i++) {
                 if (this.posts[i]._id === id) {
                     this.posts[i].comments.length++;
@@ -181,7 +181,6 @@ export default {
     },
 
     created() {
-        console.log(this.userInfo);
         this.getPosts()
     }
 }

@@ -56,13 +56,12 @@ Route::group(['prefix'=>'apps'],function(){
 Route::get('/getTrack', [SpotifyController::class, 'getTrack']);
 
 Route::group(['prefix' => 'events'], function () {
-    Route::get('/', [EventController::class, 'index']);
     Route::get('/all', [EventController::class, 'indexAll']);
     Route::get('/locations', [EventController::class, 'getLocations']);
     Route::post('/byLocation', [EventController::class, 'getEventsByLocation']);
     Route::post('/byDistance', [EventController::class, 'getEventsByDistance']);
     Route::post('/search', [EventController::class, 'getEventsByName']);
-    Route::get('/{ids}', [EventController::class, 'show']);
+    Route::post('/byId', [EventController::class, 'show']);
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
     // Route::delete('/{id}', [EventController::class, 'destroy']);
