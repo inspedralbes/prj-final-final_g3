@@ -12,60 +12,60 @@
 ### Que components hi ha?
 
 #### Menu:
-Este es el menu de navegacion de nuestra aplicacion, lo utilizamos en casi todas las paginas para que el usuario pueda moverse libremente entre pagina y pagina.
+Aquest és el menú de navegació de la nostra aplicació, l'utilitzem en gairebé totes les pàgines perquè l'usuari pugui moure's lliurement entre pàgina i pàgina.
 
 
 #### Header:
-Seccion donde mostramos el Logo y el nombre de Spottunes, una lupa para buscar usuarios y un boton para hacer logout en el caso de que el usuario este logeado. Lo utilizamos en la pantalla de Eventos y Perfil.
+Seccion on mostrem el Logo i el nom de Spottunes, una lupa per buscar usuaris i un botó per fer logout en cas que l'usuari estigui logejat. El fem servir a la pantalla d'Esdeveniments i Perfil.
 
 
 #### Logout:
-Aqui tenemos el icono y las funciones para hacer logout en la aplicacion. Lo utilizamos en el componente Header.
+Aquí tenim la icona i les funcions per fer logout a l'aplicació. L'utilitzem al component Header.
 
 
 #### CardUser:
-Mostramos el avatar y el nombre de un usuario y la opcion de poder seguirlo. Este componente lo usamos en el buscador de usuarios de Header.vue y en la pantalla de perfil.
+Mostrem l'avatar i el nom d'un usuari i l'opció de poder seguir-lo. Aquest component el fem servir al cercador d'usuaris de Header.vue ia la pantalla de perfil.
 
 
 #### CardEvent: 
-Este componente es cada carta de un evento y lo usamos en la pantalla de Eventos.
+Aquest component és cada carta d'un esdeveniment i el fem servir a la pantalla d'esdeveniments.
 
 
 #### UserCardEvent:
-Muestra el avatar, nombre y opcion de seguir en la pantalla de un evento individual. Lo usamos al mostrar los usuarios que siguen un evento.
+Mostra l'avatar, nom i opció de seguir a la pantalla d'un esdeveniment individual. El fem servir en mostrar els usuaris que segueixen un esdeveniment.
 
 <img src="../images/CardEvent.png" alt="" >
 
 
 #### PostsProfile:
-Mostramos todos los posts creadors por el usuario en la pantalla de perfil.
+Mostra tots els posts creadors per l'usuari a la pantalla de perfil.
 
 #### OpenImage:
-Este es un componente que utilizamos como modal para poder ampliar y ver mejor las imagenes de los post. Lo utulizamos en PostsProfile al hacer click en la imagen del post.
+Aquest és un component que utilitzem com a modal per poder ampliar i veure millor les imatges dels post. L'utilitzem a PostsProfile en fer clic a la imatge del post.
 
 
 #### ReplyPost:
-Es un modal que utilizamos para dejar comentarios en un post de forma rapida. Lo utilizamos en PostsProfile.
+És un modal que utilitzem per deixar comentaris en un post de forma ràpida. L'utilitzem a PostsProfile.
 
 
 #### PostDropDown:
-Desplegable para manejar la eliminacion de un post creado por el usuario. Lo utilizamos en PostsProfile.
+Desplegable per manejar l'eliminació d'un post creat per l'usuari. L'utilitzem a PostsProfile.
 
 
 #### EventosProfile:
-Si el usuario no sigue ningun evento aparece una frase conforme este usuario no sigue eventos, y sino muestra una pequeña preview de cada evento al que sigue. Esto se muestra en la pantalla de perfil.
+Si l'usuari no segueix cap esdeveniment apareix una frase conforme aquest usuari no segueix esdeveniments, i si no mostra una petita preview de cada esdeveniment al que segueix. Això es mostra a la pantalla de perfil.
 
 
 #### Logo:
-Este es el svg de nuestro logo. Lo utilizamos en Header y Join.
+Aquest és el svg del nostre logo. L'utilitzem a Header i Join.
 
 #### Loader:
-Este componente es el del loader que hemos utilizado en toda la aplicacion. Lo utilizamos en UserCardEvent, add-chat, chats, completar, edit-profile, login, register, google, spotify, events, perfil y post.
+Aquest component és el del loader que hem utilitzat en tota l'aplicació. El fem servir a UserCardEvent, add-chat, xats, completar, edit-profile, login, register, google, spotify, events, perfil i post.
 
 
 #### LoginMethods:
-Aqui tenemos los diferentes metodos para hacer login en nuestra aplicacion, como google, spotify o spottunes. Lo utilizamos en Login y Register.
+Aquí tenim els diferents mètodes per fer login a la nostra aplicació, com google, spotify o spottunes. L'utilitzem a Login i Register.
 
 
 #### Map:
-Este componente contiene un mapa para poder filtrar los conciertos por distancia de tu ubicacion.
+Aquest component conté un mapa per poder filtrar els concerts per distància de la teva ubicació.
