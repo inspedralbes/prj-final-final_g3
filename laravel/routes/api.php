@@ -6,8 +6,6 @@ use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowersController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,16 +63,4 @@ Route::group(['prefix' => 'events'], function () {
     // Route::post('/', [EventController::class, 'store']);
     // Route::put('/{id}', [EventController::class, 'update']);
     // Route::delete('/{id}', [EventController::class, 'destroy']);
-});
-
-Route::group(['prefix' => 'messages'], function () {
-    Route::post('/', [MessageController::class, 'saveMessage']);
-    Route::get('/{chat_id}', [MessageController::class, 'getMessages']);
-});
-
-Route::group(['prefix' => 'chats'], function () {
-    Route::post('/search', [ChatController::class, 'search']);
-    // Route::post('/create', [ChatController::class, 'createChat']);
-    // Route::post('/send', [ChatController::class, 'sendMessage']);
-    // Route::get('/', [ChatController::class, 'getMessages']);
 });

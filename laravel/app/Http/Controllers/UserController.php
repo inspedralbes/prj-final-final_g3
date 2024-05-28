@@ -248,7 +248,7 @@ class UserController extends Controller
      *      tags={"Autenticació"},
      *      summary="Cerrar sesión",
      *      description="Cierra la sesión del usuario actual y revoca todos los tokens de acceso asociados.",
-     *      security={{"bearerAuth":{}}},
+     *      security={{"bearer_token":{}}},
      *      @OA\Response(
      *          response=200,
      *          description="Sesión cerrada exitosamente",
@@ -267,74 +267,8 @@ class UserController extends Controller
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Token eliminado']);
     }
-    /**
-     * @OA\Get(
-     *      path="/api/auth",
-     *      operationId="redirectToAuth",
-     *      tags={"Autenticació Google"},
-     *      summary="Redirigir a la autenticación",
-     *      description="Redirige al usuario a la página de autenticación externa, como Google, para iniciar sesión.",
-     *      @OA\Response(
-     *          response=302,
-     *          description="Redirección temporal",
-     *      ),
-     * )
-     */
 
-    public function redirectToAuth(): JSONResponse
-    {
-        return response()->json([
-            Socialite::driver('google')
-                ->stateless()
-                ->redirect()
-                ->getTargetUrl()
-        ]);
-    }
-
-    public function registerWithApps(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'surnames' => 'string',
-            'nickname' => 'required|string|unique:users',
-            'password' => 'required|string',
-            'password_confirmation' => 'required|string|same:password',
-            'email' => 'required|email|unique:users',
-            'birthdate' => 'required|date',
-        ], [
-            'required' => 'El :attribute es obligatori.',
-            'email' => 'El :attribute ha de ser una adreça de correu vàlida.',
-            'unique' => 'El :attribute ja està en ús.',
-            'date' => 'El :attribute ha de ser una data vàlida.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], 400);
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'surnames' => $request->surnames,
-            'password' => bcrypt($request->password),
-            'nickname' => $request->nickname,
-            'email' => $request->email,
-            'birthdate' => $request->birthdate,
-            'loginWith' => $request->loginWith,
-            'google_id' => $request->google_id,
-        ]);
-
-        $user->makeHidden(['created_at', 'updated_at']);
-
-        $token = $user->createToken('Spottunes')->plainTextToken;
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response()->json(['success' => 'Usuari creat correctament', 'data' => $response], 200);
-    }
-
-
+    
 
     /**
      * @OA\Put(
@@ -407,6 +341,64 @@ class UserController extends Controller
         return response()->json($user->save());
     }
 
+
+    /**
+ * @OA\Put(
+ *      path="/api/updateInfo",
+ *      operationId="updateInfo",
+ *      tags={"Autenticació"},
+ *      summary="Actualizar información del usuario",
+ *      description="Actualiza la información del usuario, incluyendo nombre, apellidos, apodo, correo electrónico, fecha de nacimiento y avatar.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="Datos del usuario para actualizar",
+ *          @OA\MediaType(
+ *              mediaType="application/x-www-form-urlencoded",
+ *              @OA\Schema(
+ *                  required={"name", "nickname", "email"},
+ *                  type="object",
+ *                  @OA\Property(property="name", type="string", example="Juan"),
+ *                  @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
+ *                  @OA\Property(property="nickname", type="string", example="usuario123"),
+ *                  @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                  @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
+ *                  @OA\Property(property="avatar", type="string", format="base64", example="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."),
+ *              ),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Información de usuario actualizada exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="id", type="integer", example=1),
+ *              @OA\Property(property="name", type="string", example="Juan"),
+ *              @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
+ *              @OA\Property(property="nickname", type="string", example="usuario123"),
+ *              @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *              @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
+ *              @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Error de validación",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="errors", type="array", @OA\Items(type="string")),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
+
     public function updateInfo(Request $request)
     {
         $token = $request->header('Authorization');
@@ -478,9 +470,66 @@ class UserController extends Controller
 
         return response()->json($user, 200);
     }
+    
     /**
-     * Funcion para el buscador recibe parametros y tiene que devolver todos los usuarios que coincidan con lo que comienzen por esos parametros
-     */
+ * @OA\Post(
+ *      path="/api/apps/searchUsers",
+ *      operationId="searchUsers",
+ *      tags={"Usuaris"},
+ *      summary="Buscar usuarios",
+ *      description="Busca usuarios por su apodo.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\Parameter(
+ *          name="param",
+ *          in="query",
+ *          required=true,
+ *          description="Parámetro de búsqueda para el apodo del usuario",
+ *          @OA\Schema(
+ *              type="string",
+ *              example="usuario123"
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Resultados de la búsqueda",
+ *          @OA\JsonContent(
+ *              type="array",
+ *              @OA\Items(
+ *                  type="object",
+ *                  @OA\Property(property="id", type="integer", example=1),
+ *                  @OA\Property(property="name", type="string", example="Juan"),
+ *                  @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
+ *                  @OA\Property(property="nickname", type="string", example="usuario123"),
+ *                  @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                  @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
+ *                  @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=201,
+ *          description="No hay resultados en tu búsqueda",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No hay resultados en tu búsqueda")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=202,
+ *          description="No hay resultados en tu búsqueda",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No hay resultados en tu búsqueda")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
     public function searchUsers(Request $request)
     {
         $param = $request->input('param');
@@ -493,6 +542,72 @@ class UserController extends Controller
         }
         return response()->json($users, 200);
     }
+
+    /**
+ * @OA\Get(
+ *      path="/api/apps/checkEmail",
+ *      operationId="checkEmail",
+ *      tags={"Usuaris"},
+ *      summary="Verificar disponibilidad de correo electrónico",
+ *      description="Verifica si un correo electrónico ya está en uso. Si el correo está en uso, devuelve los detalles del usuario y un token de acceso. Si no está en uso, indica que el correo está disponible.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="Correo electrónico a verificar",
+ *          @OA\MediaType(
+ *              mediaType="application/x-www-form-urlencoded",
+ *              @OA\Schema(
+ *                  required={"email"},
+ *                  type="object",
+ *                  @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *              ),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="El email ya está en uso, haciendo Login",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="success", type="string", example="El email ya está en uso, haciendo Login"),
+ *              @OA\Property(property="data", type="object",
+ *                  @OA\Property(property="user", type="object",
+ *                      @OA\Property(property="id", type="integer", example=1),
+ *                      @OA\Property(property="name", type="string", example="Juan"),
+ *                      @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
+ *                      @OA\Property(property="nickname", type="string", example="usuario123"),
+ *                      @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                      @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
+ *                      @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
+ *                  ),
+ *                  @OA\Property(property="token", type="string", example="abc123token")
+ *              ),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=202,
+ *          description="El email está disponible",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="success", type="string", example="El email está disponible")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Solicitud incorrecta",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Solicitud incorrecta")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
+
 
     public function checkEmail(Request $request)
     {
@@ -509,6 +624,55 @@ class UserController extends Controller
             return response()->json(['success' => 'El email está disponible'], 202);
         }
     }
+
+    /**
+ * @OA\Get(
+ *      path="/api/getUser",
+ *      operationId="getUser",
+ *      tags={"Usuaris"},
+ *      summary="Obtener información del usuario",
+ *      description="Obtiene la información de un usuario por su ID.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\Parameter(
+ *          name="user_id",
+ *          in="query",
+ *          required=true,
+ *          description="ID del usuario a obtener",
+ *          @OA\Schema(
+ *              type="integer",
+ *              example=1
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Información del usuario obtenida exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="id", type="integer", example=1),
+ *              @OA\Property(property="name", type="string", example="Juan"),
+ *              @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
+ *              @OA\Property(property="nickname", type="string", example="usuario123"),
+ *              @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *              @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
+ *              @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se pudo encontrar el usuario",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="error", type="string", example="No se pudo encontrar el usuario")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
 
     public function getUser(Request $request)
     {
@@ -530,6 +694,52 @@ class UserController extends Controller
             return response()->json(['message' => 'No se ha encontrado el usuario'], 404);
         }
     }
+
+    /**
+ * @OA\Get(
+ *      path="/api/users/search/{username}",
+ *      operationId="searchByUsername",
+ *      tags={"Usuaris"},
+ *      summary="Buscar usuario por nombre de usuario",
+ *      description="Busca un usuario por su nombre de usuario.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\Parameter(
+ *          name="username",
+ *          in="path",
+ *          required=true,
+ *          description="Nombre de usuario a buscar",
+ *          @OA\Schema(
+ *              type="string"
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Usuario encontrado exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="id", type="integer", example=1),
+ *              @OA\Property(property="name", type="string", example="Juan"),
+ *              @OA\Property(property="nickname", type="string", example="usuario123"),
+ *              @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se ha encontrado el usuario",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No se ha encontrado el usuario")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
 
     public function getUserByNickname(Request $request)
     {
