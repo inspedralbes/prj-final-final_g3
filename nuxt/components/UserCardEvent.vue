@@ -1,12 +1,14 @@
 <template>
     <section class="flex justify-between items-center">
-        <article class="flex gap-2">
-            <img class="rounded-full size-14" :src="getImage" alt="">
-            <div class="flex flex-col justify-center items-start">
-                <p class="font-semibold">{{ follower.nickname }}</p>
-                <p class="text-sm text-gray-300">@{{ follower.nickname }}</p>
-            </div>
-        </article>
+        <NuxtLink :to="`/perfil/${follower.nickname}`">
+            <article class="flex gap-2">
+                <img class="rounded-full size-14" :src="getImage" alt="">
+                <div class="flex flex-col justify-center items-start">
+                    <p class="font-semibold">{{ follower.nickname }}</p>
+                    <p class="text-sm text-gray-300">@{{ follower.nickname }}</p>
+                </div>
+            </article>
+        </NuxtLink>
 
         <div class="flex items-center gap-3">
             <div v-if="loader" class="flex justify-center items-center">
