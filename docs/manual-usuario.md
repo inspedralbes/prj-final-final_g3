@@ -23,11 +23,6 @@ Bienvenido al manual de usuario de nuestra aplicación de red social para concie
 
 <img src="images/registre.png" alt="" width="390" height="420">
 
-5. Verifica tu correo electrónico siguiendo el enlace que te hemos enviado.
-6. Completa tu perfil añadiendo una foto y una breve descripción sobre ti.
-
-![Registro](images/registro.png)
-
 ## Navegación por la Interfaz
 
 ### Pantalla de Inicio
@@ -38,7 +33,7 @@ La pantalla de inicio te muestra una lista de conciertos populares y eventos rec
 
 ### Menús y Navegación
 
-Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, mensajes, y búsqueda de eventos.
+Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
 
 ![Menú de Navegación](images/menu-navegacion.png)
 
