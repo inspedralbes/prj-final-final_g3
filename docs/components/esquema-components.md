@@ -42,7 +42,7 @@ Mostra l'avatar, nom i opció de seguir a la pantalla d'un esdeveniment individu
 <img src="../images/UserCardEvent.PNG" alt="" >
 
 #### PostsProfile:
-Mostra tots els posts creadors per l'usuari a la pantalla de perfil.
+Mostra tots els posts creats per l'usuari a la pantalla de perfil.
 
 <img src="../images/PostsProfile.PNG" alt="" >
 
