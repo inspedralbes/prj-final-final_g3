@@ -8,3 +8,5 @@ Aquí encontrarás toda la información necesaria para utilizar nuestra aplicaci
 
 ## Contenidos
 - [Manual de Usuario](manual-usuario.md)
+
+
