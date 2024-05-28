@@ -14,6 +14,7 @@
 #### CardEvent: 
 Este componente es cada carta de un evento y lo usamos en la pantalla de Eventos.
 
+<img src="../images/CardEvent.PNG" alt="" >
 
 
 #### CardUser:
