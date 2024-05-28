@@ -57,7 +57,7 @@
                 </button> -->
             </div>
 
-            <PostsProfile class="" v-if="selectedSection === 'Posts'" />
+            <PostsProfile v-if="selectedSection === 'Posts'" />
             <EventosProfile v-if="selectedSection === 'Eventos'" />
             <!-- <GustosProfile v-if="selectedSection === 'Gustos'" /> -->
         </section>
@@ -105,13 +105,6 @@ export default {
             const eventos = await eventManager.getLikeEvents(this.User.id);
             this.store.setUserInfoEvents(eventos)
         },
-        getUserEvents() {
-            if (this.profile) {
-                this.User.events = this.store.otherUserInfo.events
-            } else {
-                this.User.events = this.store.userInfo.events
-            }
-        }
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
