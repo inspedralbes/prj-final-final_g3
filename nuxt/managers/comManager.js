@@ -28,17 +28,14 @@ async function getEvents() {
         eventosAgrupados[key] = evento;
       }
     });
-    console.log("cerdo");
     if (store.getLoggedIn()) {
       const likedEventIds = await getLikeEvents();
-      console.log("cerdo");
       Object.values(eventosAgrupados).forEach((evento) => {
         evento.like = likedEventIds.includes(evento.id);
       });
 
       store.setEvents(Object.values(eventosAgrupados));
     } else {
-      console.log("subnormal");
       store.setEvents(Object.values(eventosAgrupados));
     }
   } catch (error) {
@@ -256,7 +253,7 @@ async function commentPost(postID, content, userID) {
     await axios.post(`${url_api_mongo}/comments`, {
       postId: postID,
       content: content,
-      userId: userID
+      userId: userID,
     });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -309,11 +306,11 @@ async function getUserById(id, token) {
   }
 }
 
-async function uploadImage(image){
+async function uploadImage(image) {
   const reponse = await axios.post(`${url_api_mongo}/uploadImage`, image, {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+      "Content-Type": "multipart/form-data",
+    },
   });
   return reponse.data;
 }
@@ -339,7 +336,7 @@ const comManager = {
   commentPost,
   getComments,
   getPostById,
-  uploadImage
+  uploadImage,
 };
 
 export default comManager;

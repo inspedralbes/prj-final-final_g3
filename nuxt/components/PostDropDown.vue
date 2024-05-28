@@ -40,7 +40,6 @@ export default {
   methods: {
 
     async deletePost() {
-      console.log('Deleting post', this.postId)
       await comManager.deletePost(this.postId)
       this.$emit('postDeleted', this.postId)
     },

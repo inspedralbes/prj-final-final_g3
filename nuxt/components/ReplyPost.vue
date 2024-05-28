@@ -16,7 +16,7 @@
             </header>
             <main>
                 <article class=" flex justify-between items-center py-2">
-                    
+
                     <div class="flex justify-center items-center gap-3">
                         <img class="size-12 rounded-full object-cover" :src="this.getImage(avatar)">
                         <div class="flex flex-col">
@@ -34,7 +34,8 @@
                 <p class="px-3 text-sm">{{ post.content }}</p>
             </main>
 
-            <p class="mt-12 mb-2 px-3 text-sm text-gray-500">Responent a <span class="text-blue-400">@{{this.nickname }}</span></p>
+            <p class="mt-12 mb-2 px-3 text-sm text-gray-500">Responent a <span class="text-blue-400">@{{ this.nickname
+                    }}</span></p>
             <div class="flex items-start gap-3">
                 <img class="size-12 rounded-full object-cover" :src="getImage(store.getUserInfo().avatar)">
                 <textarea ref="textarea" v-model="comment" @input="autoGrow"
@@ -104,25 +105,23 @@ export default {
 
         formatDay(dateString) {
             const date = new Date(dateString);
-  
+
             const hours = date.getHours();
             const minutes = date.getMinutes();
-            
+
             const ampm = hours >= 12 ? 'PM' : 'AM';
             const formattedHours = hours % 12 || 12;
             const formattedMinutes = String(minutes).padStart(2, '0');
-            
+
             const day = date.getDate();
             const month = date.toLocaleString('ca-ES', { month: 'long' });
             const year = date.getFullYear();
-            
+
             return `${formattedHours}:${formattedMinutes} ${ampm} - ${day} ${month.charAt(0).toUpperCase() + month.slice(1)}, ${year}`;
         },
     },
     mounted() {
         this.$refs.textarea.focus();
-        console.log("ReplyPost: " + this.post.content)
-        console.log("ReplyPost: " + this.name)
     }
 
 }

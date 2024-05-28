@@ -104,7 +104,6 @@ export default {
         async getEvents() {
             const eventos = await eventManager.getLikeEvents(this.User.id);
             this.store.setUserInfoEvents(eventos)
-            console.log(this.User.events)
         },
     },
     async mounted() {
