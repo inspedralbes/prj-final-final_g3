@@ -42,45 +42,47 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 
 ## Funciones Principales 
 
-### Perfil del Usuario <img src="../images/perfil.png" alt="" width="20" height="20">
+### Perfil del Usuario <img src="../images/perfil.png" alt="" width="18" height="20">
 
 #### Creación y Edición de Perfil
 
-1. Abre tu perfil desde el menú inferior. <img src="../images/perfil.png" alt="" width="20" height="20">
-2. Haz clic en "Editar Perfil".
-3. Añade o cambia tu foto, descripción y preferencias musicales.
+1. Abre tu perfil desde el menú inferior. <img src="../images/perfil.png" alt="" width="18" height="20">
+2. Haz clic en "Editar el perfil".
+3. Añade o cambia tu foto, nombre de usuario, nombre y apellidos...
 
 <img src="../images/actualizar.png" alt="" width="1000" height="340">
-
-#### Configuración de Preferencias
-
-Ajusta tus preferencias de privacidad, notificaciones y otras configuraciones personales desde la sección de ajustes.
-
-![Configuración de Preferencias](images/configuracion-preferencias.png)
 
 ### Buscar y Conectar con Usuarios
 
 #### Buscar Usuarios
 
-Utiliza la barra de búsqueda para encontrar otros usuarios con intereses similares.
+Utiliza la lupa de búsqueda situada en la parte superior derecha que hay en inicio <img src="../images/inicio.png" alt="" width="20" height="17"> para encontrar otros usuarios con intereses similares o cualquier usuario que quieras buscar registrado en Spottunes. Donde puedes ver los eventos que ha dado like, posts, y toda la información de perfil como avatar, numero de seguidores y seguidos...
 
-![Buscar Usuarios](images/buscar-usuarios.png)
+#########FOTO INICIO PARA QUE SE VEA LA LUPA
 
-#### Enviar y Recibir Solicitudes de Amistad
+#### Seguir a usuarios
 
-Envía solicitudes de amistad y acepta o rechaza solicitudes recibidas desde la sección de notificaciones.
+Para seguir a usuarios puedes usar la lupa de busqueda en la parte superior derecha que hay en inicio <img src="../images/inicio.png" alt="" width="20" height="17">. Y cuando realices la busqueda aparecerá el perfil y al lado un boton de seguir. 
 
-![Solicitudes de Amistad](images/solicitudes-amistad.png)
+#########FOTO DEL BUSCADOR DE USUARIOS
+
+Si quieres ver el perfil antes de seguir clica en el perfil y en la parte superior derecha esta también el botón de seguir
+
+#########Foto de dentro de un perfil
 
 ### Eventos y Conciertos
 
 #### Buscar Eventos
 
-Busca conciertos y eventos musicales según tus intereses.
+Busca conciertos y eventos musicales según tus intereses, puedes buscarlo en inicio <img src="../images/inicio.png" alt="" width="20" height="17">, en la barra de buscador.
 
 ![Buscar Eventos](images/buscar-eventos.png)
+#### Filtrar Eventos
 
-#### Unirse a Eventos
+En el apartado de buscar eventos cabe decir que tenemos filtros por geolocalización. Puedes marcar una zona en el mapa y siempre te aparecerán los eventos en el radio que pongas. Por ejemplo, si pones un radio de 50 km, el sistema tomará el centro donde has clicado y te mostrará todos los eventos alrededor hasta 50 km, que es lo que has limitado.
+
+
+#### Unirse/Seguir a Eventos
 
 Únete a un evento, confirma tu asistencia y ve quién más va a asistir.
 
@@ -89,13 +91,6 @@ Busca conciertos y eventos musicales según tus intereses.
 ## Solución de Problemas Comunes
 
 ### Preguntas Frecuentes
-
-#### ¿Cómo recupero mi contraseña?
-
-1. En la pantalla de inicio de sesión, haz clic en "¿Olvidaste tu contraseña?".
-2. Introduce tu correo electrónico y sigue las instrucciones enviadas a tu correo.
-
-![Recuperar Contraseña](images/recuperar-contrasena.png)
 
 #### ¿Por qué no puedo ver ciertos eventos?
 
