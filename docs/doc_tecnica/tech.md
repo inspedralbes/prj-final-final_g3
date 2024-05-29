@@ -72,19 +72,19 @@ Quant inicia sessió o es registra fa aquest emit per vincular l'id d'usuari amb
 
 ## `socket.emit("joinChat")`
 
-### `socket.emit("message")`
+## `socket.emit("message")`
 
 Rep el chatId i l'uneix a una room que el nom es aquest chatId per enviar missatges a l'altre persona
 
-## Servidor
+## `socket.emit("message")`
 
-### `socket.emit("message")`
+### Servidor
 
 Rep el missatge i l'id del contacte. El primer que fa segons com estigui la room o l'usuari connecta a l'aplicació li posa un estat o un altre al missatge que hem rebut. Després inserta el missatge a la base de dades, una vegada insertat si es el primer missatge del chat l'uneix a la room del chat.
 
-## Client
+### Client
 
-### `socket.emit("notification")`
+## `socket.emit("notification")`
 
 Envia el missatge per poder mostrarlo per pantalla en el chat. En cas de no ser 2 persones a la room envia el següent
 
