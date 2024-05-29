@@ -6,18 +6,17 @@
             </button>
             <div class="h-[12vh] flex justify-center items-center">
 
-                <NuxtLink :to="`/perfil/${contact.nickname}`">
+                <button @click="goToProfile">
                     <article class="flex flex-col justify-center items-center gap-2">
                         <img class="size-16 rounded-full object-cover" :src="getImage()">
                         <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
                     </article>
-                </NuxtLink>
+                </button>
             </div>
         </header>
 
-        <article ref="messageContainer" class="h-screen flex flex-col items-center pt-10 overflow-y"
-            @scroll="handleScroll">
-            <div class="w-2/3 h-full my-16 flex flex-col items-center gap-2">
+        <article ref="messageContainer" class="flex flex-col items-center pt-10 mx-4 " @scroll="handleScroll">
+            <div class="w-full flex flex-col items-center gap-2 overflow-y-auto mt-24" style="max-height: 70vh;">
                 <div v-for="msg in messages" :key="msg.id"
                     :class="{ 'max-w-[50%] self-end py-2 px-4 rounded-l-xl rounded-tr-xl bg-primary': msg.user_id === store.getId(), 'max-w-[50%] self-start py-2 px-4 rounded-r-xl rounded-t-xl bg-[#828282]': msg.user_id !== store.getId() }">
                     <p>{{ msg.content }}</p>
@@ -127,6 +126,10 @@ export default {
             } else {
                 return `${this.$config.public.IMAGE_URI}/${this.contact.avatar}`;
             }
+        },
+        goToProfile() {
+            this.store.setOtherUserInfo(this.contact)
+            this.$router.push(`/perfil/${this.contact.nickname}`);
         }
 
     },
