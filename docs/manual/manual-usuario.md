@@ -36,21 +36,21 @@ Utiliza el menú inferior para navegar por las diferentes secciones de la aplica
 
 <img src="../images/menu.png" alt="Menú" width="420" height="120">
 
-### Icono +
+### Posts
 
-- El icono **+** en el menú inferior te permite crear un nuevo post. Desde aquí, puedes compartir tus pensamientos, fotos, y experiencias sobre conciertos y eventos musicales con otros usuarios.
+- El icono <img src="../images/+.png" alt="" width="22" height="15"> en el menú inferior te permite crear un nuevo post. Desde aquí, puedes compartir tus pensamientos, fotos, y experiencias sobre conciertos y eventos musicales con otros usuarios.
 
 ![Crear Post](images/crear-post.png) 
 
-### Apartado Xat
+### Xat
 
-- En el apartado **Xat**, puedes buscar a un usuario específico para iniciar un chat. Utiliza el buscador de usuarios para encontrar a la persona con la que deseas comunicarte y comienza la conversación.
+- En el icono <img src="../images/xaticon.png" alt="" width="13" height="20">, puedes buscar a un usuario específico para iniciar un chat. Utiliza el buscador de usuarios para encontrar a la persona con la que deseas comunicarte y comienza la conversación.
 
 ![Buscar en Xat](images/buscar-xat.png) 
 
-### Apartado Perfil
+### Perfil
 
-- En el apartado **Perfil**, puedes ver y editar tu perfil. Aquí puedes actualizar tu información personal, cambiar tu foto de perfil y gestionar tus preferencias.
+- En el icono <img src="../images/perfilicon.png" alt="" width="20" height="20">, puedes ver y editar tu perfil. Aquí puedes actualizar tu información personal, cambiar tu foto de perfil y gestionar tus preferencias.
 
 ![Perfil](images/perfil.png)
 
@@ -65,11 +65,11 @@ La pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" he
 
 ## Funciones Principales 
 
-### Perfil del Usuario <img src="../images/perfil.png" alt="" width="18" height="20">
+### Perfil del Usuario <img src="../images/perfilicon.png" alt="" width="18" height="20">
 
 #### Creación y Edición de Perfil
 
-1. Abre tu perfil desde el menú inferior. <img src="../images/perfil.png" alt="" width="18" height="20">
+1. Abre tu perfil desde el menú inferior. <img src="../images/perfilicon.png" alt="" width="18" height="20">
 2. Haz clic en "Editar el perfil".
 3. Añade o cambia tu foto, nombre de usuario, nombre y apellidos...
 
