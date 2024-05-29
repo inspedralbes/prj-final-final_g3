@@ -8,54 +8,55 @@ use App\Models\followers;
 
 class FollowersController extends Controller
 {
-    /**
-     * @OA\Post(
-     *      path="/api/users/follow/{userId}",
-     *      operationId="followUser",
-     *      tags={"Seguidors"},
-     *      summary="Seguir a un usuario",
-     *      description="Permite a un usuario seguir a otro usuario por su ID.",
-     *      security={{"bearer_token":{}}},
-     *      @OA\Parameter(
-     *          name="userId",
-     *          in="path",
-     *          required=true,
-     *          description="ID del usuario a seguir",
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Ahora estás siguiendo a este usuario",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Ahora estás siguiendo a este usuario")
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Ya estás siguiendo a este usuario",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Ya estás siguiendo a este usuario")
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Usuario no encontrado",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Usuario no encontrado")
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="No autorizado",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
-     *          )
-     *      ),
-     * )
-     */
+/**
+ * @OA\Post(
+ *      path="/api/users/follow/{userId}",
+ *      operationId="followUser",
+ *      tags={"Seguidors"},
+ *      summary="Segueix a un usuari",
+ *      description="Permet a un usuari seguir a un altre usuari per la seva ID.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\Parameter(
+ *          name="userId",
+ *          in="path",
+ *          required=true,
+ *          description="ID de l'usuari a seguir",
+ *          @OA\Schema(
+ *              type="integer",
+ *              example=1
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Ara estàs seguint a aquest usuari",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Ara estàs seguint a aquest usuari")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Ja estàs seguint a aquest usuari",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Ja estàs seguint a aquest usuari")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="Usuari no trobat",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Usuari no trobat")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autoritzat",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat als encapçalaments.")
+ *          )
+ *      ),
+ * )
+ */
+
     public function followUser(Request $request, $userId)
     {
         $followerId = $request->user()->id;
@@ -73,19 +74,19 @@ class FollowersController extends Controller
         return response()->json(['message' => 'You are now following this user.'], 200);
     }
 
-    /**
+/**
  * @OA\Delete(
  *      path="/api/users/unfollow/{userId}",
  *      operationId="unfollowUser",
  *      tags={"Seguidors"},
- *      summary="Dejar de seguir a un usuario",
- *      description="Permite a un usuario dejar de seguir a otro usuario por su ID.",
+ *      summary="Deixar de seguir a un usuari",
+ *      description="Permet a un usuari deixar de seguir a un altre usuari per la seva ID.",
  *      security={{"bearer_token":{}}},
  *      @OA\Parameter(
  *          name="userId",
  *          in="path",
  *          required=true,
- *          description="ID del usuario a dejar de seguir",
+ *          description="ID de l'usuari a deixar de seguir",
  *          @OA\Schema(
  *              type="integer",
  *              example=1
@@ -93,23 +94,23 @@ class FollowersController extends Controller
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Ya no estás siguiendo a este usuario",
+ *          description="Ja no estàs seguint a aquest usuari",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Ya no estás siguiendo a este usuario")
+ *              @OA\Property(property="message", type="string", example="Ja no estàs seguint a aquest usuari")
  *          )
  *      ),
  *      @OA\Response(
  *          response=404,
- *          description="Usuario no encontrado",
+ *          description="Usuari no trobat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Usuario no encontrado")
+ *              @OA\Property(property="message", type="string", example="Usuari no trobat")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat als encapçalaments.")
  *          )
  *      ),
  * )
@@ -125,19 +126,19 @@ class FollowersController extends Controller
         return response()->json(['message' => 'You have stopped following this user.'], 200);
     }
 
-    /**
+/**
  * @OA\Get(
  *      path="/api/users/followers/{userId}",
  *      operationId="getUserFollowers",
  *      tags={"Seguidors"},
- *      summary="Obtener seguidores de un usuario",
- *      description="Obtiene la lista de seguidores de un usuario por su ID, incluyendo la cuenta total de seguidores.",
+ *      summary="Obtenir seguidors d'un usuari",
+ *      description="Obté la llista de seguidors d'un usuari per la seva ID, incloent el compte total de seguidors.",
  *      security={{"bearer_token":{}}},
  *      @OA\Parameter(
  *          name="userId",
  *          in="path",
  *          required=true,
- *          description="ID del usuario cuyos seguidores se desea obtener",
+ *          description="ID de l'usuari del qual es volen obtenir els seguidors",
  *          @OA\Schema(
  *              type="integer",
  *              example=1
@@ -145,7 +146,7 @@ class FollowersController extends Controller
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Lista de seguidores obtenida exitosamente",
+ *          description="Llista de seguidors obtinguda amb èxit",
  *          @OA\JsonContent(
  *              type="object",
  *              @OA\Property(property="count", type="integer", example=10),
@@ -153,24 +154,24 @@ class FollowersController extends Controller
  *                  @OA\Items(
  *                      type="object",
  *                      @OA\Property(property="id", type="integer", example=1),
- *                      @OA\Property(property="nickname", type="string", example="follower123"),
- *                      @OA\Property(property="avatar", type="string", example="images/follower_image.png"),
+ *                      @OA\Property(property="nickname", type="string", example="seguidor123"),
+ *                      @OA\Property(property="avatar", type="string", example="imatges/imatge_seguidor.png"),
  *                  )
  *              )
  *          )
  *      ),
  *      @OA\Response(
  *          response=404,
- *          description="Usuario no encontrado",
+ *          description="Usuari no trobat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Usuario no encontrado")
+ *              @OA\Property(property="message", type="string", example="Usuari no trobat")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat als encapçalaments.")
  *          )
  *      ),
  * )
@@ -183,19 +184,20 @@ class FollowersController extends Controller
 
         return response()->json(['followers' => $followers, 'count' => $count], 200);
     }
+    
 /**
  * @OA\Get(
  *      path="/api/users/followed/{userId}",
  *      operationId="getUserFollowed",
  *      tags={"Seguidors"},
- *      summary="Obtener usuarios seguidos por un usuario",
- *      description="Obtiene la lista de usuarios seguidos por un usuario por su ID, incluyendo la cuenta total de usuarios seguidos.",
+ *      summary="Obtenir usuaris seguits per un usuari",
+ *      description="Obté la llista d'usuaris seguits per un usuari per la seva ID, incloent el compte total d'usuaris seguits.",
  *      security={{"bearer_token":{}}},
  *      @OA\Parameter(
  *          name="userId",
  *          in="path",
  *          required=true,
- *          description="ID del usuario cuyos usuarios seguidos se desea obtener",
+ *          description="ID de l'usuari del qual es volen obtenir els usuaris seguits",
  *          @OA\Schema(
  *              type="integer",
  *              example=1
@@ -203,7 +205,7 @@ class FollowersController extends Controller
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Lista de usuarios seguidos obtenida exitosamente",
+ *          description="Llista d'usuaris seguits obtinguda amb èxit",
  *          @OA\JsonContent(
  *              type="object",
  *              @OA\Property(property="count", type="integer", example=10),
@@ -211,24 +213,24 @@ class FollowersController extends Controller
  *                  @OA\Items(
  *                      type="object",
  *                      @OA\Property(property="id", type="integer", example=2),
- *                      @OA\Property(property="nickname", type="string", example="followedUser123"),
- *                      @OA\Property(property="avatar", type="string", example="images/followed_user_image.png"),
+ *                      @OA\Property(property="nickname", type="string", example="usuariSeguit123"),
+ *                      @OA\Property(property="avatar", type="string", example="imatges/imatge_usuari_seguidor.png"),
  *                  )
  *              )
  *          )
  *      ),
  *      @OA\Response(
  *          response=404,
- *          description="Usuario no encontrado",
+ *          description="Usuari no trobat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Usuario no encontrado")
+ *              @OA\Property(property="message", type="string", example="Usuari no trobat")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat als encapçalaments.")
  *          )
  *      ),
  * )
@@ -247,12 +249,12 @@ class FollowersController extends Controller
  *      path="/api/users/followers",
  *      operationId="getFollowers",
  *      tags={"Seguidors"},
- *      summary="Obtener seguidores del usuario autenticado",
- *      description="Obtiene la lista de IDs de los usuarios que siguen al usuario autenticado.",
+ *      summary="Obtenir seguidors de l'usuari autenticat",
+ *      description="Obté la llista d'IDs dels usuaris que segueixen a l'usuari autenticat.",
  *      security={{"bearer_token":{}}},
  *      @OA\Response(
  *          response=200,
- *          description="Lista de seguidores obtenida exitosamente",
+ *          description="Llista de seguidors obtinguda amb èxit",
  *          @OA\JsonContent(
  *              type="array",
  *              @OA\Items(
@@ -263,9 +265,9 @@ class FollowersController extends Controller
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat als encapçalaments.")
  *          )
  *      ),
  * )
