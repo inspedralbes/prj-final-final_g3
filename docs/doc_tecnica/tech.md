@@ -297,7 +297,7 @@ El cercador d'esdeveniments per geolocalització. Amb aquesta funcionalitat, els
 
 ## Documentació de backend
 
-La documentació del backend l'hem desenvolupat amb Swagger, l'enllaç es troba aquí:
+La documentació del backend l'hem desenvolupat amb Swagger, els enllaços dels Swagger de Laravel i el de node es troben al següent enllaç:
 [http://spottunes.documentacio.daw.inspedralbes.cat/](http://spottunes.documentacio.daw.inspedralbes.cat/#)
 
 ## Proxy invers
