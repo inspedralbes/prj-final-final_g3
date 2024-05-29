@@ -594,7 +594,7 @@ El desplegament de l'aplicació Spottunes s'ha realitzat utilitzant Oracle Cloud
 - **Cost-eficiència**: OCI proporciona opcions de preus competitius que s'ajusten al pressupost del projecte.
 - **Integració**: OCI permet la integració amb altres serveis i eines que faciliten el desplegament i la gestió de l'aplicació.
 
-#### Configuració del Docker compose
+#### Configuració del `docker-compose.yml`
 
 Aquí tens un exemple de com podria ser el fitxer `docker-compose.yml`. Els espais en blanc s'omplen mitjançant `github actions`.
 
