@@ -28,9 +28,6 @@
         <div class="fixed bottom-0 w-full">
             <footer class="h-[10vh] bg-[#4B4B4B] flex justify-center items-center gap-2 px-8 w-full">
                 <div class="w-full h-8 bg-[#646464] rounded-full flex items-center">
-                    <button class="rounded-full bg-[#7C7C7C] p-[6px]">
-                        <Plus class="size-5 border-white border-2 rounded-full" />
-                    </button>
                     <input type="text" class="w-full h-full bg-transparent pl-3 rounded-full text-sm outline-none"
                         placeholder="Escriu el teu missatge..." @keyup.enter="sendMessage" v-model="message">
                 </div>
