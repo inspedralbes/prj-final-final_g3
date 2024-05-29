@@ -134,11 +134,13 @@ async function getEventsByName(data) {
 }
 
 async function getEventsByIds(ids) {
+  console.log("Ids:", ids);
   try {
     // Realiza la solicitud GET a la API con la cadena de IDs
     const response = await axios.post(`${url_api}/events/byId`, {
       ids: ids,
     });
+    console.log("Response by id:", response.data.events);
     return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -159,13 +161,13 @@ async function getLikeEvents(id) {
       `${url_api_mongo}/likeEvents?userId=${user}`
     );
 
+    const eventID = response.data.map((like) => like.eventId);
+
     if (id) {
-      const events = await getEventsByIds(
-        response.data.map((like) => like.eventId)
-      );
+      const events = await getEventsByIds(eventID);
       return events;
     } else {
-      return response.data.map((like) => like.eventId);
+      return eventID;
     }
   } catch (error) {
     console.error("Error fetching data:", error);
