@@ -7,25 +7,27 @@
             </NuxtLink>
             <UTabs v-model="type" :items="[{ label: 'Seguidors' }, { label: 'Seguits' }]" class="mx-2 w-2/3"></UTabs>
         </div>
-        <div v-if="checkUser">
-            <div v-if="type === 0 && followers.length != 0" v-for="follower in followers"
+        <div>
+            <div v-if="type === 0 && followers.length != 0" v-for="follower in doThis.followers"
                 class="w-full flex flex-col justify-center items-center">
                 <CardUser class="w-2/3" :user="follower.follower" />
                 <hr>
             </div>
             <div v-else-if="type === 0 && followers.length === 0" class="flex justify-center items-center">
-                <h2 class="font-bold">No tens seguidors</h2>
+                <h2 v-if="checkUser" class="font-bold">No tens seguidors</h2>
+                <h2 v-else class="font-bold">No té seguidors</h2>
             </div>
-            <div v-else-if="type === 1 && following.length != 0" v-for="followed in following"
+            <div v-else-if="type === 1 && following.length != 0" v-for="followed in doThis.following"
                 class="w-full flex flex-col justify-center items-center">
                 <CardUser class="w-2/3" :user="followed.followed" />
                 <hr>
             </div>
             <div v-else-if="type === 1 && following.length === 0" class="flex justify-center items-center">
-                <h2 class="font-bold">No segueixes a ningú</h2>
+                <h2 v-if="checkUser" class="font-bold">No segueixes a ningú</h2>
+                <h2 v-else class="font-bold">No segueix a ningú</h2>
             </div>
         </div>
-        <div v-else>
+        <!-- <div v-else>
             <div v-if="type === 0 && otherFollowers.length != 0" v-for="follower in otherFollowers"
                 class="w-full flex flex-col justify-center items-center">
                 <CardUser class="w-2/3" :user="follower.follower" />
@@ -42,7 +44,7 @@
             <div v-else-if="type === 1 && otherFollowing.length === 0" class="flex justify-center items-center">
                 <h2 class="font-bold">No segueix a ningú</h2>
             </div>
-        </div>
+        </div> -->
     </div>
     <Menu />
 </template>
@@ -61,7 +63,11 @@ export default {
             otherFollowing: computed(() => this.store.otherUserInfo.followingUsers.followed) || [],
             otherFollowers: computed(() => this.store.otherUserInfo.followersUsers.followers) || [],
             type: this.$route.params.type === 'followers' ? 0 : 1,
-            user: this.$route.params.username
+            user: this.$route.params.username,
+            doThis: {
+                followers: null,
+                following: null,
+            }
         }
     },
     mounted() {
@@ -73,39 +79,35 @@ export default {
             if (!this.followers) this.getOtherFollowers();
             if (!this.following) this.getOtherFollowing();
         }
+        console.log(this.doThis)
+
     },
     methods: {
         async getFollowers() {
+            console.log('getFollowers')
             await userManager.getFollowers();
+            this.doThis.followers = this.followers;
         },
         async getFollowing() {
+            console.log('getFollowing')
             await userManager.getFollowed();
+            this.doThis.following = this.following;
         },
         async getOtherFollowers() {
+            console.log('getOtherFollowers')
             await userManager.getFollowers(this.store.otherUserInfo.id);
+            this.doThis.followers = this.otherFollowers;
         },
         async getOtherFollowing() {
+            console.log('getOtherFollowing')
             await userManager.getFollowed(this.store.otherUserInfo.id);
+            this.doThis.following = this.otherFollowing;
         }
     },
     computed: {
         checkUser() {
             return this.store.userInfo.username === this.user
         },
-        // followers() {
-        //     if (this.checkUser) {
-        //         return this.store.userInfo.followersUsers.followers
-        //     } else {
-        //         return this.store.otherUserInfo.followersUsers.followers
-        //     }
-        // },
-        // following() {
-        //     if (this.checkUser) {
-        //         return this.store.userInfo.followingUsers.followed
-        //     } else {
-        //         return this.store.otherUserInfo.followingUsers.followed
-        //     }
-        // }
     }
 }
 </script>
