@@ -72,7 +72,7 @@ Quant inicia sessió o es registra fa aquest emit per vincular l'id d'usuari amb
 
 ## `socket.emit("joinChat")`
 
-### `socket.emit("message")`
+## `socket.emit("message")`
 
 Rep el chatId i l'uneix a una room que el nom es aquest chatId per enviar missatges a l'altre persona
 
