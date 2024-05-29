@@ -53,6 +53,8 @@ export default {
                     this.store.setLoggedIn(true);
 
                     this.isLoading = false;
+                    socket.emit('logged', this.store.getId());
+
                     this.$router.push('/events');
                 }
             } catch (error) {
