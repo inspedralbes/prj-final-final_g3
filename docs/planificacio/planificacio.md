@@ -1,241 +1,236 @@
-# Planificacion del proyecto
+# Planificació del projecte
 ## SPRINT 1
 Del 29/1/2024 al 02/02/2024
 
-### Planificación y Configuración Inicial
-- Refinamos la idea del proyecto. 
-- Creación del repositorio en GitHub. 
-- Configuración inicial en Taiga con la creación del backlog.
+### Planificació i Configuració Inicial
+- Refineu la idea del projecte.
+- Creació del repositori a GitHub.
+- Configuració inicial a Taiga amb la creació del backlog.
+- Vinculem totes les parts dels Dockers entre si per assegurar un entorn de producció funcional tant en Linux com en Windows.
+- Definim l'estructura de la taula d'usuaris de la base de dades.
 
-- Vinculamos todas las partes de los Dockers entre sí para asegurar un entorno de producción funcional tanto en Linux como en Windows.
-- Definimos la estructura de la tabla de usuarios de la base de datos.
+### Disseny i Desenvolupament Front-End
+- Iniciem el disseny mòbil en Figma per a la landing page i la pantalla de propers esdeveniments.
+- Continuem amb el disseny mòbil en Figma per al menú de navegació i la pantalla de xat.
+- Dissenyem el login i el registre.
+- Introduïm l'ús de Tailwind CSS per al disseny de la pàgina d'esdeveniments.
+- Comencem amb tutorials de React i el desenvolupament de la interfície d'usuari.
 
-### Diseño y Desarrollo Front-End
-- Iniciamos el diseño móvil en Figma para la landing page y la pantalla de próximos eventos.
-- Continuamos con el diseño móvil en Figma para el menú de navegación y la pantalla de chat.
-- Diseñamos el login y el registro.
-- Introdujimos el uso de Tailwind CSS para el diseño de la página de eventos.
-- Comenzamos con tutoriales de React y el desarrollo de la interfaz de usuario.
-
-### Conexión con APIs y Desarrollo Back-End
-- Implementamos la conexión con Spotify utilizando Node.js y Laravel.
-- Solucionamos problemas con Docker para asegurar que la integración funcionara correctamente.
-- Aseguramos que la conexión con la API de Spotify estuviera 100% operativa.
+### Connexió amb APIs i Desenvolupament Back-End
+- Implementem la connexió amb Spotify utilitzant Node.js i Laravel.
+- Solucionem problemes amb Docker per assegurar que la integració funcionés correctament.
+- Assegurem que la connexió amb l'API de Spotify estigués 100% operativa.
 
 
 ## SPRINT 2
-
 Del 05/02/2024 al 09/02/2024
 
 ### Web Scraping
-Inicialmente, implementamos técnicas de web scraping utilizando JavaScript y Python, enfocándonos especialmente en la plataforma Viagogo. Sin embargo, decidimos descartar el web scraping en favor de utilizar APIs oficiales para obtener los datos necesarios.
-
-### Autenticación y API
-Registramos la API utilizando email y contraseña.
-Implementamos y completamos la autenticación con Google para asegurar un correcto almacenamiento de los datos.
-Comenzamos la documentación de los endpoints usando Swagger y OpenAPI para asegurar una clara especificación de nuestras APIs.
-
-### Desarrollo Front-End
-Creamos la landing page para móvil utilizando React.
-Diseñamos en Figma las pantallas móviles para perfil, login y registro.
-Desarrollamos la pantalla de eventos y el menú de navegación para móvil con React.
-Mejoramos el menú y diseñamos detalladamente un evento específico en Figma.
+Inicialment, implementem tècniques de web scraping utilitzant JavaScript i Python, enfocant-nos especialment en la plataforma Viagogo. Tanmateix, decidim descartar el web scraping a favor d'utilitzar APIs oficials per obtenir les dades necessàries.
 
 
-### Interacción con APIs
-Estudiamos y utilizamos la API de Ticketmaster para obtener datos de eventos.
-Implementamos fetch a la API de Ticketmaster y guardamos los datos en la base de datos.
-Usamos Axios en React para realizar fetch a un JSON estático y a la API de la plataforma de tickets de conciertos, asegurando la correcta integración de datos en nuestra aplicación.
+### Autenticació i API
+- Registrem l'API utilitzant email i contrasenya.
+- Implementem i completem l'autenticació amb Google per assegurar un correcte emmagatzematge de les dades.
+- Comencem la documentació dels endpoints utilitzant Swagger i OpenAPI per assegurar una clara especificació de les nostres APIs.
+
+### Desenvolupament Front-End
+- Creem la landing page per a mòbil utilitzant React.
+- Dissenyem en Figma les pantalles mòbils per a perfil, login i registre.
+- Desenvolupem la pantalla d'esdeveniments i el menú de navegació per a mòbil amb React.
+- Millorem el menú i dissenyem detalladament un esdeveniment específic en Figma.
 
 
-### Back-End y Conexión Front-Back
-Cambiamos el fetch de Laravel a Node.js para mejorar la integración y eficiencia del proyecto.
-Añadimos filtros en el fetch para evitar la repetición de eventos y optimizar la gestión de datos.
+### Interacció amb APIs
+- Estudiem i utilitzem l'API de Ticketmaster per obtenir dades d'esdeveniments.
+- Implementem fetch a l'API de Ticketmaster i guardem les dades a la base de dades.
+- Utilitzem Axios en React per realitzar fetch a un JSON estàtic i a l'API de la plataforma de tiquets de concerts, assegurant la correcta integració de dades a la nostra aplicació.
 
 
-### Problemas y Soluciones
-No pudimos subir la aplicación a producción debido a la falta de espacio en los laboratorios. Estamos preparando una máquina Oracle para solucionar este problema.
+### Back-End i Connexió Front-Back
+- Canviem el fetch de Laravel a Node.js per millorar la integració i eficiència del projecte.
+- Afegim filtres en el fetch per evitar la repetició d'esdeveniments i optimitzar la gestió de dades.
 
 
-**Al finalizar el SPRINT, logramos tener
-una base sólida para la aplicación, con varios componentes esenciales desarrollados y la integración de datos mediante APIs avanzando conforme a lo planificado.**
+### Problemes i Solucions
+No vam poder pujar l'aplicació a producció a causa de la falta d'espai als laboratoris. Estem preparant una màquina Oracle per solucionar aquest problema.
+
+
+**En finalitzar el SPRINT, vam aconseguir tenir una base sòlida per a l'aplicació, amb diversos components essencials desenvolupats i la integració de dades mitjançant APIs avançant segons el planificat.**
 
 
 ## SPRINT 3
 Del 12/02/2024 al 16/02/2024
 
-### Objetivo del Sprint
-Levantar la máquina Oracle y configurar el login/register normal y con Spotify.
+### Objectiu del Sprint
+Aixecar la màquina Oracle i configurar el login/register normal i amb Spotify.
 
-### Desarrollo Back-End
-- Implementamos el login y manejo de tokens en el back-end con Spotify y Google.
-- Configuramos el scheduling en Node.js para hacer fetch a la API de Ticketmaster a las 00:00 y 12:00, y eliminar eventos pasados cada hora.
-- Desplegamos la aplicación en Oracle Cloud utilizando Docker.
+### Desenvolupament Back-End
+- Implementem el login i el maneig de tokens al back-end amb Spotify i Google.
+- Configurem el scheduling en Node.js per fer fetch a l'API de Ticketmaster a les 00:00 i 12:00, i eliminar esdeveniments passats cada hora.
+- Despleguem l'aplicació en Oracle Cloud utilitzant Docker.
 
-### Desarrollo Front-End
-- Desarrollamos el login y manejo de tokens en el front-end con Spotify y Google.
-- Agregamos el manejo de datos de usuario y tokens en el front-end.
-- Mejoramos la accesibilidad del menú, añadimos contextos de React para variables globales y controlamos el estado de usuario logueado.
+### Desenvolupament Front-End
+- Desenvolupem el login i el maneig de tokens al front-end amb Spotify i Google.
+- Afegim el maneig de dades d'usuari i tokens al front-end.
+- Millorem l'accessibilitat del menú, afegim contextos de React per a variables globals i controlem l'estat d'usuari loguejat.
 
-### Mejoras y Corrección de Errores
+### Millores i Correcció d'Errors
+#### Login y Registre:
+- Afegim un loader quan l'usuari fa clic en login.
+- Registrem la fetch API de Spotify, maneguem les peticions asíncrones i resolem errors de fetch en components React.
+- Solucionem problemes de classes en SVG diferents i variables globals per millorar la navegació autenticada.
 
-#### Login y Registro:
-- Añadimos un loader cuando el usuario hace clic en login.
-- Registramos la fetch API de Spotify, manejamos las peticiones asíncronas y resolvimos errores de fetch en componentes React.
-- Solucionamos problemas de clases en SVG distintas y variables globales para mejorar la navegación autenticada.
+#### Perfil i Esdeveniments:
+- Millorem la pantalla de perfil i completem el disseny de la pantalla d'esdeveniment individual.
+- Ajustem l'scroll que afectava el menú i millorem l'accessibilitat general del menú.
 
-#### Perfil y Eventos:
-- Mejoramos la pantalla de perfil y completamos el diseño de la pantalla de evento individual.
-- Ajustamos el scroll que afectaba el menú y mejoramos la accesibilidad general del menú.
-
-#### Integración y Despliegue:
-- Ayudamos a resolver problemas con las rutas para poner en producción con Pedro.
-- Solucionamos bugs relacionados con fetch y la gestión de datos en el contexto de React.
+#### Integració i Desplegament:
+- Ajudem a resoldre problemes amb les rutes per posar en producció amb Pedro.
+- Solucionem bugs relacionats amb fetch i la gestió de dades en el context de React.
 
 
-### Revisión del Sprint
-Implementamos exitosamente el login/register con Spotify y Google, mejoramos la accesibilidad y usabilidad del menú y las pantallas de perfil y eventos, y desplegamos la aplicación en Oracle Cloud. Además, resolvimos varios errores y optimizamos la funcionalidad del fetch de datos.
+### Revisió del Sprint
+Implementem amb èxit el login/register amb Spotify i Google, millorem l'accessibilitat i usabilitat del menú i les pantalles de perfil i esdeveniments, i despleguem l'aplicació en Oracle Cloud. A més, resolvem diversos errors i optimitzem la funcionalitat del fetch de dades.
 
-**Al finalizar el SPRINT, logramos establecer una robusta autenticación con Spotify y Google, mejorar la experiencia de usuario en el front-end, y realizar el despliegue en un entorno de producción sólido, aunque enfrentamos y resolvimos diversos problemas técnicos.**
+**En finalitzar el SPRINT, aconseguim establir una robusta autenticació amb Spotify i Google, millorar l'experiència d'usuari al front-end, i realitzar el desplegament en un entorn de producció sòlid, tot i afrontar i resoldre diversos problemes tècnics.**
 
 ## SPRINT 4
 Del 17/02/2024 al 23/02/2024
 
-### Desarrollo Back-End
-- Corrección de errores y problemas con los archivos .env.
-- Implementación de la API para la gestión de seguidores.
-- Modificación del scheduling para almacenar eventos en lugar de borrarlos.
-- Creación de las API para eventos, likes y comentarios.
-- Implementación de la API para la publicación de posts con imágenes.
-- Recuperación de la clave privada para el servidor.
-- Finalización de la base de datos MongoDB e inicio del almacenamiento de imágenes.
-- Correcciones en las actions y despliegue de contenedores Docker para MongoDB y MongoDB Express.
-- Implementación de funcionalidades de likes y dislikes en eventos para usuarios.
+### Desenvolupament Back-End
+Correcció d'errors i problemes amb els fitxers .env.
+Implementació de l'API per a la gestió de seguidors.
+Modificació del scheduling per emmagatzemar esdeveniments en lloc d'eliminar-los.
+Creació de les API per a esdeveniments, likes i comentaris.
+Implementació de l'API per a la publicació de posts amb imatges.
+Recuperació de la clau privada per al servidor.
+Finalització de la base de dades MongoDB i inici de l'emmagatzematge d'imatges.
+Correccions en les actions i desplegament de contenidors Docker per a MongoDB i MongoDB Express.
+Implementació de funcionalitats de likes i dislikes en esdeveniments per a usuaris.
 
-### Desarrollo Front-End
-- Finalización del diseño de la pantalla de chat individual en Figma.
-- Corrección del componente del logo para que enlace a la ruta /events.
-- Actualización de la pantalla de perfil de usuario.
-- Implementación de funcionalidades para mostrar seguidores y seguidos en el perfil y en la pantalla de evento individual.
-- Finalización del diseño de las pantallas de "amigos" y "subir post" en Figma.
+### Desenvolupament Front-End
+Finalització del disseny de la pantalla de xat individual a Figma.
+Correcció del component del logo per enllaçar a la ruta /events.
+Actualització de la pantalla de perfil d'usuari.
+Implementació de funcionalitats per mostrar seguidors i seguits al perfil i a la pantalla d'esdeveniment individual.
+Finalització del disseny de les pantalles de "amics" i "pujar post" a Figma.
 
-### Mejoras y Corrección de Errores
-- Solución de errores relacionados con Google login.
-- Corrección de problemas con la landing page.
-- Corrección de bugs en solicitudes GET y DELETE con MongoDB.
-- Realización de pruebas para asegurar el correcto funcionamiento de la aplicación.
+### Millores i Correcció d'Errors
+Solució d'errors relacionats amb Google login.
+Correcció de problemes amb la landing page.
+Correcció de bugs en sol·licituds GET i DELETE amb MongoDB.
+Realització de proves per assegurar el correcte funcionament de l'aplicació.
 
 
-### Revisión del Sprint
-En el Sprint 4 se avanzó considerablemente en el desarrollo del proyecto. Se completaron varias funcionalidades importantes, como la gestión de seguidores, la publicación de posts con imágenes, la implementación de likes y dislikes en eventos, y el diseño de nuevas pantallas. También se solucionaron errores y se realizaron mejoras en el rendimiento de la aplicación.
+### Revisió del Sprint
+En el Sprint 4 es va avançar considerablement en el desenvolupament del projecte. Es van completar diverses funcionalitats importants, com la gestió de seguidors, la publicació de posts amb imatges, la implementació de likes i dislikes en esdeveniments, i el disseny de noves pantalles. També es van solucionar errors i es van realitzar millores en el rendiment de l'aplicació.
 
-**Al finalizar el Sprint, se logró un progreso significativo en la implementación de las funcionalidades principales del proyecto, aunque aún quedan algunas tareas pendientes para completar el desarrollo.**
+**En finalitzar el Sprint, es va aconseguir un progrés significatiu en la implementació de les funcionalitats principals del projecte, tot i que encara queden algunes tasques pendents per completar el desenvolupament.**
 
 ## SPRINT 5
 Del 29/04/2024 al 10/05/2024
 
-### Desarrollo Back-End
-- Actualización del componente "menu" para que la ruta siempre comience por /events.
-- Adición del componente "menu" en la pantalla de evento individual.
-- Ampliación de la información en la pantalla de evento individual.
-- Adición de un encabezado en la pantalla de evento individual para seguir y salir del evento.
-- Guardado de imágenes comprimidas en Node.
-- Solución de problemas de login con JSON en contexto.
-- Integración de información de la cuenta de Spotify.
-- Implementación de un toggle para el botón "seguir" en la pantalla de evento individual.
-- Corrección de errores de almacenamiento local.
-- Inicio de la migración de React a Nuxt.
-- Corrección de datos de login.
-- Solución de problemas de "like" a eventos con usuarios autentificados que se comunican con MongoDB.
-- Implementación del proxy inverso.
-- Creación de un servidor de preproducción para realizar pruebas del proxy inverso.
-- Implementación de la función para publicar un post.
-- Implementación de la función para mostrar los posts en el perfil.
-- Implementación de un menú desplegable de opciones de post.
-- Inicio de la implementación del buscador de usuarios para iniciar un chat.
+### Desenvolupament Back-End
+- Actualització del component "menú" perquè la ruta sempre comenci per /events.
+- Addició del component "menú" a la pantalla d'esdeveniment individual.
+- Ampliació de la informació a la pantalla d'esdeveniment individual.
+- Addició d'un encapçalament a la pantalla d'esdeveniment individual per seguir i sortir de l'esdeveniment.
+- Emmagatzematge d'imatges comprimides a Node.
+- Solució de problemes de login amb JSON en context.
+- Integració d'informació del compte de Spotify.
+- Implementació d'un commutador per al botó "seguir" a la pantalla d'esdeveniment individual.
+- Correcció d'errors d'emmagatzematge local.
+- Inici de la migració de React a Nuxt.
+- Correcció de dades de login.
+- Solució de problemes de "like" a esdeveniments amb usuaris autenticats que es comuniquen amb MongoDB.
+- Implementació del proxy invers.
+- Creació d'un servidor de preproducció per realitzar proves del proxy invers.
+- Implementació de la funció per publicar un post.
+- Implementació de la funció per mostrar els posts al perfil.
+- Implementació d'un menú desplegable d'opcions de post.
+- Inici de la implementació del cercador d'usuaris per iniciar un xat.
 
-### Desarrollo Front-End
-- Actualización del componente "menu" para que la ruta siempre comience por /events.
-- Adición del componente "menu" en la pantalla de evento individual.
-- Ampliación de la información en la pantalla de evento individual.
-- Adición de un encabezado en la pantalla de evento individual para seguir y salir del evento.
-- Implementación de un toggle para el botón "seguir" en la pantalla de evento individual.
-- Inicio de la migración de React a Nuxt.
-- Solución de problemas de "like" a eventos con usuarios autentificados que se comunican con MongoDB.
-- Implementación de la función para publicar un post.
-- Implementación de la función para mostrar los posts en el perfil.
-- Implementación de un menú desplegable de opciones de post.
-- Inicio de la implementación del buscador de usuarios para iniciar un chat.
+### Desenvolupament Front-End
+- Actualització del component "menu" perquè la ruta sempre comenci per /events.
+- Addició del component "menu" a la pantalla d'esdeveniment individual.
+- Ampliació de la informació a la pantalla d'esdeveniment individual.
+- Addició d'un encapçalament a la pantalla d'esdeveniment individual per seguir i sortir de l'esdeveniment.
+- Implementació d'un commutador per al botó "seguir" a la pantalla d'esdeveniment individual.
+- Inici de la migració de React a Nuxt.
+- Solució de problemes de "like" a esdeveniments amb usuaris autenticats que es comuniquen amb MongoDB.
+- Implementació de la funció per publicar un post.
+- Implementació de la funció per mostrar els posts al perfil.
+- Implementació d'un menú desplegable d'opcions de post.
+- Inici de la implementació del cercador d'usuaris per iniciar un xat.
 
-### Mejoras y Corrección de Errores
-- Solución de errores de login.
-- Corrección de problemas con la landing page.
-- Corrección de bugs en solicitudes GET y DELETE con MongoDB.
-- Realización de pruebas para asegurar el correcto funcionamiento de la aplicación.
-- Arreglo del docker-compose.
-- Adaptación de todos los iconos.
-- Corrección de errores de color de fondo.
-- Modificación del menú para mejorar la accesibilidad.
-- Programación de la pantalla de chat individual.
-- Programación de la pantalla de todos los chats.
-- Pensamiento en la estructura del chat y la tecnología a utilizar.
-- Ayuda a Raúl con actions y proxy inverso.
-- Comienzo de la implementación del chat.
-- Creación del servidor de preproducción.
-- Diseño de la pantalla de posts.
+### Millores i Correcció d'Errors
+- Solució d'errors de login.
+- Correcció de problemes amb la landing page.
+- Correcció de bugs en sol·licituds GET i DELETE amb MongoDB.
+- Realització de proves per assegurar el correcte funcionament de l'aplicació.
+- Arranjament del docker-compose.
+- Adaptació de tots els icones.
+- Correcció d'errors de color de fons.
+- Modificació del menú per millorar l'accessibilitat.
+- Programació de la pantalla de xat individual.
+- Programació de la pantalla de tots els xats.
+- Pensament en l'estructura del xat i la tecnologia a utilitzar.
+- Ajuda a Raúl amb actions i proxy invers.
+- Començament de la implementació del xat.
+- Creació del servidor de preproducció.
+- Disseny de la pantalla de posts.
 
+### Revisió del Sprint
+En el Sprint 5 es va avançar considerablement en el Desenvolupament del projecte. Es van completar diverses funcionalitats importants, com l'actualització del component "menu", l'ampliació de la informació a la pantalla d'esdeveniment individual, la implementació del commutador per al botó "seguir", la migració de React a Nuxt, la implementació de la funció per publicar un post, la implementació de la funció per mostrar els posts al perfil, la implementació d'un menú desplegable d'opcions de post, l'inici de la implementació del cercador d'usuaris per iniciar un xat, la solució d'errors de login, la correcció de problemes amb la landing page, la correcció de bugs en sol·licituds GET i DELETE amb MongoDB, la realització de proves per assegurar el correcte funcionament de l'aplicació, l'arranjament del docker-compose, l'adaptació de tots els icones, la correcció d'errors de color de fons, la modificació del menú per millorar l'accessibilitat, la programació de la pantalla de xat individual, la programació de la pantalla de tots els xats, el pensament en l'estructura del xat i la tecnologia a utilitzar, l'ajuda a Raúl amb actions i proxy invers, el començament de la implementació del xat, la creació del servidor de preproducció i el disseny de la pantalla de posts.
 
-### Revisión del Sprint
-En el Sprint 5 se avanzó considerablemente en el desarrollo del proyecto. Se completaron varias funcionalidades importantes, como la actualización del componente "menu", la ampliación de la información en la pantalla de evento individual, la implementación del toggle para el botón "seguir", la migración de React a Nuxt, la implementación de la función para publicar un post, la implementación de la función para mostrar los posts en el perfil, la implementación de un menú desplegable de opciones de post, el inicio de la implementación del buscador de usuarios para iniciar un chat, la solución de errores de login, la corrección de problemas con la landing page, la corrección de bugs en solicitudes GET y DELETE con MongoDB, la realización de pruebas para asegurar el correcto funcionamiento de la aplicación, el arreglo del docker-compose, la adaptación de todos los iconos, la corrección de errores de color de fondo, la modificación del menú para mejorar la accesibilidad, la programación de la pantalla de chat individual, la programación de la pantalla de todos los chats, el pensamiento en la estructura del chat y la tecnología a utilizar, la ayuda a Raúl con actions y proxy inverso, el comienzo de la implementación del chat, la creación del servidor de preproducción y el diseño de la pantalla de posts.
-
-**Al finalizar el Sprint, se logró un progreso significativo en la implementación de las funcionalidades principales del proyecto, aunque aún quedan algunas tareas pendientes para completar el desarrollo.**
+**Al finalitzar el Sprint, es va aconseguir un progrés significatiu en la implementació de les funcionalitats principals del projecte, encara que encara queden algunes tasques pendents per completar el Desenvolupament.**
 
 
 ## SPRINT 6
 Del 13/05/2024 al 24/05/2024
 
-### Desarrollo Back-End
-- Arreglo de errores en la función para mostrar los posts en el perfil.
-- Implementación de la función para eliminar un post.
-- Corrección de errores en la función para dar y quitar likes a un post.
-- Implementación de la función para mostrar los seguidores de un evento.
-- Corrección de errores en la función para mostrar los seguidos de un usuario.
-- Implementación de la función para seguir a un usuario.
-- Corrección de errores en la función para dejar de seguir a un usuario.
-- Implementación de la función para buscar usuarios.
-- Corrección de errores en la función para mostrar los chats de un usuario.
-- Implementación de la función para enviar mensajes en un chat.
-- Corrección de errores en la función para mostrar los mensajes de un chat.
-- Implementación de la función para eliminar un mensaje de un chat.
-- Implementación de la función para eliminar un chat.
-- Corrección de errores en la función para mostrar las notificaciones de un usuario.
-- Implementación de la función para marcar una notificación como leída.
-- Corrección de errores en la función para eliminar una notificación.
-- Implementación de la función para subir una imagen de perfil.
-- Corrección de errores en la función para mostrar la imagen de perfil de un usuario.
-- Implementación de la función para eliminar la imagen de perfil de un usuario.
+### Desenvolupament Back-End
+- Correcció d'errors en la funció per mostrar els posts en el perfil.
+- Implementació de la funció per eliminar un post.
+- Correcció d'errors en la funció per donar i treure likes a un post.
+- Implementació de la funció per mostrar els seguidors d'un esdeveniment.
+- Correcció d'errors en la funció per mostrar els seguits d'un usuari.
+- Implementació de la funció per seguir a un usuari.
+- Correcció d'errors en la funció per deixar de seguir a un usuari.
+- Implementació de la funció per buscar usuaris.
+- Correcció d'errors en la funció per mostrar els xats d'un usuari.
+- Implementació de la funció per enviar missatges en un xat.
+- Correcció d'errors en la funció per mostrar els missatges d'un xat.
+- Implementació de la funció per eliminar un missatge d'un xat.
+- Implementació de la funció per eliminar un xat.
+- Correcció d'errors en la funció per mostrar les notificacions d'un usuari.
+- Implementació de la funció per marcar una notificació com a llegida.
+- Correcció d'errors en la funció per eliminar una notificació.
+- Implementació de la funció per pujar una imatge de perfil.
+- Correcció d'errors en la funció per mostrar la imatge de perfil d'un usuari.
+- Implementació de la funció per eliminar la imatge de perfil d'un usuari.
 
+### Desenvolupament Front-End
+- Correcció d'errors en la pantalla de perfil.
+- Implementació de la pantalla per eliminar un post.
+- Correcció d'errors en la pantalla per donar i treure likes a un post.
+- Implementació de la pantalla per mostrar els seguidors d'un esdeveniment.
+- Correcció d'errors en la pantalla per mostrar els seguits d'un usuari.
+- Implementació de la pantalla per seguir a un usuari.
+- Correcció d'errors en la pantalla per deixar de seguir a un usuari.
+- Implementació de la pantalla per buscar usuaris.
+- Correcció d'errors en la pantalla per mostrar els xats d'un usuari.
+- Implementació de la pantalla per enviar missatges en un xat.
+- Correcció d'errors en la pantalla per mostrar els missatges d'un xat.
+- Implementació de la pantalla per eliminar un missatge d'un xat.
+- Implementació de la pantalla per eliminar un xat.
+- Correcció d'errors en la pantalla per mostrar les notificacions d'un usuari.
+- Implementació de la pantalla per marcar una notificació com a llegida.
+- Correcció d'errors en la pantalla per eliminar una notificació.
+- Implementació de la pantalla per pujar una imatge de perfil.
+- Correcció d'errors en la pantalla per mostrar la imatge de perfil d'un usuari.
+- Implementació de la pantalla per eliminar la imatge de perfil d'un usuari.
 
-### Desarrollo Front-End
-- Arreglo de errores en la pantalla de perfil.
-- Implementación de la pantalla para eliminar un post.
-- Corrección de errores en la pantalla para dar y quitar likes a un post.
-- Implementación de la pantalla para mostrar los seguidores de un evento.
-- Corrección de errores en la pantalla para mostrar los seguidos de un usuario.
-- Implementación de la pantalla para seguir a un usuario.
-- Corrección de errores en la pantalla para dejar de seguir a un usuario.
-- Implementación de la pantalla para buscar usuarios.
-- Corrección de errores en la pantalla para mostrar los chats de un usuario.
-- Implementación de la pantalla para enviar mensajes en un chat.
-- Corrección de errores en la pantalla para mostrar los mensajes de un chat.
-- Implementación de la pantalla para eliminar un mensaje de un chat.
-- Implementación de la pantalla para eliminar un chat.
-- Corrección de errores en la pantalla para mostrar las notificaciones de un usuario.
-- Implementación de la pantalla para marcar una notificación como leída.
-- Corrección de errores en la pantalla para eliminar una notificación.
-- Implementación de la pantalla para subir una imagen de perfil.
-- Corrección de errores en la pantalla para mostrar la imagen de perfil de un usuario.
-- Implementación de la pantalla para eliminar la imagen de perfil de un usuario.
-
-### Revisión del Sprint
-**Se avanzó considerablemente en la implementación de las funcionalidades del proyecto, enfocándose en la parte de usuarios y sus interacciones.**
+### Revisió del Sprint
+**Es va avançar considerablement en la implementació de les funcionalitats del projecte, enfocant-se en la part d'usuaris i les seves interaccions.**
