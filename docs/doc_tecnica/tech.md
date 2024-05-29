@@ -167,6 +167,8 @@ Aquest component conté un mapa per poder filtrar els concerts per distància de
 <img src="../images/Map.PNG" alt="" >
 
 ## Documentació de frontend
+* Porque de Next a Nuxt
+* Codigo que estemos orgullosos
 
 ## Documentació de backend
 
