@@ -1,7 +1,7 @@
 <template>
     <section class="w-[90%] mx-auto">
         <header class="py-4 flex gap-5 items-center">
-            <NuxtLink to="/home">
+            <NuxtLink to="/perfil">
                 <IconsLeftArrow class="size-6 bg-black rounded-full bg-opacity-60" />
             </NuxtLink>
             <h1 class="text-xl font-bold">Post</h1>
