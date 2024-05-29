@@ -59,6 +59,38 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 
 ## Rutes de l'aplicació
 
+### [/](https://spottunes.daw.inspedralbes.cat/)
+
+### [/events](https://spottunes.daw.inspedralbes.cat/events)
+
+### [/events/[id]](https://spottunes.daw.inspedralbes.cat/events/9)
+
+### [/join](https://spottunes.daw.inspedralbes.cat/join)
+
+### [/auth/callback/google](https://spottunes.daw.inspedralbes.cat/auth/callback/google)
+
+### [/auth/callback/spotify](https://spottunes.daw.inspedralbes.cat/auth/callback/spotify)
+
+### [/login](https://spottunes.daw.inspedralbes.cat/login)
+
+### [/register](https://spottunes.daw.inspedralbes.cat/register)
+
+### [/completar](https://spottunes.daw.inspedralbes.cat/completar)
+
+### [/chats](https://spottunes.daw.inspedralbes.cat/chats)
+
+### [/chat](https://spottunes.daw.inspedralbes.cat/chat)
+
+### [/perfil](https://spottunes.daw.inspedralbes.cat/perfil)
+
+### [/perfil/[username]](https://spottunes.daw.inspedralbes.cat/perfil/APorLa15)
+
+### [/perfil/[username]/[type]](https://spottunes.daw.inspedralbes.cat/perfil/APorLa15/followers)
+
+### [/post](https://spottunes.daw.inspedralbes.cat/post)
+
+### [/post/[id]](https://spottunes.daw.inspedralbes.cat/post/1)
+
 ## Esquema d'esdeveniments (sockets)
 
 Els sockets de la aplicació només els utilitzem per el xat, l'esquema es el següent:
