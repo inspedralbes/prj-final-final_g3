@@ -7,6 +7,7 @@
 <script>
 import authManager from '@/managers/authManager.js';
 import { useStores } from '@/stores/counter.js';
+import { socket } from '@/socket.js';
 
 export default {
     data() {
