@@ -278,6 +278,16 @@ server {
 - `/node/` i `/socket/`: Redirigeixen respectivament als ports 8086 i 8085, utilitzant WebSocket (al port 8086) per a la comunicació en temps real.
 
 ## Disseny
+#### Com podriem cambiar el següent ?
+* Color de fons de la pàgina inicial:
+
+  Al fitxer "nuxt\tailwind.config.js" hauriem de cambiar el color de la variable **background**.
+
+
+* Color de fons dels avatars en el rànquing:
+
+
+
 [Figma de Spottunes](https://www.figma.com/design/S5rihmdHkzsXtgUpUy0o3r/SPOTTUNES?node-id=9-29&t=NTknGM1EJcnqoSj9-1)
 
 ## Desplegament
