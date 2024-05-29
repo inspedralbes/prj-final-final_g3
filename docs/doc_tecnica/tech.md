@@ -60,6 +60,48 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 ## Rutes de l'aplicació
 
 ## Esquema d'esdeveniments (sockets)
+Els sockets de la aplicació només els utilitzem per el xat, l'esquema es el següent:
+<img src="../images/EsquemaSocket.PNG" alt="" >
+
+## `socket.emit("logged")`
+
+### Client
+
+Quant inicia sessió o es registra fa aquest emit per vincular l'id d'usuari amb el del socket y ho guardem a un array per que quedi vinculat
+
+
+## `socket.emit("joinChat")`
+
+### `socket.emit("message")`
+
+Rep el chatId i l'uneix a una room que el nom es aquest chatId per enviar missatges a l'altre persona
+
+## Servidor 
+
+### `socket.emit("message")`
+
+Rep el missatge i l'id del contacte. El primer que fa segons com estigui la room o l'usuari connecta a l'aplicació li posa un estat o un altre al missatge que hem rebut. Després inserta el missatge a la base de dades, una vegada insertat si es el primer missatge del chat l'uneix a la room del chat.
+
+## Client 
+
+### `socket.emit("notification")`
+
+Envia el missatge per poder mostrarlo per pantalla en el chat. En cas de no ser 2 persones a la room envia el següent
+
+### Servidor 
+
+Indica al front que com ho són 2 usuaris a la room pero que si esta connectat li salti una notificació indicant-li que ha rebut un nou missatge
+
+## `socket.emit("leaveChat")`
+
+### Client
+
+Envia el chatId
+
+### Servidor 
+
+Rep el chatId i el desconecta de la room amb aquell chatId
+
 
 ## Esquema de la base de dades
 
