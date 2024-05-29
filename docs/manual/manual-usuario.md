@@ -1,175 +1,189 @@
 ---
-title: Manual de Usuario
+title: Manual de Usuari
 ---
 
-# Manual de Usuario
+# Manual de Usuari
 
-## Introducción
+## Introducció
 
-Bienvenido al manual de usuario de nuestra aplicación de red social para conciertos. Aquí aprenderás a utilizar todas las funciones de nuestra aplicación para que puedas disfrutar al máximo de tu experiencia.
+Benvingut al manual d'usuari de la nostra aplicació de xarxa social per a concerts. Aquí aprendràs a utilitzar totes les funcions de la nostra aplicació perquè puguis gaudir al màxim de la teva experiència.
 
-## Registro de Usuario
+## Registre d'Usuari
 
 ### URL de Spottunes
 
 - [Spottunes](https://spottunes.daw.inspedralbes.cat)
 
-### Proceso de Registro
+### Procés de Registre
 
-1. Entra en [Spottunes](https://spottunes.daw.inspedralbes.cat).
-2. Haz clic en "Iniciar Sessión".
-3. Si ya te hicistes una cuenta introduce tu contraseña y tu correo, independientemente de con que hicistes el Registro. 
-4. Sino tienes cuenta haz clic en Registra't e introduce tus datos, tambien tienes la opción de poder hacerlo con <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:
+1. Entra a [Spottunes](https://spottunes.daw.inspedralbes.cat).
+2. Fes clic a "Iniciar Sessió".
+3. Si ja tens un compte, introdueix la teva contrasenya i el teu correu, independentment de com hagis fet el Registre.
+4. Si no tens compte, fes clic a "Registra't" i introdueix les teves dades, també tens l'opció de poder fer-ho amb <img src="../images/google.png" alt="" width="15" height="15"> o <img src="../images/spotify.webp" alt="" width="15" height="15">:
 
 <img src="../images/registre.png" alt="" width="420" height="580">
 
 
 
-## Navegación por la Interfaz
+## Navegació per la Interfície
 
-### Funcionalidades para Usuarios No Registrados
-Si no estás registrado, la única funcionalidad disponible en toda la aplicación es la búsqueda de eventos. No podrás acceder a otras secciones como la creación de posts, el chat con otros usuarios o la edición de tu perfil.
-Utiliza el menú inferior para navegar por las diferentes secciones de la aplicación, como el perfil, xats, y búsqueda de eventos.
+### Funcionalitats per a Usuaris No Registrats
+Si no estàs registrat, l'única funcionalitat disponible en tota l'aplicació és la cerca d'esdeveniments. No podràs accedir a altres seccions com la creació de posts, el xat amb altres usuaris o l'edició del teu perfil.
+Utilitza el menú inferior per navegar per les diferents seccions de l'aplicació, com el perfil, xats, i cerca d'esdeveniments.
 
-### Menús y Navegación
+### Menús i Navegació
 
 
-<img src="../images/menu.png" alt="Menú" width="420" height="120">
+<img src="../images/footermenu.png" alt="Menú" width="420" height="180">
 
 ### Posts
 
-- El icono <img src="../images/+.png" alt="" width="22" height="15"> en el menú inferior te permite crear un nuevo post. Desde aquí, puedes compartir tus pensamientos, fotos, y experiencias sobre conciertos y eventos musicales con otros usuarios.
-
-![Crear Post](images/crear-post.png) 
+La icona <img src="../images/+.png" alt="" width="22" height="15"> en el menú inferior et permet crear un nou post. Des d'aquí, pots compartir els teus pensaments, fotos, i experiències sobre concerts i esdeveniments musicals amb altres usuaris.
 
 ### Xat
 
-- En el icono <img src="../images/xaticon.png" alt="" width="13" height="20">, puedes buscar a un usuario específico para iniciar un chat. Utiliza el buscador de usuarios para encontrar a la persona con la que deseas comunicarte y comienza la conversación.
+A la icona <img src="../images/xaticon.png" alt="" width="13" height="20">, pots cercar un usuari específic per iniciar un xat amb el botó situat a la part superior dreta <img src="../images/añadirxaticon.png" alt="" width="20" height="17">. Utilitza el cercador d'usuaris per trobar la persona registrada a Spottunes amb la qual desitges comunicar-te i comença la conversa.
 
-![Buscar en Xat](images/buscar-xat.png) 
+<img src="../images/xatcapt.png" alt="Pantalla de Inici" width="410" height="690">
 
 ### Perfil
 
-- En el icono <img src="../images/perfilicon.png" alt="" width="20" height="20">, puedes ver y editar tu perfil. Aquí puedes actualizar tu información personal, cambiar tu foto de perfil y gestionar tus preferencias.
+A la icona <img src="../images/perfilicon.png" alt="" width="20" height="20">, pots veure i editar el teu perfil. Aquí pots actualitzar la teva informació personal, canviar la teva foto de perfil i gestionar les teves preferències.
 
-![Perfil](images/perfil.png)
-
-### Pantalla de Inicio
-
-La pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17"> te muestra una lista de conciertos populares y eventos recomendados. Desde aquí, puedes explorar nuevos eventos y conectarte con otros usuarios.
-
-<img src="../images/pantalla-inicio.png" alt="Pantalla de Inicio" width="420" height="640">
+<img src="../images/perfilview.png" alt="Pantalla de Inici" width="420" height="660">
 
 
+### Pantalla de Inici
+
+La pantalla de inici <img src="../images/inicio.png" alt="Inici" width="20" height="17"> et mostra una llista de concerts populars i esdeveniments recomanats. Des d'aquí, pots explorar nous esdeveniments i connectar amb altres usuaris.
+
+<img src="../images/pantalla-inicio.png" alt="Pantalla de Inici" width="420" height="640">
 
 
-## Funciones Principales 
 
-### Perfil del Usuario <img src="../images/perfilicon.png" alt="" width="18" height="20">
 
-#### Creación y Edición de Perfil
+## Funcions Principals 
 
-1. Abre tu perfil desde el menú inferior. <img src="../images/perfilicon.png" alt="" width="18" height="20">
-2. Haz clic en "Editar el perfil".
-3. Añade o cambia tu foto, nombre de usuario, nombre y apellidos...
+### Perfil de l'Usuari <img src="../images/perfilicon.png" alt="" width="18" height="20">
+
+#### Creació i Edició de Perfil
+
+1. Obre el teu perfil des del menú inferior. <img src="../images/perfilicon.png" alt="" width="18" height="20">
+2. Fes clic a "Editar el perfil".
+3. Afegeix o canvia la teva foto, nom d'usuari, nom i cognoms...
 
 <img src="../images/actualizar.png" alt="" width="1000" height="340">
 
-## Buscar y Conectar con Usuarios
+## Cercar i Connectar amb Usuaris
 
-#### Buscar Usuarios
+#### Cercar Usuaris
 
-1. Utiliza la lupa de búsqueda situada en la parte superior derecha de la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17"> para encontrar otros usuarios con intereses similares o cualquier usuario registrado en Spottunes. 
-2. Desde aquí, puedes ver:
-   - Los eventos a los que han dado like.
-   - Sus posts.
-   - Toda la información de su perfil, como el avatar, número de seguidores y seguidos.
+1. Utilitza la lupa <img src="../images/busquedaicon.png" alt="Inici" width="17" height="17"> de cerca situada a la part superior dreta de la pantalla de inici <img src="../images/inicio.png" alt="Inici" width="20" height="17"> per trobar altres usuaris amb interessos similars o qualsevol usuari registrat a Spottunes. 
+2. Des d'aquí, pots veure:
+   - Els esdeveniments als quals han donat like.
+   - Els seus posts.
+   - Tota la informació del seu perfil, com l'avatar, número de seguidors i seguits.
 
-![Buscar Usuarios](images/buscar-usuarios.png)
+Aquí un exemple:
 
-#### Seguir a Usuarios
+<img src="../images/perfilexample.png" alt="Inici" width="420" height="690">
 
-1. Para seguir a usuarios, usa la lupa de búsqueda en la parte superior derecha de la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17">.
-2. Cuando realices la búsqueda, aparecerá el perfil del usuario junto a un botón de "Seguir".
+#### Seguir Usuaris
 
-![Buscador de Usuarios](images/buscador-usuarios.png)
+1. Per seguir usuaris, utilitza la lupa <img src="../images/busquedaicon.png" alt="Inici" width="17" height="17"> de cerca a la part superior dreta de la pantalla de inici <img src="../images/inicio.png" alt="Inici" width="20" height="17">.
+2. Quan facis la cerca, apareixerà el perfil de l'usuari junt amb un botó de "Seguir".
 
-3. Si deseas ver el perfil antes de seguir a alguien, haz clic en el perfil del usuario.
-4. En la parte superior derecha del perfil, también encontrarás el botón de "Seguir".
+<img src="../images/busquedaperfil.png" alt="Inici" width="420" height="670">
 
-![Perfil de Usuario](images/perfil-usuario.png)
-
-## Eventos y Conciertos
-
-#### Buscar Eventos
-
-1. Busca conciertos y eventos musicales según tus intereses utilizando la barra de búsqueda en la pantalla de inicio <img src="../images/inicio.png" alt="Inicio" width="20" height="17">.
-
-![Buscar Eventos](images/buscar-eventos.png)
-
-#### Filtrar Eventos
-
-1. En el apartado de buscar eventos, puedes utilizar filtros por geolocalización.
-2. Marca una zona en el mapa y siempre te aparecerán los eventos dentro del radio que especifiques.
-3. Por ejemplo, si estableces un radio de 50 km, el sistema tomará el centro donde has clicado y te mostrará todos los eventos alrededor hasta 50 km.
-
-![Filtrar Eventos](images/filtrar-eventos.png)
-
-#### Unirse/Seguir a Eventos
-
-1. Únete o sigue a un evento.
-2. Confirma tu asistencia y ve quién más va a asistir.
-3. Conoce a gente a través de la lista de personas que están siguiendo el evento al que vas a asistir.
-
-![Lista de Personas Inscritas](images/lista-personas-evento.png)
+3. Si desitges veure el perfil abans de seguir algú, fes clic al perfil de l'usuari.
+4. Dins del perfil a la part superior dreta, també trobaràs el botó de "Seguir".
 
 
-## Chats
+## Esdeveniments i Concerts
 
-El chat en nuestra aplicación se encuentra en el apartado **Xat**. Aquí, puedes comunicarte fácilmente con otros usuarios y organizar tus planes para asistir a conciertos. A continuación, se detallan las características principales del chat:
+#### Cercar Esdeveniments
 
-1. **Buscador de Usuarios**:
-   - En la parte superior del apartado **Xat**, encontrarás un buscador de usuarios. Puedes utilizar este buscador para encontrar a cualquier usuario registrado en Spottunes.
-   - Simplemente introduce el nombre del usuario en la barra de búsqueda y selecciona el perfil adecuado de los resultados que aparecen.
+1. Cerca concerts i esdeveniments musicals segons els teus interessos utilitzant la barra de cerca a la pantalla de inici <img src="../images/inicio.png" alt="Inici" width="20" height="17">.
 
-2. **Iniciar un Chat**:
-   - Una vez que hayas encontrado al usuario con el que deseas comunicarte, haz clic en su nombre o foto de perfil para iniciar un chat.
-   - Esto abrirá una ventana de chat donde podrás enviar mensajes instantáneos.
+<img src="../images/barradebusquedaevents.png" alt="Inici" width="420" height="100">
 
-3. **Funciones del Chat**:
-   - **Enviar Mensajes**: Escribe tu mensaje en el cuadro de texto y presiona "Enter" o haz clic en el icono de enviar para enviar tu mensaje.
+#### Filtrar Esdeveniments
 
-4. **Historial del Chat**:
-   - Todos los mensajes enviados y recibidos se almacenan en el historial del chat. Puedes revisar tus conversaciones anteriores en cualquier momento navegando hacia arriba en la ventana del chat.
+##### Per Mapa:
+1. A la barra de cerca d'esdeveniments, pots utilitzar el botó <img src="../images/buttonfilters.png" alt="Inici" width="50" height="25"> per poder filtrar per geolocalització.
+2. A l'apartat <img src="../images/iconomapafiltros.png" alt="Inici" width="100" height="20"> marca una zona al mapa i sempre t'apareixeran els esdeveniments dins del radi que especifiquis.
+3. Per exemple, si estableixes un radi/distància d'11 km, el sistema prendrà el centre on has clicat i et mostrarà tots els esdeveniments al voltant fins a 11 km.
+3. Quan acabis de personalitzar els filtres, fes clic al botó <img src="../images/botonguardarfiltres.png" alt="Inici" width="75" height="22">
 
-5. **Notificaciones de Mensajes**:
-   - Recibirás notificaciones en tiempo real cuando recibas un nuevo mensaje.
+<img src="../images/mapafilters.png" alt="Inici" width="420" height="650">
+
+##### Per Filtres:
+
+1. Pots filtrar per determinats filtres també a l'apartat <img src="../images/iconofiltres.png" alt="Inici" width="110" height="20">
+2. Selecciona un país, una ciutat i un establiment/espai
+3. Quan acabis de personalitzar els filtres, fes clic al botó <img src="../images/botonguardarfiltres.png" alt="Inici" width="75" height="22">
+
+<img src="../images/pantallafiltresfiltre.png" alt="Inici" width="420" height="650">
+
+#### Unir-se/Seguir/Like a Esdeveniments
+
+1. Uneix-te o segueix un esdeveniment, hi ha diversos botons, a la vista de inici <img src="../images/inicio.png" alt="Inici" width="20" height="17">, és aquest botó: <img src="../images/botonlikeevent.png" alt="Inici" width="20" height="20">.
+2. I també a la vista d'un esdeveniment, quan entres el botó <img src="../images/botonseguir.png" alt="Inici" width="50" height="18"> a l'esdeveniment situat a la part superior dreta.
+3. Seguir un esdeveniment confirma la teva assistència i et permet veure qui més hi assistirà.
+4. Coneix gent a través de la llista de persones que estan seguint l'esdeveniment al qual assistiràs.
+
+<img src="../images/vistaunevento.png" alt="Inici" width="420" height="660">
+
+## Xats
+
+El xat en la nostra aplicació es troba a l'apartat **Xat**. Aquí, pots comunicar-te fàcilment amb altres usuaris i organitzar els teus plans per assistir a concerts. A continuació, es detallen les característiques principals del xat:
+
+1. **Cercador d'Usuaris** <img src="../images/añadirxaticon.png" alt="" width="20" height="17">:
+   - A la part superior de l'apartat **Xat**, trobaràs un cercador d'usuaris <img src="../images/añadirxaticon.png" alt="" width="20" height="17">. Pots utilitzar aquest cercador per trobar qualsevol usuari registrat a Spottunes.
+   - Simplement introdueix el nom de l'usuari a la barra de cerca i selecciona el perfil adequat dels resultats que apareixen.
+
+2. **Iniciar un Xat**:
+   - Un cop hagis trobat l'usuari amb qui desitges comunicar-te, fes clic al seu nom o foto de perfil per iniciar un xat.
+   - Això obrirà una finestra de xat on podràs enviar missatges instantanis.
+
+3. **Funcions del Xat**:
+   - **Enviar Missatges**: Escriu el teu missatge al quadre de text i prem "Enter" o fes clic a la icona <img src="../images/iconosendmess.png" alt="" width="20" height="18"> per enviar el teu missatge.
+
+4. **Historial del Xat**:
+   - Tots els missatges enviats i rebuts es guarden a l'historial del xat. Pots revisar les teves converses anteriors en qualsevol moment navegant cap amunt a la finestra del xat.
+
+5. **Notificacions de Missatges**:
+   - Rebràs notificacions en temps real quan rebis un nou missatge.
 
 ## Posts
-### Crear un Post
+### Crear un Post <img src="../images/+.png" alt="" width="22" height="15">
 
-Para compartir tus experiencias y opiniones sobre conciertos, puedes crear posts. Aquí te mostramos cómo hacerlo:
+Per compartir les teves experiències i opinions sobre concerts, pots crear posts. Aquí et mostrem com fer-ho:
 
-1. Ve a la sección de + desde el menú inferior.
-2. Escribe experiencias o próximos eventos a los que asistirás.
-3. Si deseas adjuntar una imagen, haz clic en el icono de la galeria y selecciona una imagen de tu dispositivo.
-4. Haz clic en "Post" para publicar tu post con la comunidad en tu perfil.
+1. Ves a l'apartat <img src="../images/+.png" alt="" width="22" height="15"> des del menú inferior.
+2. Escriu experiències o pròxims esdeveniments als quals assistiràs.
+3. Si desitges adjuntar una imatge, fes clic a la icona de <img src="../images/iconobotonsubirimg.png" alt="" width="22" height="22"> i selecciona una imatge del teu dispositiu.
+4. Fes clic a <img src="../images/botonpost.png" alt="" width="53" height="22"> per publicar el teu post amb la comunitat en el teu perfil.
 
-### Interactuar con Posts
+### Interactuar amb Posts
 
-Puedes interactuar con los posts de otros usuarios de las siguientes maneras:
+Pots interactuar amb els posts d'altres usuaris de les següents maneres:
 
-- **Dar Like**: Haz clic en el icono de corazón para dar like a un post.
-- **Comentar**: Haz clic en el icono de comentario para añadir una respuesta o comentario al post.
+- **Donar Like**: Fes clic a la icona <img src="../images/iconolikepost.png" alt="" width="20" height="17"> per donar like a un post.
+- **Comentar**: Fes clic a la icona <img src="../images/iconocomentpost.png" alt="" width="20" height="17"> per afegir una resposta o comentari al post.
+- **Esborrar el teu post**: Fes clic a la icona <img src="../images/iconotrespuntos.png" alt="" width="20" height="17"> i seguidament <img src="../images/iconoeliminarpost.png" alt="" width="60" height="22">. Si no és el teu post no podràs eliminar-lo.
 
-### Ver Posts de Usuarios
+### Veure Posts d'Usuaris
 
-En la sección de posts dentro de cada usuario, puedes ver las publicaciones que ha hecho el usuario. Esta es una excelente manera de mantenerte al tanto de lo que otros amantes de la música están diciendo y haciendo.
+A la secció de posts dins de cada usuari, pots veure les publicacions que ha fet l'usuari. Aquesta és una excel·lent manera de mantenir-te al corrent del que altres amants de la música estan dient i fent.
 
-## Solución de Problemas Comunes
+<img src="../images/perfilexample.png" alt="Inici" width="420" height="690">
 
-### Preguntas Frecuentes
 
-#### ¿Por qué no puedo ver ciertos eventos?
+## Solució de Problemes Comuns
 
-Asegúrate de que tu configuración de filtros en la búsqueda de eventos esté correctamente configurada y que no hayas excluido ciertos tipos de eventos sin querer.
+### Preguntes Freqüents
+
+#### Per què no puc veure certs esdeveniments?
+
+Assegura't que la teva configuració de filtres en la cerca d'esdeveniments estigui correctament configurada i que no hagis exclòs certs tipus d'esdeveniments sense voler.
