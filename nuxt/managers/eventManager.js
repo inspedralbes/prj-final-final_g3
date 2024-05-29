@@ -32,7 +32,6 @@ async function getEventsByDistance(lat, lon, distance) {
       longitude: lon,
       distance: distance,
     });
-    // console.log(response.data.events);
     const eventos = response.data.events;
     const eventosAgrupados = {};
     eventos.forEach((evento) => {
@@ -69,7 +68,6 @@ async function getFilteredEvents(data) {
       cities: data.cities,
       venues: data.venues,
     });
-    // console.log(response.data.events);
     const eventos = response.data.events;
     const eventosAgrupados = {};
     eventos.forEach((evento) => {
@@ -104,7 +102,6 @@ async function getEventsByName(data) {
     const response = await axios.post(`${url_api}/events/search`, {
       param: data,
     });
-    // console.log(response.data.events);
     const eventos = response.data.events;
     const eventosAgrupados = {};
     eventos.forEach((evento) => {
@@ -134,13 +131,11 @@ async function getEventsByName(data) {
 }
 
 async function getEventsByIds(ids) {
-  console.log("Ids:", ids);
   try {
     // Realiza la solicitud GET a la API con la cadena de IDs
     const response = await axios.post(`${url_api}/events/byId`, {
       ids: ids,
     });
-    console.log("Response by id:", response.data.events);
     return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
