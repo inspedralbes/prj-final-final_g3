@@ -61,11 +61,25 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 
 ### [/](https://spottunes.daw.inspedralbes.cat/)
 
+Es la landing-page que et permet anar directament a la pantalla d'esdeveniments o a iniciar sessió.
+
+<img src="../images/pages/index.png" />
+
 ### [/events](https://spottunes.daw.inspedralbes.cat/events)
+
+La pàgina d'esdeveniments es on es llisten els esdeveniments proveïts per Ticketmaster. Fent click a un esdeveniment entrem a la seva pantalla individual.
+
+<img src="../images/pages/events.png" />
 
 ### [/events/[id]](https://spottunes.daw.inspedralbes.cat/events/9)
 
+La pàgina d'un esdeveniment mostra informació més detallada de l'esdeveniment que no es troba a la pantalla inicial. També trobem a la gent que segueix al esdeveniment.
+
+<img src="../images/pages/eventID.png" />
+
 ### [/join](https://spottunes.daw.inspedralbes.cat/join)
+
+<img src="../images/pages/join.png" />
 
 ### [/auth/callback/google](https://spottunes.daw.inspedralbes.cat/auth/callback/google)
 
@@ -73,23 +87,43 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 
 ### [/login](https://spottunes.daw.inspedralbes.cat/login)
 
+<img src="../images/pages/login.png" />
+
 ### [/register](https://spottunes.daw.inspedralbes.cat/register)
+
+<img src="../images/pages/register.png" />
 
 ### [/completar](https://spottunes.daw.inspedralbes.cat/completar)
 
+<img src="../images/pages/completar.png" />
+
 ### [/chats](https://spottunes.daw.inspedralbes.cat/chats)
+
+<img src="../images/pages/chats.png" />
 
 ### [/chat](https://spottunes.daw.inspedralbes.cat/chat)
 
+<img src="../images/pages/chat.png" />
+
 ### [/perfil](https://spottunes.daw.inspedralbes.cat/perfil)
+
+<img src="../images/pages/perfil.png" />
 
 ### [/perfil/[username]](https://spottunes.daw.inspedralbes.cat/perfil/APorLa15)
 
+<img src="../images/pages/otherPerfil.png" />
+
 ### [/perfil/[username]/[type]](https://spottunes.daw.inspedralbes.cat/perfil/APorLa15/followers)
+
+<img src="../images/pages/type.png" />
 
 ### [/post](https://spottunes.daw.inspedralbes.cat/post)
 
+<img src="../images/pages/posts.png" />
+
 ### [/post/[id]](https://spottunes.daw.inspedralbes.cat/post/1)
+
+<img src="../images/pages/post.png" />
 
 ## Esquema d'esdeveniments (sockets)
 
@@ -262,6 +296,9 @@ Vam prendre la decisió de migrar de Next.js a Nuxt.js degut a diverses raons t�
 El cercador d'esdeveniments per geolocalització. Amb aquesta funcionalitat, els usuaris de Spottunes poden trobar fàcilment esdeveniments musicals propers a la seva ubicació actual. Aquesta eina utilitza la tecnologia de geolocalització per mostrar una selecció d'esdeveniments que es troben a prop de l'usuari, facilitant així la cerca d'opcions d'oci i entreteniment. Ara, els amants de la música poden descobrir concerts, festivals i altres esdeveniments en viu a prop seu amb només uns pocs clics. Aquesta funció no només millora l'experiència de l'usuari, sinó que també promou la participació en esdeveniments locals i enforteix la connexió entre la comunitat musical. Estem molt orgullosos d'oferir aquesta funcionalitat avançada i esperem que sigui útil per a tots els nostres usuaris. Gràcies per ser part de la comunitat Spottunes i seguir descobrint noves maneres de gaudir de la música en viu.
 
 ## Documentació de backend
+
+La documentació del backend l'hem desenvolupat amb Swagger, l'enllaç es troba aquí:
+[http://spottunes.documentacio.daw.inspedralbes.cat/](http://spottunes.documentacio.daw.inspedralbes.cat/#)
 
 ## Proxy invers
 
