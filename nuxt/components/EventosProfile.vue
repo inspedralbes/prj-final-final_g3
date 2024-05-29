@@ -3,7 +3,7 @@
     <p class="text-center" v-if="!events && profile">No té esdeveniments disponibles.</p>
     <section v-else class='w-[90%] mx-auto flex flex-col gap-3'>
         <NuxtLink :to="`/events/${event.id}`" class="relative w-full h-48 rounded-md overflow-hidden"
-            v-for="event in events" :key="event.id">
+            v-for="event in eventos" :key="event.id">
             <div class='relative'>
                 <img :src="JSON.parse(event.images)[2]" class='w-full h-full object-cover'
                     :alt="`Foto de ${event.event}`" />
@@ -36,10 +36,15 @@ export default {
 
     },
     mounted() {
-        if (this.profile) {
-            this.events = this.store.otherUserInfo.events
-        } else {
-            this.events = this.store.userInfo.events
+        console.log(this.eventos)
+    },
+    computed: {
+        eventos() {
+            if (this.profile) {
+                return this.store.otherUserInfo.events
+            } else {
+                return this.store.userInfo.events
+            }
         }
     }
 }

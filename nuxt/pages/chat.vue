@@ -6,12 +6,12 @@
             </button>
             <div class="h-[12vh] flex justify-center items-center">
 
-                <NuxtLink :to="`/perfil/${contact.nickname}`">
+                <button @click="goToProfile">
                     <article class="flex flex-col justify-center items-center gap-2">
                         <img class="size-16 rounded-full object-cover" :src="getImage()">
                         <h1 class="text-sm font-semibold">{{ contact.nickname }}</h1>
                     </article>
-                </NuxtLink>
+                </button>
             </div>
         </header>
 
@@ -126,6 +126,10 @@ export default {
             } else {
                 return `${this.$config.public.IMAGE_URI}/${this.contact.avatar}`;
             }
+        },
+        goToProfile() {
+            this.store.setOtherUserInfo(this.contact)
+            this.$router.push(`/perfil/${this.contact.nickname}`);
         }
 
     },

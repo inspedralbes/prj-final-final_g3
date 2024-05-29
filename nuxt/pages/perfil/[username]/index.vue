@@ -122,15 +122,15 @@ export default {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
         if (this.$route.params.username === this.store.userInfo.nickname) return this.$router.push('/perfil')
         this.loader = true
-        try {
-            await this.getFollowers();
-            await this.getFollowing();
-            await this.getEvents();
-        } catch (error) {
-            console.error("Error while fetching data:", error);
-        } finally {
-            this.loader = false;
-        }
+        // try {
+        //     await this.getFollowers();
+        //     await this.getFollowing();
+        //     await this.getEvents();
+        // } catch (error) {
+        //     console.error("Error while fetching data:", error);
+        // } finally {
+        //     this.loader = false;
+        // }
     },
     computed: {
         getImage() {
@@ -146,6 +146,23 @@ export default {
             } else {
                 return this.store.userInfo.followingUsers.followed.some(followed => followed.followed.id === this.User.id);
             }
+        }
+    },
+    watch: {
+        'User.id': {
+            async handler(newId, oldId) {
+                this.loader = true;
+                try {
+                    await this.getFollowers();
+                    await this.getFollowing();
+                    await this.getEvents();
+                    console.log(this.User.events);
+                } catch (error) {
+                    console.error("Error while fetching data:", error);
+                } finally {
+                    this.loader = false;
+                }
+            },
         }
     }
 }

@@ -139,6 +139,7 @@ async function getEventsByIds(ids) {
     const response = await axios.post(`${url_api}/events/byId`, {
       ids: ids,
     });
+    console.log("Response by id:", response.data.events);
     return response.data.events;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -159,10 +160,12 @@ async function getLikeEvents(id) {
       `${url_api_mongo}/likeEvents?userId=${user}`
     );
 
+    console.log("Id:", id);
     if (id) {
       const events = await getEventsByIds(
         response.data.map((like) => like.eventId)
       );
+      console.log("Events:", events);
       return events;
     } else {
       return response.data.map((like) => like.eventId);
