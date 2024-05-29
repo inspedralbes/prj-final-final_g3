@@ -243,8 +243,20 @@ Aquest component conté un mapa per poder filtrar els concerts per distància de
 
 ## Documentació de frontend
 
-- Porque de Next a Nuxt
-- Codigo que estemos orgullosos
+### Per què vam canviar de Next.js a Nuxt.js?
+Vam prendre la decisió de migrar de Next.js a Nuxt.js degut a diverses raons tècniques que s'alineaven millor amb les nostres necessitats i l'estructura desitjada del projecte:
+
+1. Limitacions de UserContext en React
+- L'ús de UserContext en React no va resultar ser prou robust per a les nostres necessitats. Ens trobàvem amb limitacions que afectaven l'eficiència i claredat del codi.
+- Vam considerar l'ús de Redux, però la seva corba d'aprenentatge i complexitat afegida no justificaven la seva implementació en el nostre cas.
+2. Avantatges de Nuxt.js
+- Nuxt.js ens va proporcionar una estructura més adequada i va facilitar el desenvolupament del projecte. Des de l'ús de directives com v-if fins a la integració nativa de biblioteques com Pinia, Nuxt.js va simplificar significativament moltes tasques.
+- La migració a Nuxt.js va resoldre problemes persistents relacionats amb l'emmagatzematge local (localStorage) i la gestió de l'estat de l'aplicació. Això es va traduir en una millora notable en el nostre rendiment i eficiència.
+
+
+### Codi que estem orgullosos
+
+El cercador d'esdeveniments per geolocalització. Amb aquesta funcionalitat, els usuaris de Spottunes poden trobar fàcilment esdeveniments musicals propers a la seva ubicació actual. Aquesta eina utilitza la tecnologia de geolocalització per mostrar una selecció d'esdeveniments que es troben a prop de l'usuari, facilitant així la cerca d'opcions d'oci i entreteniment. Ara, els amants de la música poden descobrir concerts, festivals i altres esdeveniments en viu a prop seu amb només uns pocs clics. Aquesta funció no només millora l'experiència de l'usuari, sinó que també promou la participació en esdeveniments locals i enforteix la connexió entre la comunitat musical. Estem molt orgullosos d'oferir aquesta funcionalitat avançada i esperem que sigui útil per a tots els nostres usuaris. Gràcies per ser part de la comunitat Spottunes i seguir descobrint noves maneres de gaudir de la música en viu.
 
 ## Documentació de backend
 
