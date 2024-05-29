@@ -19,12 +19,12 @@
                 "tags": [
                     "Esdeveniments"
                 ],
-                "summary": "Obtener lista completa de eventos",
-                "description": "Obtiene una lista completa de eventos donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+                "summary": "Obtenir llista completa d'esdeveniments",
+                "description": "Obté una llista completa d'esdeveniments on el camp 'artist' no és nul, ordenats per data i hora.",
                 "operationId": "getAllEvents",
                 "responses": {
                     "200": {
-                        "description": "Lista de eventos obtenida exitosamente",
+                        "description": "Llista d'esdeveniments obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -39,7 +39,7 @@
                                                     },
                                                     "artist": {
                                                         "type": "string",
-                                                        "example": "Artista Ejemplo"
+                                                        "example": "Artista Exemple"
                                                     },
                                                     "date": {
                                                         "type": "string",
@@ -53,7 +53,7 @@
                                                     },
                                                     "location": {
                                                         "type": "string",
-                                                        "example": "Lugar Ejemplo"
+                                                        "example": "Lloc Exemple"
                                                     }
                                                 },
                                                 "type": "object"
@@ -66,7 +66,7 @@
                         }
                     },
                     "404": {
-                        "description": "No se han encontrado eventos",
+                        "description": "No s'han trobat esdeveniments",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -82,14 +82,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -105,19 +105,18 @@
                 "tags": [
                     "Esdeveniments"
                 ],
-                "summary": "Obtener eventos por ubicación",
-                "description": "Obtiene una lista de eventos filtrados por países, ciudades y lugares específicos, donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+                "summary": "Obtenir esdeveniments per ubicació",
+                "description": "Obté una llista d'esdeveniments filtrats per països, ciutats i llocs específics, on el camp 'artist' no és nul, ordenats per data i hora.",
                 "operationId": "getEventsByLocation",
                 "requestBody": {
-                    "description": "Criterios de búsqueda por ubicación",
+                    "description": "Criteris de cerca per ubicació",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
                                     "countries",
-                                    "cities",
-                                    "venues"
+                                    "cities"
                                 ],
                                 "properties": {
                                     "countries": {
@@ -127,7 +126,7 @@
                                         },
                                         "example": [
                                             "USA",
-                                            "Spain"
+                                            "Espanya"
                                         ]
                                     },
                                     "cities": {
@@ -136,7 +135,7 @@
                                             "type": "string"
                                         },
                                         "example": [
-                                            "New York",
+                                            "Nova York",
                                             "Madrid"
                                         ]
                                     },
@@ -158,7 +157,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Lista de eventos obtenida exitosamente",
+                        "description": "Llista d'esdeveniments obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -173,7 +172,7 @@
                                                     },
                                                     "artist": {
                                                         "type": "string",
-                                                        "example": "Artista Ejemplo"
+                                                        "example": "Artista Exemple"
                                                     },
                                                     "date": {
                                                         "type": "string",
@@ -187,7 +186,7 @@
                                                     },
                                                     "location": {
                                                         "type": "string",
-                                                        "example": "Lugar Ejemplo"
+                                                        "example": "Lloc Exemple"
                                                     },
                                                     "country": {
                                                         "type": "string",
@@ -195,7 +194,7 @@
                                                     },
                                                     "city": {
                                                         "type": "string",
-                                                        "example": "New York"
+                                                        "example": "Nova York"
                                                     },
                                                     "venue": {
                                                         "type": "string",
@@ -212,7 +211,7 @@
                         }
                     },
                     "400": {
-                        "description": "Datos de entrada inválidos",
+                        "description": "Dades d'entrada invàlides",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -233,14 +232,14 @@
                         }
                     },
                     "404": {
-                        "description": "No se han encontrado eventos para los criterios especificados",
+                        "description": "No s'han trobat esdeveniments pels criteris especificats",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No events found for the specified criteria"
+                                            "example": "No s'han trobat esdeveniments pels criteris especificats"
                                         }
                                     },
                                     "type": "object"
@@ -249,18 +248,18 @@
                         }
                     },
                     "500": {
-                        "description": "Error al obtener eventos",
+                        "description": "Error en obtenir els esdeveniments",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Error fetching events"
+                                            "example": "Error en obtenir els esdeveniments"
                                         },
                                         "error": {
                                             "type": "string",
-                                            "example": "Detalle del error"
+                                            "example": "Detall de l'error"
                                         }
                                     },
                                     "type": "object"
@@ -269,14 +268,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -292,11 +291,11 @@
                 "tags": [
                     "Esdeveniments"
                 ],
-                "summary": "Obtener eventos por distancia",
-                "description": "Obtiene una lista de eventos dentro de una distancia específica desde una ubicación dada, donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+                "summary": "Obtenir esdeveniments per distància",
+                "description": "Obté una llista d'esdeveniments dins d'una distància específica des d'una ubicació donada, on el camp 'artist' no és nul, ordenats per data i hora.",
                 "operationId": "getEventsByDistance",
                 "requestBody": {
-                    "description": "Criterios de búsqueda por distancia",
+                    "description": "Criteris de cerca per distància",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -330,7 +329,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Lista de eventos obtenida exitosamente",
+                        "description": "Llista d'esdeveniments obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -345,7 +344,7 @@
                                                     },
                                                     "artist": {
                                                         "type": "string",
-                                                        "example": "Artista Ejemplo"
+                                                        "example": "Artista Exemple"
                                                     },
                                                     "date": {
                                                         "type": "string",
@@ -359,7 +358,7 @@
                                                     },
                                                     "location": {
                                                         "type": "string",
-                                                        "example": "Lugar Ejemplo"
+                                                        "example": "Lloc Exemple"
                                                     },
                                                     "distance": {
                                                         "type": "number",
@@ -377,7 +376,7 @@
                         }
                     },
                     "400": {
-                        "description": "Datos de entrada inválidos",
+                        "description": "Dades d'entrada invàlides",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -398,14 +397,14 @@
                         }
                     },
                     "404": {
-                        "description": "No se han encontrado eventos para los criterios especificados",
+                        "description": "No s'han trobat esdeveniments pels criteris especificats",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No events found for the specified criteria"
+                                            "example": "No s'han trobat esdeveniments pels criteris especificats"
                                         }
                                     },
                                     "type": "object"
@@ -414,18 +413,18 @@
                         }
                     },
                     "500": {
-                        "description": "Error al obtener eventos",
+                        "description": "Error en obtenir els esdeveniments",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Error fetching events"
+                                            "example": "Error en obtenir els esdeveniments"
                                         },
                                         "error": {
                                             "type": "string",
-                                            "example": "Detalle del error"
+                                            "example": "Detall de l'error"
                                         }
                                     },
                                     "type": "object"
@@ -434,14 +433,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -457,11 +456,11 @@
                 "tags": [
                     "Esdeveniments"
                 ],
-                "summary": "Buscar eventos por nombre",
-                "description": "Obtiene una lista de eventos que coinciden con el nombre especificado en el parámetro de búsqueda, buscando en varias columnas de la tabla de eventos.",
+                "summary": "Buscar esdeveniments per nom",
+                "description": "Obté una llista d'esdeveniments que coincideixen amb el nom especificat en el paràmetre de cerca, cercant en diverses columnes de la taula d'esdeveniments.",
                 "operationId": "getEventsByName",
                 "requestBody": {
-                    "description": "Parámetro de búsqueda por nombre",
+                    "description": "Paràmetre de cerca per nom",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -472,7 +471,7 @@
                                 "properties": {
                                     "param": {
                                         "type": "string",
-                                        "example": "Nombre del evento o artista"
+                                        "example": "Nom de l'esdeveniment o artista"
                                     }
                                 },
                                 "type": "object"
@@ -482,7 +481,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Lista de eventos obtenida exitosamente",
+                        "description": "Llista d'esdeveniments obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -497,7 +496,7 @@
                                                     },
                                                     "artist": {
                                                         "type": "string",
-                                                        "example": "Artista Ejemplo"
+                                                        "example": "Artista Exemple"
                                                     },
                                                     "date": {
                                                         "type": "string",
@@ -511,7 +510,7 @@
                                                     },
                                                     "location": {
                                                         "type": "string",
-                                                        "example": "Lugar Ejemplo"
+                                                        "example": "Lloc Exemple"
                                                     },
                                                     "country": {
                                                         "type": "string",
@@ -519,7 +518,7 @@
                                                     },
                                                     "city": {
                                                         "type": "string",
-                                                        "example": "New York"
+                                                        "example": "Nova York"
                                                     },
                                                     "venue": {
                                                         "type": "string",
@@ -536,7 +535,7 @@
                         }
                     },
                     "400": {
-                        "description": "Datos de entrada inválidos",
+                        "description": "Dades d'entrada invàlides",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -557,14 +556,14 @@
                         }
                     },
                     "404": {
-                        "description": "No se han encontrado eventos para los criterios especificados",
+                        "description": "No s'han trobat esdeveniments per als criteris especificats",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No events found for the specified criteria"
+                                            "example": "No s'han trobat esdeveniments per als criteris especificats"
                                         }
                                     },
                                     "type": "object"
@@ -573,18 +572,18 @@
                         }
                     },
                     "500": {
-                        "description": "Error al obtener eventos",
+                        "description": "Error en obtenir esdeveniments",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Error fetching events"
+                                            "example": "Error en obtenir esdeveniments"
                                         },
                                         "error": {
                                             "type": "string",
-                                            "example": "Detalle del error"
+                                            "example": "Detall de l'error"
                                         }
                                     },
                                     "type": "object"
@@ -593,14 +592,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en les capçaleres."
                                         }
                                     },
                                     "type": "object"
@@ -616,12 +615,12 @@
                 "tags": [
                     "Esdeveniments"
                 ],
-                "summary": "Obtener ubicaciones de eventos",
-                "description": "Obtiene una lista de países, ciudades y lugares donde se realizan eventos.",
+                "summary": "Obtenir ubicacions d'esdeveniments",
+                "description": "Obté una llista de països, ciutats i llocs on es realitzen esdeveniments.",
                 "operationId": "getLocations",
                 "responses": {
                     "200": {
-                        "description": "Ubicaciones de eventos obtenidas exitosamente",
+                        "description": "Ubicacions d'esdeveniments obtingudes amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -640,7 +639,7 @@
                                                             "properties": {
                                                                 "city": {
                                                                     "type": "string",
-                                                                    "example": "New York"
+                                                                    "example": "Nova York"
                                                                 },
                                                                 "venues": {
                                                                     "type": "array",
@@ -679,14 +678,14 @@
                         }
                     },
                     "404": {
-                        "description": "No se han encontrado ubicaciones de eventos",
+                        "description": "No s'han trobat ubicacions d'esdeveniments",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No locations found for events"
+                                            "example": "No s'han trobat ubicacions per als esdeveniments"
                                         }
                                     },
                                     "type": "object"
@@ -695,18 +694,18 @@
                         }
                     },
                     "500": {
-                        "description": "Error al obtener ubicaciones de eventos",
+                        "description": "Error en obtenir ubicacions d'esdeveniments",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Error fetching event locations"
+                                            "example": "Error en obtenir les ubicacions dels esdeveniments"
                                         },
                                         "error": {
                                             "type": "string",
-                                            "example": "Detalle del error"
+                                            "example": "Error: "
                                         }
                                     },
                                     "type": "object"
@@ -722,11 +721,11 @@
                 "tags": [
                     "Esdeveniments"
                 ],
-                "summary": "Mostrar eventos por IDs",
-                "description": "Obtiene una lista de eventos según los IDs proporcionados en el cuerpo de la solicitud.",
+                "summary": "Mostrar events per IDs",
+                "description": "Obté una llista d'esdeveniments segons els IDs proporcionats en el cos de la sol·licitud.",
                 "operationId": "showEvents",
                 "requestBody": {
-                    "description": "IDs de los eventos",
+                    "description": "IDs dels esdeveniments",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -750,7 +749,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Eventos encontrados",
+                        "description": "Esdeveniments trobats",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -765,7 +764,7 @@
                                                     },
                                                     "artist": {
                                                         "type": "string",
-                                                        "example": "Artista Ejemplo"
+                                                        "example": "Artista Exemple"
                                                     },
                                                     "date": {
                                                         "type": "string",
@@ -779,7 +778,7 @@
                                                     },
                                                     "location": {
                                                         "type": "string",
-                                                        "example": "Lugar Ejemplo"
+                                                        "example": "Lloc Exemple"
                                                     },
                                                     "country": {
                                                         "type": "string",
@@ -787,7 +786,7 @@
                                                     },
                                                     "city": {
                                                         "type": "string",
-                                                        "example": "New York"
+                                                        "example": "Nova York"
                                                     },
                                                     "venue": {
                                                         "type": "string",
@@ -804,14 +803,14 @@
                         }
                     },
                     "400": {
-                        "description": "IDs inválidos",
+                        "description": "IDs invàlids",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Invalid IDs provided"
+                                            "example": "IDs invàlids proporcionats"
                                         }
                                     },
                                     "type": "object"
@@ -820,14 +819,14 @@
                         }
                     },
                     "404": {
-                        "description": "Eventos no encontrados",
+                        "description": "Esdeveniments no trobats",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Events not found"
+                                            "example": "Esdeveniments no trobats"
                                         }
                                     },
                                     "type": "object"
@@ -843,14 +842,14 @@
                 "tags": [
                     "Seguidors"
                 ],
-                "summary": "Seguir a un usuario",
-                "description": "Permite a un usuario seguir a otro usuario por su ID.",
+                "summary": "Segueix a un usuari",
+                "description": "Permet a un usuari seguir a un altre usuari per la seva ID.",
                 "operationId": "followUser",
                 "parameters": [
                     {
                         "name": "userId",
                         "in": "path",
-                        "description": "ID del usuario a seguir",
+                        "description": "ID de l'usuari a seguir",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -860,14 +859,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ahora estás siguiendo a este usuario",
+                        "description": "Ara estàs seguint a aquest usuari",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Ahora estás siguiendo a este usuario"
+                                            "example": "Ara estàs seguint a aquest usuari"
                                         }
                                     },
                                     "type": "object"
@@ -876,14 +875,14 @@
                         }
                     },
                     "400": {
-                        "description": "Ya estás siguiendo a este usuario",
+                        "description": "Ja estàs seguint a aquest usuari",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Ya estás siguiendo a este usuario"
+                                            "example": "Ja estàs seguint a aquest usuari"
                                         }
                                     },
                                     "type": "object"
@@ -892,14 +891,14 @@
                         }
                     },
                     "404": {
-                        "description": "Usuario no encontrado",
+                        "description": "Usuari no trobat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuario no encontrado"
+                                            "example": "Usuari no trobat"
                                         }
                                     },
                                     "type": "object"
@@ -908,14 +907,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -936,14 +935,14 @@
                 "tags": [
                     "Seguidors"
                 ],
-                "summary": "Dejar de seguir a un usuario",
-                "description": "Permite a un usuario dejar de seguir a otro usuario por su ID.",
+                "summary": "Deixar de seguir a un usuari",
+                "description": "Permet a un usuari deixar de seguir a un altre usuari per la seva ID.",
                 "operationId": "unfollowUser",
                 "parameters": [
                     {
                         "name": "userId",
                         "in": "path",
-                        "description": "ID del usuario a dejar de seguir",
+                        "description": "ID de l'usuari a deixar de seguir",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -953,14 +952,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ya no estás siguiendo a este usuario",
+                        "description": "Ja no estàs seguint a aquest usuari",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Ya no estás siguiendo a este usuario"
+                                            "example": "Ja no estàs seguint a aquest usuari"
                                         }
                                     },
                                     "type": "object"
@@ -969,14 +968,14 @@
                         }
                     },
                     "404": {
-                        "description": "Usuario no encontrado",
+                        "description": "Usuari no trobat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuario no encontrado"
+                                            "example": "Usuari no trobat"
                                         }
                                     },
                                     "type": "object"
@@ -985,14 +984,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1013,14 +1012,14 @@
                 "tags": [
                     "Seguidors"
                 ],
-                "summary": "Obtener seguidores de un usuario",
-                "description": "Obtiene la lista de seguidores de un usuario por su ID, incluyendo la cuenta total de seguidores.",
+                "summary": "Obtenir seguidors d'un usuari",
+                "description": "Obté la llista de seguidors d'un usuari per la seva ID, incloent el compte total de seguidors.",
                 "operationId": "getUserFollowers",
                 "parameters": [
                     {
                         "name": "userId",
                         "in": "path",
-                        "description": "ID del usuario cuyos seguidores se desea obtener",
+                        "description": "ID de l'usuari del qual es volen obtenir els seguidors",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -1030,7 +1029,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de seguidores obtenida exitosamente",
+                        "description": "Llista de seguidors obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1049,11 +1048,11 @@
                                                     },
                                                     "nickname": {
                                                         "type": "string",
-                                                        "example": "follower123"
+                                                        "example": "seguidor123"
                                                     },
                                                     "avatar": {
                                                         "type": "string",
-                                                        "example": "images/follower_image.png"
+                                                        "example": "imatges/imatge_seguidor.png"
                                                     }
                                                 },
                                                 "type": "object"
@@ -1066,14 +1065,14 @@
                         }
                     },
                     "404": {
-                        "description": "Usuario no encontrado",
+                        "description": "Usuari no trobat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuario no encontrado"
+                                            "example": "Usuari no trobat"
                                         }
                                     },
                                     "type": "object"
@@ -1082,14 +1081,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1110,14 +1109,14 @@
                 "tags": [
                     "Seguidors"
                 ],
-                "summary": "Obtener usuarios seguidos por un usuario",
-                "description": "Obtiene la lista de usuarios seguidos por un usuario por su ID, incluyendo la cuenta total de usuarios seguidos.",
+                "summary": "Obtenir usuaris seguits per un usuari",
+                "description": "Obté la llista d'usuaris seguits per un usuari per la seva ID, incloent el compte total d'usuaris seguits.",
                 "operationId": "getUserFollowed",
                 "parameters": [
                     {
                         "name": "userId",
                         "in": "path",
-                        "description": "ID del usuario cuyos usuarios seguidos se desea obtener",
+                        "description": "ID de l'usuari del qual es volen obtenir els usuaris seguits",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -1127,7 +1126,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de usuarios seguidos obtenida exitosamente",
+                        "description": "Llista d'usuaris seguits obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1146,11 +1145,11 @@
                                                     },
                                                     "nickname": {
                                                         "type": "string",
-                                                        "example": "followedUser123"
+                                                        "example": "usuariSeguit123"
                                                     },
                                                     "avatar": {
                                                         "type": "string",
-                                                        "example": "images/followed_user_image.png"
+                                                        "example": "imatges/imatge_usuari_seguidor.png"
                                                     }
                                                 },
                                                 "type": "object"
@@ -1163,14 +1162,14 @@
                         }
                     },
                     "404": {
-                        "description": "Usuario no encontrado",
+                        "description": "Usuari no trobat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Usuario no encontrado"
+                                            "example": "Usuari no trobat"
                                         }
                                     },
                                     "type": "object"
@@ -1179,14 +1178,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1207,12 +1206,12 @@
                 "tags": [
                     "Seguidors"
                 ],
-                "summary": "Obtener seguidores del usuario autenticado",
-                "description": "Obtiene la lista de IDs de los usuarios que siguen al usuario autenticado.",
+                "summary": "Obtenir seguidors de l'usuari autenticat",
+                "description": "Obté la llista d'IDs dels usuaris que segueixen a l'usuari autenticat.",
                 "operationId": "getFollowers",
                 "responses": {
                     "200": {
-                        "description": "Lista de seguidores obtenida exitosamente",
+                        "description": "Llista de seguidors obtinguda amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1226,14 +1225,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat als encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1249,98 +1248,19 @@
                 ]
             }
         },
-        "/api/loginSpotify": {
-            "get": {
-                "tags": [
-                    "Autenticació Spotify"
-                ],
-                "summary": "Iniciar sesión de usuario",
-                "description": "Inicia sesión de un usuario con correo electrónico y contraseña.",
-                "operationId": "login",
-                "responses": {
-                    "302": {
-                        "description": "Redirección temporal"
-                    }
-                }
-            }
-        },
-        "/api/spotifyCallback": {
-            "get": {
-                "tags": [
-                    "Autenticació Spotify"
-                ],
-                "summary": "Manejar el callback de autorización de Spotify",
-                "description": "Recibe el código de autorización de Spotify y realiza la solicitud para obtener el token de acceso.",
-                "operationId": "callback",
-                "requestBody": {
-                    "description": "Código de autorización de Spotify",
-                    "required": true,
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "required": [
-                                    "code"
-                                ],
-                                "properties": {
-                                    "code": {
-                                        "type": "string",
-                                        "example": "your_authorization_code"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Respuesta exitosa",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "description": "Datos de respuesta",
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Error del servidor",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "description": "Mensaje de error",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/login": {
             "post": {
                 "tags": [
                     "Autenticació"
                 ],
-                "summary": "Iniciar sesión de usuario",
-                "description": "Inicia sesión de un usuario con correo electrónico y contraseña.",
+                "summary": "Iniciar sessió d'usuari",
+                "description": "Inicia sessió d'un usuari amb correu electrònic i contrasenya.",
                 "operationId": "0fc9610184083ac6dddab2c63139225a",
                 "parameters": [
                     {
                         "name": "email",
                         "in": "query",
-                        "description": "Correo electrónico del usuario",
+                        "description": "Correu electrònic de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1349,7 +1269,7 @@
                     {
                         "name": "password",
                         "in": "query",
-                        "description": "Contraseña del usuario",
+                        "description": "Contrasenya de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -1359,14 +1279,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Inicio de sesión exitoso",
+                        "description": "Inici de sessió exitós",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
                                             "type": "string",
-                                            "example": "Has iniciado sesión"
+                                            "example": "Has iniciat sessió"
                                         },
                                         "token": {
                                             "type": "string",
@@ -1379,7 +1299,7 @@
                         }
                     },
                     "400": {
-                        "description": "Error en la solicitud",
+                        "description": "Error en la sol·licitud",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1401,14 +1321,14 @@
                 "tags": [
                     "Autenticació"
                 ],
-                "summary": "Registro de usuario",
-                "description": "Registra un nuevo usuario con los datos proporcionados.",
+                "summary": "Registre d'usuari",
+                "description": "Registra un nou usuari amb les dades proporcionades.",
                 "operationId": "2f25885f3b6f61ca11724ec302d2e439",
                 "parameters": [
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "Nombre del usuario",
+                        "description": "Nom de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1417,7 +1337,7 @@
                     {
                         "name": "surnames",
                         "in": "query",
-                        "description": "Apellidos del usuario",
+                        "description": "Cognoms de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1426,7 +1346,7 @@
                     {
                         "name": "nickname",
                         "in": "query",
-                        "description": "Alias o nombre de usuario",
+                        "description": "Àlies o nom d'usuari",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1435,7 +1355,7 @@
                     {
                         "name": "email",
                         "in": "query",
-                        "description": "Correo electrónico del usuario",
+                        "description": "Correu electrònic de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -1445,17 +1365,17 @@
                     {
                         "name": "birthdate",
                         "in": "query",
-                        "description": "Fecha de nacimiento del usuario (formato: YYYY-MM-DD)",
+                        "description": "Data de naixement de l'usuari (format: AAAA-MM-DD)",
                         "required": true,
                         "schema": {
-                            "type": "date",
+                            "type": "string",
                             "format": "date"
                         }
                     },
                     {
                         "name": "password",
                         "in": "query",
-                        "description": "Contraseña del usuario",
+                        "description": "Contrasenya de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -1465,14 +1385,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Registro exitoso",
+                        "description": "Registre exitós",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
                                             "type": "string",
-                                            "example": "Usuario creado correctamente"
+                                            "example": "Usuari creat correctament"
                                         },
                                         "token": {
                                             "type": "string",
@@ -1485,7 +1405,7 @@
                         }
                     },
                     "400": {
-                        "description": "Error en la solicitud",
+                        "description": "Error en la sol·licitud",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1510,19 +1430,19 @@
                 "tags": [
                     "Autenticació"
                 ],
-                "summary": "Cerrar sesión",
-                "description": "Cierra la sesión del usuario actual y revoca todos los tokens de acceso asociados.",
+                "summary": "Tancar sessió",
+                "description": "Tanca la sessió de l'usuari actual i revoca tots els tokens d'accés associats.",
                 "operationId": "logout",
                 "responses": {
                     "200": {
-                        "description": "Sesión cerrada exitosamente",
+                        "description": "Sessió tancada amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
                                             "type": "string",
-                                            "example": "Has cerrado sesión"
+                                            "example": "Has tancat sessió"
                                         }
                                     },
                                     "type": "object"
@@ -1531,7 +1451,7 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado"
+                        "description": "No autoritzat"
                     }
                 },
                 "security": [
@@ -1546,11 +1466,11 @@
                 "tags": [
                     "Autenticació"
                 ],
-                "summary": "Completar información de usuario",
-                "description": "Completa la información de un usuario, como su fecha de nacimiento y apodo.",
+                "summary": "Completar informació d'usuari",
+                "description": "Completa la informació d'un usuari, com la seva data de naixement i àlies.",
                 "operationId": "completeInfo",
                 "requestBody": {
-                    "description": "Datos de usuario para completar",
+                    "description": "Dades d'usuari per completar",
                     "required": true,
                     "content": {
                         "application/x-www-form-urlencoded": {
@@ -1567,7 +1487,7 @@
                                     },
                                     "nickname": {
                                         "type": "string",
-                                        "example": "usuario123"
+                                        "example": "usuari123"
                                     }
                                 },
                                 "type": "object"
@@ -1577,7 +1497,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Información de usuario completada exitosamente",
+                        "description": "Informació d'usuari completada amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1588,7 +1508,7 @@
                         }
                     },
                     "400": {
-                        "description": "Error de validación",
+                        "description": "Error de validació",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1606,14 +1526,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en els encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1634,11 +1554,11 @@
                 "tags": [
                     "Autenticació"
                 ],
-                "summary": "Actualizar información del usuario",
-                "description": "Actualiza la información del usuario, incluyendo nombre, apellidos, apodo, correo electrónico, fecha de nacimiento y avatar.",
+                "summary": "Actualitzar informació de l'usuari",
+                "description": "Actualitza la informació de l'usuari, incloent nom, cognoms, àlies, correu electrònic, data de naixement i avatar.",
                 "operationId": "updateInfo",
                 "requestBody": {
-                    "description": "Datos del usuario para actualizar",
+                    "description": "Dades de l'usuari per actualitzar",
                     "required": true,
                     "content": {
                         "application/x-www-form-urlencoded": {
@@ -1659,12 +1579,12 @@
                                     },
                                     "nickname": {
                                         "type": "string",
-                                        "example": "usuario123"
+                                        "example": "usuari123"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "usuario@example.com"
+                                        "example": "usuari@example.com"
                                     },
                                     "birthdate": {
                                         "type": "string",
@@ -1684,7 +1604,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Información de usuario actualizada exitosamente",
+                        "description": "Informació de l'usuari actualitzada amb èxit",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1703,12 +1623,12 @@
                                         },
                                         "nickname": {
                                             "type": "string",
-                                            "example": "usuario123"
+                                            "example": "usuari123"
                                         },
                                         "email": {
                                             "type": "string",
                                             "format": "email",
-                                            "example": "usuario@example.com"
+                                            "example": "usuari@example.com"
                                         },
                                         "birthdate": {
                                             "type": "string",
@@ -1726,7 +1646,7 @@
                         }
                     },
                     "400": {
-                        "description": "Error de validación",
+                        "description": "Error de validació",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1744,14 +1664,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en els encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1772,24 +1692,24 @@
                 "tags": [
                     "Usuaris"
                 ],
-                "summary": "Buscar usuarios",
-                "description": "Busca usuarios por su apodo.",
+                "summary": "Cerca d'usuaris",
+                "description": "Cerca d'usuaris pel seu àlies.",
                 "operationId": "searchUsers",
                 "parameters": [
                     {
                         "name": "param",
                         "in": "query",
-                        "description": "Parámetro de búsqueda para el apodo del usuario",
+                        "description": "Paràmetre de cerca per al àlies de l'usuari",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "example": "usuario123"
+                            "example": "usuari123"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Resultados de la búsqueda",
+                        "description": "Resultats de la cerca",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1810,12 +1730,12 @@
                                             },
                                             "nickname": {
                                                 "type": "string",
-                                                "example": "usuario123"
+                                                "example": "usuari123"
                                             },
                                             "email": {
                                                 "type": "string",
                                                 "format": "email",
-                                                "example": "usuario@example.com"
+                                                "example": "usuari@example.com"
                                             },
                                             "birthdate": {
                                                 "type": "string",
@@ -1834,14 +1754,14 @@
                         }
                     },
                     "201": {
-                        "description": "No hay resultados en tu búsqueda",
+                        "description": "No hi ha resultats en la teva cerca",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No hay resultados en tu búsqueda"
+                                            "example": "No hi ha resultats en la teva cerca"
                                         }
                                     },
                                     "type": "object"
@@ -1850,14 +1770,14 @@
                         }
                     },
                     "202": {
-                        "description": "No hay resultados en tu búsqueda",
+                        "description": "No hi ha resultats en la teva cerca",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No hay resultados en tu búsqueda"
+                                            "example": "No hi ha resultats en la teva cerca"
                                         }
                                     },
                                     "type": "object"
@@ -1866,14 +1786,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en els encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -1894,11 +1814,11 @@
                 "tags": [
                     "Usuaris"
                 ],
-                "summary": "Verificar disponibilidad de correo electrónico",
-                "description": "Verifica si un correo electrónico ya está en uso. Si el correo está en uso, devuelve los detalles del usuario y un token de acceso. Si no está en uso, indica que el correo está disponible.",
+                "summary": "Verificar disponibilitat de correu electrònic",
+                "description": "Verifica si un correu electrònic ja està en ús. Si el correu està en ús, retorna els detalls de l'usuari i un token d'accés. Si no està en ús, indica que el correu està disponible.",
                 "operationId": "checkEmail",
                 "requestBody": {
-                    "description": "Correo electrónico a verificar",
+                    "description": "Correu electrònic a verificar",
                     "required": true,
                     "content": {
                         "application/x-www-form-urlencoded": {
@@ -1910,7 +1830,7 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "usuario@example.com"
+                                        "example": "usuari@example.com"
                                     }
                                 },
                                 "type": "object"
@@ -1920,14 +1840,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "El email ya está en uso, haciendo Login",
+                        "description": "El correu electrònic ja està en ús, iniciant sessió",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
                                             "type": "string",
-                                            "example": "El email ya está en uso, haciendo Login"
+                                            "example": "El correu electrònic ja està en ús, iniciant sessió"
                                         },
                                         "data": {
                                             "properties": {
@@ -1947,12 +1867,12 @@
                                                         },
                                                         "nickname": {
                                                             "type": "string",
-                                                            "example": "usuario123"
+                                                            "example": "usuari123"
                                                         },
                                                         "email": {
                                                             "type": "string",
                                                             "format": "email",
-                                                            "example": "usuario@example.com"
+                                                            "example": "usuari@example.com"
                                                         },
                                                         "birthdate": {
                                                             "type": "string",
@@ -1980,14 +1900,14 @@
                         }
                     },
                     "202": {
-                        "description": "El email está disponible",
+                        "description": "El correu electrònic està disponible",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "success": {
                                             "type": "string",
-                                            "example": "El email está disponible"
+                                            "example": "El correu electrònic està disponible"
                                         }
                                     },
                                     "type": "object"
@@ -1996,14 +1916,14 @@
                         }
                     },
                     "400": {
-                        "description": "Solicitud incorrecta",
+                        "description": "Sol·licitud incorrecta",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Solicitud incorrecta"
+                                            "example": "Sol·licitud incorrecta"
                                         }
                                     },
                                     "type": "object"
@@ -2012,14 +1932,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en els encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -2040,14 +1960,14 @@
                 "tags": [
                     "Usuaris"
                 ],
-                "summary": "Obtener información del usuario",
-                "description": "Obtiene la información de un usuario por su ID.",
+                "summary": "Obtenir informació de l'usuari",
+                "description": "Obté la informació d'un usuari pel seu ID.",
                 "operationId": "getUser",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "query",
-                        "description": "ID del usuario a obtener",
+                        "description": "ID de l'usuari a obtenir",
                         "required": true,
                         "schema": {
                             "type": "integer",
@@ -2057,7 +1977,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Información del usuario obtenida exitosamente",
+                        "description": "Informació de l'usuari obtinguda exitosament",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2076,12 +1996,12 @@
                                         },
                                         "nickname": {
                                             "type": "string",
-                                            "example": "usuario123"
+                                            "example": "usuari123"
                                         },
                                         "email": {
                                             "type": "string",
                                             "format": "email",
-                                            "example": "usuario@example.com"
+                                            "example": "usuari@example.com"
                                         },
                                         "birthdate": {
                                             "type": "string",
@@ -2099,14 +2019,14 @@
                         }
                     },
                     "404": {
-                        "description": "No se pudo encontrar el usuario",
+                        "description": "No s'ha pogut trobar l'usuari",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "No se pudo encontrar el usuario"
+                                            "example": "No s'ha pogut trobar l'usuari"
                                         }
                                     },
                                     "type": "object"
@@ -2115,14 +2035,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en els encapçalaments."
                                         }
                                     },
                                     "type": "object"
@@ -2143,14 +2063,14 @@
                 "tags": [
                     "Usuaris"
                 ],
-                "summary": "Buscar usuario por nombre de usuario",
-                "description": "Busca un usuario por su nombre de usuario.",
+                "summary": "Cercar usuari per nom d'usuari",
+                "description": "Cerca un usuari pel seu nom d'usuari.",
                 "operationId": "searchByUsername",
                 "parameters": [
                     {
                         "name": "username",
                         "in": "path",
-                        "description": "Nombre de usuario a buscar",
+                        "description": "Nom d'usuari a cercar",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -2159,7 +2079,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Usuario encontrado exitosamente",
+                        "description": "Usuari trobat exitosament",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2174,7 +2094,7 @@
                                         },
                                         "nickname": {
                                             "type": "string",
-                                            "example": "usuario123"
+                                            "example": "usuari123"
                                         },
                                         "avatar": {
                                             "type": "string",
@@ -2187,14 +2107,14 @@
                         }
                     },
                     "404": {
-                        "description": "No se ha encontrado el usuario",
+                        "description": "No s'ha trobat l'usuari",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No se ha encontrado el usuario"
+                                            "example": "No s'ha trobat l'usuari"
                                         }
                                     },
                                     "type": "object"
@@ -2203,14 +2123,14 @@
                         }
                     },
                     "401": {
-                        "description": "No autorizado",
+                        "description": "No autoritzat",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Token no proporcionado en los encabezados."
+                                            "example": "Token no proporcionat en els encapçalaments."
                                         }
                                     },
                                     "type": "object"
