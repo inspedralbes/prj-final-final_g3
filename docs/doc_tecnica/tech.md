@@ -75,53 +75,73 @@ La pàgina d'esdeveniments es on es llisten els esdeveniments proveïts per Tick
 
 La pàgina d'un esdeveniment mostra informació més detallada de l'esdeveniment que no es troba a la pantalla inicial. També trobem a la gent que segueix al esdeveniment.
 
+S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
+
 <img src="../images/pages/eventID.png" />
 
 ### [/join](https://spottunes.daw.inspedralbes.cat/join)
 
+La pàgina a la ruta `/join` es la pantalla on trobem les opcions per registrar-se o iniciar sessió.
+
 <img src="../images/pages/join.png" />
 
-### [/auth/callback/google](https://spottunes.daw.inspedralbes.cat/auth/callback/google)
+### [/auth/callback/google](https://spottunes.daw.inspedralbes.cat/auth/callback/google) i [/auth/callback/spotify](https://spottunes.daw.inspedralbes.cat/auth/callback/spotify)
 
-### [/auth/callback/spotify](https://spottunes.daw.inspedralbes.cat/auth/callback/spotify)
-
-### [/login](https://spottunes.daw.inspedralbes.cat/login)
-
-<img src="../images/pages/login.png" />
-
-### [/register](https://spottunes.daw.inspedralbes.cat/register)
-
-<img src="../images/pages/register.png" />
+Les dues pantalles de callback son, visualment, només un loader per s'encarreguen de prendre les dades del login de Spotify i Google i redirigir a `/completar` per tal de completar les dades que faltin i guardar l'usuari en base de dades.
 
 ### [/completar](https://spottunes.daw.inspedralbes.cat/completar)
 
+A aquesta pantalla podrem escollir la nostra contrasenya, l'usuari que tindrem (@) i la data de naixement després del login de Spotify i el de Google.
+
 <img src="../images/pages/completar.png" />
 
+### [/login](https://spottunes.daw.inspedralbes.cat/login) i [/register](https://spottunes.daw.inspedralbes.cat/register)
+
+El login i el registre s'utitlizen per accedir al teu usuari de la pàgina.
+
+<img src="../images/pages/login.png" />
+
+<img src="../images/pages/register.png" />
+
 ### [/chats](https://spottunes.daw.inspedralbes.cat/chats)
+
+Aquesta es la pantalla on es trobaran els xats existents i el filtre per crear un xat nou amb un usuari registrar. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
 
 <img src="../images/pages/chats.png" />
 
 ### [/chat](https://spottunes.daw.inspedralbes.cat/chat)
 
+Es la pantalla on es veurà el xat amb un usuari. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
+
 <img src="../images/pages/chat.png" />
 
 ### [/perfil](https://spottunes.daw.inspedralbes.cat/perfil)
+
+Es la pantalla del teu perfil on pots trobar els teus posts, els esdeveniments que segueixes i els teus seguidors/seguits. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
 
 <img src="../images/pages/perfil.png" />
 
 ### [/perfil/[username]](https://spottunes.daw.inspedralbes.cat/perfil/APorLa15)
 
+Es la pantalla del perfil d'un altre usuari on pots veure els seus posts, els seus esdeveniments i els seus seguidors/seguits. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
+
 <img src="../images/pages/otherPerfil.png" />
 
 ### [/perfil/[username]/[type]](https://spottunes.daw.inspedralbes.cat/perfil/APorLa15/followers)
+
+A aquesta pantalla es podran veure els seguidors/seguits de l'usuari indicat. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
 
 <img src="../images/pages/type.png" />
 
 ### [/post](https://spottunes.daw.inspedralbes.cat/post)
 
+Pantalla per escriure un post i pujar-lo. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
+
 <img src="../images/pages/posts.png" />
 
 ### [/post/[id]](https://spottunes.daw.inspedralbes.cat/post/1)
+
+Aquí es pot visualitzar un post i els seus comentaris. També pots comentar aquest post. S'ha d'haver iniciat sessió per accedir a aquesta pantalla.
 
 <img src="../images/pages/post.png" />
 
@@ -409,7 +429,7 @@ server {
 
 ## Disseny
 
-#### Com podriem cambiar el següent?
+### Com podriem cambiar el següent?
 
 - Color de fons de la pàgina inicial:
 
