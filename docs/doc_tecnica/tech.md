@@ -428,7 +428,7 @@ server {
 - `/node/` i `/socket/`: Redirigeixen respectivament als ports 8086 i 8085, utilitzant WebSocket (al port 8086) per a la comunicació en temps real.
 
 ## Disseny
-### Per què aquesta paleta de colors?
+### Per què aquesta paleta de colors ?
 Nuestra paleta de colores esta formada por:
 - Negro: #212121
 - Color primario: #FF8A1E
@@ -437,7 +437,7 @@ Hemos elegido el negro como color de fondo principal. Este tono oscuro es ideal 
 
 El color primario de nuestra aplicación es el naranja. Este color vibrante y energético simboliza entusiasmo, creatividad y diversión, cualidades que son fundamentales en los eventos y conciertos. El naranja también proporciona un contraste llamativo contra el fondo negro, destacando botones, enlaces y otros elementos interactivos, facilitando la navegación y mejorando la usabilidad de la aplicación.
 
-### Per què aquest disseny?
+### Per què aquest disseny ?
 El diseño de nuestra aplicación se ha inspirado en las interfaces de usuario de las redes sociales más grandes y populares como Twitter, Instagram y TikTok. Estas plataformas han establecido un estándar en cuanto a la usabilidad y la estética, y hemos adoptado elementos clave de sus diseños para asegurar que nuestra aplicación sea intuitiva y atractiva para los usuarios.
 
 Las secciones de la aplicación, como la pantalla de inicio, listados de eventos, mensajes y perfiles, están diseñadas para ser intuitivas y visualmente atractivas, utilizando iconos simples y una tipografía legible para garantizar una fácil navegación y comprensión.
