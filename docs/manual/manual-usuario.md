@@ -72,7 +72,7 @@ La pantalla de inici <img src="../images/inicio.png" alt="Inici" width="20" heig
 2. Fes clic a "Editar el perfil".
 3. Afegeix o canvia la teva foto, nom d'usuari, nom i cognoms...
 
-<img src="../images/actualizar.PNG" alt="" width="1000" height="340">
+<img src="../images/actualizar.PNG" alt="" width="1000" height="540">
 
 ## Cercar i Connectar amb Usuaris
 
