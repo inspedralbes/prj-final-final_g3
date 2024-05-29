@@ -75,8 +75,6 @@ export default {
                 if (this.chats.some(c => c._id === chat._id)) {
                     const index = this.chats.findIndex(c => c._id === chat._id);
                     this.chats.splice(index, 1, chat);
-                    const toast = useToast();
-                    toast.add({ title: 'Has rebut un nou missatge' });
                 } else {
                     this.chats.push(chat);
                 }
