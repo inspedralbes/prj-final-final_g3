@@ -1,12 +1,6 @@
 # Documentació bàsica del projecte
-Alguns dels punts que han de quedar explicats:
- * Objectius
- * Arquitectura bàsica
-   * Tecnologies utilitzades
-   * Interrelació entre els diversos components
- * Com crees l'entorn de desenvolupament
- * Com desplegues l'aplicació a producció
- * Llistat d'endpoints de l'API de backend
-    * Rutes
-   * Exemples de JSON de peticó
-   * Exemples de JSON de resposta i els seus codis d'estat 200? 404?
+
+La documentació tècnica del projecte es troba al següent enllaç:
+[Documentació tècnica](doc_tecnica)
+
+- La documentació de desplegament aquí: [Documentació de desplegament](doc_tecnica#desplegament)
