@@ -76,7 +76,7 @@ class EventController extends Controller
  *          description="Criterios de búsqueda por ubicación",
  *          @OA\JsonContent(
  *              type="object",
- *              required={"countries", "cities", "venues"},
+ *              required={"countries", "cities"},
  *              @OA\Property(
  *                  property="countries",
  *                  type="array",
@@ -161,7 +161,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'countries' => 'required|array',
             'cities' => 'required|array',
-            'venues' => 'required|array',
+            'venues' => 'array',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
