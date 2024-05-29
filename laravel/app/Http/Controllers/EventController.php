@@ -76,7 +76,7 @@ class EventController extends Controller
  *          description="Criterios de búsqueda por ubicación",
  *          @OA\JsonContent(
  *              type="object",
- *              required={"countries", "cities", "venues"},
+ *              required={"countries", "cities"},
  *              @OA\Property(
  *                  property="countries",
  *                  type="array",
@@ -161,7 +161,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'countries' => 'required|array',
             'cities' => 'required|array',
-            'venues' => 'required|array',
+            'venues' => 'array',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
@@ -548,14 +548,14 @@ class EventController extends Controller
  */
     public function show(Request $request)
     {
+        // Validar que todos los elementos en $idsArray sean números
+        $idsArray = $request->input('ids');
 
         // Validar que el array no esté vacío
         if (empty($idsArray)) {
             return response()->json(['message' => 'No IDs provided'], 400);
         }
 
-        // Validar que todos los elementos en $idsArray sean números
-        $idsArray = $request->input('ids');
 
         // Validar que todos los elementos en $idsArray sean números
         if (array_filter($idsArray, 'is_numeric') !== $idsArray) {

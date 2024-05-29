@@ -1,6 +1,6 @@
 <template>
     <section class="flex justify-between items-center">
-        <NuxtLink :to="`/perfil/${follower.nickname}`">
+        <button @click="goToProfile">
             <article class="flex gap-2">
                 <img class="rounded-full size-14" :src="getImage" alt="">
                 <div class="flex flex-col justify-center items-start">
@@ -8,7 +8,7 @@
                     <p class="text-sm text-gray-300">@{{ follower.nickname }}</p>
                 </div>
             </article>
-        </NuxtLink>
+        </button>
 
         <div class="flex items-center gap-3">
             <div v-if="loader" class="flex justify-center items-center">
@@ -75,6 +75,10 @@ export default {
             } else {
                 this.follower.follow = false;
             }
+        },
+        goToProfile() {
+            this.store.setOtherUserInfo(this.follower)
+            this.$router.push(`/perfil/${this.follower.nickname}`);
         }
     },
     async mounted() {
