@@ -106,6 +106,8 @@ Rep el chatId i el desconecta de la room amb aquell chatId
 
 ### SQL
 
+<img src="../images/estructura_sql.png" alt="Estructura del SQL" />
+
 ### Mongo
 
 ## Esquema de components
