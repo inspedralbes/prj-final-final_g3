@@ -73,12 +73,13 @@ export default {
     mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
         if (this.checkUser) {
-            if (!this.followers) this.getFollowers();
-            if (!this.following) this.getFollowing();
+            this.getFollowers();
+            this.getFollowing();
         } else {
-            if (!this.followers) this.getOtherFollowers();
-            if (!this.following) this.getOtherFollowing();
+            this.getOtherFollowers();
+            this.getOtherFollowing();
         }
+        console.log(this.checkUser)
         console.log(this.doThis)
 
     },
