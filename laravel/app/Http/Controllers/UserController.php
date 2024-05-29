@@ -15,61 +15,61 @@ use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
-    /**
-     * @OA\Post(
-     *     path="/api/login",
-     *     summary="Iniciar sesión de usuario",
-     *     description="Inicia sesión de un usuario con correo electrónico y contraseña.",
-     *     tags={"Autenticació"},
-     *     @OA\Parameter(
-     *         name="email",
-     *         in="query",
-     *         required=true,
-     *         description="Correo electrónico del usuario",
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="password",
-     *         in="query",
-     *         required=true,
-     *         description="Contraseña del usuario",
-     *         @OA\Schema(
-     *             type="string",
-     *             format="password"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Inicio de sesión exitoso",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="success",
-     *                 type="string",
-     *                 example="Has iniciado sesión"
-     *             ),
-     *             @OA\Property(
-     *                 property="token",
-     *                 type="string",
-     *                 example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Error en la solicitud",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="message",
-     *                 type="string"
-     *             )
-     *         )
-     *     )
-     * )
-     */
+   /**
+ * @OA\Post(
+ *     path="/api/login",
+ *     summary="Iniciar sessió d'usuari",
+ *     description="Inicia sessió d'un usuari amb correu electrònic i contrasenya.",
+ *     tags={"Autenticació"},
+ *     @OA\Parameter(
+ *         name="email",
+ *         in="query",
+ *         required=true,
+ *         description="Correu electrònic de l'usuari",
+ *         @OA\Schema(
+ *             type="string"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="password",
+ *         in="query",
+ *         required=true,
+ *         description="Contrasenya de l'usuari",
+ *         @OA\Schema(
+ *             type="string",
+ *             format="password"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Inici de sessió exitós",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="success",
+ *                 type="string",
+ *                 example="Has iniciat sessió"
+ *             ),
+ *             @OA\Property(
+ *                 property="token",
+ *                 type="string",
+ *                 example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Error en la sol·licitud",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="message",
+ *                 type="string"
+ *             )
+ *         )
+ *     )
+ * )
+ */
 
     public function login(Request $request)
     {
@@ -104,99 +104,100 @@ class UserController extends Controller
         }
     }
     /**
-     * @OA\Post(
-     *     path="/api/register",
-     *     summary="Registro de usuario",
-     *     description="Registra un nuevo usuario con los datos proporcionados.",
-     *     tags={"Autenticació"},
-     *     @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         required=true,
-     *         description="Nombre del usuario",
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="surnames",
-     *         in="query",
-     *         required=true,
-     *         description="Apellidos del usuario",
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="nickname",
-     *         in="query",
-     *         required=true,
-     *         description="Alias o nombre de usuario",
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="email",
-     *         in="query",
-     *         required=true,
-     *         description="Correo electrónico del usuario",
-     *         @OA\Schema(
-     *             type="string",
-     *             format="email"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="birthdate",
-     *         in="query",
-     *         required=true,
-     *         description="Fecha de nacimiento del usuario (formato: YYYY-MM-DD)",
-     *         @OA\Schema(
-     *             type="date",
-     *             format="date"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="password",
-     *         in="query",
-     *         required=true,
-     *         description="Contraseña del usuario",
-     *         @OA\Schema(
-     *             type="string",
-     *             format="password"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Registro exitoso",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="success",
-     *                 type="string",
-     *                 example="Usuario creado correctamente"
-     *             ),
-     *             @OA\Property(
-     *                 property="token",
-     *                 type="string",
-     *                 example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Error en la solicitud",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="errors",
-     *                 type="array",
-     *                 @OA\Items(type="string"),
-     *             )
-     *         )
-     *     )
-     * )
-     */
+ * @OA\Post(
+ *     path="/api/register",
+ *     summary="Registre d'usuari",
+ *     description="Registra un nou usuari amb les dades proporcionades.",
+ *     tags={"Autenticació"},
+ *     @OA\Parameter(
+ *         name="name",
+ *         in="query",
+ *         required=true,
+ *         description="Nom de l'usuari",
+ *         @OA\Schema(
+ *             type="string"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="surnames",
+ *         in="query",
+ *         required=true,
+ *         description="Cognoms de l'usuari",
+ *         @OA\Schema(
+ *             type="string"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="nickname",
+ *         in="query",
+ *         required=true,
+ *         description="Àlies o nom d'usuari",
+ *         @OA\Schema(
+ *             type="string"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="email",
+ *         in="query",
+ *         required=true,
+ *         description="Correu electrònic de l'usuari",
+ *         @OA\Schema(
+ *             type="string",
+ *             format="email"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="birthdate",
+ *         in="query",
+ *         required=true,
+ *         description="Data de naixement de l'usuari (format: AAAA-MM-DD)",
+ *         @OA\Schema(
+ *             type="string",
+ *             format="date"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="password",
+ *         in="query",
+ *         required=true,
+ *         description="Contrasenya de l'usuari",
+ *         @OA\Schema(
+ *             type="string",
+ *             format="password"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Registre exitós",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="success",
+ *                 type="string",
+ *                 example="Usuari creat correctament"
+ *             ),
+ *             @OA\Property(
+ *                 property="token",
+ *                 type="string",
+ *                 example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Error en la sol·licitud",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="errors",
+ *                 type="array",
+ *                 @OA\Items(type="string"),
+ *             )
+ *         )
+ *     )
+ * )
+ */
+
 
     public function register(Request $request)
     {
@@ -242,26 +243,27 @@ class UserController extends Controller
         return response()->json(['success' => 'Usuari creat correctament', 'data' => $response], 200);
     }
     /**
-     * @OA\Post(
-     *      path="/api/logout",
-     *      operationId="logout",
-     *      tags={"Autenticació"},
-     *      summary="Cerrar sesión",
-     *      description="Cierra la sesión del usuario actual y revoca todos los tokens de acceso asociados.",
-     *      security={{"bearer_token":{}}},
-     *      @OA\Response(
-     *          response=200,
-     *          description="Sesión cerrada exitosamente",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="success", type="string", example="Has cerrado sesión"),
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="No autorizado",
-     *      ),
-     * )
-     */
+ * @OA\Post(
+ *      path="/api/logout",
+ *      operationId="logout",
+ *      tags={"Autenticació"},
+ *      summary="Tancar sessió",
+ *      description="Tanca la sessió de l'usuari actual i revoca tots els tokens d'accés associats.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\Response(
+ *          response=200,
+ *          description="Sessió tancada amb èxit",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="success", type="string", example="Has tancat sessió"),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autoritzat",
+ *      ),
+ * )
+ */
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -270,51 +272,52 @@ class UserController extends Controller
 
     
 
-    /**
-     * @OA\Put(
-     *      path="/api/completeInfo",
-     *      operationId="completeInfo",
-     *      tags={"Autenticació"},
-     *      summary="Completar información de usuario",
-     *      description="Completa la información de un usuario, como su fecha de nacimiento y apodo.",
-     *      security={{"bearer_token":{}}},
-     *      @OA\RequestBody(
-     *          required=true,
-     *          description="Datos de usuario para completar",
-     *          @OA\MediaType(
-     *              mediaType="application/x-www-form-urlencoded",
-     *              @OA\Schema(
-     *                  required={"birthdate", "nickname"},
-     *                  type="object",
-     *                  @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
-     *                  @OA\Property(property="nickname", type="string", example="usuario123"),
-     *              ),
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Información de usuario completada exitosamente",
-     *          @OA\JsonContent(
-     *              type="boolean",
-     *              example=true,
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=400,
-     *          description="Error de validación",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="errors", type="array", @OA\Items(type="string")),
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="No autorizado",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
-     *          )
-     *      ),
-     * )
-     */
+   /**
+ * @OA\Put(
+ *      path="/api/completeInfo",
+ *      operationId="completeInfo",
+ *      tags={"Autenticació"},
+ *      summary="Completar informació d'usuari",
+ *      description="Completa la informació d'un usuari, com la seva data de naixement i àlies.",
+ *      security={{"bearer_token":{}}},
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="Dades d'usuari per completar",
+ *          @OA\MediaType(
+ *              mediaType="application/x-www-form-urlencoded",
+ *              @OA\Schema(
+ *                  required={"birthdate", "nickname"},
+ *                  type="object",
+ *                  @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
+ *                  @OA\Property(property="nickname", type="string", example="usuari123"),
+ *              ),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Informació d'usuari completada amb èxit",
+ *          @OA\JsonContent(
+ *              type="boolean",
+ *              example=true,
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Error de validació",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="errors", type="array", @OA\Items(type="string")),
+ *          ),
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autoritzat",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat en els encapçalaments.")
+ *          )
+ *      ),
+ * )
+ */
+
     public function completeInfo(Request $request)
     {
         $token = $request->header('Authorization');
@@ -347,12 +350,12 @@ class UserController extends Controller
  *      path="/api/updateInfo",
  *      operationId="updateInfo",
  *      tags={"Autenticació"},
- *      summary="Actualizar información del usuario",
- *      description="Actualiza la información del usuario, incluyendo nombre, apellidos, apodo, correo electrónico, fecha de nacimiento y avatar.",
+ *      summary="Actualitzar informació de l'usuari",
+ *      description="Actualitza la informació de l'usuari, incloent nom, cognoms, àlies, correu electrònic, data de naixement i avatar.",
  *      security={{"bearer_token":{}}},
  *      @OA\RequestBody(
  *          required=true,
- *          description="Datos del usuario para actualizar",
+ *          description="Dades de l'usuari per actualitzar",
  *          @OA\MediaType(
  *              mediaType="application/x-www-form-urlencoded",
  *              @OA\Schema(
@@ -360,8 +363,8 @@ class UserController extends Controller
  *                  type="object",
  *                  @OA\Property(property="name", type="string", example="Juan"),
  *                  @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
- *                  @OA\Property(property="nickname", type="string", example="usuario123"),
- *                  @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                  @OA\Property(property="nickname", type="string", example="usuari123"),
+ *                  @OA\Property(property="email", type="string", format="email", example="usuari@example.com"),
  *                  @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
  *                  @OA\Property(property="avatar", type="string", format="base64", example="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."),
  *              ),
@@ -369,34 +372,35 @@ class UserController extends Controller
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Información de usuario actualizada exitosamente",
+ *          description="Informació de l'usuari actualitzada amb èxit",
  *          @OA\JsonContent(
  *              type="object",
  *              @OA\Property(property="id", type="integer", example=1),
  *              @OA\Property(property="name", type="string", example="Juan"),
  *              @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
- *              @OA\Property(property="nickname", type="string", example="usuario123"),
- *              @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *              @OA\Property(property="nickname", type="string", example="usuari123"),
+ *              @OA\Property(property="email", type="string", format="email", example="usuari@example.com"),
  *              @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
  *              @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
  *          ),
  *      ),
  *      @OA\Response(
  *          response=400,
- *          description="Error de validación",
+ *          description="Error de validació",
  *          @OA\JsonContent(
  *              @OA\Property(property="errors", type="array", @OA\Items(type="string")),
  *          ),
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat en els encapçalaments.")
  *          )
  *      ),
  * )
  */
+
 
 
     public function updateInfo(Request $request)
@@ -471,27 +475,27 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
     
-    /**
+/**
  * @OA\Post(
  *      path="/api/apps/searchUsers",
  *      operationId="searchUsers",
  *      tags={"Usuaris"},
- *      summary="Buscar usuarios",
- *      description="Busca usuarios por su apodo.",
+ *      summary="Cerca d'usuaris",
+ *      description="Cerca d'usuaris pel seu àlies.",
  *      security={{"bearer_token":{}}},
  *      @OA\Parameter(
  *          name="param",
  *          in="query",
  *          required=true,
- *          description="Parámetro de búsqueda para el apodo del usuario",
+ *          description="Paràmetre de cerca per al àlies de l'usuari",
  *          @OA\Schema(
  *              type="string",
- *              example="usuario123"
+ *              example="usuari123"
  *          )
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Resultados de la búsqueda",
+ *          description="Resultats de la cerca",
  *          @OA\JsonContent(
  *              type="array",
  *              @OA\Items(
@@ -499,8 +503,8 @@ class UserController extends Controller
  *                  @OA\Property(property="id", type="integer", example=1),
  *                  @OA\Property(property="name", type="string", example="Juan"),
  *                  @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
- *                  @OA\Property(property="nickname", type="string", example="usuario123"),
- *                  @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                  @OA\Property(property="nickname", type="string", example="usuari123"),
+ *                  @OA\Property(property="email", type="string", format="email", example="usuari@example.com"),
  *                  @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
  *                  @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
  *              )
@@ -508,27 +512,28 @@ class UserController extends Controller
  *      ),
  *      @OA\Response(
  *          response=201,
- *          description="No hay resultados en tu búsqueda",
+ *          description="No hi ha resultats en la teva cerca",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="No hay resultados en tu búsqueda")
+ *              @OA\Property(property="message", type="string", example="No hi ha resultats en la teva cerca")
  *          )
  *      ),
  *      @OA\Response(
  *          response=202,
- *          description="No hay resultados en tu búsqueda",
+ *          description="No hi ha resultats en la teva cerca",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="No hay resultados en tu búsqueda")
+ *              @OA\Property(property="message", type="string", example="No hi ha resultats en la teva cerca")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat en els encapçalaments.")
  *          )
  *      ),
  * )
  */
+
 
     public function searchUsers(Request $request)
     {
@@ -543,39 +548,39 @@ class UserController extends Controller
         return response()->json($users, 200);
     }
 
-    /**
+   /**
  * @OA\Get(
  *      path="/api/apps/checkEmail",
  *      operationId="checkEmail",
  *      tags={"Usuaris"},
- *      summary="Verificar disponibilidad de correo electrónico",
- *      description="Verifica si un correo electrónico ya está en uso. Si el correo está en uso, devuelve los detalles del usuario y un token de acceso. Si no está en uso, indica que el correo está disponible.",
+ *      summary="Verificar disponibilitat de correu electrònic",
+ *      description="Verifica si un correu electrònic ja està en ús. Si el correu està en ús, retorna els detalls de l'usuari i un token d'accés. Si no està en ús, indica que el correu està disponible.",
  *      security={{"bearer_token":{}}},
  *      @OA\RequestBody(
  *          required=true,
- *          description="Correo electrónico a verificar",
+ *          description="Correu electrònic a verificar",
  *          @OA\MediaType(
  *              mediaType="application/x-www-form-urlencoded",
  *              @OA\Schema(
  *                  required={"email"},
  *                  type="object",
- *                  @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                  @OA\Property(property="email", type="string", format="email", example="usuari@example.com"),
  *              ),
  *          ),
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="El email ya está en uso, haciendo Login",
+ *          description="El correu electrònic ja està en ús, iniciant sessió",
  *          @OA\JsonContent(
  *              type="object",
- *              @OA\Property(property="success", type="string", example="El email ya está en uso, haciendo Login"),
+ *              @OA\Property(property="success", type="string", example="El correu electrònic ja està en ús, iniciant sessió"),
  *              @OA\Property(property="data", type="object",
  *                  @OA\Property(property="user", type="object",
  *                      @OA\Property(property="id", type="integer", example=1),
  *                      @OA\Property(property="name", type="string", example="Juan"),
  *                      @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
- *                      @OA\Property(property="nickname", type="string", example="usuario123"),
- *                      @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *                      @OA\Property(property="nickname", type="string", example="usuari123"),
+ *                      @OA\Property(property="email", type="string", format="email", example="usuari@example.com"),
  *                      @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
  *                      @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
  *                  ),
@@ -585,28 +590,27 @@ class UserController extends Controller
  *      ),
  *      @OA\Response(
  *          response=202,
- *          description="El email está disponible",
+ *          description="El correu electrònic està disponible",
  *          @OA\JsonContent(
- *              @OA\Property(property="success", type="string", example="El email está disponible")
+ *              @OA\Property(property="success", type="string", example="El correu electrònic està disponible")
  *          )
  *      ),
  *      @OA\Response(
  *          response=400,
- *          description="Solicitud incorrecta",
+ *          description="Sol·licitud incorrecta",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Solicitud incorrecta")
+ *              @OA\Property(property="message", type="string", example="Sol·licitud incorrecta")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat en els encapçalaments.")
  *          )
  *      ),
  * )
  */
-
 
 
     public function checkEmail(Request $request)
@@ -625,19 +629,19 @@ class UserController extends Controller
         }
     }
 
-    /**
+ /**
  * @OA\Get(
  *      path="/api/getUser",
  *      operationId="getUser",
  *      tags={"Usuaris"},
- *      summary="Obtener información del usuario",
- *      description="Obtiene la información de un usuario por su ID.",
+ *      summary="Obtenir informació de l'usuari",
+ *      description="Obté la informació d'un usuari pel seu ID.",
  *      security={{"bearer_token":{}}},
  *      @OA\Parameter(
  *          name="user_id",
  *          in="query",
  *          required=true,
- *          description="ID del usuario a obtener",
+ *          description="ID de l'usuari a obtenir",
  *          @OA\Schema(
  *              type="integer",
  *              example=1
@@ -645,30 +649,30 @@ class UserController extends Controller
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Información del usuario obtenida exitosamente",
+ *          description="Informació de l'usuari obtinguda exitosament",
  *          @OA\JsonContent(
  *              type="object",
  *              @OA\Property(property="id", type="integer", example=1),
  *              @OA\Property(property="name", type="string", example="Juan"),
  *              @OA\Property(property="surnames", type="string", example="Pérez Gómez"),
- *              @OA\Property(property="nickname", type="string", example="usuario123"),
- *              @OA\Property(property="email", type="string", format="email", example="usuario@example.com"),
+ *              @OA\Property(property="nickname", type="string", example="usuari123"),
+ *              @OA\Property(property="email", type="string", format="email", example="usuari@example.com"),
  *              @OA\Property(property="birthdate", type="string", format="date", example="1990-01-01"),
  *              @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
  *          )
  *      ),
  *      @OA\Response(
  *          response=404,
- *          description="No se pudo encontrar el usuario",
+ *          description="No s'ha pogut trobar l'usuari",
  *          @OA\JsonContent(
- *              @OA\Property(property="error", type="string", example="No se pudo encontrar el usuario")
+ *              @OA\Property(property="error", type="string", example="No s'ha pogut trobar l'usuari")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat en els encapçalaments.")
  *          )
  *      ),
  * )
@@ -700,41 +704,41 @@ class UserController extends Controller
  *      path="/api/users/search/{username}",
  *      operationId="searchByUsername",
  *      tags={"Usuaris"},
- *      summary="Buscar usuario por nombre de usuario",
- *      description="Busca un usuario por su nombre de usuario.",
+ *      summary="Cercar usuari per nom d'usuari",
+ *      description="Cerca un usuari pel seu nom d'usuari.",
  *      security={{"bearer_token":{}}},
  *      @OA\Parameter(
  *          name="username",
  *          in="path",
  *          required=true,
- *          description="Nombre de usuario a buscar",
+ *          description="Nom d'usuari a cercar",
  *          @OA\Schema(
  *              type="string"
  *          )
  *      ),
  *      @OA\Response(
  *          response=200,
- *          description="Usuario encontrado exitosamente",
+ *          description="Usuari trobat exitosament",
  *          @OA\JsonContent(
  *              type="object",
  *              @OA\Property(property="id", type="integer", example=1),
  *              @OA\Property(property="name", type="string", example="Juan"),
- *              @OA\Property(property="nickname", type="string", example="usuario123"),
+ *              @OA\Property(property="nickname", type="string", example="usuari123"),
  *              @OA\Property(property="avatar", type="string", example="images/unique_image_name.png"),
  *          )
  *      ),
  *      @OA\Response(
  *          response=404,
- *          description="No se ha encontrado el usuario",
+ *          description="No s'ha trobat l'usuari",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="No se ha encontrado el usuario")
+ *              @OA\Property(property="message", type="string", example="No s'ha trobat l'usuari")
  *          )
  *      ),
  *      @OA\Response(
  *          response=401,
- *          description="No autorizado",
+ *          description="No autoritzat",
  *          @OA\JsonContent(
- *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *              @OA\Property(property="message", type="string", example="Token no proporcionat en els encapçalaments.")
  *          )
  *      ),
  * )
