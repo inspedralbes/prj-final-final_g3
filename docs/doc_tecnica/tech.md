@@ -60,6 +60,7 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 ## Rutes de l'aplicació
 
 ## Esquema d'esdeveniments (sockets)
+
 Els sockets de la aplicació només els utilitzem per el xat, l'esquema es el següent:
 <img src="../images/EsquemaSocket.PNG" alt="" >
 
@@ -69,26 +70,25 @@ Els sockets de la aplicació només els utilitzem per el xat, l'esquema es el se
 
 Quant inicia sessió o es registra fa aquest emit per vincular l'id d'usuari amb el del socket y ho guardem a un array per que quedi vinculat
 
-
 ## `socket.emit("joinChat")`
 
 ### `socket.emit("message")`
 
 Rep el chatId i l'uneix a una room que el nom es aquest chatId per enviar missatges a l'altre persona
 
-## Servidor 
+## Servidor
 
 ### `socket.emit("message")`
 
 Rep el missatge i l'id del contacte. El primer que fa segons com estigui la room o l'usuari connecta a l'aplicació li posa un estat o un altre al missatge que hem rebut. Després inserta el missatge a la base de dades, una vegada insertat si es el primer missatge del chat l'uneix a la room del chat.
 
-## Client 
+## Client
 
 ### `socket.emit("notification")`
 
 Envia el missatge per poder mostrarlo per pantalla en el chat. En cas de no ser 2 persones a la room envia el següent
 
-### Servidor 
+### Servidor
 
 Indica al front que com ho són 2 usuaris a la room pero que si esta connectat li salti una notificació indicant-li que ha rebut un nou missatge
 
@@ -98,10 +98,9 @@ Indica al front que com ho són 2 usuaris a la room pero que si esta connectat l
 
 Envia el chatId
 
-### Servidor 
+### Servidor
 
 Rep el chatId i el desconecta de la room amb aquell chatId
-
 
 ## Esquema de la base de dades
 
@@ -209,8 +208,9 @@ Aquest component conté un mapa per poder filtrar els concerts per distància de
 <img src="../images/Map.PNG" alt="" >
 
 ## Documentació de frontend
-* Porque de Next a Nuxt
-* Codigo que estemos orgullosos
+
+- Porque de Next a Nuxt
+- Codigo que estemos orgullosos
 
 ## Documentació de backend
 
@@ -322,15 +322,14 @@ server {
 - `/node/` i `/socket/`: Redirigeixen respectivament als ports 8086 i 8085, utilitzant WebSocket (al port 8086) per a la comunicació en temps real.
 
 ## Disseny
+
 #### Com podriem cambiar el següent ?
-* Color de fons de la pàgina inicial:
+
+- Color de fons de la pàgina inicial:
 
   Al fitxer "nuxt\tailwind.config.js" hauriem de cambiar el color de la variable **background**.
 
-
-* Color de fons dels avatars en el rànquing:
-
-
+- Color de fons dels avatars en el rànquing:
 
 [Figma de Spottunes](https://www.figma.com/design/S5rihmdHkzsXtgUpUy0o3r/SPOTTUNES?node-id=9-29&t=NTknGM1EJcnqoSj9-1)
 
@@ -480,8 +479,8 @@ services:
 Aquí s'adjunta la `Github Action` que s'està utilitzant actualment per desplegar la pàgina web a servidor.
 
 ```
-name: Spottunes Deploy Actions
-run-name: ${{ github.actor }} is deploying Spottunes 🚀
+name: Spottunes Deploy on Production Actions
+run-name: ${{ github.actor }} is deploying Spottunes in Server 🚀
 on:
   push:
     branches:
@@ -541,11 +540,16 @@ jobs:
           sed -i 's/DB_USERNAME=/DB_USERNAME=${{ secrets.DB_USERNAME }}/g' .env
           sed -i 's#DB_PASSWORD=#DB_PASSWORD=${{ secrets.DB_PASSWORD }}#g' .env
           cd ${{ github.workspace }}
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d laravel ] && sudo rm -r laravel"
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "mkdir laravel"
+          # Cambiar permisos
+          # Cambiar permisos
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 777 laravel/"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 777 laravel/*"
+          #Update laravel
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./laravel/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:laravel
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./laravel/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:laravel
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 laravel/"
+          #Restringir permisos
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 775 laravel/"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 775 laravel/*"
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   deployment-node:
@@ -565,44 +569,87 @@ jobs:
           sed -i 's/DB_DATABASE=/DB_DATABASE=spottunes/g' .env
           sed -i 's/DB_USERNAME=/DB_USERNAME=${{ secrets.DB_USERNAME }}/g' .env
           sed -i 's#DB_PASSWORD=#DB_PASSWORD=${{ secrets.DB_PASSWORD }}#g' .env
+          sed -i 's#MONGO_USER=#MONGO_USER=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}#g' .env
+          sed -i 's#MONGO_PASSWORD=#MONGO_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}#g' .env
           sed -i 's#TICKETMASTER_API_KEY=#TICKETMASTER_API_KEY=${{ secrets.TICKETMASTER_API_KEY }}#g' .env
+          sed -i 's#MAPBOX_TOKEN=#MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
           cd ${{ github.workspace }}
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d node ] && sudo rm -r node"
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "mkdir node"
+          # Eliminar node_modules
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo rm -rf node/node_modules"
+          # Dar permisos a todo
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 777 node/"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 777 node/*"
+          # Update node
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:node
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./node/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:node
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 node/"
+          # Restringir permisos
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 775 node/"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "sudo chmod -R 775 node/*"
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  deployement-next:
+  deployment-nodeChat:
     needs: [fill-docker-compose]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: Conexión al servidor y deploy de next
+      - name: Conexión al servidor y deploy de node
         run: |
           echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
           chmod 600 ~/prod_key.pem
-          cd next
+          cd nodeChat
           cp .env.example .env
-          sed -i 's#NEXT_PUBLIC_SPOTIFY_CLIENT_ID=#NEXT_PUBLIC_SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}#g' .env
-          sed -i 's#NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=#NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}#g' .env
-          sed -i 's#NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=#NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=${{ secrets.SPOTIFY_REDIRECT_URI }}#g' .env
-          sed -i 's#NEXT_PUBLIC_GOOGLE_CLIENT_ID=#NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}#g' .env
-          sed -i 's#NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=#NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}#g' .env
-          sed -i 's#NEXT_PUBLIC_GOOGLE_REDIRECT_URI=#NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}#g' .env
+          sed -i 's#API_URL=#API_URL=${{secrets.MONGO_API_PROD_URL}}#g' .env
           cd ${{ github.workspace }}
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d next ] && sudo rm -r next"
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "mkdir next"
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./next/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:next
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./next/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:next
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 next/"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d nodeChat ] && sudo rm -r nodeChat"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "mkdir nodeChat"
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./nodeChat/* ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:nodeChat
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r ./nodeChat/.env ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:nodeChat
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "chmod -R 775 nodeChat/"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  deployment-nuxt:
+    needs: [fill-docker-compose]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Conexión al servidor y deploy de nuxt
+        run: |
+          echo "${{ secrets.SECRET_KEY }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          cd ${{ github.workspace }}
+          cd nuxt
+          cp .env.example .env
+          npm install
+          npm install -D sass
+          sed -i 's#VITE_APP_ENV=#VITE_APP_ENV=production#g' .env
+          sed -i 's#VITE_APP_API_PROD_URL=#VITE_APP_API_PROD_URL=${{secrets.API_PROD_URL}}#g' .env
+          sed -i 's#VITE_APP_MONGO_API_PROD_URL=#VITE_APP_MONGO_API_PROD_URL=${{secrets.MONGO_API_PROD_URL}}#g' .env
+          sed -i 's#VITE_APP_MONGO_IMG_DEV_URL=#VITE_APP_MONGO_IMG_DEV_URL=${{secrets.MONGO_IMAGE_PROD_URL}}#g' .env
+          sed -i 's#VITE_APP_SPOTIFY_CLIENT_ID=#VITE_APP_SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}#g' .env
+          sed -i 's#VITE_APP_SPOTIFY_CLIENT_SECRET=#VITE_APP_SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}#g' .env
+          sed -i 's#VITE_APP_SPOTIFY_REDIRECT_URI=#VITE_APP_SPOTIFY_REDIRECT_URI=${{ secrets.SPOTIFY_REDIRECT_URI }}#g' .env
+          sed -i 's#VITE_APP_GOOGLE_CLIENT_ID=#VITE_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}#g' .env
+          sed -i 's#VITE_APP_GOOGLE_CLIENT_SECRET=#VITE_APP_GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}#g' .env
+          sed -i 's#VITE_APP_GOOGLE_REDIRECT_URI=#VITE_APP_GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}#g' .env
+          sed -i 's#VITE_APP_MAPBOX_TOKEN=#VITE_APP_MAPBOX_TOKEN=${{ secrets.MAPBOX_TOKEN }}#g' .env
+          sed -i 's#VITE_APP_IMAGE_URL=#VITE_APP_IMAGE_URL=${{ secrets.PROD_IMAGE_URL }}#g' .env
+          npm run build
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/prod_key.pem ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }} "[ -d nuxt ] && sudo rm -r nuxt"
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" -r .output ${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}:nuxt
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   start-docker:
-    needs: [deployment-laravel, deployment-node, deployement-next]
+    needs:
+      [
+        deployment-laravel,
+        deployment-node,
+        deployment-nuxt,
+        deployment-nodeChat,
+      ]
     runs-on: ubuntu-latest
     steps:
       - name: Conexión al servidor y start de docker-compose
@@ -613,3 +660,137 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
 ```
+
+1. **stop-docker**
+
+   - 1.1 **Propòsit**: Atura els contenidors Docker en execució al servidor de producció.
+   - 1.2 **Passos**:
+     - **Checkout del codi**: Descarrega el codi del repositori.
+     - **Connexió al servidor i atura de docker-compose**:
+       - Es connecta al servidor utilitzant SSH.
+       - Atura els contenidors Docker amb `docker compose down`.
+
+2. **fill-docker-compose**
+
+   - 2.1 **Propòsit**: Actualitza el fitxer `docker-compose.yml` amb els secrets necessaris i el puja al servidor.
+   - 2.2 **Dependència**: Aquest job depèn de `stop-docker`.
+   - 2.3 **Passos**:
+     - **Checkout del codi**: Descarrega el codi del repositori.
+     - **Connexió al servidor i modificar docker-compose**:
+       - Actualitza el fitxer `docker-compose.yml` amb els valors dels secrets.
+       - Copia el fitxer actualitzat al servidor mitjançant SCP.
+
+3. **deployment-laravel**
+
+   - 3.1 **Propòsit**: Desplega l'aplicació Laravel al servidor.
+   - 3.2 **Dependència**: Aquest job depèn de `fill-docker-compose`.
+   - 3.3 **Passos**:
+     - **Checkout del codi**: Descarrega el codi del repositori.
+     - **Connexió al servidor i deploy de laravel**:
+       - Configura l'entorn `.env` de Laravel.
+       - Canvia permisos.
+       - Actualitza els fitxers de Laravel al servidor.
+       - Restableix permisos més restrictius.
+
+4. **deployment-node**
+
+   - 4.1 **Propòsit**: Desplega l'aplicació Node.js al servidor.
+   - 4.2 **Dependència**: Aquest job depèn de `fill-docker-compose`.
+   - 4.3 **Passos**:
+     - **Checkout del codi**: Descarrega el codi del repositori.
+     - **Connexió al servidor i deploy de node**:
+       - Configura l'entorn `.env` de l'aplicació Node.js.
+       - Elimina `node_modules`.
+       - Canvia permisos.
+       - Actualitza els fitxers de Node.js al servidor.
+       - Restableix permisos més restrictius.
+
+5. **deployment-nodeChat**
+
+   - 5.1 **Propòsit**: Desplega l'aplicació `nodeChat` al servidor.
+   - 5.2 **Dependència**: Aquest job depèn de `fill-docker-compose`.
+   - 5.3 **Passos**:
+     - **Checkout del codi**: Descarrega el codi del repositori.
+     - **Connexió al servidor i deploy de nodeChat**:
+       - Configura l'entorn `.env`.
+       - Elimina qualsevol directori existent de `nodeChat`.
+       - Crea un de nou.
+       - Copia els fitxers i estableix permisos.
+
+6. **deployment-nuxt**
+
+   - 6.1 **Propòsit**: Desplega l'aplicació Nuxt.js al servidor.
+   - 6.2 **Dependència**: Aquest job depèn de `fill-docker-compose`.
+   - 6.3 **Passos**:
+     - **Checkout del codi**: Descarrega el codi del repositori.
+     - **Connexió al servidor i deploy de nuxt**:
+       - Configura l'entorn `.env` de Nuxt.js.
+       - Instal·la dependències.
+       - Construeix l'aplicació.
+       - Copia els fitxers construïts al servidor.
+
+7. **start-docker**
+   - 7.1 **Propòsit**: Inicia els contenidors Docker al servidor de producció.
+   - 7.2 **Dependència**: Aquest job depèn dels jobs de desplegament (`deployment-laravel`, `deployment-node`, `deployment-nodeChat`, `deployment-nuxt`).
+   - 7.3 **Passos**:
+     - **Connexió al servidor i start de docker-compose**:
+       - Es connecta al servidor utilitzant SSH.
+       - Arrenca els contenidors Docker amb `docker compose up -d`.
+
+#### `Github Secrets`
+
+Els secrets utilitzats en el workflow de desplegament són variables d'entorn que contenen informació sensible necessària per a la configuració i el desplegament de l'aplicació. A continuació es detallen els secrets utilitzats:
+
+1. **SECRET_KEY**: Clau privada utilitzada per establir connexions SSH segures amb el servidor de producció.
+2. **PROD_USER**: Nom d'usuari del servidor de producció.
+3. **PROD_HOST**: Adreça IP o domini del servidor de producció.
+4. **DB_PASSWORD**: Contrasenya per a l'usuari root de la base de dades MySQL.
+5. **DB_USERNAME**: Nom d'usuari de la base de dades MySQL.
+6. **MONGO_INITDB_ROOT_USERNAME**: Nom d'usuari root per a la base de dades MongoDB.
+7. **MONGO_INITDB_ROOT_PASSWORD**: Contrasenya per a l'usuari root de la base de dades MongoDB.
+8. **MONGO_USER**: Nom d'usuari per a l'autenticació bàsica en Mongo Express.
+9. **MONGO_PASSWORD**: Contrasenya per a l'autenticació bàsica en Mongo Express.
+10. **TICKETMASTER_API_KEY**: Clau API per a Ticketmaster.
+11. **MAPBOX_TOKEN**: Token d'autenticació per a Mapbox.
+12. **API_PROD_URL**: URL de l'API de producció.
+13. **MONGO_API_PROD_URL**: URL de l'API MongoDB de producció.
+14. **MONGO_IMAGE_PROD_URL**: URL de les imatges MongoDB de producció.
+15. **SPOTIFY_CLIENT_ID**: Identificador del client per a l'API de Spotify.
+16. **SPOTIFY_CLIENT_SECRET**: Secret del client per a l'API de Spotify.
+17. **SPOTIFY_REDIRECT_URI**: URI de redirecció per a l'autenticació de Spotify.
+18. **GOOGLE_CLIENT_ID**: Identificador del client per a l'API de Google.
+19. **GOOGLE_CLIENT_SECRET**: Secret del client per a l'API de Google.
+20. **GOOGLE_REDIRECT_URI**: URI de redirecció per a l'autenticació de Google.
+21. **PROD_IMAGE_URL**: URL de les imatges de producció.
+
+#### Com aconseguir els tokens
+
+1. **Obtenir el token d'accés de Spotify:**
+
+   - Visita [Spotify for Developers](https://developer.spotify.com/) i inicia sessió o crea un compte.
+   - Crea una nova aplicació al teu panell de control de Spotify Developer.
+   - Obtingues el Client ID i el Client Secret de la teva aplicació.
+   - Configura les redireccions d'URI autoritzades per a la teva aplicació.
+   - Utilitza aquestes credencials per autenticar-te amb l'API de Spotify.
+
+1. **Obtenir el token d'accés de Google:**
+
+   - Accedeix a [Google Cloud Console](https://console.cloud.google.com/) i crea un nou projecte.
+   - Habilita les API necessàries per al teu projecte, com ara l'API de Google Maps.
+   - Crea les claus d'API o configura els ID de client i els secrets de client per a l'autenticació d'OAuth, segons les necessitats.
+   - Configura les URL de redirecció autoritzades per a la teva aplicació.
+   - Utilitza les credencials generades per autenticar-te amb les API de Google.
+
+1. **Obtenir la clau de l'API de Ticketmaster:**
+
+   - Visita el [Ticketmaster Developer Portal](https://developer.ticketmaster.com/) i inicia sessió o crea un compte.
+   - Registra una nova aplicació al portal.
+   - Obtingues la clau de l'API (API Key) proporcionada per Ticketmaster.
+   - Utilitza aquesta clau per autenticar-te amb l'API de Ticketmaster.
+
+1. **Obtenir el token d'accés de Mapbox:**
+   - Accedeix a [Mapbox](https://www.mapbox.com/) i inicia sessió o crea un compte.
+   - Accedeix al teu panell de compte i navega fins a la secció de Tokens.
+   - Crea un nou token d'accés.
+   - Configura els permisos i les restriccions del token segons les necessitats.
+   - Utilitza aquest token per autenticar-te amb l'API de Mapbox a la teva aplicació.
