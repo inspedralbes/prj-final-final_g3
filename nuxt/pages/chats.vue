@@ -18,10 +18,10 @@
             </div>
         </header>
 
-        <div v-for="chat in chats" :key="chat.id" @click="goToChat(chat)">
-            <main class="flex justify-between items-center gap-2">
+        <div v-for="chat in chats" :key="chat.id" @click="goToChat(chat)" class="">
+            <main class="flex justify-between items-center gap-2 my-4">
                 <img class="size-16 rounded-full object-cover" :src=getImage(chat.avatar)>
-                <div class="flex flex-col justify-center items-start gap-1 max-w-64">
+                <div class="flex flex-col justify-center items-start gap-1 w-[80%]">
                     <h2 class="font-bold">{{ chat.nickname }}</h2>
                     <p v-if="chat.messageCount !== 0" class="text-sm">Tens missatges sense llegir</p>
                     <p v-else class="text-sm">{{ chat.lastMessage.content }}</p>
@@ -32,8 +32,8 @@
                         {{ chat.messageCount }}</p>
                 </div>
             </main>
+            <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
         </div>
-        <div class="bg-[#D9D9D9]/20 w-full h-[1px] rounded-full my-4"></div>
     </section>
     <Menu v-if="!loader" />
 </template>
