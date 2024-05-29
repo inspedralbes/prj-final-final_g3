@@ -59,6 +59,7 @@ L'arquitectura de l'aplicació està dissenyada per ser modular i escalable, dis
 
 ## Rutes de l'aplicació
 
+
 ## Esquema d'esdeveniments (sockets)
 Els sockets de la aplicació només els utilitzem per el xat, l'esquema es el següent:
 <img src="../images/EsquemaSocket.PNG" alt="" >
