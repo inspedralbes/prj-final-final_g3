@@ -106,6 +106,8 @@ export default {
     },
     computed: {
         checkUser() {
+            console.log(this.store.userInfo.username, this.user)
+            console.log(this.store.userInfo.username === this.user)
             return this.store.userInfo.username === this.user
         },
     }
