@@ -1,1 +1,1 @@
-Enllaç a la Github Page de la documentació tècnica --> [Documentació tècnica](https://inspedralbes.github.io/prj-final-final_g3/doc_tecnica/tech.html)
+Enllaç a la presentació tècnica del Genialy --> [Enllaç](https://view.genially.com/6656f97d88e6160015def927/presentation-presentacion-spottunes-comercial)
