@@ -323,7 +323,7 @@ server {
 
 ## Disseny
 
-#### Com podriem cambiar el següent ?
+#### Com podriem cambiar el següent?
 
 - Color de fons de la pàgina inicial:
 
@@ -336,6 +336,219 @@ server {
 ## Desplegament
 
 ### Workflow de treball
+
+Per treballar en local en l'aplicació Spottunes ho fem mitjançant Docker. A continuació s'especifica la configuració del `docker-compose.yml`.
+
+#### Configuració del `docker-compose.yml`
+
+```
+services:
+  node:
+    container_name: node
+    image: node:20.8.1-bullseye-slim
+    volumes:
+      - ./node:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - 8080:8080
+    command: sh -c "npm install -g npm@10.7.0 && npm install && npm run dev"
+    depends_on:
+      - db
+
+  nodeChat:
+    container_name: nodeChat
+    image: node:20.8.1-bullseye-slim
+    volumes:
+      - ./nodeChat:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - 8085:8080
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - laravel
+      - nodeMongo
+
+  nodeMongo:
+    container_name: nodeMongo
+    image: node:20.8.1-bullseye-slim
+    volumes:
+      - ./node:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - 8086:8080
+    command: sh -c "npm install && npm run devmongo"
+    depends_on:
+      - mongodb
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 9091:80
+    depends_on:
+      - db
+
+  laravel:
+    container_name: laravel
+    build: ./laravel
+    volumes:
+      - ./laravel:/var/www/html
+    ports:
+      - 8000:80
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    command: /bin/sh -c "composer install --no-interaction && chown -R www-data:www-data * && php artisan migrate --force && apache2-foreground "
+    restart: always
+    depends_on:
+      - db
+
+  next:
+    container_name: next
+    image: node:20.8.1-bullseye-slim
+    working_dir: /usr/src/app
+    volumes:
+      - ./nuxt:/usr/src/app
+    ports:
+      - 3000:3000
+    environment:
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "npm install -g npm@10.7.0 && npm install && npm run dev"
+    depends_on:
+      - node
+
+  db:
+    container_name: db
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: spottunes
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./mysql/dades.sql:/docker-entrypoint-initdb.d/dades.sql
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - ./mongodb_data:/data/db
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    depends_on:
+      - mongodb
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: mongodb
+
+```
+
+#### Environment de Nuxt.js
+
+```
+VITE_APP_ENV=development
+
+VITE_APP_API_DEV_URL=http://localhost:8000/api
+VITE_APP_API_PROD_URL=url-de-produccio
+
+VITE_APP_IMAGE_URL=http://localhost:8000/public
+
+
+VITE_APP_MONGO_API_DEV_URL=http://localhost:8086
+VITE_APP_MONGO_API_PROD_URL=url-de-produccio
+
+VITE_APP_MONGO_IMG_DEV_URL=http://localhost:8086
+VITE_APP_MONGO_IMG_PROD_URL=url-de-produccio
+
+VITE_APP_SPOTIFY_CLIENT_ID=Token ID de Spotify
+VITE_APP_SPOTIFY_CLIENT_SECRET=Token Secret de Spotify
+VITE_APP_SPOTIFY_REDIRECT_URI=http://localhost:3000/auth/callback/spotify
+
+VITE_APP_GOOGLE_CLIENT_ID=Token ID de Google
+VITE_APP_GOOGLE_CLIENT_SECRET=Token Secret de Google
+VITE_APP_GOOGLE_REDIRECT_URI=http://localhost:3000/auth/callback/google
+
+VITE_APP_MAPBOX_TOKEN=Token de Mapbox
+
+VITE_APP_TICKETMASTER_API_KEY=Token de Ticketmaster
+```
+
+#### Environment de NodeChat
+
+```
+API_URL=http://nodeMongo:8080/
+```
+
+#### Environment de Node
+
+```
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=spottunes
+DB_USERNAME=root
+DB_PASSWORD=root
+
+MONGO_USER=root
+MONGO_PASSWORD=root
+
+MAPBOX_TOKEN=Token de Mapbox
+
+TICKETMASTER_API_KEY=Token de Ticketmaster
+```
+
+#### Com aconseguir els tokens
+
+1. **Obtenir el token d'accés de Spotify:**
+
+   - Visita [Spotify for Developers](https://developer.spotify.com/) i inicia sessió o crea un compte.
+   - Crea una nova aplicació al teu panell de control de Spotify Developer.
+   - Obtingues el Client ID i el Client Secret de la teva aplicació.
+   - Configura les redireccions d'URI autoritzades per a la teva aplicació.
+   - Utilitza aquestes credencials per autenticar-te amb l'API de Spotify.
+
+2. **Obtenir el token d'accés de Google:**
+
+   - Accedeix a [Google Cloud Console](https://console.cloud.google.com/) i crea un nou projecte.
+   - Habilita les API necessàries per al teu projecte, com ara l'API de Google Maps.
+   - Crea les claus d'API o configura els ID de client i els secrets de client per a l'autenticació d'OAuth, segons les necessitats.
+   - Configura les URL de redirecció autoritzades per a la teva aplicació.
+   - Utilitza les credencials generades per autenticar-te amb les API de Google.
+
+3. **Obtenir la clau de l'API de Ticketmaster:**
+
+   - Visita el [Ticketmaster Developer Portal](https://developer.ticketmaster.com/) i inicia sessió o crea un compte.
+   - Registra una nova aplicació al portal.
+   - Obtingues la clau de l'API (API Key) proporcionada per Ticketmaster.
+   - Utilitza aquesta clau per autenticar-te amb l'API de Ticketmaster.
+
+4. **Obtenir el token d'accés de Mapbox:**
+   - Accedeix a [Mapbox](https://www.mapbox.com/) i inicia sessió o crea un compte.
+   - Accedeix al teu panell de compte i navega fins a la secció de Tokens.
+   - Crea un nou token d'accés.
+   - Configura els permisos i les restriccions del token segons les necessitats.
+   - Utilitza aquest token per autenticar-te amb l'API de Mapbox a la teva aplicació.
+
+### Desplegament a la web
 
 El desplegament de l'aplicació Spottunes s'ha realitzat utilitzant Oracle Cloud Infrastructure (OCI) i Docker. A continuació les raons per triar OCI:
 
@@ -773,7 +986,7 @@ Els secrets utilitzats en el workflow de desplegament són variables d'entorn qu
    - Configura les redireccions d'URI autoritzades per a la teva aplicació.
    - Utilitza aquestes credencials per autenticar-te amb l'API de Spotify.
 
-1. **Obtenir el token d'accés de Google:**
+2. **Obtenir el token d'accés de Google:**
 
    - Accedeix a [Google Cloud Console](https://console.cloud.google.com/) i crea un nou projecte.
    - Habilita les API necessàries per al teu projecte, com ara l'API de Google Maps.
@@ -781,14 +994,14 @@ Els secrets utilitzats en el workflow de desplegament són variables d'entorn qu
    - Configura les URL de redirecció autoritzades per a la teva aplicació.
    - Utilitza les credencials generades per autenticar-te amb les API de Google.
 
-1. **Obtenir la clau de l'API de Ticketmaster:**
+3. **Obtenir la clau de l'API de Ticketmaster:**
 
    - Visita el [Ticketmaster Developer Portal](https://developer.ticketmaster.com/) i inicia sessió o crea un compte.
    - Registra una nova aplicació al portal.
    - Obtingues la clau de l'API (API Key) proporcionada per Ticketmaster.
    - Utilitza aquesta clau per autenticar-te amb l'API de Ticketmaster.
 
-1. **Obtenir el token d'accés de Mapbox:**
+4. **Obtenir el token d'accés de Mapbox:**
    - Accedeix a [Mapbox](https://www.mapbox.com/) i inicia sessió o crea un compte.
    - Accedeix al teu panell de compte i navega fins a la secció de Tokens.
    - Crea un nou token d'accés.
