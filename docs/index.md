@@ -10,3 +10,4 @@ Aquí encontrarás toda la información necesaria para utilizar nuestra aplicaci
 
 - [Manual de Usuario](manual/manual-usuario.md)
 - [Documentació tècnica](doc_tecnica/tech.md)
+- [Planificació](planificacio/planificacio.md)
