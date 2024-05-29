@@ -548,14 +548,14 @@ class EventController extends Controller
  */
     public function show(Request $request)
     {
+        // Validar que todos los elementos en $idsArray sean números
+        $idsArray = $request->input('ids');
 
         // Validar que el array no esté vacío
         if (empty($idsArray)) {
             return response()->json(['message' => 'No IDs provided'], 400);
         }
 
-        // Validar que todos los elementos en $idsArray sean números
-        $idsArray = $request->input('ids');
 
         // Validar que todos los elementos en $idsArray sean números
         if (array_filter($idsArray, 'is_numeric') !== $idsArray) {
