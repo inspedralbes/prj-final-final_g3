@@ -45,7 +45,7 @@ services:
     ports:
       - 9091:80
     environment:
-      PMA_ABSOLUTE_URI: https://prespottunes.daw.inspedralbes.cat/pma/
+      PMA_ABSOLUTE_URI: https://spottunes.daw.inspedralbes.cat/pma/
     depends_on:
       - db
 
