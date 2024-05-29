@@ -1,6 +1,6 @@
 <template>
-    <p class="text-center" v-if="!events && !profile">No tens esdeveniments disponibles.</p>
-    <p class="text-center" v-if="!events && profile">No té esdeveniments disponibles.</p>
+    <p class="text-center" v-if="!eventos && !profile">No tens esdeveniments disponibles.</p>
+    <p class="text-center" v-if="!eventos && profile">No té esdeveniments disponibles.</p>
     <section v-else class='w-[90%] mx-auto flex flex-col gap-3'>
         <NuxtLink :to="`/events/${event.id}`" class="relative w-full h-48 rounded-md overflow-hidden"
             v-for="event in eventos" :key="event.id">

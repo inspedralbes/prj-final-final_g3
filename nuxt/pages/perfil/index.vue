@@ -108,8 +108,18 @@ export default {
     },
     async mounted() {
         if (!this.store.getLoggedIn()) return this.$router.push('/join');
-        this.loader = true;
 
+        this.loader = true;
+        try {
+            await this.getFollowers();
+            await this.getFollowing();
+            await this.getEvents();
+            console.log(this.User.events)
+        } catch (error) {
+            console.error("Error while fetching data:", error);
+        } finally {
+            this.loader = false;
+        }
     },
     computed: {
         getImage() {
@@ -118,23 +128,6 @@ export default {
             } else {
                 return `${this.$config.public.IMAGE_URI}/${this.User.avatar}`;
             }
-        }
-    },
-    watch: {
-        'User.id': {
-            async handler(newId, oldId) {
-                this.loader = true;
-                try {
-                    await this.getFollowers();
-                    await this.getFollowing();
-                    await this.getEvents();
-                    console.log(this.User.events);
-                } catch (error) {
-                    console.error("Error while fetching data:", error);
-                } finally {
-                    this.loader = false;
-                }
-            },
         }
     }
 }
