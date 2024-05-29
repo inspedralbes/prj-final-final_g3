@@ -10,24 +10,47 @@ use Illuminate\Support\Facades\Validator;
 class EventController extends Controller
 {
 
-    
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $events = Event::whereNotNull('artist')
-                       ->orderBy('date')
-                       ->orderBy('time')
-                       ->paginate(20);
+ * @OA\Get(
+ *      path="/api/events/all",
+ *      operationId="getAllEvents",
+ *      tags={"Esdeveniments"},
+ *      summary="Obtener lista completa de eventos",
+ *      description="Obtiene una lista completa de eventos donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+ *      @OA\Response(
+ *          response=200,
+ *          description="Lista de eventos obtenida exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="events", type="array",
+ *                  @OA\Items(
+ *                      type="object",
+ *                      @OA\Property(property="id", type="integer", example=1),
+ *                      @OA\Property(property="artist", type="string", example="Artista Ejemplo"),
+ *                      @OA\Property(property="date", type="string", format="date", example="2024-06-01"),
+ *                      @OA\Property(property="time", type="string", format="time", example="19:00:00"),
+ *                      @OA\Property(property="location", type="string", example="Lugar Ejemplo"),
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se han encontrado eventos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No s'han trobat esdeveniments")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
 
-        if ($events->isEmpty()) {
-            return response()->json(['message' => 'No s\' han trobat esdeveniments'], 404);
-        }
-
-        return response()->json(['events' => $events], 200);
-    }
-    
     public function indexAll()
     {
         $events = Event::whereNotNull('artist')
@@ -41,6 +64,96 @@ class EventController extends Controller
     
         return response()->json(['events' => $events], 200);
     }
+/**
+ * @OA\Post(
+ *      path="/api/events/byLocation",
+ *      operationId="getEventsByLocation",
+ *      tags={"Esdeveniments"},
+ *      summary="Obtener eventos por ubicación",
+ *      description="Obtiene una lista de eventos filtrados por países, ciudades y lugares específicos, donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="Criterios de búsqueda por ubicación",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              required={"countries", "cities"},
+ *              @OA\Property(
+ *                  property="countries",
+ *                  type="array",
+ *                  @OA\Items(type="string"),
+ *                  example={"USA", "Spain"}
+ *              ),
+ *              @OA\Property(
+ *                  property="cities",
+ *                  type="array",
+ *                  @OA\Items(type="string"),
+ *                  example={"New York", "Madrid"}
+ *              ),
+ *              @OA\Property(
+ *                  property="venues",
+ *                  type="array",
+ *                  @OA\Items(type="string"),
+ *                  example={"Madison Square Garden", "Wanda Metropolitano"}
+ *              ),
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Lista de eventos obtenida exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="events", type="array",
+ *                  @OA\Items(
+ *                      type="object",
+ *                      @OA\Property(property="id", type="integer", example=1),
+ *                      @OA\Property(property="artist", type="string", example="Artista Ejemplo"),
+ *                      @OA\Property(property="date", type="string", format="date", example="2024-06-01"),
+ *                      @OA\Property(property="time", type="string", format="time", example="19:00:00"),
+ *                      @OA\Property(property="location", type="string", example="Lugar Ejemplo"),
+ *                      @OA\Property(property="country", type="string", example="USA"),
+ *                      @OA\Property(property="city", type="string", example="New York"),
+ *                      @OA\Property(property="venue", type="string", example="Madison Square Garden"),
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Datos de entrada inválidos",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="errors", type="object",
+ *                  @OA\AdditionalProperties(type="array",
+ *                      @OA\Items(type="string")
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se han encontrado eventos para los criterios especificados",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No events found for the specified criteria")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=500,
+ *          description="Error al obtener eventos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Error fetching events"),
+ *              @OA\Property(property="error", type="string", example="Detalle del error")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
 
     public function getEventsByLocation(Request $request)
     {
@@ -48,7 +161,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'countries' => 'required|array',
             'cities' => 'required|array',
-            'venues' => 'required|array',
+            'venues' => 'array',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
@@ -79,7 +192,79 @@ class EventController extends Controller
         }
     }
     
-    
+/**
+ * @OA\Post(
+ *      path="/api/events/byDistance",
+ *      operationId="getEventsByDistance",
+ *      tags={"Esdeveniments"},
+ *      summary="Obtener eventos por distancia",
+ *      description="Obtiene una lista de eventos dentro de una distancia específica desde una ubicación dada, donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="Criterios de búsqueda por distancia",
+ *          @OA\JsonContent(
+ *              required={"latitude", "longitude", "distance"},
+ *              @OA\Property(property="latitude", type="number", format="float", example=40.7128),
+ *              @OA\Property(property="longitude", type="number", format="float", example=-74.0060),
+ *              @OA\Property(property="distance", type="number", format="float", example=50),
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Lista de eventos obtenida exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="events", type="array",
+ *                  @OA\Items(
+ *                      type="object",
+ *                      @OA\Property(property="id", type="integer", example=1),
+ *                      @OA\Property(property="artist", type="string", example="Artista Ejemplo"),
+ *                      @OA\Property(property="date", type="string", format="date", example="2024-06-01"),
+ *                      @OA\Property(property="time", type="string", format="time", example="19:00:00"),
+ *                      @OA\Property(property="location", type="string", example="Lugar Ejemplo"),
+ *                      @OA\Property(property="distance", type="number", format="float", example=30.5),
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Datos de entrada inválidos",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="errors", type="object",
+ *                  @OA\AdditionalProperties(type="array",
+ *                      @OA\Items(type="string")
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se han encontrado eventos para los criterios especificados",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No events found for the specified criteria")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=500,
+ *          description="Error al obtener eventos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Error fetching events"),
+ *              @OA\Property(property="error", type="string", example="Detalle del error")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
+
     public function getEventsByDistance(Request $request){
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
@@ -117,6 +302,78 @@ class EventController extends Controller
         return response()->json(['events' => $events], 200);
     }
 
+    /**
+ * @OA\Post(
+ *      path="/api/events/search",
+ *      operationId="getEventsByName",
+ *      tags={"Esdeveniments"},
+ *      summary="Buscar eventos por nombre",
+ *      description="Obtiene una lista de eventos que coinciden con el nombre especificado en el parámetro de búsqueda, buscando en varias columnas de la tabla de eventos.",
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="Parámetro de búsqueda por nombre",
+ *          @OA\JsonContent(
+ *              required={"param"},
+ *              @OA\Property(property="param", type="string", example="Nombre del evento o artista")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Lista de eventos obtenida exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="events", type="array",
+ *                  @OA\Items(
+ *                      type="object",
+ *                      @OA\Property(property="id", type="integer", example=1),
+ *                      @OA\Property(property="artist", type="string", example="Artista Ejemplo"),
+ *                      @OA\Property(property="date", type="string", format="date", example="2024-06-01"),
+ *                      @OA\Property(property="time", type="string", format="time", example="19:00:00"),
+ *                      @OA\Property(property="location", type="string", example="Lugar Ejemplo"),
+ *                      @OA\Property(property="country", type="string", example="USA"),
+ *                      @OA\Property(property="city", type="string", example="New York"),
+ *                      @OA\Property(property="venue", type="string", example="Madison Square Garden"),
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="Datos de entrada inválidos",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="errors", type="object",
+ *                  @OA\AdditionalProperties(type="array",
+ *                      @OA\Items(type="string")
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se han encontrado eventos para los criterios especificados",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No events found for the specified criteria")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=500,
+ *          description="Error al obtener eventos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Error fetching events"),
+ *              @OA\Property(property="error", type="string", example="Detalle del error")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="No autorizado",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Token no proporcionado en los encabezados.")
+ *          )
+ *      ),
+ * )
+ */
+
     public function getEventsByName(Request $request)
     {
         // Validar los datos de entrada
@@ -151,6 +408,57 @@ class EventController extends Controller
         }
     }
     
+    /**
+ * @OA\Get(
+ *      path="/api/events/locations",
+ *      operationId="getLocations",
+ *      tags={"Esdeveniments"},
+ *      summary="Obtener ubicaciones de eventos",
+ *      description="Obtiene una lista de países, ciudades y lugares donde se realizan eventos.",
+ *      @OA\Response(
+ *          response=200,
+ *          description="Ubicaciones de eventos obtenidas exitosamente",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="locations", type="array",
+ *                  @OA\Items(
+ *                      type="object",
+ *                      @OA\Property(property="country", type="string", example="USA"),
+ *                      @OA\Property(property="cities", type="array",
+ *                          @OA\Items(
+ *                              type="object",
+ *                              @OA\Property(property="city", type="string", example="New York"),
+ *                              @OA\Property(property="venues", type="array",
+ *                                  @OA\Items(
+ *                                      type="object",
+ *                                      @OA\Property(property="venue", type="string", example="Madison Square Garden"),
+ *                                      @OA\Property(property="latitude", type="number", format="float", example=40.7505),
+ *                                      @OA\Property(property="longitude", type="number", format="float", example=-73.9934),
+ *                                  )
+ *                              ),
+ *                          )
+ *                      ),
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="No se han encontrado ubicaciones de eventos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="No locations found for events")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=500,
+ *          description="Error al obtener ubicaciones de eventos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Error fetching event locations"),
+ *              @OA\Property(property="error", type="string", example="Detalle del error")
+ *          )
+ *      )
+ * )
+ */
 
     public function getLocations()
     {
@@ -185,29 +493,69 @@ class EventController extends Controller
         return response()->json(['locations' => $locations], 200);
     }
 
-    
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
+/**
+ * @OA\Post(
+ *      path="/api/events/byId",
+ *      operationId="showEvents",
+ *      tags={"Esdeveniments"},
+ *      summary="Mostrar eventos por IDs",
+ *      description="Obtiene una lista de eventos según los IDs proporcionados en el cuerpo de la solicitud.",
+ *      @OA\RequestBody(
+ *          required=true,
+ *          description="IDs de los eventos",
+ *          @OA\JsonContent(
+ *              required={"ids"},
+ *              @OA\Property(property="ids", type="array",
+ *                  @OA\Items(type="integer", example="1")
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Eventos encontrados",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="events", type="array",
+ *                  @OA\Items(
+ *                      type="object",
+ *                      @OA\Property(property="id", type="integer", example=1),
+ *                      @OA\Property(property="artist", type="string", example="Artista Ejemplo"),
+ *                      @OA\Property(property="date", type="string", format="date", example="2024-06-01"),
+ *                      @OA\Property(property="time", type="string", format="time", example="19:00:00"),
+ *                      @OA\Property(property="location", type="string", example="Lugar Ejemplo"),
+ *                      @OA\Property(property="country", type="string", example="USA"),
+ *                      @OA\Property(property="city", type="string", example="New York"),
+ *                      @OA\Property(property="venue", type="string", example="Madison Square Garden"),
+ *                  )
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=400,
+ *          description="IDs inválidos",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Invalid IDs provided")
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="Eventos no encontrados",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="message", type="string", example="Events not found")
+ *          )
+ *      )
+ * )
+ */
     public function show(Request $request)
     {
+        // Validar que todos los elementos en $idsArray sean números
+        $idsArray = $request->input('ids');
 
         // Validar que el array no esté vacío
         if (empty($idsArray)) {
             return response()->json(['message' => 'No IDs provided'], 400);
         }
 
-        // Validar que todos los elementos en $idsArray sean números
-        $idsArray = $request->input('ids');
 
         // Validar que todos los elementos en $idsArray sean números
         if (array_filter($idsArray, 'is_numeric') !== $idsArray) {
@@ -224,30 +572,5 @@ class EventController extends Controller
     
         // Retorna los eventos encontrados
         return response()->json(['events' => $events], 200);
-    }
-    
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(event $event)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, event $event)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(event $event)
-    {
-        //
     }
 }
