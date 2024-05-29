@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Documentaió de la nostra API",
+        "title": "Documentació de la nostra API",
         "description": "",
         "contact": {
             "name": "Equip de Spottunes",
@@ -14,6 +14,1241 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/events/all": {
+            "get": {
+                "tags": [
+                    "Esdeveniments"
+                ],
+                "summary": "Obtener lista completa de eventos",
+                "description": "Obtiene una lista completa de eventos donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+                "operationId": "getAllEvents",
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "events": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "artist": {
+                                                        "type": "string",
+                                                        "example": "Artista Ejemplo"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-01"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "format": "time",
+                                                        "example": "19:00:00"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "Lugar Ejemplo"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se han encontrado eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No s'han trobat esdeveniments"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/events/byLocation": {
+            "post": {
+                "tags": [
+                    "Esdeveniments"
+                ],
+                "summary": "Obtener eventos por ubicación",
+                "description": "Obtiene una lista de eventos filtrados por países, ciudades y lugares específicos, donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+                "operationId": "getEventsByLocation",
+                "requestBody": {
+                    "description": "Criterios de búsqueda por ubicación",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "countries",
+                                    "cities",
+                                    "venues"
+                                ],
+                                "properties": {
+                                    "countries": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "USA",
+                                            "Spain"
+                                        ]
+                                    },
+                                    "cities": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "New York",
+                                            "Madrid"
+                                        ]
+                                    },
+                                    "venues": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Madison Square Garden",
+                                            "Wanda Metropolitano"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "events": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "artist": {
+                                                        "type": "string",
+                                                        "example": "Artista Ejemplo"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-01"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "format": "time",
+                                                        "example": "19:00:00"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "Lugar Ejemplo"
+                                                    },
+                                                    "country": {
+                                                        "type": "string",
+                                                        "example": "USA"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "New York"
+                                                    },
+                                                    "venue": {
+                                                        "type": "string",
+                                                        "example": "Madison Square Garden"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se han encontrado eventos para los criterios especificados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No events found for the specified criteria"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error fetching events"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Detalle del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/events/byDistance": {
+            "post": {
+                "tags": [
+                    "Esdeveniments"
+                ],
+                "summary": "Obtener eventos por distancia",
+                "description": "Obtiene una lista de eventos dentro de una distancia específica desde una ubicación dada, donde el campo 'artist' no es nulo, ordenados por fecha y hora.",
+                "operationId": "getEventsByDistance",
+                "requestBody": {
+                    "description": "Criterios de búsqueda por distancia",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "latitude",
+                                    "longitude",
+                                    "distance"
+                                ],
+                                "properties": {
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 40.7128
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": -74.006
+                                    },
+                                    "distance": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 50
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "events": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "artist": {
+                                                        "type": "string",
+                                                        "example": "Artista Ejemplo"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-01"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "format": "time",
+                                                        "example": "19:00:00"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "Lugar Ejemplo"
+                                                    },
+                                                    "distance": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 30.5
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se han encontrado eventos para los criterios especificados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No events found for the specified criteria"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error fetching events"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Detalle del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/events/search": {
+            "post": {
+                "tags": [
+                    "Esdeveniments"
+                ],
+                "summary": "Buscar eventos por nombre",
+                "description": "Obtiene una lista de eventos que coinciden con el nombre especificado en el parámetro de búsqueda, buscando en varias columnas de la tabla de eventos.",
+                "operationId": "getEventsByName",
+                "requestBody": {
+                    "description": "Parámetro de búsqueda por nombre",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "param"
+                                ],
+                                "properties": {
+                                    "param": {
+                                        "type": "string",
+                                        "example": "Nombre del evento o artista"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de eventos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "events": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "artist": {
+                                                        "type": "string",
+                                                        "example": "Artista Ejemplo"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-01"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "format": "time",
+                                                        "example": "19:00:00"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "Lugar Ejemplo"
+                                                    },
+                                                    "country": {
+                                                        "type": "string",
+                                                        "example": "USA"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "New York"
+                                                    },
+                                                    "venue": {
+                                                        "type": "string",
+                                                        "example": "Madison Square Garden"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se han encontrado eventos para los criterios especificados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No events found for the specified criteria"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error fetching events"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Detalle del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/events/locations": {
+            "get": {
+                "tags": [
+                    "Esdeveniments"
+                ],
+                "summary": "Obtener ubicaciones de eventos",
+                "description": "Obtiene una lista de países, ciudades y lugares donde se realizan eventos.",
+                "operationId": "getLocations",
+                "responses": {
+                    "200": {
+                        "description": "Ubicaciones de eventos obtenidas exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "locations": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "country": {
+                                                        "type": "string",
+                                                        "example": "USA"
+                                                    },
+                                                    "cities": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "city": {
+                                                                    "type": "string",
+                                                                    "example": "New York"
+                                                                },
+                                                                "venues": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "venue": {
+                                                                                "type": "string",
+                                                                                "example": "Madison Square Garden"
+                                                                            },
+                                                                            "latitude": {
+                                                                                "type": "number",
+                                                                                "format": "float",
+                                                                                "example": 40.7505
+                                                                            },
+                                                                            "longitude": {
+                                                                                "type": "number",
+                                                                                "format": "float",
+                                                                                "example": -73.9934
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se han encontrado ubicaciones de eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No locations found for events"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al obtener ubicaciones de eventos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error fetching event locations"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Detalle del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/events/byId": {
+            "post": {
+                "tags": [
+                    "Esdeveniments"
+                ],
+                "summary": "Mostrar eventos por IDs",
+                "description": "Obtiene una lista de eventos según los IDs proporcionados en el cuerpo de la solicitud.",
+                "operationId": "showEvents",
+                "requestBody": {
+                    "description": "IDs de los eventos",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "ids"
+                                ],
+                                "properties": {
+                                    "ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Eventos encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "events": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "artist": {
+                                                        "type": "string",
+                                                        "example": "Artista Ejemplo"
+                                                    },
+                                                    "date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-06-01"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "format": "time",
+                                                        "example": "19:00:00"
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "Lugar Ejemplo"
+                                                    },
+                                                    "country": {
+                                                        "type": "string",
+                                                        "example": "USA"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "New York"
+                                                    },
+                                                    "venue": {
+                                                        "type": "string",
+                                                        "example": "Madison Square Garden"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "IDs inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid IDs provided"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Eventos no encontrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Events not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/follow/{userId}": {
+            "post": {
+                "tags": [
+                    "Seguidors"
+                ],
+                "summary": "Seguir a un usuario",
+                "description": "Permite a un usuario seguir a otro usuario por su ID.",
+                "operationId": "followUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID del usuario a seguir",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ahora estás siguiendo a este usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ahora estás siguiendo a este usuario"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ya estás siguiendo a este usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ya estás siguiendo a este usuario"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/unfollow/{userId}": {
+            "delete": {
+                "tags": [
+                    "Seguidors"
+                ],
+                "summary": "Dejar de seguir a un usuario",
+                "description": "Permite a un usuario dejar de seguir a otro usuario por su ID.",
+                "operationId": "unfollowUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID del usuario a dejar de seguir",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ya no estás siguiendo a este usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ya no estás siguiendo a este usuario"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/followers/{userId}": {
+            "get": {
+                "tags": [
+                    "Seguidors"
+                ],
+                "summary": "Obtener seguidores de un usuario",
+                "description": "Obtiene la lista de seguidores de un usuario por su ID, incluyendo la cuenta total de seguidores.",
+                "operationId": "getUserFollowers",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID del usuario cuyos seguidores se desea obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de seguidores obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "followers": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "nickname": {
+                                                        "type": "string",
+                                                        "example": "follower123"
+                                                    },
+                                                    "avatar": {
+                                                        "type": "string",
+                                                        "example": "images/follower_image.png"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/followed/{userId}": {
+            "get": {
+                "tags": [
+                    "Seguidors"
+                ],
+                "summary": "Obtener usuarios seguidos por un usuario",
+                "description": "Obtiene la lista de usuarios seguidos por un usuario por su ID, incluyendo la cuenta total de usuarios seguidos.",
+                "operationId": "getUserFollowed",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID del usuario cuyos usuarios seguidos se desea obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios seguidos obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "followed": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "nickname": {
+                                                        "type": "string",
+                                                        "example": "followedUser123"
+                                                    },
+                                                    "avatar": {
+                                                        "type": "string",
+                                                        "example": "images/followed_user_image.png"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/followers": {
+            "get": {
+                "tags": [
+                    "Seguidors"
+                ],
+                "summary": "Obtener seguidores del usuario autenticado",
+                "description": "Obtiene la lista de IDs de los usuarios que siguen al usuario autenticado.",
+                "operationId": "getFollowers",
+                "responses": {
+                    "200": {
+                        "description": "Lista de seguidores obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/api/loginSpotify": {
             "get": {
                 "tags": [
@@ -301,24 +1536,9 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer_token": []
                     }
                 ]
-            }
-        },
-        "/api/auth": {
-            "get": {
-                "tags": [
-                    "Autenticació Google"
-                ],
-                "summary": "Redirigir a la autenticación",
-                "description": "Redirige al usuario a la página de autenticación externa, como Google, para iniciar sesión.",
-                "operationId": "redirectToAuth",
-                "responses": {
-                    "302": {
-                        "description": "Redirección temporal"
-                    }
-                }
             }
         },
         "/api/completeInfo": {
@@ -378,6 +1598,603 @@
                                             "items": {
                                                 "type": "string"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/updateInfo": {
+            "put": {
+                "tags": [
+                    "Autenticació"
+                ],
+                "summary": "Actualizar información del usuario",
+                "description": "Actualiza la información del usuario, incluyendo nombre, apellidos, apodo, correo electrónico, fecha de nacimiento y avatar.",
+                "operationId": "updateInfo",
+                "requestBody": {
+                    "description": "Datos del usuario para actualizar",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "nickname",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "surnames": {
+                                        "type": "string",
+                                        "example": "Pérez Gómez"
+                                    },
+                                    "nickname": {
+                                        "type": "string",
+                                        "example": "usuario123"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "usuario@example.com"
+                                    },
+                                    "birthdate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-01"
+                                    },
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "base64",
+                                        "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Información de usuario actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Juan"
+                                        },
+                                        "surnames": {
+                                            "type": "string",
+                                            "example": "Pérez Gómez"
+                                        },
+                                        "nickname": {
+                                            "type": "string",
+                                            "example": "usuario123"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "usuario@example.com"
+                                        },
+                                        "birthdate": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "1990-01-01"
+                                        },
+                                        "avatar": {
+                                            "type": "string",
+                                            "example": "images/unique_image_name.png"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/apps/searchUsers": {
+            "post": {
+                "tags": [
+                    "Usuaris"
+                ],
+                "summary": "Buscar usuarios",
+                "description": "Busca usuarios por su apodo.",
+                "operationId": "searchUsers",
+                "parameters": [
+                    {
+                        "name": "param",
+                        "in": "query",
+                        "description": "Parámetro de búsqueda para el apodo del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "usuario123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultados de la búsqueda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Juan"
+                                            },
+                                            "surnames": {
+                                                "type": "string",
+                                                "example": "Pérez Gómez"
+                                            },
+                                            "nickname": {
+                                                "type": "string",
+                                                "example": "usuario123"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "usuario@example.com"
+                                            },
+                                            "birthdate": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "1990-01-01"
+                                            },
+                                            "avatar": {
+                                                "type": "string",
+                                                "example": "images/unique_image_name.png"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "No hay resultados en tu búsqueda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No hay resultados en tu búsqueda"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "No hay resultados en tu búsqueda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No hay resultados en tu búsqueda"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/apps/checkEmail": {
+            "get": {
+                "tags": [
+                    "Usuaris"
+                ],
+                "summary": "Verificar disponibilidad de correo electrónico",
+                "description": "Verifica si un correo electrónico ya está en uso. Si el correo está en uso, devuelve los detalles del usuario y un token de acceso. Si no está en uso, indica que el correo está disponible.",
+                "operationId": "checkEmail",
+                "requestBody": {
+                    "description": "Correo electrónico a verificar",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "usuario@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "El email ya está en uso, haciendo Login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "El email ya está en uso, haciendo Login"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Juan"
+                                                        },
+                                                        "surnames": {
+                                                            "type": "string",
+                                                            "example": "Pérez Gómez"
+                                                        },
+                                                        "nickname": {
+                                                            "type": "string",
+                                                            "example": "usuario123"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "usuario@example.com"
+                                                        },
+                                                        "birthdate": {
+                                                            "type": "string",
+                                                            "format": "date",
+                                                            "example": "1990-01-01"
+                                                        },
+                                                        "avatar": {
+                                                            "type": "string",
+                                                            "example": "images/unique_image_name.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "abc123token"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "El email está disponible",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "El email está disponible"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Solicitud incorrecta"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/getUser": {
+            "get": {
+                "tags": [
+                    "Usuaris"
+                ],
+                "summary": "Obtener información del usuario",
+                "description": "Obtiene la información de un usuario por su ID.",
+                "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID del usuario a obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Información del usuario obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Juan"
+                                        },
+                                        "surnames": {
+                                            "type": "string",
+                                            "example": "Pérez Gómez"
+                                        },
+                                        "nickname": {
+                                            "type": "string",
+                                            "example": "usuario123"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "format": "email",
+                                            "example": "usuario@example.com"
+                                        },
+                                        "birthdate": {
+                                            "type": "string",
+                                            "format": "date",
+                                            "example": "1990-01-01"
+                                        },
+                                        "avatar": {
+                                            "type": "string",
+                                            "example": "images/unique_image_name.png"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se pudo encontrar el usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "No se pudo encontrar el usuario"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token no proporcionado en los encabezados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/search/{username}": {
+            "get": {
+                "tags": [
+                    "Usuaris"
+                ],
+                "summary": "Buscar usuario por nombre de usuario",
+                "description": "Busca un usuario por su nombre de usuario.",
+                "operationId": "searchByUsername",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "Nombre de usuario a buscar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario encontrado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Juan"
+                                        },
+                                        "nickname": {
+                                            "type": "string",
+                                            "example": "usuario123"
+                                        },
+                                        "avatar": {
+                                            "type": "string",
+                                            "example": "images/unique_image_name.png"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado el usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No se ha encontrado el usuario"
                                         }
                                     },
                                     "type": "object"
