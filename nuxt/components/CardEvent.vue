@@ -12,11 +12,11 @@
                     <IconsCalendar class="size-4" />{{ event.date }}
                 </p>
                 <p class='text-white flex items-center gap-1'>
-                    <IconsUsers class="size-4" />{{ followers }} inscritos
+                    <IconsUsers class="size-4" />{{ followers }} inscrits
                 </p>
             </div>
         </NuxtLink>
-        
+
         <button v-if="event.like" class="absolute bottom-2 right-2 p-1 rounded-lg bg-red-500 hover:bg-red-700"
             @click="toggleLike">
             <IconsHeartFill size="20" />
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         async toggleLike() {
-            if(!this.store.getLoggedIn()) return this.$router.push('/join');
+            if (!this.store.getLoggedIn()) return this.$router.push('/join');
             let response;
             if (!this.event.like) {
                 response = await comManager.likeAnEvent(this.event.id)
