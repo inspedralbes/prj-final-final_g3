@@ -8,21 +8,21 @@
             <UTabs v-model="type" :items="[{ label: 'Seguidors' }, { label: 'Seguits' }]" class="mx-2 w-2/3"></UTabs>
         </div>
         <div>
-            <div v-if="type === 0 && followers.length != 0" v-for="follower in doThis.followers"
+            <div v-if="type === 0 && doThis.followers.length != 0" v-for="follower in doThis.followers"
                 class="w-full flex flex-col justify-center items-center">
                 <CardUser class="w-2/3" :user="follower.follower" />
                 <hr>
             </div>
-            <div v-else-if="type === 0 && followers.length === 0" class="flex justify-center items-center">
+            <div v-else-if="type === 0 && doThis.followers.length === 0" class="flex justify-center items-center">
                 <h2 v-if="checkUser" class="font-bold">No tens seguidors</h2>
                 <h2 v-else class="font-bold">No té seguidors</h2>
             </div>
-            <div v-else-if="type === 1 && following.length != 0" v-for="followed in doThis.following"
+            <div v-else-if="type === 1 && doThis.following.length != 0" v-for="followed in doThis.following"
                 class="w-full flex flex-col justify-center items-center">
                 <CardUser class="w-2/3" :user="followed.followed" />
                 <hr>
             </div>
-            <div v-else-if="type === 1 && following.length === 0" class="flex justify-center items-center">
+            <div v-else-if="type === 1 && doThis.following.length === 0" class="flex justify-center items-center">
                 <h2 v-if="checkUser" class="font-bold">No segueixes a ningú</h2>
                 <h2 v-else class="font-bold">No segueix a ningú</h2>
             </div>
@@ -80,6 +80,7 @@ export default {
             this.getOtherFollowing();
         }
         console.log("Check User:", this.checkUser)
+        console.log("doThis:", this.doThis)
 
     },
     methods: {
@@ -96,11 +97,13 @@ export default {
         async getOtherFollowers() {
             console.log('getOtherFollowers')
             await userManager.getFollowers(this.store.otherUserInfo.id);
+            console.log("Other Followers:", this.otherFollowers)
             this.doThis.followers = this.otherFollowers;
         },
         async getOtherFollowing() {
             console.log('getOtherFollowing')
             await userManager.getFollowed(this.store.otherUserInfo.id);
+            console.log("Other Following:", this.otherFollowing)
             this.doThis.following = this.otherFollowing;
         },
     },
