@@ -79,31 +79,23 @@ export default {
             this.getOtherFollowers();
             this.getOtherFollowing();
         }
-        console.log("Check User:", this.checkUser)
-        console.log("doThis:", this.doThis)
 
     },
     methods: {
         async getFollowers() {
-            console.log('getFollowers')
             await userManager.getFollowers();
             this.doThis.followers = this.followers;
         },
         async getFollowing() {
-            console.log('getFollowing')
             await userManager.getFollowed();
             this.doThis.following = this.following;
         },
         async getOtherFollowers() {
-            console.log('getOtherFollowers')
             await userManager.getFollowers(this.store.otherUserInfo.id);
-            console.log("Other Followers:", this.otherFollowers)
             this.doThis.followers = this.otherFollowers;
         },
         async getOtherFollowing() {
-            console.log('getOtherFollowing')
             await userManager.getFollowed(this.store.otherUserInfo.id);
-            console.log("Other Following:", this.otherFollowing)
             this.doThis.following = this.otherFollowing;
         },
     },
